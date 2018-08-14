@@ -1,19 +1,20 @@
 {
-  "name": "cs9-rightnow",
-  "version": "1.0.0",
-  "description": "Minimal setup of node server for Heroku",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Lambda-School-Labs/CS9-RightNow.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Lambda-School-Labs/CS9-RightNow/issues"
-  },
-  "homepage": "https://github.com/Lambda-School-Labs/CS9-RightNow#readme"
+	"name": "cs9-rightnow",
+	"version": "1.0.0",
+	"description": "Minimal setup of node server for Heroku",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "react-scripts build",
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Lambda-School-Labs/CS9-RightNow.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Lambda-School-Labs/CS9-RightNow/issues"
+	},
+	"homepage": "https://github.com/Lambda-School-Labs/CS9-RightNow#readme"
 }
