@@ -19,6 +19,7 @@ Privacy settings available in the profile settings
 
 <h2>FAQ: </h2>
 Q) Was making this application fun?
+
 A) You betcha! 
 
 <h2>Maintaining</h2>
