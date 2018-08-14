@@ -8,13 +8,13 @@ Table of Contents
 * Maintaining
 
 
-About:
+*About:
 This is a full-stack scheduling application. Businesses may launch new ventures and host appointment calendars, while users may see available openings and schedule appointments in real-time.
 
-Requirements:
+*Requirements:
 Internet connection and computer (for Desktop) or smart phone (for Mobile)
 
-Configuration:
+<h2>Configuration:</h2>
 Privacy settings available in the profile settings
 
 FAQ: 
