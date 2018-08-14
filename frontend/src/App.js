@@ -8,10 +8,12 @@ class App extends Component {
 			<div className="App">
 				<header className="App-header">
 					<img src={logo} className="App-logo" alt="logo" />
-					<h1 className="App-title">Welcome to React</h1>
+					<h1 className="App-title">Welcome to React!</h1>
 				</header>
 				<p className="App-intro">
-					To get started, edit <code>src/App.js</code> and save to reload.
+					This React app is deployed to heroku using git subtree feature. This is only temporary solution, as
+					script will need to be written at root directory as backend is implemented, and deploy both, rather
+					than just React.
 				</p>
 			</div>
 		);
