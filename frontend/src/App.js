@@ -15,6 +15,7 @@ class App extends Component {
 					script will need to be written at root directory as backend is implemented, and deploy both, rather
 					than just React.
 				</p>
+				<p>git subtree push --prefix frontend heroku master</p>
 			</div>
 		);
 	}
