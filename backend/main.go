@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 	"encoding/json"
-  "strings"
+	"strings"
 	"log"
 	"fmt"
 
@@ -12,6 +12,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/mitchellh/mapstructure"
 )
+
 
 // Create user data first
 type User struct {
@@ -30,12 +31,14 @@ type Exception struct {
 	Message string `json:"message"`
 }
 
+var usersDB []User
+
 // create token
 func CreateTokenEndpoint(w http.ResponseWriter, req *http.Request) {
 	var user User
     _ = json.NewDecoder(req.Body).Decode(&user)
     token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-        "username": user.Username,
+		"username": user.Username,
         "password": user.Password,
     })
     tokenString, error := token.SignedString([]byte("secret"))
@@ -135,16 +138,14 @@ func main() {
 
 	/* 
 	/status - checks if the API is up and running
-	/products - retrieve list of products
-	/products/{slug}/feedback - capture feedback ** for purpose of practicing Golang
-	/get-token - simply generates token
 	*/
 
 	r.Handle("/status", StatusHandler).Methods("GET")
 
 	r.HandleFunc("/authenticate", CreateTokenEndpoint).Methods("POST")
 	r.HandleFunc("/protected", ProtectedEndpoint).Methods("GET")
-	log.Fatal(http.ListenAndServe(":12345", router))
+	r.HandleFunc("/test", ValidateMiddleware(TestEndpoint)).Methods("GET")
+	log.Fatal(http.ListenAndServe(":5000", r))
 	
 	// logging handler is wrapped around in our router; logger is now called first on each route request.
 	// http.ListenAndServe(":5000", handlers.LoggingHandler(os.Stdout, r))
