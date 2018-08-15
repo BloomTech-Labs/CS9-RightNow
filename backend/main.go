@@ -9,16 +9,38 @@ import (
     // "github.com/rs/cors"
 )
 
-// Basic company by id
-// type Company struct {
-//     ID    string `json:"id,omitempty"`
-//     Name  string `json:"name,omitempty"`
-//     Stars string `json:"stars,omitempty"`
+// Basic user by id
+// type User struct {
+// 		Id int
+// 		Name string
+// 		Password string
+// 		PhoneNumber string
+// 		Appointment_Id = []
+// 		Slug string //would be username used for url; just like linkedIn
+// 		Description string
 // }
 
+// var users = []User{
+// 	User{Id: 1, Name: "James May", Password slug: "captain-slow", }
+// }
 
+// user appointments by id
+type Appointment struct {
+	Id int
+	Location string
+	Company string
+	Time string // string for now
+	Booking bool
+	User_id int // filling space for now, not used currently.
+}
 
-// var companies []Company
+// creating list of Appointments
+var appointments = []Appointment{
+	Appointment(Id: 1, Location: "Some location 1", Company: "James May", Time: "some time 1", Booking: true, User_id: 1),
+	Appointment(Id: 2, Location: "Some location 2", Company: "Richard Hammond", Time: "some time 2", Booking: true, User_id: 1),
+	Appointment(Id: 1, Location: "Some location 3", Company: "Jeremy Clarkson", Time: "some time 3", Booking: true, User_id: 1),
+	Appointment(Id: 1, Location: "Some location 4", Company: "Top Gear Team", Time: "some time 4", Booking: true, User_id: 1),
+}
 
 //Get all companies
 // func GetCompanies(w http.ResponseWriter, r *http.Request) {
