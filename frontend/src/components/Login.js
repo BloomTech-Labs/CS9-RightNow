@@ -20,7 +20,7 @@ export default class Login extends component {
 	};
 
 	submitHandler = (e) => {
-		// connect to the server we want
+		// connect to the server that handles token
 		const login = axios.post('whatever server', this.state);
 
 		e.preventDefault();
