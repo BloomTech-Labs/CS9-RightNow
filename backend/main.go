@@ -55,12 +55,22 @@ func main() {
     // companies = append(companies, Company{"3", "FaceBook", "3"})
 
 		// instantiating gorilla/mux router
-		router := mux.NewRouter()
+		r := mux.NewRouter()
 		
  		// On the default page we will simply serve our static index page.
-		 router.Handle("/", http.FileServer(http.Dir("./views/")))
+		 r.Handle("/", http.FileServer(http.Dir("./views/")))
+
+		/* 
+		/status - checks if the API is up and running
+		/products - retrieve list of products
+		/products/{slug}/feedback - capture feedback ** for purpose of practicing Golang
+		*/
+		 r.Handle("/status", NotImplemented).Methods("GET")
+		 r.Handle("/products", NotImplemented).Methods("GET")
+		 r.Handle("/products/{slug}/feedback", NotImplemented).Methods("POST")
 		 
-		 router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
+		 r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
+
     // router.HandleFunc("/company", GetCompanies).Methods("GET")
     // router.HandleFunc("/company/{id}", GetCompany).Methods("GET")
 
@@ -71,6 +81,11 @@ func main() {
     
 		// handler := c.Handler(router)
 		
-		http.ListenAndServe(":5000", router)
+		http.ListenAndServe(":5000", r)
     // log.Fatal(http.ListenAndServe(":5000", loggingMiddleware(handler)))
 }
+
+// Simply displays "Not Implemented" whenever endpoint with this function is hit.
+var NotImplemented = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+	w.Write([]byte("Not Implemented"))
+})
