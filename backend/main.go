@@ -3,7 +3,8 @@ package main
 import (
 	"net/http"
 	"encoding/json"
-	"context"
+
+	// "testing"
 	// "strings"
 	// "os"
 	"log"
@@ -14,15 +15,12 @@ import (
 	gorctx "github.com/gorilla/context" // conflicts with context; give it an AS alias
 	"github.com/dgrijalva/jwt-go"
 	"github.com/mitchellh/mapstructure"
-
-	// mongodb
-	"github.com/mongodb/mongo-go-driver/mongo"
-
 )
 
-
+/* JWT */
 // Create user data first
 type User struct {
+	Id string `json:"id"`
 	Username string `json:"username"`
 	Password string `json:"password"`
 	// can add other parameter later
@@ -107,7 +105,8 @@ func ValidateMiddleware(next http.HandlerFunc) http.HandlerFunc {
 			}
 	})
 }
-// mongo
+
+// test endpoint to see if middleware is working
 func TestEndpoint(w http.ResponseWriter, req *http.Request) {
 	decoded := gorctx.Get(req, "decoded")
 	var user User
@@ -115,29 +114,27 @@ func TestEndpoint(w http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(w).Encode(user)
 }
 
+/* status checker */
 // invoked when user calls /status route; confirms API running
 var StatusHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
 	w.Write([]byte("API is up and running")) // confirm API running for now.
 })
 
+
 func main() {
-	// connect to mongo
-	client, err := mongo.NewClient("mongodb://rightnow_user@localhost:27017")
-	if err != nil { log.Fatal(err) }
-	err = client.Connect(context.TODO())
-	if err != nil { log.Fatal(err) }
+	fmt.Println("Starting the application...")
+
+	// mongo initiation
 
 	// instantiating gorilla/mux router
 	r := mux.NewRouter()
-	fmt.Println("Starting the application...")
 
-	// On the default page we will simply serve our static index page.
-
+	// Routes
 	r.Handle("/status", StatusHandler).Methods("GET")
-
 	r.HandleFunc("/authenticate", CreateTokenEndpoint).Methods("POST")
 	r.HandleFunc("/protected", ProtectedEndpoint).Methods("GET")
 	r.HandleFunc("/test", ValidateMiddleware(TestEndpoint)).Methods("GET")
+	r.HandleFunc("/mongotest", MongoDataBase)
 	log.Fatal(http.ListenAndServe(":5000", r))
 	
 }

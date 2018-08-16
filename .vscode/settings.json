@@ -1,0 +1,28 @@
+{
+  "git.path": "D:\\Program Files\\Git\\cmd\\git.exe",
+    "editor.renderWhitespace": "boundary",
+    "window.zoomLevel": 0,
+    "liveServer.settings.donotVerifyTags": true,
+    "workbench.colorCustomizations": {
+        "editor.hoverHighlightBackground": "#45455e",
+        "sideBar.background": "#2b2b2d",
+        "editor.background": "#222223",
+        "editor.wordHighlightBackground": "#11eff727",
+        "editor.selectionBackground": "#f7851a56",
+        "tab.activeBorder": "#f7cd11",
+        "activityBar.background": "#37373a",
+        "activityBarBadge.background": "#e6c019ec",
+        "activityBarBadge.foreground": "#000000ec"
+    },
+    "editor.tokenColorCustomizations": {
+        // "comments": "#8ec0b4"
+    },
+    "editor.tabSize": 2,
+    // Git Bash
+    "terminal.integrated.shell.windows": "D:\\Program Files\\Git\\bin\\bash.exe",
+    // Ubuntu Bash (toggle this to switch between types)
+    // "terminal.integrated.shell.windows": "C:\\Windows\\System32\\bash.exe",
+    "workbench.iconTheme": "material-icon-theme",
+    "python.jediEnabled": false,
+    "workbench.colorTheme": "Gruvbox Dark Medium"
+}
