@@ -3,19 +3,20 @@ package main
 import (
 	"net/http"
 	"encoding/json"
+	"context"
 	// "strings"
-	"os"
+	// "os"
 	"log"
 	"fmt"
 	
 	// JWT verification
 	"github.com/gorilla/mux"
-	"github.com/gorilla/context"
+	gorctx "github.com/gorilla/context" // conflicts with context; give it an AS alias
 	"github.com/dgrijalva/jwt-go"
 	"github.com/mitchellh/mapstructure"
 
 	// mongodb
-	// "github.com/mongodb/mongo-go-driver/mongo"
+	"github.com/mongodb/mongo-go-driver/mongo"
 
 )
 
@@ -95,7 +96,7 @@ func ValidateMiddleware(next http.HandlerFunc) http.HandlerFunc {
 									return
 							}
 							if token.Valid {
-									context.Set(req, "decoded", token.Claims)
+									gorctx.Set(req, "decoded", token.Claims)
 									next(w, req)
 							} else {
 									json.NewEncoder(w).Encode(Exception{Message: "Invalid authorization token"})
@@ -106,9 +107,9 @@ func ValidateMiddleware(next http.HandlerFunc) http.HandlerFunc {
 			}
 	})
 }
-
+// mongo
 func TestEndpoint(w http.ResponseWriter, req *http.Request) {
-	decoded := context.Get(req, "decoded")
+	decoded := gorctx.Get(req, "decoded")
 	var user User
 	mapstructure.Decode(decoded.(jwt.MapClaims), &user)
 	json.NewEncoder(w).Encode(user)
@@ -120,6 +121,11 @@ var StatusHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 })
 
 func main() {
+	// connect to mongo
+	client, err := mongo.NewClient("mongodb://rightnow_user@localhost:27017")
+	if err != nil { log.Fatal(err) }
+	err = client.Connect(context.TODO())
+	if err != nil { log.Fatal(err) }
 
 	// instantiating gorilla/mux router
 	r := mux.NewRouter()
