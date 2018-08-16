@@ -144,7 +144,7 @@ func main() {
 
 	// user DB
 	r.HandleFunc("/mongotest", sanityCheck) // works.
-	r.HandleFunc("/users/all", MongoAllUser)
+	r.HandleFunc("/users/all", MongoAllUser) // finds only one person, need to know how query everything
 	r.HandleFunc("/users/create", CreateNewUser) // sort of works.
 
 	log.Fatal(http.ListenAndServe(":5000", r))
