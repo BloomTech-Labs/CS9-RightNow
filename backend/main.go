@@ -9,9 +9,11 @@ import (
 	// "os"
 	"log"
 	"fmt"
-	
-	// JWT verification
+
+	// router
 	"github.com/gorilla/mux"
+
+	// JWT verification
 	gorctx "github.com/gorilla/context" // conflicts with context; give it an AS alias
 	"github.com/dgrijalva/jwt-go"
 	"github.com/mitchellh/mapstructure"
@@ -89,25 +91,20 @@ func ValidateMiddleware(next http.HandlerFunc) http.HandlerFunc {
 									!ok {
 										return nil, fmt.Errorf("There was an error")
 									}
-									fmt.Println("returning")
 									return []byte("secret"), nil
 							})
 							if error != nil {
-									fmt.Println("error1")
 									json.NewEncoder(w).Encode(Exception{Message: error.Error()})
 									return
 							}
 							if token.Valid {
-									fmt.Println("validated")
 									gorctx.Set(req, "decoded", token.Claims)
 									next(w, req)
 							} else {
-									fmt.Println("invalid auth token")
 									json.NewEncoder(w).Encode(Exception{Message: "Invalid authorization token"})
 							}
 					}
 			} else {
-					fmt.Println("auth header is required")
 					json.NewEncoder(w).Encode(Exception{Message: "An authorization header is required"})
 			}
 	})
@@ -116,15 +113,15 @@ func ValidateMiddleware(next http.HandlerFunc) http.HandlerFunc {
 // test endpoint to see if middleware is working
 func TestEndpoint(w http.ResponseWriter, req *http.Request) {
 	decoded := gorctx.Get(req, "decoded")
-	fmt.Println(decoded)
+	// fmt.Println(decoded) // token
 	var user User
 	mapstructure.Decode(decoded.(jwt.MapClaims), &user)
-	json.NewEncoder(w).Encode(decoded)
+	json.NewEncoder(w).Encode(user)
 }
 
 /* status checker */
 // invoked when user calls /status route; confirms API running
-var StatusHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+var StatusHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("API is up and running")) // confirm API running for now.
 })
 
@@ -137,12 +134,18 @@ func main() {
 	// instantiating gorilla/mux router
 	r := mux.NewRouter()
 
-	// Routes
+	/* Routes */
+
+	// JWT
 	r.Handle("/status", StatusHandler).Methods("GET")
 	r.HandleFunc("/authenticate", CreateTokenEndpoint).Methods("POST")
 	r.HandleFunc("/protected", ProtectedEndpoint).Methods("GET")
 	r.HandleFunc("/test", ValidateMiddleware(TestEndpoint)).Methods("GET")
-	r.HandleFunc("/mongotest", MongoDataBase) // works.
+
+	// user DB
+	r.HandleFunc("/mongotest", sanityCheck) // works.
+	r.HandleFunc("/users/all", MongoAllUser)
+	r.HandleFunc("/users/create", CreateNewUser) // sort of works.
+
 	log.Fatal(http.ListenAndServe(":5000", r))
-	
 }
