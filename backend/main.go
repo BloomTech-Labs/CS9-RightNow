@@ -3,14 +3,20 @@ package main
 import (
 	"net/http"
 	"encoding/json"
-	"strings"
+	// "strings"
+	"os"
 	"log"
 	"fmt"
-
+	
+	// JWT verification
 	"github.com/gorilla/mux"
 	"github.com/gorilla/context"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/mitchellh/mapstructure"
+
+	// mongodb
+	// "github.com/mongodb/mongo-go-driver/mongo"
+
 )
 
 
@@ -31,28 +37,33 @@ type Exception struct {
 	Message string `json:"message"`
 }
 
-var usersDB []User
+// user DB
+var usersDB = []User{
+	User{Username: "JamesMay", Password: "random1"},
+	User{Username: "RichardHammond", Password: "random2"},
+	User{Username: "JeremyClarkson", Password: "random3"},
+}
 
 // create token
 func CreateTokenEndpoint(w http.ResponseWriter, req *http.Request) {
 	var user User
-    _ = json.NewDecoder(req.Body).Decode(&user)
-    token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+    _ = json.NewDecoder(req.Body).Decode(&user) // decode json then assign to 'user'
+    token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{ // jwt type, HS256 Algo; username/password
 		"username": user.Username,
         "password": user.Password,
     })
     tokenString, error := token.SignedString([]byte("secret"))
     if error != nil {
         fmt.Println(error)
-    }
+	}
     json.NewEncoder(w).Encode(JwtToken{Token: tokenString})
 }
 
-// protect endpoint
+// protect endpoint: sample
 // look for token parameter
 func ProtectedEndpoint(w http.ResponseWriter, req *http.Request) {
-	params := req.URL.Query()
-    token, _ := jwt.Parse(params["token"][0], func(token *jwt.Token) (interface{}, error) {
+	params := req.Header.Get("Authorization")
+    token, _ := jwt.Parse(params, func(token *jwt.Token) (interface{}, error) {
         if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
             return nil, fmt.Errorf("There was an error")
         }
@@ -70,11 +81,10 @@ func ProtectedEndpoint(w http.ResponseWriter, req *http.Request) {
 // middleware for user validation for every endpoint
 func ValidateMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
-			authorizationHeader := req.Header.Get("authorization")
-			if authorizationHeader != "" {
-					bearerToken := strings.Split(authorizationHeader, " ")
-					if len(bearerToken) == 2 {
-							token, error := jwt.Parse(bearerToken[1], func(token *jwt.Token) (interface{}, error) {
+			authHeader := req.Header.Get("authorization")
+			if authHeader != "" {
+					if len(authHeader) == 1 {
+							token, error := jwt.Parse(authHeader, func(token *jwt.Token) (interface{}, error) {
 									if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 											return nil, fmt.Errorf("There was an error")
 									}
@@ -104,24 +114,6 @@ func TestEndpoint(w http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(w).Encode(user)
 }
 
-// // user appointments by id
-// type Appointment struct {
-// 	App_Id int
-// 	Location string
-// 	Company string
-// 	Time string // string for now
-// 	Booking bool
-// 	User_id int // filling space for now, not used currently.
-// }
-
-// // creating list of Appointments
-// var appointments = []Appointment{
-// 	Appointment{App_Id: 1, Location: "Some location 1", Company: "James May", Time: "some time 1", Booking: true, User_id: 1},
-// 	Appointment{App_Id: 2, Location: "Some location 2", Company: "Richard Hammond", Time: "some time 2", Booking: true, User_id: 1},
-// 	Appointment{App_Id: 3, Location: "Some location 3", Company: "Jeremy Clarkson", Time: "some time 3", Booking: true, User_id: 1},
-// 	Appointment{App_Id: 4, Location: "Some location 4", Company: "Top Gear Team", Time: "some time 4", Booking: true, User_id: 1},
-// }
-
 // invoked when user calls /status route; confirms API running
 var StatusHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
 	w.Write([]byte("API is up and running")) // confirm API running for now.
@@ -134,11 +126,6 @@ func main() {
 	fmt.Println("Starting the application...")
 
 	// On the default page we will simply serve our static index page.
-	r.Handle("/", http.FileServer(http.Dir("./views/")))
-
-	/* 
-	/status - checks if the API is up and running
-	*/
 
 	r.Handle("/status", StatusHandler).Methods("GET")
 
@@ -147,6 +134,4 @@ func main() {
 	r.HandleFunc("/test", ValidateMiddleware(TestEndpoint)).Methods("GET")
 	log.Fatal(http.ListenAndServe(":5000", r))
 	
-	// logging handler is wrapped around in our router; logger is now called first on each route request.
-	// http.ListenAndServe(":5000", handlers.LoggingHandler(os.Stdout, r))
 }
