@@ -38,7 +38,7 @@ type Exception struct {
 
 // user DB
 var usersDB = []User{
-	User{Username: "JamesMay", Password: "random1"},
+	User{Username: "JamesMay", Password: "jamesmaypassword"},
 	User{Username: "RichardHammond", Password: "random2"},
 	User{Username: "JeremyClarkson", Password: "random3"},
 }
@@ -48,14 +48,14 @@ func CreateTokenEndpoint(w http.ResponseWriter, req *http.Request) {
 	var user User
     _ = json.NewDecoder(req.Body).Decode(&user) // decode json then assign to 'user'
     token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{ // jwt type, HS256 Algo; username/password
-		"username": user.Username,
-        "password": user.Password,
+			"username": user.Username,
+			"password": user.Password,
     })
     tokenString, error := token.SignedString([]byte("secret"))
     if error != nil {
         fmt.Println(error)
 	}
-    json.NewEncoder(w).Encode(JwtToken{Token: tokenString})
+	json.NewEncoder(w).Encode(JwtToken{Token: tokenString})
 }
 
 // protect endpoint: sample
@@ -82,25 +82,32 @@ func ValidateMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
 			authHeader := req.Header.Get("authorization")
 			if authHeader != "" {
-					if len(authHeader) == 1 {
+				if len(authHeader) != 0 {
+					fmt.Println(authHeader)
 							token, error := jwt.Parse(authHeader, func(token *jwt.Token) (interface{}, error) {
-									if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-											return nil, fmt.Errorf("There was an error")
+									if _, ok := token.Method.(*jwt.SigningMethodHMAC); 
+									!ok {
+										return nil, fmt.Errorf("There was an error")
 									}
+									fmt.Println("returning")
 									return []byte("secret"), nil
 							})
 							if error != nil {
+									fmt.Println("error1")
 									json.NewEncoder(w).Encode(Exception{Message: error.Error()})
 									return
 							}
 							if token.Valid {
+									fmt.Println("validated")
 									gorctx.Set(req, "decoded", token.Claims)
 									next(w, req)
 							} else {
+									fmt.Println("invalid auth token")
 									json.NewEncoder(w).Encode(Exception{Message: "Invalid authorization token"})
 							}
 					}
 			} else {
+					fmt.Println("auth header is required")
 					json.NewEncoder(w).Encode(Exception{Message: "An authorization header is required"})
 			}
 	})
@@ -109,9 +116,10 @@ func ValidateMiddleware(next http.HandlerFunc) http.HandlerFunc {
 // test endpoint to see if middleware is working
 func TestEndpoint(w http.ResponseWriter, req *http.Request) {
 	decoded := gorctx.Get(req, "decoded")
+	fmt.Println(decoded)
 	var user User
 	mapstructure.Decode(decoded.(jwt.MapClaims), &user)
-	json.NewEncoder(w).Encode(user)
+	json.NewEncoder(w).Encode(decoded)
 }
 
 /* status checker */
@@ -134,7 +142,7 @@ func main() {
 	r.HandleFunc("/authenticate", CreateTokenEndpoint).Methods("POST")
 	r.HandleFunc("/protected", ProtectedEndpoint).Methods("GET")
 	r.HandleFunc("/test", ValidateMiddleware(TestEndpoint)).Methods("GET")
-	r.HandleFunc("/mongotest", MongoDataBase)
+	r.HandleFunc("/mongotest", MongoDataBase) // works.
 	log.Fatal(http.ListenAndServe(":5000", r))
 	
 }
