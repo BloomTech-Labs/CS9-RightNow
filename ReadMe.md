@@ -9,10 +9,10 @@ Table of Contents
 
 
 <h2>About:</h2>
-This is a full-stack scheduling application. Users may browse, book, and pay for  appointments in real-time. 
+This is a full-stack scheduling application. Users may browse and book appointments in real time. Once completed, the application handles vendor payment through Stripe.
 
 <h2>Requirements:</h2>
-Internet connection and computer (for Desktop) or smart phone (for Mobile)
+Internet connection and computer (for Desktop) or smart phone (for Mobile). Credit Card required for some bookings.
 
 <h2>Configuration:</h2>
 Privacy settings available in the profile settings
