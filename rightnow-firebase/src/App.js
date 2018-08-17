@@ -1,49 +1,59 @@
 import React, { Component } from 'react';
-import glamorous from "glamorous";
+import glamorous from 'glamorous';
 import NavBar from './components/nav_bar';
-import UserLanding from "./components/user_landing";
+import UserLanding from './components/user_landing';
 
 const LoginContainer = glamorous.div({
-	display: "flex",
-	justifyContent: "center",
+	display: 'flex',
+	justifyContent: 'center',
 	height: 50
 });
 
-
 class App extends Component {
 	state = {
-		email: "",
-		password: ""
-	}
+		email: '',
+		password: ''
+	};
 
 	handleLogin = () => {
-		console.log("email: ", this.state.email);
-		console.log("password: ", this.state.password);
-		this.setState({ email: "", password: "" });
-	}
+		console.log('email: ', this.state.email);
+		console.log('password: ', this.state.password);
+		this.setState({ email: '', password: '' });
+	};
 
+	
+	
 	render() {
 		return (
 			<div className="App">
-				<NavBar/>
-				<UserLanding/>
-				<LoginContainer>
-					<input 
+				<NavBar />
+				<UserLanding />
+				
+				{/* <LoginContainer>
+					<input
 						type="text"
 						name="email"
 						placeholder="Email"
 						value={this.state.email}
-						onChange={event => this.setState({ [event.target.name]: event.targer.value })}
+						onChange={(event) => this.setState({ [event.target.name]: event.targer.value })}
 					/>
-					<input 
+					<input
 						type="password"
 						name="password"
 						placeholder="Email"
 						value={this.state.password}
-						onChange={event => this.setState({ [event.target.name]: event.targer.value })}
+						onChange={(event) => this.setState({ [event.target.name]: event.targer.value })}
 					/>
 					<button onClick={() => this.handleLogin()}>Submit</button>
-				</LoginContainer>
+					<button
+						onClick={() =>
+							function() {
+								modal.style.display = 'block';
+							}}
+					>
+						TRY modal
+					</button>
+				</LoginContainer> */}
 			</div>
 		);
 	}
