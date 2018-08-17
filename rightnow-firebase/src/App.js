@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import glamorous from 'glamorous';
 // sweetAlert2
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 // import Swal from 'sweetalert2/dist/sweetalert2.js';
 // import 'sweetalert2/src/sweetalert2.scss';
 import withReactContent from 'sweetalert2-react-content';
@@ -36,25 +36,23 @@ class App extends Component {
 		MySwal.fire({
 			title: <p>Hello World!</p>,
 			footer: 'Copyright 2018',
+			input: 'email',
+			inputPlaceholder: 'Enter your email address',
 			// onOpen: () => {
 			// 	// `MySwal` is a subclass of `Swal`
 			// 	//   with all the same instance & static methods
 			// 	MySwal.clickConfirm(); // auto-click confirm
 			// }
-		}).then(() => {
-			return MySwal.fire(<p>Login right now!</p>);
-		})
-	}
+			confirmButtonText: 'Hi there!'
+		});
+	};
+
 
 	render() {
 		return (
 			<div className="App">
 				<NavBar />
-				<button
-					onClick={this.loginModal}
-				>
-					TRY modal
-				</button>
+				<button onClick={this.loginModal}>TRY modal</button>
 				<UserLanding />
 				{/* <LoginContainer>
 					<input
