@@ -52,7 +52,7 @@ firebase.database().ref("appointments").orderByChild("booked").equalTo("no");
     });
 ```
 
-Firebase functions allow us to chain multiple filters together. For instance, we can search for all unbooked appointments for a specific specific industry, such as haircuts: 
+Firebase functions allow us to chain multiple filters together. For instance, we can search for all unbooked appointments for a specific specific service, such as haircuts: 
 
 ```
 firebase.database().ref("appointments").orderByChild("booked").equalTo("no").orderByChild("service").equalTo("haircuts");
@@ -78,4 +78,4 @@ For more information, please consult the Firebase Documentation: https://firebas
 <h2>Maintaining</h2>
 Our Application runs React on the front end, and handles the backend and hosting through Firebase.
 
-This full stack-application was developed and is currently maintained by @Anthony-Calderaro, @harrisonbrock, @Remastered21, @jtla3, and @phantomflynn. 
+This full stack-application was developed and is currently maintained by [Anthony] (https://github.com/Anthony-Calderaro), [Harrison] (https://github.com/harrisonbrock),[Henry] (https://github.com/Remastered21), [Mark] (https://github.com/htla3), and [Jeffrey] (https://github.com/phantomflynn). 
