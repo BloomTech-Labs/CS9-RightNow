@@ -9,7 +9,7 @@ Table of Contents
 
 
 <h2>About:</h2>
-This is a full-stack scheduling application. Businesses may launch new ventures and hobusinessppointmenes calendars,business users may see available openings and schedule appointments in real-time.
+This is a full-stack scheduling application. Users may browse, book, and pay for  appointments in real-time. 
 
 <h2>Requirements:</h2>
 Internet connection and computer (for Desktop) or smart phone (for Mobile)
@@ -20,13 +20,13 @@ Privacy settings available in the profile settings
 <h2>Firebase Backend Architecture</h2>
 Firebase acts as a backend-as-a-service, providing an abstraction for data storage and retreival. Because this is abstracted away, we utilize firebase functions to interact with their backend and manage our data. In order to provide additional clarity, we provide a brief outline of our backend architecture below.
 
-<h4>Database, Collections, and Documents </h4>
+<h4>Database, Collections, and Documents</h4>
 Firebase currently has two available databases: Cloud Firestore and Firebase Realtime Database. Cloud Firestore provides all of the features of the Realtime Database, with additional scalability, query, and development features. 
 
 Cloud Firestore provides us with a scalable, non-relational (NoSQL) database, which contains collections of documents to serve as a blueprint for each of the items in our database. Our database is structured with 3 collections (appointments, businesses, users), each of which has 1 document (appointment, business, user), which outlines the fields of each entry. 
 
-**Collection -> Document -> Field:**
-* appointments -> appointment -> startDate, endDate, company, service, cost, booked location, uniqueId 
+**Collection -> Document -> Field**
+* appointments -> appointment -> startDate, endDate, company, service, cost, booked, location, uniqueId 
 * users -> user -> name, phone, email, bookedAppointments, pastAppointments, uniqueId
 * businesses -> business -> name, phone, email, bookedAppointments, openAppointments, pastAppointments, service, street#, streetAddress, city, state, zip, ratings, uniqueId
 
@@ -55,7 +55,7 @@ firebase.database().ref("appointments").orderByChild("booked").equalTo("no");
 Firebase functions allow us to chain multiple filters together. For instance, we can search for all unbooked appointments for a specific specific industry, such as haircuts: 
 
 ```
-firebase.database().ref("appointments").orderByChild("booked").equalTo("no").orderByChild("service".equalTo("haircuts";
+firebase.database().ref("appointments").orderByChild("booked").equalTo("no").orderByChild("service").equalTo("haircuts");
     appointmentsFilter.on('value', snapshot => {
       let appointmentsArr = snapshot.val();
       let newState = [];
@@ -76,6 +76,6 @@ firebase.database().ref("appointments").orderByChild("booked").equalTo("no").ord
 For more information, please consult the Firebase Documentation: https://firebase.google.com/docs/functions/
 
 <h2>Maintaining</h2>
-Our Application runs React on the front end, a Go backend, Redis for caching, and Mongodb to hold the data. It is deployed on AWS.
+Our Application runs React on the front end, and handles the backend and hosting through Firebase.
 
-This is a full stack-application developed by Anthony, Mark, Henry, Harrison, and Jeffrey. 
+This full stack-application was developed and is currently maintained by @Anthony-Calderaro, @harrisonbrock, @Remastered21, @jtla3, and @phantomflynn. 
