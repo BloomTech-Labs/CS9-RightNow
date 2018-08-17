@@ -16,7 +16,7 @@ export default class UserLanding extends Component {
           <h4>Right Now</h4>
         </div>
         <div>
-          <input type= "text" placeholder="city or zip" /> <button type="sumbit">Search</button>
+          <input type= "text" placeholder="city or zip" /> <button type="subit">Search</button>
         </div>
       </Container>
     )
