@@ -1,66 +1,29 @@
 import React, { Component } from 'react';
 import glamorous from 'glamorous';
+// sweetAlert2
+import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2/dist/sweetalert2.js';
+// import 'sweetalert2/src/sweetalert2.scss';
+import withReactContent from 'sweetalert2-react-content';
+
+// Components
 import NavBar from './components/nav_bar';
 import UserLanding from './components/user_landing';
-import tingle from 'tingle.js';
 
-// import stylesheet from 'tingle.min.css';
+const MySwal = withReactContent(Swal);
 
+/* Glamorous Section */
 const LoginContainer = glamorous.div({
 	display: 'flex',
 	justifyContent: 'center',
 	height: 50
 });
 
-// modal popup for login
-var modal = new tingle.modal({
-	footer: true,
-	stickyFooter: false,
-	closeMethods: [ 'overlay', 'button', 'escape' ],
-	closeLabel: 'Close',
-	cssClass: [ 'custom-class-1', 'custom-class-2' ],
-	onOpen: function() {
-		console.log('modal open');
-	},
-	onClose: function() {
-		console.log('modal closed');
-	},
-	beforeClose: function() {
-		// here's goes some logic
-		// e.g. save content before closing the modal
-		return true; // close the modal
-		return false; // nothing happens
-	}
-	/*
-// 
-
-	// set content
-modal.setContent('<h1>here\'s some content</h1>');
-
-// add a button
-modal.addFooterBtn('Button label', 'tingle-btn tingle-btn--primary', function() {
-    // here goes some logic
-    modal.close();
-});
-
-// add another button
-modal.addFooterBtn('Dangerous action !', 'tingle-btn tingle-btn--danger', function() {
-    // here goes some logic
-    modal.close();
-});
-
-// open modal
-modal.open();
-
-// close modal
-modal.close();
-*/
-});
-
 class App extends Component {
 	state = {
 		email: '',
-		password: ''
+		password: '',
+		login_modal: false
 	};
 
 	handleLogin = () => {
@@ -69,13 +32,29 @@ class App extends Component {
 		this.setState({ email: '', password: '' });
 	};
 
+	loginModal = () => {
+		MySwal.fire({
+			title: <p>Hello World!</p>,
+			footer: 'Copyright 2018',
+			// onOpen: () => {
+			// 	// `MySwal` is a subclass of `Swal`
+			// 	//   with all the same instance & static methods
+			// 	MySwal.clickConfirm(); // auto-click confirm
+			// }
+		}).then(() => {
+			return MySwal.fire(<p>Login right now!</p>);
+		})
+	}
+
 	render() {
 		return (
 			<div className="App">
 				<NavBar />
-				<button onClick={modal.setContent('<h1>here\'s some content</h1>')}>TRY modal</button>
-				<button onClick={modal.open()}>TRY modal</button>
-				<button onClick={modal.open()}>TRY modal</button>
+				<button
+					onClick={this.loginModal}
+				>
+					TRY modal
+				</button>
 				<UserLanding />
 				{/* <LoginContainer>
 					<input
