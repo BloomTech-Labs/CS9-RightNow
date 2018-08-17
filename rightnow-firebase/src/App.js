@@ -4,8 +4,6 @@ import glamorous from "glamorous";
 import NavBar from './components/nav_bar';
 import UserLanding from "./components/user_landing";
 
-import { add_new_data } from "./firebase";
-
 const LoginContainer = glamorous.div({
 	display: "flex",
 	justifyContent: "center",
@@ -21,7 +19,6 @@ class App extends Component {
 	handleLogin = () => {
 		console.log("email: ", this.state.email);
 		console.log("password: ", this.state.password);
-		add_new_data({ email: this.state.email, password: this.state.password });
 		this.setState({ email: "", password: "" });
 	}
 
