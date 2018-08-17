@@ -10,13 +10,10 @@
     "react-dom": "^16.4.2",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
-<<<<<<< HEAD
     "sweetalert2": "^7.26.11",
     "sweetalert2-react-content": "^1.0.1",
-    "tingle.js": "^0.13.2"
-=======
+    "tingle.js": "^0.13.2",
     "yarn": "^1.9.4"
->>>>>>> f4f35204b9d7b9aca94c9c57c78a40cd08e02e62
   },
   "scripts": {
     "start": "react-scripts start",
