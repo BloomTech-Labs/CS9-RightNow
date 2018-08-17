@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import glamorous, { Head } from "glamorous";
+import { GoogleAPI, GoogleLogin } from 'react-google-oauth';
 
+
+/* -----------------------
+  | GLAMOROUS COMPONENTS |
+  ----------------------- */
 
 const DropdownContainer = glamorous.div({
   position: "absolute",
@@ -27,7 +32,11 @@ const Header = glamorous.div({
 const BulkContent = glamorous.div({
   width: "100%",
   height: "60%",
-  border: "1px solid teal"
+  border: "1px solid teal",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
 });
 
 const Footer = glamorous.div({
@@ -47,51 +56,94 @@ const NoTextButton = glamorous.button({
 
 const InputField = glamorous.input({
   width: "65%",
-  height: "20%"
+  height: "17%",
+});
+
+const Google = glamorous.div({
+  width: '80%',
+  height: "20%",
+  display: 'flex',
+  alignContent: 'center',
+  justifyContent: 'center',
+  marginTop: '3%'
 });
 
 
 
-// YOU ARE NOW ENTERING THE STATELESS COMPONENTS ZONE
+/* -----------------------
+  | STATELESS COMPONENTS |
+  ----------------------- */
 
-const Button = props => <NoTextButton>{props.text}</NoTextButton>
+const Button = props => <NoTextButton style={props.styleOptions ? props.styleOptions : null}>{props.text}</NoTextButton>
 
-const Logged_OUT_Display = props => (
-  <div style={{width: "100%", height: "100%"}}>
-    <Header>You are NOT signed in.</Header>
-    <BulkContent></BulkContent>
-    <Footer>
-      <Button text="REGISTER HERE" />
-    </Footer>
-  </div>
-);
+const Header_LoggedIn = props => <Header>You ARE signed in.</Header>
+const Header_LoggedOut = props => <Header>You are NOT signed in.</Header>
 
-const Logged_IN_Display = props => (
-  <div style={{width: "100%", height: "100%"}}>
-    <Header>You ARE signed in.</Header>
-    <BulkContent></BulkContent>
-    <Footer>
-      <Button text="SIGN OUT" />
-    </Footer>
-  </div>
+const Footer_LoggedIn = () => <Footer><Button text="SIGN OUT" /></Footer>
+const Footer_LoggedOut = () => (
+  <Footer>
+    <h2 style={{color: "white", textAlign: "center"}}>New user?</h2>
+    <Button text="REGESTER HERE" />
+  </Footer>
 );
 
 
 
-// FULL DROPDOWN COMPONENT RENDERING
+/* ------------------------------------
+  | FULL DROPDOWN COMPONENT RENDERING |
+  ------------------------------------ */
 
 export default class UserDropdown extends Component {
   constructor() {
     super();
     this.state = {
-      userSignedIn: true // for development purposes. set to false for deployment.
+      userSignedIn: true, // for development purposes. set to false for deployment.
+      email: "",
+      password: ""
     }
+  }
+
+  handleGoogleAuth = user => {
+    console.log("this is the google auth login handler");
   }
 
   render() {
     return (
       <DropdownContainer>
-        {this.state.userSignedIn ? <Logged_IN_Display /> : <Logged_OUT_Display />}
+        {this.state.userSignedIn ? <Header_LoggedIn /> : <Header_LoggedOut />}
+
+        <BulkContent>
+          <InputField 
+            type="text"
+            name="email"
+            value={this.state.email}
+            placeholder="Email Address"
+            onChange={event => this.setState({ [event.target.name]: event.target.value })}
+          />
+          <InputField 
+            type="password"
+            name="password"
+            value={this.state.password}
+            placeholder="Password"
+            onChange={event => this.setState({ [event.target.name]: event.target.value })}
+          />
+          <Button text="SIGN IN" styleOptions={{height: "20%"}} />
+
+          <div style={{width: "80%", height: "8%", borderBottom: "1px solid white"}}></div>
+
+          <Google>
+            <GoogleAPI clientId="962293448005-vas5rftptuuqf6tcueb9ismhmojn32oq.apps.googleusercontent.com">
+              <GoogleLogin 
+                onLoginSuccess={user => this.handleGoogleAuth(user)} 
+                backgroundColor="rgba(255, 255, 255, 0.3)" 
+                width="100%" 
+                className="rounded"
+                /> 
+            </GoogleAPI>
+          </Google>
+        </BulkContent>
+
+        {this.state.userSignedIn ? <Footer_LoggedIn /> : <Footer_LoggedOut />}
       </DropdownContainer>
     )
   }

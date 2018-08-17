@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import glamorous, { P } from "glamorous";
+import glamorous from "glamorous";
 import UserDropdown from "./user_dropdown";
 
 const NavContainer = glamorous.div({
