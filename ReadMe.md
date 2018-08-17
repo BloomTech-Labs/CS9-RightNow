@@ -78,4 +78,4 @@ For more information, please consult the Firebase Documentation: https://firebas
 <h2>Maintaining:</h2>
 Our Application runs React on the front end, and handles the backend and hosting through Firebase.
 
-This full stack-application was developed and is currently maintained by [Anthony](https://github.com/Anthony-Calderaro), [Harrison](https://github.com/harrisonbrock),  [Henry](https://github.com/Remastered21), [Mark](https://github.com/htla3), and [Jeffrey](https://github.com/phantomflynn). 
+This full stack-application was developed and is currently maintained by [Anthony](https://github.com/Anthony-Calderaro), [Harrison](https://github.com/harrisonbrock),  [Henry](https://github.com/Remastered21), [Jeffrey](https://github.com/phantomflynn), and [Mark](https://github.com/htla3). 
