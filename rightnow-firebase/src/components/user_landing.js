@@ -11,7 +11,13 @@ export default class UserLanding extends Component {
   render() {
     return (
       <Container>
-        <div></div>
+        <div>
+          <h3>BOOK YOUR LAST MINUTE APPOINTMENT!</h3>
+          <h4>Right Now</h4>
+        </div>
+        <div>
+          <input type= "text" placeholder="city or zip" /> <button type="sumbit">Search</button>
+        </div>
       </Container>
     )
   }

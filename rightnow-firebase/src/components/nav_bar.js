@@ -61,6 +61,7 @@ export default class NavBar extends Component {
       <NavContainer>
         <Logo>Right Now</Logo>
         <ButtonContainer>
+          <Button>Business Inquiries</Button>
           <Button>Sign Up</Button>
           <Button>Login</Button>
           <Menu>
