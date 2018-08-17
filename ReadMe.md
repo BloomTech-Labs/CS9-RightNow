@@ -32,13 +32,43 @@ This database provides us with a scalable non-relational (NoSQL) database, which
 
 
 <h4>Backend Functions</h4>
-Because the database is handled directly through Firebase, our applications utilize firebase functions to instruct the firebase API to retrieve or update the data we need. Below is an example of the function we utilize to retreive all unbooked appointments for a specific day:
+Because the database is handled directly through Firebase, our applications utilize firebase functions to instruct the firebase API to retrieve or update the data we need. Below is an example of the function we utilize to retreive all unbooked appointments and move them to state:
 
-<insert>
+```firebase.database().ref("appointments").orderByChild("booked").equalTo("no");
+    appointmentsFilter.on('value', snapshot => {
+      let appointmentsArr = snapshot.val();
+      let newState = [];
+      for (let appointment in appointmentsArr) {
+        newState.push({
+          id: appointment,
+          name: appointmentArr[appointment].name,
+          startDate: appointmentArr[appointment].startDate,
+          zip: appointmentArr[appointment].zip,
+        });
+      }
+      this.setState({
+        appointments: newState
+      });
+    });```
 
-Firebase functions allow us to chain multiple filters together. For instance, we can search for all unbooked appointments for a specific day, for a specific industry, and a specific company 
+Firebase functions allow us to chain multiple filters together. For instance, we can search for all unbooked appointments for a specific specific industry, such as haircuts: 
 
-<insert>
+```firebase.database().ref("appointments").orderByChild("booked").equalTo("no").orderByChild("service".equalTo("haircuts";
+    appointmentsFilter.on('value', snapshot => {
+      let appointmentsArr = snapshot.val();
+      let newState = [];
+      for (let appointment in appointmentsArr) {
+        newState.push({
+          id: appointment,
+          name: appointmentArr[appointment].name,
+          startDate: appointmentArr[appointment].startDate,
+          zip: appointmentArr[appointment].zip,
+        });
+      }
+      this.setState({
+        appointments: newState
+      });
+    });```
 
 For more information, please consult the Firebase Documentation _https://firebase.google.com/docs/functions/_
 
