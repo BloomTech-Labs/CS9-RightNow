@@ -17,7 +17,7 @@ Internet connection and computer (for Desktop) or smart phone (for Mobile). Cred
 <h2>Configuration:</h2>
 Privacy settings available in the profile settings
 
-<h2>Firebase Backend Architecture</h2>
+<h2>Firebase Backend Architecture:</h2>
 Firebase acts as a backend-as-a-service, providing an abstraction for data storage and retreival. Because this is abstracted away, we utilize firebase functions to interact with their backend and manage our data. In order to provide additional clarity, we provide a brief outline of our backend architecture below.
 
 <h4>Database, Collections, and Documents</h4>
