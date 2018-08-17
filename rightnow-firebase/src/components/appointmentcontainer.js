@@ -7,7 +7,7 @@ class AppointmentContainer extends Component {
         return (
             <div>
                 Test
-             <Appointment title = 'test' time = '12:00PM' />
+             <Appointment title ='test' time = '12:00PM' />
              <Appointment title = 'test2' time = '12:30PM' />
              <Appointment title = 'test3' time = '12:45PM' />
             </div>
