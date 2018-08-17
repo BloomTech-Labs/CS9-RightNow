@@ -97,7 +97,7 @@ export default class UserDropdown extends Component {
   constructor() {
     super();
     this.state = {
-      userSignedIn: true, // for development purposes. set to false for deployment.
+      userSignedIn: false, // true for development purposes. set to false for deployment.
       email: "",
       password: ""
     }
@@ -132,7 +132,7 @@ export default class UserDropdown extends Component {
           <div style={{width: "80%", height: "8%", borderBottom: "1px solid white"}}></div>
 
           <Google>
-            <GoogleAPI clientId="962293448005-vas5rftptuuqf6tcueb9ismhmojn32oq.apps.googleusercontent.com">
+            <GoogleAPI clientId="903659903905-03pstho0j9cs8qbhr3g4b86v8nclk6dv.apps.googleusercontent.com">
               <GoogleLogin 
                 onLoginSuccess={user => this.handleGoogleAuth(user)} 
                 backgroundColor="rgba(255, 255, 255, 0.3)" 

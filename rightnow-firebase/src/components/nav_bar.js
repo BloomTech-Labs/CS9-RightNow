@@ -58,8 +58,11 @@ const MenuLine = glamorous.div({
 
 
 export default class NavBar extends Component {
-  state = {
-    displayProfile: true // for development. set to false for deployment.
+  constructor() {
+    super();
+    this.state = {
+      displayProfile: false
+    }
   }
 
   toggleProfileDisplay = () => {
