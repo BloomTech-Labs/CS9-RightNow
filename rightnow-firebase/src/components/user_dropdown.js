@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import glamorous from "glamorous";
+import glamorous, { Head } from "glamorous";
 
 
 const DropdownContainer = glamorous.div({
@@ -18,7 +18,10 @@ const Header = glamorous.div({
   height: "20%",
   border: "1px solid white",
   color: "yellow",
-  fontSize: "3em"
+  fontSize: "3em",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center"
 });
 
 const BulkContent = glamorous.div({
@@ -42,10 +45,40 @@ const NoTextButton = glamorous.button({
   height: "45%"
 });
 
+const InputField = glamorous.input({
+  width: "65%",
+  height: "20%"
+});
 
+
+
+// YOU ARE NOW ENTERING THE STATELESS COMPONENTS ZONE
 
 const Button = props => <NoTextButton>{props.text}</NoTextButton>
 
+const Logged_OUT_Display = props => (
+  <div style={{width: "100%", height: "100%"}}>
+    <Header>You are NOT signed in.</Header>
+    <BulkContent></BulkContent>
+    <Footer>
+      <Button text="REGISTER HERE" />
+    </Footer>
+  </div>
+);
+
+const Logged_IN_Display = props => (
+  <div style={{width: "100%", height: "100%"}}>
+    <Header>You ARE signed in.</Header>
+    <BulkContent></BulkContent>
+    <Footer>
+      <Button text="SIGN OUT" />
+    </Footer>
+  </div>
+);
+
+
+
+// FULL DROPDOWN COMPONENT RENDERING
 
 export default class UserDropdown extends Component {
   constructor() {
@@ -58,15 +91,7 @@ export default class UserDropdown extends Component {
   render() {
     return (
       <DropdownContainer>
-        <Header>You are not signed in.</Header>
-        <BulkContent></BulkContent>
-        <Footer>
-          {this.state.userSignedIn ? (
-            <Button text="REGISTER HERE" />
-          ) : (
-            <Button text="SIGN OUT" />
-          )}
-        </Footer>
+        {this.state.userSignedIn ? <Logged_IN_Display /> : <Logged_OUT_Display />}
       </DropdownContainer>
     )
   }
