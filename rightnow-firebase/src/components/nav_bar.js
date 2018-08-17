@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import glamorous from "glamorous";
+import glamorous, { P } from "glamorous";
+import UserDropdown from "./user_dropdown";
 
 const NavContainer = glamorous.div({
   width: "100%",
@@ -55,7 +56,16 @@ const MenuLine = glamorous.div({
 });
 
 
+
 export default class NavBar extends Component {
+  state = {
+    displayProfile: true // for development. set to false for deployment.
+  }
+
+  toggleProfileDisplay = () => {
+    this.setState({ displayProfile: !this.state.displayProfile });
+  }
+
   render() {
     return (
       <NavContainer>
@@ -63,12 +73,13 @@ export default class NavBar extends Component {
         <ButtonContainer>
           <Button>Sign Up</Button>
           <Button>Login</Button>
-          <Menu>
+          <Menu onClick={() => this.toggleProfileDisplay()}>
             <MenuLine></MenuLine>
             <MenuLine></MenuLine>
             <MenuLine></MenuLine>
           </Menu>
         </ButtonContainer>
+        {this.state.displayProfile ? <UserDropdown/> : null}
       </NavContainer>
     )
   }
