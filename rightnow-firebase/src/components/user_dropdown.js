@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import glamorous, { Head } from "glamorous";
+import glamorous from "glamorous";
 import { GoogleAPI, GoogleLogin } from 'react-google-oauth';
 
 
@@ -76,8 +76,8 @@ const Google = glamorous.div({
 
 const Button = props => <NoTextButton style={props.styleOptions ? props.styleOptions : null}>{props.text}</NoTextButton>
 
-const Header_LoggedIn = props => <Header>You ARE signed in.</Header>
-const Header_LoggedOut = props => <Header>You are NOT signed in.</Header>
+const Header_LoggedIn = () => <Header>You ARE signed in.</Header>
+const Header_LoggedOut = () => <Header>You are NOT signed in.</Header>
 
 const Footer_LoggedIn = () => <Footer><Button text="SIGN OUT" /></Footer>
 const Footer_LoggedOut = () => (
@@ -104,7 +104,7 @@ export default class UserDropdown extends Component {
   }
 
   handleGoogleAuth = user => {
-    console.log("this is the google auth login handler");
+    console.log("this is the google auth login handler", user);
   }
 
   render() {
@@ -132,7 +132,7 @@ export default class UserDropdown extends Component {
           <div style={{width: "80%", height: "8%", borderBottom: "1px solid white"}}></div>
 
           <Google>
-            <GoogleAPI clientId="903659903905-03pstho0j9cs8qbhr3g4b86v8nclk6dv.apps.googleusercontent.com">
+            <GoogleAPI clientId="549388490497-91nmq5roliqa2ssfo91iun97bis4no56.apps.googleusercontent.com">
               <GoogleLogin 
                 onLoginSuccess={user => this.handleGoogleAuth(user)} 
                 backgroundColor="rgba(255, 255, 255, 0.3)" 
