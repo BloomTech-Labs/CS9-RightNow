@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './styles/App.css';
 import glamorous from "glamorous";
 import NavBar from './components/nav_bar';
 import UserLanding from "./components/user_landing";
@@ -9,6 +8,7 @@ const LoginContainer = glamorous.div({
 	justifyContent: "center",
 	height: 50
 });
+
 
 class App extends Component {
 	state = {
