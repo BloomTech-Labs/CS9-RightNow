@@ -67,7 +67,7 @@ export default class RegisterModal extends Component {
 
 					<NewUser>
 						<p style={{ marginRight: '2%' }}>Already have an account?</p>
-						<p style={{ color: 'green' }} onClick={ () => this.props.regToLog() }>Log in Here</p>
+						<p style={{ color: 'green' }} onClick={this.props.regToLog }>Log in Here</p>
 					</NewUser>
 				</Modal>
 				<CloseX onClick={() => this.props.closeModal()}>x</CloseX>

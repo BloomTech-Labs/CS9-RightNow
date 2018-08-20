@@ -271,8 +271,8 @@ export const NewUser = glamorous.div({
 
 export const CloseX = glamorous.div({
 	position: 'fixed',
-	top: '29vh',
-	right: '36vw',
+	top: '30vh',
+	right: '36.5vw',
 	zIndex: 3,
 	fontSize: '1.5em',
 	fontWeight: 500,
