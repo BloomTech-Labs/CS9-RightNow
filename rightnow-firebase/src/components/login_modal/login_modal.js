@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import GoogleLogIn from '../../firebase/auth.google.services';
+import FacebookLogIn from '../../firebase/auth.facebook.services';
 import {
   Container,
   Modal,
@@ -54,7 +55,7 @@ export default class SignInModal extends Component {
               <AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
               Login with Google
             </OAuthButton>
-            <OAuthButton onClick={() => this.handleSignIn("facebook")}>
+            <OAuthButton onClick={FacebookLogIn}>
               <AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" />
               Login with Facebook
             </OAuthButton>
