@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import glamorous from 'glamorous';
 
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
 import RegModal from './reg_modal';
 import LogModal from './log_modal';
 
+/* glamrous */
 const NavContainer = glamorous.div({
 	width: '100%',
 	background: '#EBEBEB',
@@ -57,30 +61,44 @@ const MenuLine = glamorous.div({
 	margin: '6px 0'
 });
 
+/* SweetAlert2 */
+const SuccessPop = withReactContent(Swal);
+
 export default class NavBar extends Component {
 	state = {
 		email: '',
 		password: '',
 		display_regModal: false,
 		display_logModal: false
-  };
-  
-  // Modal for registration
+	};
+
+	// Modal for registration
 	openModal_reg = () => {
 		this.setState({ display_regModal: true });
 	};
 
 	closeModal_reg = () => {
 		this.setState({ display_regModal: false });
-  };
+	};
 
-  // Modal for logging in
+	// Modal for logging in
 	openModal_log = () => {
 		this.setState({ display_logModal: true });
 	};
 
 	closeModal_log = () => {
 		this.setState({ display_logModal: false });
+	};
+
+	register_success = () => {
+		this.setState({ display_regModal: false });
+		SuccessPop.fire({
+			title: <p>Register Successful!</p>,
+			footer: 'RightNow',
+			type: 'success'
+		}).then(() => {
+			return SuccessPop.fire(<p>Lets get pinning!</p>);
+		});
 	};
 
 	render() {
@@ -95,8 +113,11 @@ export default class NavBar extends Component {
 						<MenuLine />
 						<MenuLine />
 					</Menu>
+					<Button onClick={() => this.register_success()} />
 				</ButtonContainer>
-				{this.state.display_regModal ? <RegModal closeModal_reg={this.closeModal_reg.bind(this)} /> : null}
+				{this.state.display_regModal ? (
+					<RegModal closeModal_reg={this.closeModal_reg.bind(this)} register_success={this.register_success} />
+				) : null}
 				{this.state.display_logModal ? <LogModal closeModal_log={this.closeModal_log.bind(this)} /> : null}
 			</NavContainer>
 		);

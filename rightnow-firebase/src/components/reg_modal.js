@@ -40,11 +40,11 @@ export default class Reg_modal extends Component {
 		email: '',
 		password: '',
 		phoneNumber: '',
-		password: ''
+		location: ''
 	};
 
 	handleRegister = () => {
-		// this.setState( )
+		this.props.register_success();
 	};
 
 	render() {
@@ -68,9 +68,10 @@ export default class Reg_modal extends Component {
 						onChange={(event) => this.setState({ [event.target.name]: event.target.value })}
 					/>
 					<input
-						type="number"
+						type="tel"
 						name="phoneNumber"
 						placeholder="Phone Number"
+						pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
 						value={this.state.phoneNumber}
 						onChange={(event) => this.setState({ [event.target.name]: event.target.value })}
 					/>

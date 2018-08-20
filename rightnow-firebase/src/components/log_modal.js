@@ -42,7 +42,7 @@ export default class Log_modal extends Component {
 	};
 
 	handleLogin = () => {
-		// this.setState( )
+
 	};
 
 	render() {
