@@ -113,7 +113,6 @@ export default class NavBar extends Component {
 						<MenuLine />
 						<MenuLine />
 					</Menu>
-					<Button onClick={() => this.register_success()} />
 				</ButtonContainer>
 				{this.state.display_regModal ? (
 					<RegModal closeModal_reg={this.closeModal_reg.bind(this)} register_success={this.register_success} />
