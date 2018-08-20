@@ -19,7 +19,6 @@ class App extends Component {
 			<div className="App">
 				<NavBar/>
 				<UserLanding/>
-				<AppointmentContainer/>
 			</div>
 		);
 	}
