@@ -47,7 +47,7 @@ export default class SignInModal extends Component {
           </OAuthContainer>
           
           <NewUser>
-            <h1>Don't have an account?</h1>
+            <h1 style={{ marginRight: "2%" }}>Don't have an account?</h1>
             <Button style={{ padding: "1.5%", fontSize: "1.5em" }}>Register Here</Button>
           </NewUser>
 

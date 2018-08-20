@@ -21,13 +21,23 @@ export const Modal = glamorous.div({
   display: "flex",
   flexDirection: "column",
   width: "30%",
-  height: "50%",
   padding: "2.5%",
 
   '@media(min-width: 1024px)': {
     width: "615px",
-    height: "500px"
   },
+
+  "@media(max-width: 1024px)": {
+    width: "50%",
+  },
+
+  "@media(max-width: 793px)": {
+    width: "65%"
+  },
+
+  "@media(max-width: 350px)": {
+    width: "90%"
+  }
 });
 
 
@@ -38,6 +48,14 @@ export const Header = glamorous.div({
   '@media(min-width: 1024px)': {
     fontSize: "2.5em"
   },
+
+  "@media(max-width: 1024px)": {
+    fontSize: "2em"
+  },
+
+  "@media(max-width: 550px)": {
+    fontSize: "1.8em"
+  }
 });
 
 
@@ -49,6 +67,11 @@ export const NormalSignIn = glamorous.div({
 
   '@media(min-width: 1024px)': {
     marginBottom: 0
+  },
+
+  "@media(max-width: 550px)": {
+    margin: "3% 0",
+    padding: "7% 0"
   }
 });
 
@@ -64,6 +87,19 @@ export const Input = glamorous.input({
 
   '@media(min-width: 1024px)': {
     fontSize: "1.3em"
+  },
+
+  "@media(max-width: 1024px)": {
+    fontSize: "1.1em"
+  },
+
+  "@media(max-width: 793px)": {
+    marginBottom: "3%"
+  },
+
+  "@media(max-width: 550px)": {
+    marginBlockEnd: "6%",
+    padding: "2% 3%"
   }
 });
 
@@ -80,6 +116,10 @@ export const Button = glamorous.button({
 
   "@media(min-width: 1024px)": {
     fontSize: "1.3em"
+  },
+
+  "@media(max-width: 1024px)": {
+    fontSize: "1.1em"
   }
 });
 
@@ -93,6 +133,16 @@ export const Or = glamorous.div({
   "@media(min-width: 1024px)": {
     fontSize: "1.1em",
     fontWeight: 600,
+  },
+
+  "@media(max-width: 1024px)": {
+    fontSize: "1em",
+    fontWeight: 600,
+    marginBottom: "2.5%"
+  },
+
+  "@media(max-width: 550px)": {
+    marginBottom: "7%"
   }
 });
 
@@ -106,6 +156,17 @@ export const OAuthContainer = glamorous.div({
   
   "@media(min-width: 1024px)": {
     paddingBottom: "3%"
+  },
+
+  "@media(max-width: 793px)": {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: "2%"
+  },
+
+  "@media(max-width: 550px)": {
+    paddingBottom: "6%"
   }
 });
 
@@ -114,13 +175,22 @@ export const AuthLogo = glamorous.img({
   height: "100%",
   width: "15%",
   
-  "@media(min-width: 1024px)": {}
+  "@media(max-width: 1024px)": {
+    height: "40%"
+  },
+
+  "@media(max-width: 793px)": {
+    height: "35%"
+  },
+
+  "@media(max-width: 550px)": {
+    height: "45%"
+  }
 });
 
 
 export const OAuthButton = glamorous.div({
   width: '48%',
-  height: "100%",
   padding: "3% 0",
   display: 'flex',
   alignItems: "center", 
@@ -135,8 +205,19 @@ export const OAuthButton = glamorous.div({
   
   "@media(min-width: 1024px)": {
     fontSize: "1.3em",
-    height: "30%",
     marginTop: "5%"
+  },
+
+  "@media(max-width: 1024px)": {
+    fontSize: "1em",
+    padding: "0",
+    margin: "2% 0"
+  },
+
+  "@media(max-width: 793px)": {
+    width: "100%",
+    padding: 0,
+    fontSize: "1.1em",
   }
 });
 
@@ -145,10 +226,18 @@ export const NewUser = glamorous.div({
   width: "100%",
   marginTop: "2.5%",
   display: "flex",
-  justifyContent: "space-around",
+  justifyContent: "center",
   alignItems: "center",
 
   "@media(min-width: 1024px)": {
     fontSize: "0.8em"
+  },
+
+  "@media(max-width: 1024px)": {
+    fontSize: "0.5em"
+  },
+
+  "@media(max-width: 450px)": {
+    flexDirection: "column"
   }
 });
