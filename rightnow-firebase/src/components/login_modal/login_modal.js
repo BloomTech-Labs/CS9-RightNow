@@ -10,7 +10,8 @@ import {
   OAuthContainer,
   OAuthButton,
   AuthLogo,
-  NewUser
+  NewUser,
+  CloseX
 } from "./login_modal_styles";
 
 
@@ -52,7 +53,7 @@ export default class SignInModal extends Component {
           </NewUser>
 
         </Modal>
-        {/* <CloseX onClick={() => this.props.closeModal()}>x</CloseX> */}
+        <CloseX onClick={() => this.props.closeModal()}>x</CloseX>
       </Container>
     )
   }

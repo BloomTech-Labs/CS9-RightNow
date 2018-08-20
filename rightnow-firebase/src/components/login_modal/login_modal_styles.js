@@ -241,3 +241,14 @@ export const NewUser = glamorous.div({
     flexDirection: "column"
   }
 });
+
+
+export const CloseX = glamorous.div({
+  position: "fixed",
+  top: "7vh",
+  right: "2vw",
+  fontSize: "3em",
+  fontWeight: 500,
+  color: "white",
+  ":hover": { cursor: "pointer" }
+});
