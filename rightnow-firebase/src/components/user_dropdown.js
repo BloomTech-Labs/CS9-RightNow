@@ -5,7 +5,6 @@
 
 import React, { Component } from "react";
 import glamorous from "glamorous";
-import { GoogleAPI, GoogleLogin } from 'react-google-oauth';
 
 
 /* -----------------------
@@ -136,16 +135,7 @@ export default class UserDropdown extends Component {
 
           <div style={{width: "80%", height: "8%", borderBottom: "1px solid white"}}></div>
 
-          <Google>
-            <GoogleAPI clientId="549388490497-91nmq5roliqa2ssfo91iun97bis4no56.apps.googleusercontent.com">
-              <GoogleLogin 
-                onLoginSuccess={user => this.handleGoogleAuth(user)} 
-                backgroundColor="rgba(255, 255, 255, 0.3)" 
-                width="100%" 
-                className="rounded"
-                /> 
-            </GoogleAPI>
-          </Google>
+          <Google></Google>
         </BulkContent>
 
         {this.state.userSignedIn ? <Footer_LoggedIn /> : <Footer_LoggedOut />}
