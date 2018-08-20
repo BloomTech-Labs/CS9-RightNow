@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import glamorous from "glamorous";
+import SignInModal from "./login_modal/login_modal";
 
 const NavContainer = glamorous.div({
   width: "100%",
@@ -55,7 +56,15 @@ const MenuLine = glamorous.div({
 });
 
 
+
 export default class NavBar extends Component {
+  constructor() {
+    super();
+    this.state = {
+      displayLoginModal: false // true for dev purposes. set to false prior to pull.
+    }
+  }
+
   render() {
     return (
       <NavContainer>
@@ -63,13 +72,14 @@ export default class NavBar extends Component {
         <ButtonContainer>
           <Button>Business Inquiries</Button>
           <Button>Sign Up</Button>
-          <Button>Login</Button>
+          <Button onClick={() => this.setState({ displayLoginModal: true })}>Login</Button>
           <Menu>
             <MenuLine></MenuLine>
             <MenuLine></MenuLine>
             <MenuLine></MenuLine>
           </Menu>
         </ButtonContainer>
+        {this.state.displayLoginModal ? <SignInModal closeModal={() => this.setState({ displayLoginModal: false })} /> : null}
       </NavContainer>
     )
   }
