@@ -1561,6 +1561,7 @@ class-utils@^0.3.5:
     static-extend "^0.1.1"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 classnames@^2.2.1:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
@@ -1568,6 +1569,11 @@ classnames@^2.2.1:
 clean-css@4.1.x:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-4.1.11.tgz#2ecdf145aba38f54740f26cefd0ff3e03e125d6a"
+=======
+clean-css@4.2.x:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-4.2.1.tgz#2d411ef76b8569b6d0c84068dabe85b0aa5e5c17"
+>>>>>>> cc50d8950790012548b52e8abaa4b8ee4729f5ad
 =======
 clean-css@4.2.x:
   version "4.2.1"
