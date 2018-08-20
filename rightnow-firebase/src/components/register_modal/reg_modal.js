@@ -12,7 +12,8 @@ import {
 	AuthLogo,
 	EmailButton,
 	NewUser,
-	CloseX
+	CloseX,
+	LoginClickHere
 } from './reg_modal_styles';
 
 export default class RegisterModal extends Component {
@@ -67,7 +68,7 @@ export default class RegisterModal extends Component {
 
 					<NewUser>
 						<p style={{ marginRight: '2%' }}>Already have an account?</p>
-						<p style={{ color: 'green' }} onClick={ () => this.props.regToLog() }>Log in Here</p>
+						<LoginClickHere onClick={() => this.props.regToLog()}>Log in Here</LoginClickHere>
 					</NewUser>
 				</Modal>
 				<CloseX onClick={() => this.props.closeModal()}>x</CloseX>

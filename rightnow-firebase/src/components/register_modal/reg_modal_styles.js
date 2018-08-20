@@ -269,6 +269,11 @@ export const NewUser = glamorous.div({
 	}
 });
 
+export const LoginClickHere = glamorous.p({
+	color: 'green',
+	':hover': { textDecoration: ' underline ' }
+});
+
 export const CloseX = glamorous.div({
 	position: 'fixed',
 	top: '30vh',
