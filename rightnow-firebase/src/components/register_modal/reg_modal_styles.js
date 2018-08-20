@@ -271,7 +271,7 @@ export const NewUser = glamorous.div({
 
 export const LoginClickHere = glamorous.p({
 	color: 'green',
-	':hover': { textDecoration: ' underline ' }
+	':hover': { textDecoration: 'underline', cursor: 'pointer' }
 });
 
 export const CloseX = glamorous.div({
