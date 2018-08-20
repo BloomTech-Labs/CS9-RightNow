@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import glamorous from 'glamorous';
 
-import Modal from './reg_modal';
+import RegModal from './reg_modal';
+import LogModal from './log_modal';
 
 const NavContainer = glamorous.div({
 	width: '100%',
@@ -60,15 +61,26 @@ export default class NavBar extends Component {
 	state = {
 		email: '',
 		password: '',
-		modal_open: false
+		display_regModal: false,
+		display_logModal: false
+  };
+  
+  // Modal for registration
+	openModal_reg = () => {
+		this.setState({ display_regModal: true });
 	};
 
-	open_modal = () => {
-		this.setState({ modal_open: true });
+	closeModal_reg = () => {
+		this.setState({ display_regModal: false });
+  };
+
+  // Modal for logging in
+	openModal_log = () => {
+		this.setState({ display_logModal: true });
 	};
 
-	close_modal = () => {
-		this.setState({ modal_open: false });
+	closeModal_log = () => {
+		this.setState({ display_logModal: false });
 	};
 
 	render() {
@@ -76,16 +88,16 @@ export default class NavBar extends Component {
 			<NavContainer>
 				<Logo>Right Now</Logo>
 				<ButtonContainer>
-					<Button onClick={() => this.setState({ modal_open: true })}>Sign Up</Button>
-					<Button onClick={() => this.open_modal()}>Sign Up2</Button>
-					<Button>Login</Button>
+					<Button onClick={() => this.openModal_reg()}>Sign Up</Button>
+					<Button onClick={() => this.openModal_log()}>Login</Button>
 					<Menu>
 						<MenuLine />
 						<MenuLine />
 						<MenuLine />
 					</Menu>
 				</ButtonContainer>
-				{this.state.modal_open ? <Modal close_modal={this.close_modal.bind(this)} /> : null}
+				{this.state.display_regModal ? <RegModal closeModal_reg={this.closeModal_reg.bind(this)} /> : null}
+				{this.state.display_logModal ? <LogModal closeModal_log={this.closeModal_log.bind(this)} /> : null}
 			</NavContainer>
 		);
 	}

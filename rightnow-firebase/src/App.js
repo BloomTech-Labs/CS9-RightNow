@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import glamorous from 'glamorous';
+// import glamorous from 'glamorous';
 
 // sweetAlert2
 // import Swal from 'sweetalert2';

@@ -35,15 +35,13 @@ const LoginModal = glamorous.div({
 	padding: '2.5%'
 });
 
-export default class Reg_modal extends Component {
+export default class Log_modal extends Component {
 	state = {
 		email: '',
-		password: '',
-		phoneNumber: '',
 		password: ''
 	};
 
-	handleRegister = () => {
+	handleLogin = () => {
 		// this.setState( )
 	};
 
@@ -52,7 +50,7 @@ export default class Reg_modal extends Component {
 		return (
 			<ModalBackdrop>
 				<LoginModal>
-					<h1>Sign Up!</h1>
+					<h1>Login here!</h1>
 					<input
 						type="text"
 						name="email"
@@ -67,22 +65,8 @@ export default class Reg_modal extends Component {
 						value={this.state.password}
 						onChange={(event) => this.setState({ [event.target.name]: event.target.value })}
 					/>
-					<input
-						type="number"
-						name="phoneNumber"
-						placeholder="Phone Number"
-						value={this.state.phoneNumber}
-						onChange={(event) => this.setState({ [event.target.name]: event.target.value })}
-					/>
-					<input
-						type="text"
-						name="location"
-						placeholder="Location"
-						value={this.state.location}
-						onChange={(event) => this.setState({ [event.target.name]: event.target.value })}
-					/>
-					<button onClick={() => this.handleRegister()}>Register</button>
-					<button onClick={() => this.props.closeModal_reg()}>Close</button>
+					<button onClick={() => this.handleLogin()}>Submit</button>
+					<button onClick={() => this.props.closeModal_log()}>Close</button>
 				</LoginModal>
 			</ModalBackdrop>
 		);
