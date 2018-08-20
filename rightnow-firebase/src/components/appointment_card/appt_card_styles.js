@@ -16,10 +16,19 @@ export const BusinessImage = glamorous.img({
 
 
 export const BusinessInfo = glamorous.div({
-  width: "100%"
+  width: "100%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center"
 });
 
 
 export const AvailableAppts = glamorous.div({
-  width: "100%"
+  width: "100%",
+  borderTop: "0.5px solid lightgray",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center"
 });
