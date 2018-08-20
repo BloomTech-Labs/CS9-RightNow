@@ -63,12 +63,21 @@ export default class NavBar extends Component {
 		modal_open: false
 	};
 
+	open_modal = () => {
+		this.setState({ modal_open: true });
+	};
+
+	close_modal = () => {
+		this.setState({ modal_open: false });
+	};
+
 	render() {
 		return (
 			<NavContainer>
 				<Logo>Right Now</Logo>
 				<ButtonContainer>
 					<Button onClick={() => this.setState({ modal_open: true })}>Sign Up</Button>
+					<Button onClick={() => this.open_modal()}>Sign Up2</Button>
 					<Button>Login</Button>
 					<Menu>
 						<MenuLine />
@@ -76,7 +85,7 @@ export default class NavBar extends Component {
 						<MenuLine />
 					</Menu>
 				</ButtonContainer>
-				{this.state.modal_open ? <Modal /> : null}
+				{this.state.modal_open ? <Modal close_modal={this.close_modal.bind(this)} /> : null}
 			</NavContainer>
 		);
 	}
