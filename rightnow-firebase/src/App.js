@@ -7,10 +7,11 @@ class App extends Component {
 	constructor() {
 		super();
 		firebaseInit();
-	}
-	state = {
-		email: "",
-		password: ""
+		this .state = {
+            email: "",
+            password: "",
+			currentUser: ""
+		};
 	}
 
 	render() {
