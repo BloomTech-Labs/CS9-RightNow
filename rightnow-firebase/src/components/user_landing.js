@@ -5,10 +5,9 @@ const Container = glamorous.div({
 	padding: '10px',
 	width: '100%',
 	height: '80vh',
-	backgroundImage:
-		'url( "https://zimmer7.com/fileadmin/_processed_/5/b/csm_photo-1462885928573-b5d04c6855de_9f46a27ab0.jpg")',
+	backgroundImage: 'url( "https://zimmer7.com/fileadmin/_processed_/5/b/csm_photo-1462885928573-b5d04c6855de_9f46a27ab0.jpg")',
 	backgroundRepeat: 'no-repeat',
-	// background: "linear-gradient(rgba(255, 0, 0, 0.05), rgba(255, 0, 0, 0.05))",
+	background: "linear-gradient(rgba(205,133,63, 0.25), rgba(205,133,63, 0.25)), url(https://zimmer7.com/fileadmin/_processed_/5/b/csm_photo-1462885928573-b5d04c6855de_9f46a27ab0.jpg)",
 	backgroundSize: 'cover'
 });
 
