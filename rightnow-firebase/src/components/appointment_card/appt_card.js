@@ -5,6 +5,7 @@ import {
   BusinessInfo,
   AvailableAppts
 } from "./appt_card_styles";
+import StarRatings from "react-star-ratings";
 
 
 export default class AppointmentCard extends Component {
@@ -16,7 +17,15 @@ export default class AppointmentCard extends Component {
 
         <BusinessInfo>
           <h3>Caputo's Bake Shop</h3>
-          <span style={{fontSize: "1.5em"}}>★★★★★</span>
+          <StarRatings 
+            rating={4.5}
+            numberOfStars={5}
+            starRatedColor="gold"
+            starEmptyColor="grey"
+            starDimension="35px"
+          />
+          <div>329 Court St</div>
+          <div>Brooklyn, NY 11231</div>
         </BusinessInfo>
 
         <AvailableAppts>
