@@ -45,11 +45,11 @@ export const Address = glamorous.div({
 
 
 export const AvailableAppts = glamorous.div({
-  width: "100%",
+  width: "95%",
+  margin: "auto",
   padding: "5% 0",
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center",
   alignItems: "center"
 });
 
