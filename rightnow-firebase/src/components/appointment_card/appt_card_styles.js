@@ -21,7 +21,8 @@ export const BusinessInfo = glamorous.div({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  alignItems: "center"
+  alignItems: "center",
+  borderBottom: "0.5px solid lightgray",
 });
 
 
@@ -39,13 +40,13 @@ export const Address = glamorous.div({
   alignItems: "center",
   fontSize: "1.5em",
   fontWeight: 500,
-  margin: "3% 0"
+  marginBottom: "5%"
 });
 
 
 export const AvailableAppts = glamorous.div({
   width: "100%",
-  borderTop: "0.5px solid lightgray",
+  padding: "5% 0",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -56,7 +57,11 @@ export const AvailableAppts = glamorous.div({
 export const Appointment = glamorous.div({
   width: "95%",
   display: "grid",
-  gridTemplateColumns: "33% 34% 33%"
+  gridTemplateColumns: "33% 34% 33%",
+  border: "1px solid black",
+  borderRadius: "5px",
+  margin: "0 0 3%",
+  padding: "3%"
 });
 
 export const Type = glamorous.div({
