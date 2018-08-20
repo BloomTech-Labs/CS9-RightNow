@@ -10,6 +10,15 @@ import {
 import StarRatings from "react-star-ratings";
 
 
+/*
+INFORMATION REQUIRED FOR THIS COMPONENT:
+  * Business image
+  * Business name
+  * Business rating
+  * Business address
+  * Available appointments
+*/
+
 export default class AppointmentCard extends Component {
   render() {
     return (
@@ -20,7 +29,7 @@ export default class AppointmentCard extends Component {
         <BusinessInfo>
           <BusinessName>Caputo's Bake Shop</BusinessName>
           <StarRatings 
-            rating={4.5}
+            rating={4.5} // this.props.rating
             numberOfStars={5}
             starRatedColor="gold"
             starEmptyColor="grey"
