@@ -21,8 +21,20 @@ export default class SignInModal extends Component {
     this.state = {};
   }
 
+  handleSignIn = method => {
+    switch (method) {
+      case "email":
+        break;
+      case "google":
+        break;
+      case "facebook":
+        break;
+      default:
+        break;
+    }
+  }
+
   render() {
-    console.log(this.props)
     return (
       <Container>
         <Modal>
@@ -31,17 +43,17 @@ export default class SignInModal extends Component {
           <NormalSignIn>
             <Input type="text" placeholder="Email" />
             <Input type="password" placeholder="Password" />
-            <Button>Sign In</Button>
+            <Button onClick={() => this.handleSignIn("email")}>Sign In</Button>
           </NormalSignIn>
 
           <Or><span style={{ backgroundColor: "white", padding: "0 3%" }}>or</span></Or>
 
           <OAuthContainer>
-            <OAuthButton>
+            <OAuthButton onClick={() => this.handleSignIn("google")}>
               <AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
               Login with Google
             </OAuthButton>
-            <OAuthButton>
+            <OAuthButton onClick={() => this.handleSignIn("facebook")}>
               <AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" />
               Login with Facebook
             </OAuthButton>
