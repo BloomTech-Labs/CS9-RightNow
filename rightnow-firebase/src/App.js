@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import NavBar from './components/nav_bar';
 import UserLanding from "./components/user_landing";
-
+import {init as firebaseInit} from './firebase/firebase';
 
 class App extends Component {
+	constructor() {
+		super();
+		firebaseInit();
+	}
 	state = {
 		email: "",
 		password: ""

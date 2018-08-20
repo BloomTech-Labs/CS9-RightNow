@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import GoogleLogIn from '../../firebase/auth.google.services';
 import {
   Container,
   Modal,
@@ -49,7 +50,7 @@ export default class SignInModal extends Component {
           <Or><span style={{ backgroundColor: "white", padding: "0 3%" }}>or</span></Or>
 
           <OAuthContainer>
-            <OAuthButton onClick={() => this.handleSignIn("google")}>
+            <OAuthButton onClick={GoogleLogIn}>
               <AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
               Login with Google
             </OAuthButton>
