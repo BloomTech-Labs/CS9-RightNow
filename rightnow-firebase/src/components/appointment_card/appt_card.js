@@ -3,7 +3,9 @@ import {
   Container,
   BusinessImage,
   BusinessInfo,
-  AvailableAppts
+  AvailableAppts,
+  BusinessName,
+  Address
 } from "./appt_card_styles";
 import StarRatings from "react-star-ratings";
 
@@ -16,7 +18,7 @@ export default class AppointmentCard extends Component {
         <BusinessImage src="https://nyoobserver.files.wordpress.com/2015/12/unnamed2.jpg" />
 
         <BusinessInfo>
-          <h3>Caputo's Bake Shop</h3>
+          <BusinessName>Caputo's Bake Shop</BusinessName>
           <StarRatings 
             rating={4.5}
             numberOfStars={5}
@@ -24,8 +26,10 @@ export default class AppointmentCard extends Component {
             starEmptyColor="grey"
             starDimension="35px"
           />
-          <div>329 Court St</div>
-          <div>Brooklyn, NY 11231</div>
+          <Address>
+            <div>329 Court St</div>
+            <div>Brooklyn, NY 11231</div>
+          </Address>
         </BusinessInfo>
 
         <AvailableAppts>

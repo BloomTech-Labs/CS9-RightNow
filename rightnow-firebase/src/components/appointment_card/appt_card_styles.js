@@ -24,6 +24,24 @@ export const BusinessInfo = glamorous.div({
 });
 
 
+export const BusinessName = glamorous.div({
+  fontSize: "2em",
+  fontWeight: 600,
+  margin: "4% 0 2.5%"
+});
+
+
+export const Address = glamorous.div({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  fontSize: "1.5em",
+  fontWeight: 500,
+  margin: "3% 0"
+});
+
+
 export const AvailableAppts = glamorous.div({
   width: "100%",
   borderTop: "0.5px solid lightgray",
