@@ -33,7 +33,7 @@ export default class SignInModal extends Component {
             <Button>Sign In</Button>
           </NormalSignIn>
 
-          <Or><span style={{ backgroundColor: "white", padding: "3%" }}>or</span></Or>
+          <Or><span style={{ backgroundColor: "white", padding: "0 3%" }}>or</span></Or>
 
           <OAuthContainer>
             <OAuthButton>

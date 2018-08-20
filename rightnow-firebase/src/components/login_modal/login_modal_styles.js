@@ -1,5 +1,6 @@
 import glamorous from "glamorous";
 
+
 export const Container = glamorous.div({
   width: "100vw",
   height: "100vh",
@@ -8,6 +9,7 @@ export const Container = glamorous.div({
   background: "rgba(0, 0, 0, 0.5)",
   overflow: "hidden"
 });
+
 
 export const Modal = glamorous.div({
   position: "fixed",
@@ -21,30 +23,35 @@ export const Modal = glamorous.div({
   width: "30%",
   height: "50%",
   padding: "2.5%",
+
   '@media(min-width: 1024px)': {
-    width: "35%",
-    height: "64%"
+    width: "615px",
+    height: "500px"
   },
-  '@media(min-width: 250px)': {
-    width: "60vw",
-    height: "80vh"
-  }
 });
+
 
 export const Header = glamorous.div({
   fontSize: "3em",
   marginBottom: "3%",
+
+  '@media(min-width: 1024px)': {
+    fontSize: "2.5em"
+  },
 });
+
 
 export const NormalSignIn = glamorous.div({
   borderTop: "0.5px solid lightgray",
   padding: "4% 0",
   display: "flex",
   flexDirection: "column",
-  '@media(max-width: 600px)': {
-    marginBottom: "3%"
+
+  '@media(min-width: 1024px)': {
+    marginBottom: 0
   }
 });
+
 
 export const Input = glamorous.input({
   padding: "1% 2%",
@@ -53,8 +60,13 @@ export const Input = glamorous.input({
   height: "3vh",
   border: "1px solid gray",
   borderRadius: "5px",
-  ":focus": { outline: "none"  } // *:focus { outline: none } ~~~ no focus for any elements
+  ":focus": { outline: "none"  }, // *:focus { outline: none } ~~~ no focus for any elements
+
+  '@media(min-width: 1024px)': {
+    fontSize: "1.3em"
+  }
 });
+
 
 export const Button = glamorous.button({
   fontSize: "2em",
@@ -65,18 +77,25 @@ export const Button = glamorous.button({
   color: "white",
   ":hover": { cursor: "pointer" },
   ":focus": { outline: "none"  },
-  '@media(max-width: 600px)': {
-    fontSize: "1.3em",
-    marginBottom: "3%"
+
+  "@media(min-width: 1024px)": {
+    fontSize: "1.3em"
   }
 });
 
-export const Or = glamorous.h2({
+
+export const Or = glamorous.div({
   width: "100%",
   textAlign: "center",
   borderBottom: "0.5px solid lightgray",
-  lineHeight: "0.1em"
+  lineHeight: "0.1em",
+
+  "@media(min-width: 1024px)": {
+    fontSize: "1.1em",
+    fontWeight: 600,
+  }
 });
+
 
 export const OAuthContainer = glamorous.div({
   display: "flex",
@@ -84,20 +103,20 @@ export const OAuthContainer = glamorous.div({
   width: "100%",
   borderBottom: "0.5px solid lightgray",
   paddingBottom: "6%",
-  '@media (min-width: 300px) and (max-width: 600px)': {
-    flexDirection: "column"
+  
+  "@media(min-width: 1024px)": {
+    paddingBottom: "3%"
   }
 });
+
 
 export const AuthLogo = glamorous.img({
   height: "100%",
   width: "15%",
-  '@media(min-width: 600px)': {
-    height: "3vh",
-    width: "3vh",
-    marginRight: "1%"
-  }
+  
+  "@media(min-width: 1024px)": {}
 });
+
 
 export const OAuthButton = glamorous.div({
   width: '48%',
@@ -113,17 +132,23 @@ export const OAuthButton = glamorous.div({
   border: "1px solid lightgray",
   borderRadius: "5px",
   ":hover": { backgroundColor: "rgba(225, 225, 225, 0.6)", cursor: "pointer" },
-  '@media(min-width: 300px) and (max-width: 600px)': {
-    width: "100%",
-
+  
+  "@media(min-width: 1024px)": {
+    fontSize: "1.3em",
+    height: "30%",
+    marginTop: "5%"
   }
 });
+
 
 export const NewUser = glamorous.div({
   width: "100%",
   marginTop: "2.5%",
   display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center"
+  justifyContent: "space-around",
+  alignItems: "center",
+
+  "@media(min-width: 1024px)": {
+    fontSize: "0.8em"
+  }
 });
