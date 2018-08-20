@@ -1,4 +1,4 @@
-import glamorous, { P } from "glamorous";
+import glamorous from "glamorous";
 
 export const Container = glamorous.div({
   width: "15vw",
@@ -6,6 +6,7 @@ export const Container = glamorous.div({
   borderRadius: "5px",
   display: "flex",
   flexDirection: "column",
+  margin: "5%"
 });
 
 
@@ -50,3 +51,29 @@ export const AvailableAppts = glamorous.div({
   justifyContent: "center",
   alignItems: "center"
 });
+
+
+export const Appointment = glamorous.div({
+  width: "95%",
+  display: "grid",
+  gridTemplateColumns: "33% 34% 33%"
+});
+
+export const Type = glamorous.div({
+  textAlign: "start"
+});
+
+export const Time = glamorous.div({
+  textAlign: "center"
+})
+
+export const Cost = glamorous.div({
+  textAlign: "end"
+})
+
+
+// const ComponentName = glamorous.any_html_element({
+//   alwaysCammelCase: "exactly the same as you would with css - except as a string", // comma
+// })
+
+

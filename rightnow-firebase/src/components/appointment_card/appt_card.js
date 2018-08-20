@@ -5,7 +5,9 @@ import {
   BusinessInfo,
   AvailableAppts,
   BusinessName,
-  Address
+  Address,
+  Appointment,
+  Type, Time, Cost
 } from "./appt_card_styles";
 import StarRatings from "react-star-ratings";
 
@@ -42,7 +44,21 @@ export default class AppointmentCard extends Component {
         </BusinessInfo>
 
         <AvailableAppts>
-          <h4>right meow</h4>
+          <Appointment>
+            <Type>Haircut</Type>
+            <Time>1:30-2:00</Time>
+            <Cost>$45</Cost>
+          </Appointment>
+          <Appointment>
+            <Type>Haircut</Type>
+            <Time>2:00-2:30</Time>
+            <Cost>$55</Cost>
+          </Appointment>
+          <Appointment>
+            <Type>Haircut</Type>
+            <Time>4:30-5:00</Time>
+            <Cost>$105</Cost>
+          </Appointment>
         </AvailableAppts>
 
       </Container>
