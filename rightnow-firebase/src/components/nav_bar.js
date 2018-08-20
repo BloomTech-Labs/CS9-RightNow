@@ -50,7 +50,7 @@ const Menu = glamorous.div({
 const MenuLine = glamorous.div({
   width: "35px",
   height: "5px",
-  background: "black",
+  background: "white",
   margin: "6px 0"
 });
 
@@ -59,7 +59,7 @@ export default class NavBar extends Component {
   render() {
     return (
       <NavContainer>
-        <Logo>Right Now</Logo>
+        <Logo>FLY-BY</Logo>
         <ButtonContainer>
           <Button>Business Inquiries</Button>
           <Button>Sign Up</Button>
