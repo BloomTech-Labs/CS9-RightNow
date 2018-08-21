@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
+import * as routes from "../constants/routes";
+
 import glamorous from 'glamorous';
 import SignInModal from './login_modal/login_modal';
 import RegisterModal from './register_modal/reg_modal';
 import RegisterForm from './register_modal/reg_forms';
+
 
 const NavContainer = glamorous.div({
 	width: '100%',
@@ -83,35 +87,33 @@ export default class NavBar extends Component {
 	};
 
 	render() {
-		return (
-			<NavContainer>
-				<Logo>Right Now</Logo>
+		return <NavContainer>
+        <Logo>Right Now</Logo>
         <ButtonContainer>
-          <Button>Business Signup</Button>
-					<Button onClick={() => this.setState({ displayRegModal: true })}>Sign Up</Button>
-					<Button onClick={() => this.setState({ displayLoginModal: true })}>Login</Button>
-					<Menu>
-						<MenuLine />
-						<MenuLine />
-						<MenuLine />
-					</Menu>
-				</ButtonContainer>
-				{this.state.displayLoginModal ? (
-					<SignInModal
-						closeModal={() => this.setState({ displayLoginModal: false })}
-						logToReg={() => this.LogToRegModal()}
-					/>
-				) : null}
-				{this.state.displayRegModal ? (
-					<RegisterModal
-						closeModal={() => this.setState({ displayRegModal: false })}
-						regToLog={() => this.RegToLogModal()}
-					/>
-				) : null}
-				{this.state.displayRegForm ? (
-					<RegisterForm closeModal={() => this.setState({ displayRegForm: false })} />
-				) : null}
-			</NavContainer>
-		);
+        <Button><Link to={routes.BIZ_LANDING}>Business Signup</Link></Button>
+          <Button onClick={() => this.setState({ displayRegModal: true })}>
+            Sign Up
+          </Button>
+          <Button
+            onClick={() => this.setState({ displayLoginModal: true })}
+          >
+            Login
+          </Button>
+          <Menu>
+            <MenuLine />
+            <MenuLine />
+            <MenuLine />
+          </Menu>
+        </ButtonContainer>
+        {this.state.displayLoginModal ? <SignInModal closeModal={() => this.setState(
+                { displayLoginModal: false }
+              )} logToReg={() => this.LogToRegModal()} /> : null}
+        {this.state.displayRegModal ? <RegisterModal closeModal={() => this.setState(
+                { displayRegModal: false }
+              )} regToLog={() => this.RegToLogModal()} /> : null}
+        {this.state.displayRegForm ? <RegisterForm closeModal={() => this.setState(
+                { displayRegForm: false }
+              )} /> : null}
+      </NavContainer>;
 	}
 }
