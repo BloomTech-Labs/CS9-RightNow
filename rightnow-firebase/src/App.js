@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NavBar from './components/nav_bar';
 import UserLanding from './components/user_landing';
 import { init as firebaseInit } from './firebase/firebase';
+import FeaturedAppointments from './components/featured_appointments/feat_appts';
 
 class App extends Component {
 	constructor() {
@@ -19,6 +20,7 @@ class App extends Component {
 			<div className="App">
 				<NavBar />
 				<UserLanding />
+				<FeaturedAppointments />
 			</div>
 		);
 	}
