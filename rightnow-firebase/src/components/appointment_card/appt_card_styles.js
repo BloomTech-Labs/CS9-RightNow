@@ -1,7 +1,7 @@
 import glamorous from "glamorous";
 
 export const Container = glamorous.div({
-  width: "15vw",
+  width: "100%",
   border: "1px solid gray",
   borderRadius: "5px",
   display: "flex",
