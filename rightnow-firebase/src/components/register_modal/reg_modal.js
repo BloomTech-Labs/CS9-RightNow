@@ -24,8 +24,8 @@ export default class RegisterModal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			showRegMethods: true,
-			showForms: false
+			showRegMethods: false, // set only one as false
+			showForms: true
 		};
 	}
 
