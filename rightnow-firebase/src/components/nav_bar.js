@@ -3,7 +3,7 @@ import glamorous from 'glamorous';
 import SignInModal from './login_modal/login_modal';
 import RegisterModal from './register_modal/reg_modal';
 import RegisterForm from './register_modal/reg_forms';
-
+import { Link } from 'react-router-dom';
 const NavContainer = glamorous.div({
 	width: '100%',
 	background: '#EBEBEB',
@@ -102,6 +102,9 @@ export default class NavBar extends Component {
 			<NavContainer>
 				<Logo>Right Now</Logo>
 				<ButtonContainer>
+					<Link to="/biz-landing">
+						<Button>Business Signup</Button>
+					</Link>
 					<Button onClick={() => this.openReg()}>Sign Up</Button>
 					<Button onClick={() => this.openLogin()}>Login</Button>
 					<Menu>
