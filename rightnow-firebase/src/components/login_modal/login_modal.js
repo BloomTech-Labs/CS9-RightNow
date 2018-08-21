@@ -48,8 +48,8 @@ export default class SignInModal extends Component {
 						<NormalSignIn>
 							<Input type="text" placeholder="Email" />
 							<Input type="password" placeholder="Password" />
-							<LoginButton onClick={() => this.handleSignIn('email')}>Sign In</LoginButton>
 						</NormalSignIn>
+						<LoginButton onClick={() => this.handleSignIn('email')}>Sign In</LoginButton>
 
 						<Or>
 							<span style={{ backgroundColor: '#353A50', padding: '0 3%' }}>or</span>
@@ -68,7 +68,7 @@ export default class SignInModal extends Component {
 
 						<NewUser>
 							<p style={{ marginRight: '2%' }}>Don't have an account?</p>
-							<RegClickHere>Register Here</RegClickHere>
+							<RegClickHere onClick={() => this.props.logToReg()}>Register Here</RegClickHere>
 						</NewUser>
 					</ModalRight>
 

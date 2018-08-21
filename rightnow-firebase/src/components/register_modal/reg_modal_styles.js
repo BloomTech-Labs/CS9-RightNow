@@ -26,7 +26,7 @@ export const ModalLeft = glamorous.div({
 	writingMode: 'vertical-lr',
 	color: 'yellow',
 	background: '#494755',
-	width: '1%',
+	width: '.6%',
 	zIndex: 2
 });
 
@@ -34,7 +34,7 @@ export const ModalRight = glamorous.div({
 	color: 'white',
 	fontFamily: 'Quicksand, sans-serif',
 	background: '#353A50',
-	width: '30%',
+	width: '31%',
 	padding: '2%',
 	zIndex: 2
 
@@ -220,8 +220,8 @@ export const EmailButton = glamorous.div({
 });
 
 export const AuthLogo = glamorous.img({
-	height: '50%',
-	width: '4%',
+	height: '100%',
+	width: '6%',
 	paddingRight: '3%',
 
 	// fix it later

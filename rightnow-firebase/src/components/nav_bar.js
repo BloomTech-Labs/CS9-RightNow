@@ -63,13 +63,18 @@ export default class NavBar extends Component {
 		this.state = {
 			displayLoginModal: true, // true for dev purposes. set to false prior to pull.
 			displayRegModal: false,
-			displayRegForm: false 
+			displayRegForm: false
 		};
 	}
 
 	RegToLogModal = () => {
 		this.setState({ displayRegModal: false });
 		this.setState({ displayLoginModal: true });
+	};
+
+	LogToRegModal = () => {
+		this.setState({ displayLoginModal: false });
+		this.setState({ displayRegModal: true });
 	};
 
 	CreateUserForm = () => {
@@ -91,7 +96,10 @@ export default class NavBar extends Component {
 					</Menu>
 				</ButtonContainer>
 				{this.state.displayLoginModal ? (
-					<SignInModal closeModal={() => this.setState({ displayLoginModal: false })} />
+					<SignInModal
+						closeModal={() => this.setState({ displayLoginModal: false })}
+						logToReg={() => this.LogToRegModal()}
+					/>
 				) : null}
 				{this.state.displayRegModal ? (
 					<RegisterModal

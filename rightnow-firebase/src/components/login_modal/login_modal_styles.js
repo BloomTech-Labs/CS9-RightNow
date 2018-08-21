@@ -93,13 +93,14 @@ export const Input = glamorous.input({
 	fontFamily: 'Quicksand, sans-serif',
 	background: '#353A50',
 	color: 'white',
-	padding: '0.5% 0.7%',
+	padding: '1% 0.7%',
 	marginBottom: '2%',
 	// fontSize: '1em',
 	height: '3vh',
-	border: '1px solid #ada3a2',
-	borderRadius: '5px',
-	':focus': { border: '1px solid white' },
+	border: 0,
+	borderBottom: '1px solid #ada3a2',
+	// borderRadius: '5px',
+	':focus': { borderBottom: '1px solid white' },
 	'::placeholder': {
 		color: '#ada3a2',
 		fontSize: '0.9rem'
@@ -140,7 +141,7 @@ export const LoginButton = glamorous.div({
 	padding: '2% 0',
 	background: '#26c1a2',
 	width: '100%',
-	margin: 'auto',
+	marginBottom: '5%',
 	borderRadius: '5px',
 	':hover': { border: '1px solid #2cd3b2', backgroundColor: '#2cd3b2', cursor: 'pointer' },
 
@@ -158,6 +159,7 @@ export const Or = glamorous.div({
 	textAlign: 'center',
 	borderBottom: '0.5px solid #605e70',
 	lineHeight: '0.1em',
+	// padding: '2% 0',
 
 	'@media(min-width: 1024px)': {
 		fontSize: '1.1em',
@@ -180,10 +182,10 @@ export const OAuthContainer = glamorous.div({
 	justifyContent: 'space-between',
 	width: '100%',
 	// borderBottom: '0.5px solid #605e70',
-	paddingBottom: '5%',
+	paddingBottom: '2%',
 
 	'@media(min-width: 1024px)': {
-		paddingBottom: '5%'
+		paddingBottom: '2%'
 	},
 
 	'@media(max-width: 793px)': {
@@ -200,7 +202,7 @@ export const OAuthContainer = glamorous.div({
 
 export const AuthLogo = glamorous.img({
 	height: '100%',
-	width: '10%',
+	width: '9%',
 	// paddingLeft: '5%',
 	paddingRight: '3%',
 
@@ -232,7 +234,7 @@ export const OAuthButton = glamorous.div({
 	':hover': { backgroundColor: 'rgba(225, 225, 225, 0.6)', cursor: 'pointer' },
 
 	'@media(min-width: 1024px)': {
-		fontSize: '1em',
+		fontSize: '.85em',
 		marginTop: '5%'
 	},
 
