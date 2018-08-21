@@ -3,6 +3,7 @@ import NavBar from './components/nav_bar';
 import UserLanding from './components/user_landing';
 import { init as firebaseInit } from './firebase/firebase';
 import FeaturedAppointments from './components/featured_appointments/feat_appts';
+import IndustryView from './components/industry_view/industry_view';
 
 class App extends Component {
 	constructor() {
@@ -21,6 +22,7 @@ class App extends Component {
 				<NavBar />
 				<UserLanding />
 				<FeaturedAppointments />
+				<IndustryView />
 			</div>
 		);
 	}
