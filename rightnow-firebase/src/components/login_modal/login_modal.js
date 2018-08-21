@@ -1,0 +1,80 @@
+import React, { Component } from 'react';
+import GoogleLogIn from '../../firebase/auth.google.services';
+import FacebookLogIn from '../../firebase/auth.facebook.services';
+import {
+	Container,
+	ModalWrapper,
+	ModalLeft,
+	ModalRight,
+	Header,
+	NormalSignIn,
+	Input,
+	LoginButton,
+	Or,
+	OAuthContainer,
+	OAuthButton,
+	AuthLogo,
+	NewUser,
+	RegClickHere,
+	CloseX
+} from './login_modal_styles';
+
+export default class SignInModal extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {};
+	}
+
+	handleSignIn = (method) => {
+		switch (method) {
+			case 'email':
+				break;
+			case 'google':
+				break;
+			case 'facebook':
+				break;
+			default:
+				break;
+		}
+	};
+
+	render() {
+		return (
+			<Container>
+				<ModalWrapper>
+					<ModalLeft />
+					<ModalRight>
+						<Header>Please sign in.</Header>
+						<NormalSignIn>
+							<Input type="text" placeholder="Email" />
+							<Input type="password" placeholder="Password" />
+						</NormalSignIn>
+						<LoginButton onClick={() => this.handleSignIn('email')}>Sign In</LoginButton>
+
+						<Or>
+							<span style={{ backgroundColor: '#353A50', padding: '0 3%' }}>or</span>
+						</Or>
+
+						<OAuthContainer>
+							<OAuthButton onClick={GoogleLogIn}>
+								<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+								Login with Google
+							</OAuthButton>
+							<OAuthButton onClick={FacebookLogIn}>
+								<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" />
+								Login with Facebook
+							</OAuthButton>
+						</OAuthContainer>
+
+						<NewUser>
+							<p style={{ marginRight: '2%' }}>Don't have an account?</p>
+							<RegClickHere onClick={() => this.props.logToReg()}>Register Here</RegClickHere>
+						</NewUser>
+					</ModalRight>
+
+					<CloseX onClick={() => this.props.closeModal()}>x</CloseX>
+				</ModalWrapper>
+			</Container>
+		);
+	}
+}
