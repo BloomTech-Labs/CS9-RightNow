@@ -10,7 +10,7 @@
 
 .dashboard {
     border: 1px solid black;
-    height: 45rem;
+    height: 50rem;
     background: goldenrod;
     margin: 1% 5%;
     display: flex;
@@ -22,6 +22,9 @@
     background: skyblue;
     border: 1px solid black;
     width: 70%;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
 }
 
 .one-four {
@@ -61,4 +64,27 @@ input {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+}
+
+.dateCard {
+    width: 12%;
+    background: white;
+    height: 10%;
+    margin: 1%;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+}
+
+.red {
+    background: red
+}
+
+.green {
+    background: green;
+}
+
+.yellow {
+    background: yellow;
 }
