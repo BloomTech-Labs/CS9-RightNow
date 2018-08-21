@@ -70,15 +70,10 @@ export const Type = glamorous.div({
 
 export const Time = glamorous.div({
   textAlign: "center"
-})
+});
 
 export const Cost = glamorous.div({
   textAlign: "end"
-})
-
-
-// const ComponentName = glamorous.any_html_element({
-//   alwaysCammelCase: "exactly the same as you would with css - except as a string", // comma
-// })
+});
 
 
