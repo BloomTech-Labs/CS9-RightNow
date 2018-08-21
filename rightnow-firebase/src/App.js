@@ -5,6 +5,7 @@ import { init as firebaseInit } from './firebase/firebase';
 import FeaturedAppointments from './components/featured_appointments/feat_appts';
 import IndustryView from './components/industry_view/industry_view';
 import UserProvider from './context/userContext';
+import Biz_Appointments from './components/view_appointments_business/appointments_business';
 
 class App extends Component {
 	constructor() {
@@ -22,6 +23,8 @@ class App extends Component {
 					<FeaturedAppointments />
 					<IndustryView />
 				</UserProvider>
+
+				<Biz_Appointments />
 			</div>
 		);
 	}

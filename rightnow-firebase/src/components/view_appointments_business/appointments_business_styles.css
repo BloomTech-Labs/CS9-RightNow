@@ -1,0 +1,64 @@
+/* import glamorous from "glamorous"; */
+
+#background {
+    background: rgb(138, 135, 135);
+    border: 1px solid black;
+    /* height: 45rem;
+    margin-top: 10rem; */
+
+}
+
+.dashboard {
+    border: 1px solid black;
+    height: 45rem;
+    background: goldenrod;
+    margin: 1% 5%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.three-four {
+    margin: 2rem 0;
+    background: skyblue;
+    border: 1px solid black;
+    width: 70%;
+}
+
+.one-four {
+    margin: 2rem 0;
+    background: goldenrod;
+    /* border: 1px solid black; */
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.slide {
+    height: 30%;
+    border: 1px solid black;
+    background: skyblue;
+}
+
+h4 {
+    margin: 1.5% 5%;
+    text-align: center;
+}
+
+input {
+    margin: 1.5% 7.45%;
+    width: 85%;
+}
+
+.filterButton {
+    border: 1px solid black;
+    background: white;
+    text-align: center;
+    margin: 0 10%;
+}
+
+.filter {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
