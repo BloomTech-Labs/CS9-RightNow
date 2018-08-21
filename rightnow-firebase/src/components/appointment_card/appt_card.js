@@ -23,42 +23,35 @@ INFORMATION REQUIRED FOR THIS COMPONENT:
 
 export default class AppointmentCard extends Component {
   render() {
+    const { businessImage, businessName, streetAddress, cityStateZip, rating, appointments } = this.props.businessInfo;
     return (
       <Container>
 
-        <BusinessImage src="https://nyoobserver.files.wordpress.com/2015/12/unnamed2.jpg" />
+        <BusinessImage src={businessImage} />
 
         <BusinessInfo>
-          <BusinessName>Caputo's Bake Shop</BusinessName>
+          <BusinessName>{businessName}</BusinessName>
           <StarRatings 
-            rating={4.5} // this.props.rating
+            rating={rating}
             numberOfStars={5}
             starRatedColor="gold"
             starEmptyColor="grey"
             starDimension="35px"
           />
           <Address>
-            <div>329 Court St</div>
-            <div>Brooklyn, NY 11231</div>
+            <div>{streetAddress}</div>
+            <div>{cityStateZip}</div>
           </Address>
         </BusinessInfo>
 
         <AvailableAppts>
-          <Appointment>
-            <Type>Haircut</Type>
-            <Time>1:30-2:00</Time>
-            <Cost>$45</Cost>
-          </Appointment>
-          <Appointment>
-            <Type>Haircut</Type>
-            <Time>2:00-2:30</Time>
-            <Cost>$55</Cost>
-          </Appointment>
-          <Appointment>
-            <Type>Haircut</Type>
-            <Time>4:30-5:00</Time>
-            <Cost>$105</Cost>
-          </Appointment>
+          {Object.keys(appointments).map((key, index) => (
+            <Appointment key={index}>
+              <Type>{appointments[key].type}</Type>
+              <Time>{appointments[key].time}</Time>
+              <Cost>{appointments[key].cost}</Cost>
+            </Appointment>
+          ))}
         </AvailableAppts>
 
       </Container>
