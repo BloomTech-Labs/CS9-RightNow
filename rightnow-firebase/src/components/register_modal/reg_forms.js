@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
 	Container,
-	Modal,
+	ModalRight,
 	Header,
 	// NormalSignIn,
 	// Input,
@@ -37,7 +37,7 @@ export default class RegisterModal extends Component {
 	render() {
 		return (
 			<Container>
-				<Modal>
+				<ModalRight>
 					<Header>Lets get started.</Header>
 					{/* <NormalSignIn>
 						<Input type="text" placeholder="Email" />
@@ -69,7 +69,7 @@ export default class RegisterModal extends Component {
 						<p style={{ marginRight: '2%' }}>Already have an account?</p>
 						<p style={{ color: 'green' }} onClick={this.props.regToLog }>Log in Here</p>
 					</NewUser>
-				</Modal>
+				</ModalRight>
 				<CloseX onClick={() => this.props.closeModal()}>x</CloseX>
 			</Container>
 		);

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {
 	Container,
-	Modal,
+	ModalWrapper,
+	ModalLeft,
+	ModalRight,
 	Header,
 	// NormalSignIn,
 	// Input,
@@ -38,40 +40,38 @@ export default class RegisterModal extends Component {
 	render() {
 		return (
 			<Container>
-				<Modal>
-					<Header>Lets get started.</Header>
-					{/* <NormalSignIn>
-						<Input type="text" placeholder="Email" />
-						<Input type="password" placeholder="Password" />
-						<Button onClick={() => this.handleSignIn('email')}>Sign In</Button>
-          </NormalSignIn> */}
+				<ModalWrapper>
+					<ModalLeft></ModalLeft>
+					<ModalRight>
+						<Header>Lets get started.</Header>
 
-					<OAuthContainer>
-						<OAuthButton onClick={() => this.handleRegister('google')}>
-							<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
-							Sign Up with Google
-						</OAuthButton>
-						<OAuthButton onClick={() => this.handleRegister('facebook')}>
-							<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" />
-							Sign Up with Facebook
-						</OAuthButton>
-					</OAuthContainer>
+						<OAuthContainer>
+							<OAuthButton onClick={() => this.handleRegister('google')}>
+								<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+								Sign Up with Google
+							</OAuthButton>
+							<OAuthButton onClick={() => this.handleRegister('facebook')}>
+								<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" />
+								Sign Up with Facebook
+							</OAuthButton>
+						</OAuthContainer>
 
-					<Or>
-						<span style={{ backgroundColor: 'white', padding: '0 3%' }}>or</span>
-					</Or>
+						<Or>
+							<span style={{ backgroundColor: '#353A50', padding: '0 3%' }}>or</span>
+						</Or>
 
-					<EmailButton>
-						<AuthLogo src="https://www.dining-out.co.za/ftp/themes/desk/images/Email_Icon.svg" />
-						Sign Up with your email
-					</EmailButton>
+						<EmailButton>
+							<AuthLogo src="https://www.dining-out.co.za/ftp/themes/desk/images/Email_Icon.svg" />
+							Sign Up with your email
+						</EmailButton>
 
-					<NewUser>
-						<p style={{ marginRight: '2%' }}>Already have an account?</p>
-						<LoginClickHere onClick={() => this.props.regToLog()}>Log in Here</LoginClickHere>
-					</NewUser>
-				</Modal>
-				<CloseX onClick={() => this.props.closeModal()}>x</CloseX>
+						<NewUser>
+							<p style={{ marginRight: '2%' }}>Already have an account?</p>
+							<LoginClickHere onClick={() => this.props.regToLog()}>Log in Here</LoginClickHere>
+						</NewUser>
+					</ModalRight>
+					<CloseX onClick={() => this.props.closeModal()}>x</CloseX>
+				</ModalWrapper>
 			</Container>
 		);
 	}

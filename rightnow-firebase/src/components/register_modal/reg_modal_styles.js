@@ -6,36 +6,56 @@ export const Container = glamorous.div({
 	position: 'absolute',
 	zIndex: 1,
 	background: 'rgba(0, 0, 0, 0.5)',
-	overflow: 'hidden'
+	overflow: 'hidden',
+	// add filter: blur() later; should affect App.js when modal is active.
 });
 
-export const Modal = glamorous.div({
-	position: 'fixed',
-	left: '50%',
-	top: '50%',
-	transform: 'translate(-50%, -50%)',
+export const ModalWrapper = glamorous.div({
+	filter: 0,
+	padding: '0 15%',
+	paddingTop: '15%',
+	border: '3px solid blue',
 	zIndex: 2,
-	background: 'white',
+	position: 'relative',
 	display: 'flex',
-	flexDirection: 'column',
+	justifyContent: 'center'
+});
+
+export const ModalLeft = glamorous.div({
+	fontFamily: 'Quicksand, sans-serif',
+	writingMode: 'vertical-lr',
+	color: 'yellow',
+	background: '#494755',
+	width: '1%',
+	zIndex: 2
+});
+
+export const ModalRight = glamorous.div({
+	color: 'white',
+	fontFamily: 'Quicksand, sans-serif',
+	background: '#353A50',
 	width: '30%',
 	padding: '2%',
+	zIndex: 2
 
-	'@media(min-width: 1024px)': {
-		width: '25%'
-	},
-
-	'@media(max-width: 1024px)': {
-		width: '50%'
-	},
-
-	'@media(max-width: 793px)': {
-		width: '65%'
-	},
-
-	'@media(max-width: 350px)': {
-		width: '90%'
-	}
+	// position: 'fixed',
+	// left: '50%',
+	// top: '50%',
+	// transform: 'translate(-50%, -50%)',
+	// display: 'flex',
+	// flexDirection: 'column',
+	// '@media(min-width: 1024px)': {
+	// 	width: '25%'
+	// },
+	// '@media(max-width: 1024px)': {
+	// 	width: '50%'
+	// },
+	// '@media(max-width: 793px)': {
+	// 	width: '65%'
+	// },
+	// '@media(max-width: 350px)': {
+	// 	width: '90%'
+	// }
 });
 
 export const Header = glamorous.div({
@@ -270,14 +290,15 @@ export const NewUser = glamorous.div({
 });
 
 export const LoginClickHere = glamorous.p({
-	color: 'green',
+	color: '#7cff92',
 	':hover': { textDecoration: 'underline', cursor: 'pointer' }
 });
 
 export const CloseX = glamorous.div({
+	fontFamily: 'Quicksand, sans-serif',
 	position: 'fixed',
-	top: '30vh',
-	right: '36.5vw',
+	top: '32vh',
+	right: '39vw',
 	zIndex: 3,
 	fontSize: '1.5em',
 	fontWeight: 500,
