@@ -90,7 +90,7 @@ export default class NavBar extends Component {
 		return <NavContainer>
         <Logo>Right Now</Logo>
         <ButtonContainer>
-        <Button><Link to={routes.BIZ_LANDING}>Business Signup</Link></Button>
+			<Link to="/biz-landing"><Button>Business Signup</Button></Link>
           <Button onClick={() => this.setState({ displayRegModal: true })}>
             Sign Up
           </Button>
