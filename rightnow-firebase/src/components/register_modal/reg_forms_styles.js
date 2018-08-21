@@ -1,7 +1,10 @@
 /* EXTENDED registration form */
 import glamorous from 'glamorous';
 
-export const FormContainer = glamorous.div({});
+export const FormContainer = glamorous.div({
+  width: "100%",
+
+});
 
 export const Email = glamorous.input({
   width: "100%",
