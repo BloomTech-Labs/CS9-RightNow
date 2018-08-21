@@ -61,9 +61,9 @@ export default class NavBar extends Component {
 	constructor() {
 		super();
 		this.state = {
-			displayLoginModal: false, // true for dev purposes. set to false prior to pull.
-			displayRegModal: true, // true for dev purposes. set to false prior to pull.
-			displayRegForm: false // true for dev purposes. set to false prior to pull.
+			displayLoginModal: true, // true for dev purposes. set to false prior to pull.
+			displayRegModal: false,
+			displayRegForm: false 
 		};
 	}
 

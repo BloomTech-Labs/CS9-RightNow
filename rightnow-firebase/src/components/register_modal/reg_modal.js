@@ -5,9 +5,6 @@ import {
 	ModalLeft,
 	ModalRight,
 	Header,
-	// NormalSignIn,
-	// Input,
-	Button,
 	Or,
 	OAuthContainer,
 	OAuthButton,
@@ -41,7 +38,7 @@ export default class RegisterModal extends Component {
 		return (
 			<Container>
 				<ModalWrapper>
-					<ModalLeft></ModalLeft>
+					<ModalLeft />
 					<ModalRight>
 						<Header>Lets get started.</Header>
 

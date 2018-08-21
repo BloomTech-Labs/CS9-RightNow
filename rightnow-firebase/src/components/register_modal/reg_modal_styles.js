@@ -13,12 +13,12 @@ export const Container = glamorous.div({
 export const ModalWrapper = glamorous.div({
 	filter: 0,
 	padding: '0 15%',
-	paddingTop: '15%',
-	border: '3px solid blue',
+	paddingTop: '30vh',
 	zIndex: 2,
 	position: 'relative',
 	display: 'flex',
-	justifyContent: 'center'
+	justifyContent: 'center',
+	opacity: '0.95'
 });
 
 export const ModalLeft = glamorous.div({
@@ -38,12 +38,6 @@ export const ModalRight = glamorous.div({
 	padding: '2%',
 	zIndex: 2
 
-	// position: 'fixed',
-	// left: '50%',
-	// top: '50%',
-	// transform: 'translate(-50%, -50%)',
-	// display: 'flex',
-	// flexDirection: 'column',
 	// '@media(min-width: 1024px)': {
 	// 	width: '25%'
 	// },
@@ -62,7 +56,7 @@ export const Header = glamorous.div({
 	fontSize: '1em',
 	marginBottom: '3%',
 	paddingBottom: '2%',
-	borderBottom: '0.5px solid black',
+	borderBottom: '0.5px solid #605e70',
 
 	'@media(min-width: 1024px)': {
 		fontSize: '2.5em'
@@ -93,32 +87,6 @@ export const Header = glamorous.div({
 //   }
 // });
 
-export const Input = glamorous.input({
-	padding: '1% 2%',
-	marginBottom: '2%',
-	fontSize: '2em',
-	height: '3vh',
-	border: '1px solid gray',
-	borderRadius: '5px',
-	':focus': { outline: 'none' }, // *:focus { outline: none } ~~~ no focus for any elements
-
-	'@media(min-width: 1024px)': {
-		fontSize: '1.3em'
-	},
-
-	'@media(max-width: 1024px)': {
-		fontSize: '1.1em'
-	},
-
-	'@media(max-width: 793px)': {
-		marginBottom: '3%'
-	},
-
-	'@media(max-width: 550px)': {
-		marginBlockEnd: '6%',
-		padding: '2% 3%'
-	}
-});
 
 export const Button = glamorous.button({
 	fontSize: '2em',
@@ -145,7 +113,8 @@ export const OAuthContainer = glamorous.div({
 	width: '100%',
 
 	'@media(min-width: 1024px)': {
-		paddingBottom: '5%'
+		paddingBottom: '5%',
+		paddingTop: '0.2%'
 	},
 
 	'@media(max-width: 793px)': {
@@ -162,11 +131,11 @@ export const OAuthContainer = glamorous.div({
 
 export const OAuthButton = glamorous.div({
 	display: 'flex',
-	width: '100%',
-	padding: '2% 0',
 	alignItems: 'center',
 	alignContent: 'center',
 	justifyContent: 'center',
+	width: '100%',
+	padding: '2% 0',
 	marginTop: '1%',
 	margin: 'auto',
 	fontSize: '1em',
@@ -196,7 +165,7 @@ export const OAuthButton = glamorous.div({
 export const Or = glamorous.div({
 	width: '100%',
 	textAlign: 'center',
-	borderBottom: '0.5px solid black',
+	borderBottom: '0.5px solid #605e70',
 	lineHeight: '0.1em',
 
 	'@media(min-width: 1024px)': {
@@ -296,9 +265,9 @@ export const LoginClickHere = glamorous.p({
 
 export const CloseX = glamorous.div({
 	fontFamily: 'Quicksand, sans-serif',
-	position: 'fixed',
-	top: '32vh',
-	right: '39vw',
+	position: 'relative',
+	top: '0.7vh',
+	right: '1.5vw',
 	zIndex: 3,
 	fontSize: '1.5em',
 	fontWeight: 500,
