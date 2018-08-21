@@ -51,17 +51,10 @@ const Menu = glamorous.div({
 });
 
 const MenuLine = glamorous.div({
-<<<<<<< HEAD
-  width: "35px",
-  height: "5px",
-  background: "white",
-  margin: "6px 0"
-=======
 	width: '35px',
 	height: '5px',
 	background: 'black',
 	margin: '6px 0'
->>>>>>> a68836a5a859c05ebaba04c4010e0079bfee006f
 });
 
 export default class NavBar extends Component {
@@ -89,32 +82,12 @@ export default class NavBar extends Component {
 		this.setState({ displayRegForm: true });
 	};
 
-<<<<<<< HEAD
-  render() {
-    return (
-      <NavContainer>
-        <Logo>FLY-BY</Logo>
-        <ButtonContainer>
-          <Button>Business Inquiries</Button>
-          <Button>Sign Up</Button>
-          <Button onClick={() => this.setState({ displayLoginModal: true })}>Login</Button>
-          <Menu>
-            <MenuLine></MenuLine>
-            <MenuLine></MenuLine>
-            <MenuLine></MenuLine>
-          </Menu>
-        </ButtonContainer>
-        {this.state.displayLoginModal ? <SignInModal closeModal={() => this.setState({ displayLoginModal: false })} /> : null}
-      </NavContainer>
-    )
-  }
-}
-=======
 	render() {
 		return (
 			<NavContainer>
 				<Logo>Right Now</Logo>
-				<ButtonContainer>
+        <ButtonContainer>
+          <Button>Business Signup</Button>
 					<Button onClick={() => this.setState({ displayRegModal: true })}>Sign Up</Button>
 					<Button onClick={() => this.setState({ displayLoginModal: true })}>Login</Button>
 					<Menu>
@@ -142,4 +115,3 @@ export default class NavBar extends Component {
 		);
 	}
 }
->>>>>>> a68836a5a859c05ebaba04c4010e0079bfee006f
