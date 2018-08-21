@@ -67,6 +67,16 @@ export default class NavBar extends Component {
 		};
 	}
 
+	openReg = () => {
+		this.setState({ displayRegModal: true });
+		document.body.style.overflow = 'hidden';
+	};
+
+	openLogin = () => {
+		this.setState({ displayLoginModal: true });
+		document.body.style.overflow = 'hidden';
+	};
+
 	RegToLogModal = () => {
 		this.setState({ displayRegModal: false });
 		this.setState({ displayLoginModal: true });
@@ -82,13 +92,18 @@ export default class NavBar extends Component {
 		this.setState({ displayRegForm: true });
 	};
 
+	closeModal = () => {
+		document.body.style.overflow = 'scroll';
+		this.setState({ displayRegModal: false, displayLoginModal: false, displayRegForm: false });
+	};
+
 	render() {
 		return (
 			<NavContainer>
 				<Logo>Right Now</Logo>
 				<ButtonContainer>
-					<Button onClick={() => this.setState({ displayRegModal: true })}>Sign Up</Button>
-					<Button onClick={() => this.setState({ displayLoginModal: true })}>Login</Button>
+					<Button onClick={() => this.openReg()}>Sign Up</Button>
+					<Button onClick={() => this.openLogin()}>Login</Button>
 					<Menu>
 						<MenuLine />
 						<MenuLine />
@@ -96,20 +111,12 @@ export default class NavBar extends Component {
 					</Menu>
 				</ButtonContainer>
 				{this.state.displayLoginModal ? (
-					<SignInModal
-						closeModal={() => this.setState({ displayLoginModal: false })}
-						logToReg={() => this.LogToRegModal()}
-					/>
+					<SignInModal closeModal={() => this.closeModal()} logToReg={() => this.LogToRegModal()} />
 				) : null}
 				{this.state.displayRegModal ? (
-					<RegisterModal
-						closeModal={() => this.setState({ displayRegModal: false })}
-						regToLog={() => this.RegToLogModal()}
-					/>
+					<RegisterModal closeModal={() => this.closeModal()} regToLog={() => this.RegToLogModal()} />
 				) : null}
-				{this.state.displayRegForm ? (
-					<RegisterForm closeModal={() => this.setState({ displayRegForm: false })} />
-				) : null}
+				{this.state.displayRegForm ? <RegisterForm closeModal={() => this.closeModal()} /> : null}
 			</NavContainer>
 		);
 	}
