@@ -35,101 +35,101 @@ class Biz_Appointments extends React.Component {
                 <div>Sunday 7</div>
                 <div>Closed</div>
             </div>
-            <div className='dateCard'>
+            <div className='dateCard yellow'>
                 <div>Monday 1</div>
+                <div>69%</div>
+            </div>
+            <div className='dateCard green'>
+                <div>Tuesday 2</div>
+                <div>89%</div>
+            </div>
+            <div className='dateCard red'>
+                <div>Wednesday 3</div>
+                <div>43%</div>
+            </div>
+            <div className='dateCard red'>
+                <div>Thursday 4</div>
+                <div>35%</div>
+            </div>
+            <div className='dateCard yellow'>
+                <div>Friday 5</div>
+                <div>55%</div>
+            </div>
+            <div className='dateCard green'>
+                <div>Saturday 6</div>
                 <div>80%</div>
             </div>
             <div className='dateCard'>
+                <div>Sunday 7</div>
+                <div>Closed</div>
+            </div>
+            <div className='dateCard yellow'>
                 <div>Monday 1</div>
+                <div>69%</div>
+            </div>
+            <div className='dateCard green'>
+                <div>Tuesday 2</div>
+                <div>89%</div>
+            </div>
+            <div className='dateCard green'>
+                <div>Wednesday 3</div>
+                <div>93%</div>
+            </div>
+            <div className='dateCard red'>
+                <div>Thursday 4</div>
+                <div>35%</div>
+            </div>
+            <div className='dateCard yellow'>
+                <div>Friday 5</div>
+                <div>55%</div>
+            </div>
+            <div className='dateCard green'>
+                <div>Saturday 6</div>
                 <div>80%</div>
             </div>
             <div className='dateCard'>
+                <div>Sunday 7</div>
+                <div>Closed</div>
+            </div>
+            <div className='dateCard yellow'>
                 <div>Monday 1</div>
-                <div>80%</div>
+                <div>69%</div>
+            </div>
+            <div className='dateCard green'>
+                <div>Tuesday 2</div>
+                <div>89%</div>
+            </div>
+            <div className='dateCard green'>
+                <div>Wednesday 3</div>
+                <div>83%</div>
+            </div>
+            <div className='dateCard green'>
+                <div>Thursday 4</div>
+                <div>75%</div>
+            </div>
+            <div className='dateCard yellow'>
+                <div>Friday 5</div>
+                <div>65%</div>
+            </div>
+            <div className='dateCard red'>
+                <div>Saturday 6</div>
+                <div>20%</div>
             </div>
             <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
+                <div>Sunday 7</div>
+                <div>Closed</div>
             </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
+            <div className='dateCard yellow'>
+                <div>Thursday 4</div>
+                <div>65%</div>
             </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
+            <div className='dateCard green'>
+                <div>Friday 5</div>
+                <div>95%</div>
             </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
-            </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
-            </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
-            </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
-            </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
-            </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
-            </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
-            </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
-            </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
-            </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
-            </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
-            </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
-            </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
-            </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
-            </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
-            </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
-            </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
-            </div>
-            <div className='dateCard'>
-                <div>Monday 1</div>
-                <div>80%</div>
+            <div className='dateCard red'>
+                <div>Saturday 6</div>
+                <div>10%</div>
             </div>
           </div>
 
@@ -148,14 +148,15 @@ class Biz_Appointments extends React.Component {
               <input placeholder="What hours are you available?" />
               <input placeholder="Cost ($)" />
               <input placeholder="How long is each reservation? (30m or 60m)" />
-
+              <div className='filterButton'>Create Appointments</div>
             </div>
             <div className="slide">
               <h4>Create a Single Appointment</h4>
               <input placeholder="Type of Service" />
               <input placeholder="Date (MM/DD/YY)" />
               <input placeholder="Cost ($)" />
-              <input placeholder="Type of Service" />
+              <input placeholder="Time" />
+              <div className='filterButton'>Create Appointment</div>
             </div>
           </div>
         </div>
