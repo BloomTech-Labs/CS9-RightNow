@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import GoogleLogIn from '../../firebase/auth.google.services';
+import FacebookLogIn from '../../firebase/auth.facebook.services';
 import {
 	Container,
 	ModalWrapper,
@@ -43,11 +45,11 @@ export default class RegisterModal extends Component {
 						<Header>Lets get started.</Header>
 
 						<OAuthContainer>
-							<OAuthButton onClick={() => this.handleRegister('google')}>
+							<OAuthButton onClick={GoogleLogIn}>
 								<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
 								Sign Up with Google
 							</OAuthButton>
-							<OAuthButton onClick={() => this.handleRegister('facebook')}>
+							<OAuthButton onClick={FacebookLogIn}>
 								<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" />
 								Sign Up with Facebook
 							</OAuthButton>
