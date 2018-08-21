@@ -140,7 +140,6 @@ export const LoginButton = glamorous.div({
 	fontWeight: 500,
 	padding: '2% 0',
 	background: '#26c1a2',
-	width: '100%',
 	marginBottom: '5%',
 	borderRadius: '5px',
 	':hover': { border: '1px solid #2cd3b2', backgroundColor: '#2cd3b2', cursor: 'pointer' },
