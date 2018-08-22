@@ -17,7 +17,9 @@ class UserSettings extends Component {
                 <h1>User Settings</h1>
                 <FormContainer>
                     <EmailPhone/>
+                    <h1>Notifications</h1>
                     <UserNotification/>
+                    <h1>Change Password</h1>
                     <UserChangePassword/>
                 </FormContainer>
             </div>
