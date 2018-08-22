@@ -4,6 +4,7 @@ import {
   CircleOption,
   OptionContainer
 } from "./industry_view_styles";
+import Results from "./selection_results";
 
 
 const IndustryOption = props => {
@@ -52,6 +53,8 @@ export default class IndustryView extends Component {
         </OptionContainer>
 
         {this.state.currentSelection ? <Header>{`${this.state.currentSelection.innerHTML} Services`}</Header> : null}
+
+        <Results industry={this.state.currentSelection} />
         
       </div>
     )
