@@ -7,6 +7,16 @@ import {
 
 
 const IndustryOption = props => {
+  if (props.text === "All") {
+    return (
+      <CircleOption 
+        id="defaultSelection"
+        onClick={(e) => props.handleSelection(e)} 
+        style={{ border: "3px solid red" }}>
+        {props.text}
+      </CircleOption>
+    )
+  }
   return <CircleOption onClick={(e) => props.handleSelection(e)}>{props.text}</CircleOption>
 }
 
@@ -14,16 +24,18 @@ const IndustryOption = props => {
 export default class IndustryView extends Component {
   state = {
     industries: ["All", "Hair", "Auto", "Nails", "etc.", "etc."],
-    lastSelection: null
+    currentSelection: null
+  }
+
+  componentDidMount() {
+    const defaultIndustry = document.querySelector("#defaultSelection");
+    this.setState({ currentSelection: defaultIndustry });
   }
 
   handleIndustrySelection = e => {
-    const { lastSelection } = this.state;
-
     e.target.style.border = "3px solid red";
-    lastSelection ? lastSelection.style.border = "1px solid black" : null;
-    
-    this.setState({ lastSelection: e.target });
+    this.state.currentSelection.style.border = "1px solid black";
+    this.setState({ currentSelection: e.target });
   }
 
   render() {
@@ -33,6 +45,7 @@ export default class IndustryView extends Component {
         <OptionContainer>
           {this.state.industries.map((industry, index) => (
             <IndustryOption 
+              key={index}
               text={industry} 
               handleSelection={this.handleIndustrySelection} 
               />
