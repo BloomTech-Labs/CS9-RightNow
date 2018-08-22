@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import EmailPhone from './email_phone'
-import UserNotification from './user_notification';
-import UserChangePassword from './user_change_password';
+import EmailPhone from '../share_settings/email_phone'
+import UserNotification from '../share_settings/user_notification';
+import UserChangePassword from '../share_settings/user_change_password';
 import glamorous from "glamorous";
 
 export const FormContainer = glamorous.div({
