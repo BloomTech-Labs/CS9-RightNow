@@ -5,6 +5,7 @@ import UserProvider from './context/userContext';
 import { Route } from 'react-router-dom';
 import BusinessLanding from './components/business_page/business_landing'
 import Customer from './components/customers/customers';
+import UserSettings from './components/user_settings/user_settings_form';
 
 class App extends Component {
     constructor() {
@@ -21,6 +22,7 @@ class App extends Component {
                     <Route exact path="/" component={Customer} /> 
                     <Route exact path="/biz-landing" component={BusinessLanding} />
                     <Route exact path="/biz-account" component={null} />
+                    <Route exact path="/user-settings" component={UserSettings} />
                 </UserProvider>
             </div>
         );

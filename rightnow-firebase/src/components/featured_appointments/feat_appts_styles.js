@@ -43,7 +43,7 @@ export const Header = glamorous.div({
 
 export const CardContainer = glamorous.div({
   display: "grid",
-  gridTemplateColumns: "23% 23% 23%",
+  gridTemplateColumns: "18% 18% 18%",
   gridColumnGap: "5%",
   justifyContent: "center"
 
