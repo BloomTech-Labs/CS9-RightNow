@@ -4,6 +4,9 @@ import SignInModal from './login_modal/login_modal';
 import RegisterModal from './register_modal/reg_modal';
 import RegisterForm from './register_modal/reg_forms';
 import { Link } from "react-router-dom";
+import UserDropdown from './user_dropdown/user_dropdown';
+
+
 const NavContainer = glamorous.div({
 	width: '100%',
 	background: '#EBEBEB',
@@ -63,7 +66,8 @@ export default class NavBar extends Component {
 		this.state = {
 			displayLoginModal: false, // true for dev purposes. set to false prior to pull.
 			displayRegModal: false,
-			displayRegForm: false
+			displayRegForm: false,
+			userDropdown: true // true for dev purposes
 		};
 	}
 
@@ -90,7 +94,7 @@ export default class NavBar extends Component {
 					<Link to="/biz-landing"><Button>Business Signup</Button></Link>
 					<Button onClick={() => this.setState({ displayRegModal: true })}>Sign Up</Button>
 					<Button onClick={() => this.setState({ displayLoginModal: true })}>Login</Button>
-					<Menu>
+					<Menu onClick={() => this.setState({ userDropdown: !this.state.userDropdown })}>
 						<MenuLine />
 						<MenuLine />
 						<MenuLine />
@@ -111,6 +115,7 @@ export default class NavBar extends Component {
 				{this.state.displayRegForm ? (
 					<RegisterForm closeModal={() => this.setState({ displayRegForm: false })} />
 				) : null}
+				{this.state.userDropdown ? <UserDropdown /> : null}
 			</NavContainer>
 		);
 	}
