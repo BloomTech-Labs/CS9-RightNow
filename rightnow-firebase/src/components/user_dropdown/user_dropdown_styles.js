@@ -6,8 +6,8 @@ export const DropdownContainer = glamorous.div({
   right: "1%",
   top: "5%",
   background: "black",
-  height: "500px",
   width: "500px",
-  display: "flex",
-  flexDirection: "column"
+  height: "50vh",
+  display: "grid",
+  grid: "10% 80% 10% / 100%"
 });

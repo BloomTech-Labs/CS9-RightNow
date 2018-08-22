@@ -67,7 +67,7 @@ export default class NavBar extends Component {
 			displayLoginModal: false, // true for dev purposes. set to false prior to pull.
 			displayRegModal: false,
 			displayRegForm: false,
-			userDropdown: true // true for dev purposes
+			userDropdown: false // true for dev purposes
 		};
 	}
 
