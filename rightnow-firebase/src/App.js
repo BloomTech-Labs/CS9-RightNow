@@ -5,7 +5,7 @@ import UserProvider from './context/userContext';
 import {Route} from 'react-router-dom';
 import BusinessLanding from './components/BusinessLanding'
 import Customer from './components/customers/customers';
-import UserSettings from './components/user_settings/user_setting_form';
+import UserSettings from './components/user_settings/user_settings_form';
 
 class App extends Component {
     constructor() {
