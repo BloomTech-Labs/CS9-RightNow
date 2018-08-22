@@ -19,6 +19,13 @@ export default class RegisterModal extends Component {
 		this.state = {};
 	}
 
+	addDashes = (f) => {
+		let num = f.phoneNum.value;
+		let parts = [ num.slice(0, 3), num.slice(3, 6), num.slice(6, 10) ];
+		let fNum = parts[0] + '-' + parts[1] + '-' + parts[2];
+		alert(fNum);
+	};
+
 	render() {
 		return (
 			<FormContainer>
@@ -31,7 +38,7 @@ export default class RegisterModal extends Component {
 						<NamePlace2 type="text" placeholder="Last Name" />
 					</div>
 				</NameContainer>
-				<PhoneNumber type="text" placeholder="Phone number" />
+				<PhoneNumber name="phoneNum" onBlur="addDashes(this)" type="text" placeholder="Phone number" />
 				<Location type="text" placeholder="Preferred location" />
 
 				<CheckBoxWrapper>
