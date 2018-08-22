@@ -3,7 +3,7 @@ import NavBar from './components/nav_bar';
 import { init as firebaseInit } from './firebase/firebase';
 import UserProvider from './context/userContext';
 import { Route } from 'react-router-dom';
-import BusinessLanding from './components/BusinessLanding'
+import BusinessLanding from './components/business_page/business_landing'
 import Customer from './components/customers/customers';
 
 class App extends Component {
@@ -18,8 +18,9 @@ class App extends Component {
             <div className="App">
                 <UserProvider>
                     <NavBar />
-                    <Route exact path="/" component={Customer} />
+                    <Route exact path="/" component={Customer} /> 
                     <Route exact path="/biz-landing" component={BusinessLanding} />
+                    <Route exact path="/biz-account" component={null} />
                 </UserProvider>
             </div>
         );
