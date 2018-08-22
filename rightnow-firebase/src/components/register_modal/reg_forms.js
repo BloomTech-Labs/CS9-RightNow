@@ -19,13 +19,6 @@ export default class RegisterModal extends Component {
 		this.state = {};
 	}
 
-	addDashes = (f) => {
-		let num = f.phoneNum.value;
-		let parts = [ num.slice(0, 3), num.slice(3, 6), num.slice(6, 10) ];
-		let fNum = parts[0] + '-' + parts[1] + '-' + parts[2];
-		alert(fNum);
-	};
-
 	render() {
 		return (
 			<FormContainer>
