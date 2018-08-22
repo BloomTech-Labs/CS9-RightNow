@@ -11,11 +11,9 @@ const IndustryOption = props => {
     return (
       <CircleOption 
         id="defaultSelection"
-        onClick={(e) => props.handleSelection(e)} 
-        style={{ border: "3px solid red" }}>
-        {props.text}
-      </CircleOption>
-    )
+        style={{ border: "3px solid red" }}
+        onClick={(e) => props.handleSelection(e)}>{props.text}</CircleOption>
+    );
   }
   return <CircleOption onClick={(e) => props.handleSelection(e)}>{props.text}</CircleOption>
 }
@@ -42,6 +40,7 @@ export default class IndustryView extends Component {
     return (
       <div>
         <Header>View Appointments by Industry</Header>
+
         <OptionContainer>
           {this.state.industries.map((industry, index) => (
             <IndustryOption 
@@ -51,6 +50,9 @@ export default class IndustryView extends Component {
               />
           ))}
         </OptionContainer>
+
+        {this.state.currentSelection ? <Header>{`${this.state.currentSelection.innerHTML} Services`}</Header> : null}
+        
       </div>
     )
   }

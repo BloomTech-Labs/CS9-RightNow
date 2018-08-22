@@ -21,7 +21,7 @@ export const OptionContainer = glamorous.div({
 export const CircleOption = glamorous.div({
   width: "100%",
   height: "100%",
-  border: "1px solid black",
+  border: "1px solid gray",
   borderRadius: "50%",
   fontSize: "2.5em",
   fontWeight: 600,
