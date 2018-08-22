@@ -13,9 +13,9 @@ const UserInput = glamorous.input({
 const emailPassword = () => {
     return (
         <div>
-            Email
+            <h3>Email</h3>
             <UserInput/>
-            Phone
+            <h3>Phone</h3>
             <UserInput />
         </div>
     );
