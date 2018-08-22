@@ -27,5 +27,13 @@ export const Time = glamorous.div({
 export const SortBy = glamorous.select({
   fontSize: "2em",
   width: "50%",
-  padding: "2.5%"
+  padding: "2.5%",
+
+  ":hover": {
+    cursor: "pointer"
+  },
+
+  ":focus": {
+    outline: "none"
+  }
 });
