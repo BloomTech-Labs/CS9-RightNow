@@ -101,36 +101,6 @@ export default class NavBar extends Component {
 	};
 
 	render() {
-<<<<<<< HEAD
-		return <NavContainer>
-        <Logo>Right Now</Logo>
-        <ButtonContainer>
-			<Link to="/biz-landing"><Button>Business Signup</Button></Link>
-          <Button onClick={() => this.setState({ displayRegModal: true })}>
-            Sign Up
-          </Button>
-          <Button
-            onClick={() => this.setState({ displayLoginModal: true })}
-          >
-            Login
-          </Button>
-          <Menu>
-            <MenuLine />
-            <MenuLine />
-            <MenuLine />
-          </Menu>
-        </ButtonContainer>
-        {this.state.displayLoginModal ? <SignInModal closeModal={() => this.setState(
-                { displayLoginModal: false }
-              )} logToReg={() => this.LogToRegModal()} /> : null}
-        {this.state.displayRegModal ? <RegisterModal closeModal={() => this.setState(
-                { displayRegModal: false }
-              )} regToLog={() => this.RegToLogModal()} /> : null}
-        {this.state.displayRegForm ? <RegisterForm closeModal={() => this.setState(
-                { displayRegForm: false }
-              )} /> : null}
-      </NavContainer>;
-=======
 		return (
 			<NavContainer>
 				<Logo>Right Now</Logo>
@@ -155,6 +125,5 @@ export default class NavBar extends Component {
 				{this.state.displayRegForm ? <RegisterForm closeModal={() => this.closeModal()} /> : null}
 			</NavContainer>
 		);
->>>>>>> 589ec4a1c48e00814e3c31ffdc25e23e80317272
 	}
 }
