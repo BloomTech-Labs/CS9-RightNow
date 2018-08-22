@@ -7,7 +7,7 @@ import {
 } from "./selection_results_styles";
 import AppointmentCard from "../appointment_card/appt_card";
 
-
+// DUMMY DATA
 const information = {
   0: {
     businessImage: "https://nyoobserver.files.wordpress.com/2015/12/unnamed2.jpg",
