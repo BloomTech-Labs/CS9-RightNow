@@ -1,19 +1,28 @@
 import React, {Component} from 'react';
-import {FormContainer, Email} from './user_settings_form_styles'
 import EmailPhone from './email_phone'
 import UserNotification from './user_notification';
 import UserChangePassword from './user_change_password';
+import glamorous from "glamorous";
+
+export const FormContainer = glamorous.div({
+    // border: '1px solid blue',
+    width: '50%'
+});
+
 class UserSettings extends Component {
 
     render() {
-        return(
+        return (
             <div>
                 <h1>User Settings</h1>
-                <EmailPhone/>
-                <UserNotification/>
-                <UserChangePassword/>
+                <FormContainer>
+                    <EmailPhone/>
+                    <UserNotification/>
+                    <UserChangePassword/>
+                </FormContainer>
             </div>
         );
     }
 }
+
 export default UserSettings;
