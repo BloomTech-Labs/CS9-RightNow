@@ -18,26 +18,9 @@ import {
 	RegClickHere,
 	CloseX
 } from './login_modal_styles';
+import { UserContext } from '../../context/userContext';
 
 export default class SignInModal extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {};
-	}
-
-	handleSignIn = (method) => {
-		switch (method) {
-			case 'email':
-				break;
-			case 'google':
-				break;
-			case 'facebook':
-				break;
-			default:
-				break;
-		}
-	};
-
 	render() {
 		return (
 			<Container>
@@ -49,22 +32,26 @@ export default class SignInModal extends Component {
 							<Input type="text" placeholder="Email" />
 							<Input type="password" placeholder="Password" />
 						</NormalSignIn>
-						<LoginButton onClick={() => this.handleSignIn('email')}>Sign In</LoginButton>
+						<LoginButton onClick={() => console.log('email login not implemented')}>Sign In</LoginButton>
 
 						<Or>
 							<span style={{ backgroundColor: '#353A50', padding: '0 3%' }}>or</span>
 						</Or>
 
-						<OAuthContainer>
-							<OAuthButton onClick={GoogleLogIn}>
-								<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
-								Login with Google
-							</OAuthButton>
-							<OAuthButton onClick={FacebookLogIn}>
-								<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" />
-								Login with Facebook
-							</OAuthButton>
-						</OAuthContainer>
+						<UserContext.Consumer>
+							{(value) => (
+								<OAuthContainer>
+									<OAuthButton onClick={() => GoogleLogIn(value)}>
+										<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+										Login with Google
+									</OAuthButton>
+									<OAuthButton onClick={FacebookLogIn}>
+										<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" />
+										Login with Facebook
+									</OAuthButton>
+								</OAuthContainer>
+							)}
+						</UserContext.Consumer>
 
 						<NewUser>
 							<p style={{ marginRight: '2%' }}>Don't have an account?</p>
