@@ -3,7 +3,9 @@ import glamorous from 'glamorous';
 import SignInModal from './login_modal/login_modal';
 import RegisterModal from './register_modal/reg_modal';
 import RegisterForm from './register_modal/reg_forms';
+import ConfirmModal from './confirm_appt_modal/confirm_modal';
 import { Link } from 'react-router-dom';
+
 const NavContainer = glamorous.div({
 	width: '100%',
 	background: '#EBEBEB',
@@ -120,6 +122,7 @@ export default class NavBar extends Component {
 					<RegisterModal closeModal={() => this.closeModal()} regToLog={() => this.RegToLogModal()} />
 				) : null}
 				{this.state.displayRegForm ? <RegisterForm closeModal={() => this.closeModal()} /> : null}
+				<ConfirmModal />
 			</NavContainer>
 		);
 	}
