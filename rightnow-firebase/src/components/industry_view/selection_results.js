@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import {
   Container, 
   Sorting, 
-  Time
+  Time,
+  SortBy
 } from "./selection_results_styles";
 import AppointmentCard from "../appointment_card/appt_card";
 
@@ -249,13 +250,21 @@ export default class Results extends Component {
   render() {
     return (
       <Container>
+
         <Sorting>
-          <div>
             <h2>Current time:</h2>
             <Time>{this.state.time}</Time>
-          </div>
+            <SortBy>
+              <option disabled selected hidden>Sort By</option>
+              <option value="2">2 hours</option>
+              <option value="3">3 hours</option>
+              <option value="4">4 hours</option>
+              <option value="5">5+ hours</option>
+            </SortBy>
         </Sorting>
+
         {Object.keys(information).map((key, index) => <AppointmentCard businessInfo={information[key]} key={index} /> )}
+        
       </Container>
     )
   }

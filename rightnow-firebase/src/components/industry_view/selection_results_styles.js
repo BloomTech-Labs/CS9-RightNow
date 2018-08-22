@@ -11,8 +11,7 @@ export const Container = glamorous.div({
 
 export const Sorting = glamorous.div({
   display: "grid",
-  gridTemplateRows: "20% 10% 10% 60%",
-  gridGap: "5vw",
+  gridTemplateRows: "8% 25% 10% 55%",
   justifyItems: "center"
 });
 
@@ -22,4 +21,11 @@ export const Time = glamorous.div({
   fontWeight: 600,
   fontSize: "3em",
   letterSpacing: "0.1em"
+});
+
+
+export const SortBy = glamorous.select({
+  fontSize: "2em",
+  width: "50%",
+  padding: "2.5%"
 });
