@@ -1,7 +1,30 @@
 import React, { Component } from "react";
-import "./appointments_business_styles.css";
+import "/appointments_business_styles.css";
+// import firebase from './../firebase/firebase.js';
+// const db = firebase.firestore();
 
 class Biz_Appointments extends React.Component {
+    constructor(){
+        super();
+        this.state = {
+            service: '',
+            date: '',
+            cost: '',
+            startTime: '',
+            endTime: '',
+        };
+        // this.handleSubmitAppointment = this.handleSubmitAppointment.bind(this);
+    }
+    componentDidMount() {
+        // Upon mounting, this sets the state of this component to what is inside of the database.
+        let initalServiceState = [];
+        // firebase.firestore().collection().doc().get().then(function(query) {
+        //     initalServiceState.push(query.data().service)
+        // }).then(data => {
+        //     this.setState({ service: initalServiceState[0] });
+        // });
+    }
+
   render() {
     return (
       <div id="background">
