@@ -54,7 +54,15 @@ export const Appointment = glamorous.div({
   border: "1px solid black",
   borderRadius: "5px",
   margin: "0 0 3%",
-  padding: "3%"
+  padding: "3%",
+
+  ":hover": {
+    border: "1px solid #00FFFF",
+    background: "rgba(255, 255, 0, 0.35)",
+    fontWeight: 600,
+    color: "#099FFF",
+    cursor: "pointer"
+  }
 });
 
 export const Type = glamorous.div({
