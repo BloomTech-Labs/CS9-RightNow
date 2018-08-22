@@ -58,9 +58,7 @@ export const Appointment = glamorous.div({
 
   ":hover": {
     border: "1px solid #00FFFF",
-    background: "rgba(255, 255, 0, 0.35)",
     fontWeight: 600,
-    color: "#099FFF",
     cursor: "pointer"
   }
 });
