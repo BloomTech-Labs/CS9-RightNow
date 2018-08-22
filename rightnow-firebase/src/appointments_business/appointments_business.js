@@ -20,12 +20,13 @@ class Biz_Appointments extends React.Component {
       newSeshService: '',
       newSeshDate: '',
       newSeshCost: '',
-      newSeshStateTime: '',
+      newSeshStartTime: '',
       newSeshEndTime: '',
     };
 
     this.submitSession = this.submitSession.bind(this);
     this.submitMultipleSessions = this.submitMultipleSessions.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
     // Upon mounting, this sets the state of this component to what is inside of the database.
@@ -42,13 +43,31 @@ class Biz_Appointments extends React.Component {
   }
 
   handleChange(e) {
-
-  }
-  submitSession(e) {
-      e.preventDefault();
-    //   console.log('inside SA');
-    this.setState({ })
-  }
+    e.preventDefault();
+    this.setState({
+        [e.target.name]: e.target.value
+    });
+}
+submitSession(e) {
+    e.preventDefault();
+    // const newFirestorePlaceholder = db... // Set space in the firestore db for the new session
+    // const item = { // Pick the items from state which are going to be added to the db
+    //   newSeshService: '',
+    //   newSeshDate: '',
+    //   newSeshCost: '',
+    //   newSeshStartTime: '',
+    //   newSeshEndTime: '',
+    // }
+        // newFirestorePlaceholder.push(item); // Push the new session to the db
+        // Reset the state for the next input
+        this.setState({
+            newSeshService: '',
+            newSeshDate: '',
+            newSeshCost: '',
+            newSeshStartTime: '',
+            newSeshEndTime: '',
+        })
+    }
   
   submitMultipleSessions(e) {
     e.preventDefault();
@@ -196,11 +215,11 @@ class Biz_Appointments extends React.Component {
             </div>
             <div className="slide">
               <h4>Create Recurring Sessions</h4>
-              <input placeholder="Type of Service" />
-              <input placeholder="Which days are you available?" />
-              <input placeholder="What hours are you available?" />
-              <input placeholder="Cost ($)" />
-              <input placeholder="How long is each reservation? (30m or 60m)" />
+              <input onChange={this.handleChange} placeholder="Type of Service" />
+              <input onChange={this.handleChange} placeholder="Which days are you available?" />
+              <input onChange={this.handleChange} placeholder="What hours are you available?" />
+              <input onChange={this.handleChange} placeholder="Cost ($)" />
+              <input onChange={this.handleChange} placeholder="How long is each reservation? (30m or 60m)" />
               <button
                 className="filterButton"
                 onClick={this.submitMultipleSessions}
@@ -210,10 +229,10 @@ class Biz_Appointments extends React.Component {
             </div>
             <div className="slide">
               <h4>Create a Single Session</h4>
-              <input placeholder="Type of Service" />
-              <input placeholder="Date (MM/DD/YY)" />
-              <input placeholder="Cost ($)" />
-              <input placeholder="Time" />
+              <input onChange={this.handleChange} name='newSeshService' value={this.state.newSeshService}placeholder="Type of Service" />
+              <input onChange={this.handleChange} name='newSeshDate' value={this.state.newSeshDate} placeholder="Day of the Week" />
+              <input onChange={this.handleChange} name='newSeshCost' value={this.state.newSeshCost} placeholder="Cost ($)" />
+              <input onChange={this.handleChange} name='newSeshStartTime' value={this.state.newSeshStartTime} placeholder="Time" />
               <div className="filterButton" onClick={this.submitSession}>
                 Create Single Session
               </div>
