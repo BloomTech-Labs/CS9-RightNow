@@ -18,7 +18,7 @@ import {
 	RegClickHere,
 	CloseX
 } from './login_modal_styles';
-import { UserContext } from "../../context/userContext";
+import { UserContext } from '../../context/userContext';
 
 export default class SignInModal extends Component {
 	render() {
@@ -39,7 +39,7 @@ export default class SignInModal extends Component {
 						</Or>
 
 						<UserContext.Consumer>
-							{value => (
+							{(value) => (
 								<OAuthContainer>
 									<OAuthButton onClick={() => GoogleLogIn(value)}>
 										<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />

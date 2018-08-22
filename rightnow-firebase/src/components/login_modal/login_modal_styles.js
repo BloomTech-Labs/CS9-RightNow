@@ -24,8 +24,6 @@ export const ModalWrapper = glamorous.div({
 export const ModalLeft = glamorous.div({
 	fontFamily: 'Quicksand, sans-serif',
 	writingMode: 'vertical-lr',
-	color: 'yellow',
-	// background: '#494755',
 	background: '#ef5651',
 	width: '.6%',
 	zIndex: 2
@@ -100,7 +98,13 @@ export const Input = glamorous.input({
 	border: 0,
 	borderBottom: '1px solid #ada3a2',
 	// borderRadius: '5px',
-	':focus': { borderBottom: '1px solid white' },
+	':focus': {
+		borderBottom: '1px solid white',
+		outline: 'none',
+		'::placeholder': {
+			opacity: 0
+		}
+	},
 	'::placeholder': {
 		color: '#ada3a2',
 		fontSize: '0.9rem'
@@ -142,6 +146,7 @@ export const LoginButton = glamorous.div({
 	background: '#26c1a2',
 	marginBottom: '5%',
 	borderRadius: '5px',
+	transition: 'background .4s, border .4s',
 	':hover': { border: '1px solid #2cd3b2', backgroundColor: '#2cd3b2', cursor: 'pointer' },
 
 	'@media(min-width: 1024px)': {
@@ -230,6 +235,7 @@ export const OAuthButton = glamorous.div({
 	fontWeight: 500,
 	border: '1px solid lightgray',
 	borderRadius: '5px',
+	transition: 'background .25s, border .25s',
 	':hover': { backgroundColor: 'rgba(225, 225, 225, 0.6)', cursor: 'pointer' },
 
 	'@media(min-width: 1024px)': {
@@ -272,12 +278,13 @@ export const NewUser = glamorous.div({
 });
 
 export const RegClickHere = glamorous.div({
-  // width: '50%',
+	// width: '50%',
 	color: '#FF9756',
 	':hover': { textDecoration: 'underline', cursor: 'pointer' }
 });
 
 export const CloseX = glamorous.div({
+	height: '100%',
 	fontFamily: 'Quicksand, sans-serif',
 	position: 'relative',
 	top: '0.7vh',
