@@ -17,5 +17,9 @@ export const CircleOption = glamorous.div({
   fontSize: "2.5em",
   fontWeight: 600,
   textAlign: "center",
-  lineHeight: "10vw" // same as OptionContainer height
+  lineHeight: "10vw", // same as OptionContainer height
+
+  ":hover": {
+    cursor: "pointer"
+  }
 });

@@ -11,7 +11,7 @@ export const Container = glamorous.div({
 
 export const Sorting = glamorous.div({
   display: "grid",
-  grid: "auto / 20vw 10vw 10vw",
+  gridTemplateRows: "20% 10% 10% 60%",
   gridGap: "5vw",
   justifyItems: "center"
 });

@@ -250,7 +250,10 @@ export default class Results extends Component {
     return (
       <Container>
         <Sorting>
-          <Time>{this.state.time}</Time>
+          <div>
+            <h2>Current time:</h2>
+            <Time>{this.state.time}</Time>
+          </div>
         </Sorting>
         {Object.keys(information).map((key, index) => <AppointmentCard businessInfo={information[key]} key={index} /> )}
       </Container>
