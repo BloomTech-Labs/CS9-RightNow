@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  Container
+  Container, Sorting
 } from "./selection_results_styles";
 import AppointmentCard from "../appointment_card/appt_card";
 
@@ -227,12 +227,29 @@ const information = {
 export default class Results extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      time: new Date().toTimeString()
+    };
+  }
+
+  componentDidMount() {
+    this.intervalID = setInterval(() => this.tick(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalID);
+  }
+
+  tick = () => {
+    this.setState({ time: new Date().toTimeString() })
   }
   
   render() {
     return (
       <Container>
+        <Sorting>
+          <h1>{this.state.time}</h1>
+        </Sorting>
         {Object.keys(information).map((key, index) => <AppointmentCard businessInfo={information[key]} key={index} /> )}
       </Container>
     )
