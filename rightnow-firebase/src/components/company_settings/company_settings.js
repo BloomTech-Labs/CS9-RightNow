@@ -31,7 +31,7 @@ class CompanySettings extends Component {
     render() {
         return (
             <div>
-                <h1>User Settings</h1>
+                <h1>Company Settings</h1>
                 <FormContainer>
                     <EmailPhone/>
                     <h1>Notifications</h1>
