@@ -13,9 +13,9 @@ const ChangePasswordInput = glamorous.input({
 const UserChangePassowrd = () => {
     return (
         <div>
-            Old Password
+            <h3> Old Password </h3>
             <ChangePasswordInput/>
-            New Password
+            <h3> New Password </h3>
             <ChangePasswordInput/>
         </div>
     );
