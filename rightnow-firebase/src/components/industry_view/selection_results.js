@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import {
-  Container, Sorting
+  Container, 
+  Sorting, 
+  Time
 } from "./selection_results_styles";
 import AppointmentCard from "../appointment_card/appt_card";
 
@@ -228,7 +230,7 @@ export default class Results extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      time: new Date().toTimeString()
+      time: new Date().toLocaleTimeString()
     };
   }
 
@@ -241,14 +243,14 @@ export default class Results extends Component {
   }
 
   tick = () => {
-    this.setState({ time: new Date().toTimeString() })
+    this.setState({ time: new Date().toLocaleTimeString() })
   }
   
   render() {
     return (
       <Container>
         <Sorting>
-          <h1>{this.state.time}</h1>
+          <Time>{this.state.time}</Time>
         </Sorting>
         {Object.keys(information).map((key, index) => <AppointmentCard businessInfo={information[key]} key={index} /> )}
       </Container>
