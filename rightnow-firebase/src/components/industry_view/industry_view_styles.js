@@ -1,15 +1,6 @@
 import glamorous from "glamorous";
 
 
-export const Industry = glamorous.div({
-  height: "50px",
-  width: "50px",
-  border: "1px solid black",
-  borderRadius: "50%",
-  textAlign: "center"
-});
-
-
 export const OptionContainer = glamorous.div({
   display: "grid",
   grid: "10vw / 10vw 10vw 10vw 10vw 10vw 10vw",

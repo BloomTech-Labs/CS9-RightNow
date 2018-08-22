@@ -4,22 +4,22 @@ export const Container = glamorous.div({
   border: "1px solid gray",
   borderRadius: "5px",
   display: "grid",
-  grid: "33% 34% 33% / 100%"
+  grid: "32% 32% 34% / 100%"
 });
 
 
 export const BusinessImage = glamorous.img({
-  height: "100%",
   width: "100%",
-  objectFit: "cover"
+  maxHeight: "25vh",
+  minHeight: "25vh"
 });
 
 
 export const BusinessInfo = glamorous.div({
   display: "grid",
-  grid: "33% 33% 33% / 100%",
+  grid: "30% 30% 30% / 100%",
   justifyItems: "center",
-  margin: "3% 1.5%"
+  marginTop: "1.5vh"
 });
 
 

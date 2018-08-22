@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { Header } from "../featured_appointments/feat_appts_styles";
 import {
   CircleOption,
-  OptionContainer
+  OptionContainer,
+  DropDown,
+  Options
 } from "./industry_view_styles";
 import Results from "./selection_results";
 
@@ -52,7 +54,7 @@ export default class IndustryView extends Component {
           ))}
         </OptionContainer>
 
-        {this.state.currentSelection ? <Header>{`${this.state.currentSelection.innerHTML} Services`}</Header> : null}
+        {this.state.currentSelection ? <Header style={{marginLeft: "5%"}}>{`${this.state.currentSelection.innerHTML} Services`}</Header> : null}
 
         <Results industry={this.state.currentSelection} />
         
