@@ -6,7 +6,8 @@ import FeaturedAppointments from './components/featured_appointments/feat_appts'
 import IndustryView from './components/industry_view/industry_view';
 import UserProvider from './context/userContext';
 // import Biz_Appointments from './components/view_appointments_business/appointments_business';
-import Biz_Appointments from '/view_appointments_business/appointments_business';
+// import Biz_Appointments from './view_appointments_business/appointments_business.js';
+import Biz_Appointments from './appointments_business/appointments_business.js';
 
 class App extends Component {
 	constructor() {
