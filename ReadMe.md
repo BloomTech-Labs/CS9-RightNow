@@ -25,4 +25,9 @@ A) You betcha!
 <h2>Maintaining</h2>
 Our Application runs React on the front end, a Go backend, Redis for caching, and Mongodb to hold the data. It is deployed on AWS.
 
-This is a full stack-application developed by Anthony, Mark, Henry, Harrison, and Jeffrey. 
+This is a full stack-application developed by Anthony, Mark, Henry, Harrison, and Jeffrey.
+
+<h2>Photo Credits<h2>
+
+https://unsplash.com/search/photos/time
+https://www.pexels.com/photo/man-wearing-black-and-white-stripe-shirt-looking-at-white-printer-papers-on-the-wall-212286/
