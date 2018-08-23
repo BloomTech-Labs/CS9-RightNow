@@ -5,16 +5,19 @@ import React, { Component } from 'react';
 import {
 	Container,
 	ModalWrapper,
+	ElementConainer,
+	DetailContainer,
 	Greeting,
 	YourSesh,
 	Activity,
-	BusinessName,
+	Spanner,
 	Location,
+	Icon,
 	Time,
 	Cost,
-  Agreement,
-  ButtonContainer,
-  Button,
+	Agreement,
+	ButtonContainer,
+	Button,
 	CloseX
 } from './confirm_modal_styles';
 
@@ -32,24 +35,35 @@ export default class ConfirmModal extends Component {
 	// 	console.log('GrandChild did mount.');
 	// }
 
+
+  // use FieldSet
 	render() {
 		return (
 			<Container>
 				<ModalWrapper>
-					<Greeting>Hey 'name',</Greeting>
-					<YourSesh>Your Sesh is:</YourSesh>
-					<Activity>Type of activity</Activity>
-					<BusinessName>at 'Business Name'</BusinessName>
-					<Location>on 'Location' using Google API</Location>
-					<Time>At 'Time'</Time>
-					<Cost>Estimated cost: $'cost'</Cost>
-					<Agreement>Agreement box</Agreement>
-					<ButtonContainer>
-						<Greeting>Got it!</Greeting>
-						<Greeting>Let's change something</Greeting>
-					</ButtonContainer>
-
-					<CloseX onClick={() => this.props.closeModal()}>x</CloseX>
+					<ElementConainer>
+						<Greeting>Hey John!</Greeting>
+						<YourSesh>Your Sesh-o is:</YourSesh>
+						<DetailContainer>
+							<Activity>
+								<Spanner>Man's Haircut</Spanner> at <Spanner>Chatters Hair Salon</Spanner>
+							</Activity>
+							<Location>
+								on <Spanner>624 109 St NW, Edmonton, AB</Spanner>{' '}
+								<Icon src="https://seeklogo.com/images/G/google-maps-2014-logo-6108508C7B-seeklogo.com.png" />
+							</Location>
+							<Time>
+								at <Spanner> 12:00 AM</Spanner>
+							</Time>
+							<Cost>Estimated cost: $30</Cost>
+							<Agreement>Agreement box</Agreement>
+							<ButtonContainer>
+								<Button>Got it!</Button>
+								<Button>Go back</Button>
+							</ButtonContainer>
+						</DetailContainer>
+						<CloseX onClick={() => this.props.closeModal()}>x</CloseX>
+					</ElementConainer>
 				</ModalWrapper>
 			</Container>
 		);
