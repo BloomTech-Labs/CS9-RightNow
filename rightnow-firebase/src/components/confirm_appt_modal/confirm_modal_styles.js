@@ -16,10 +16,21 @@ export const ModalWrapper = glamorous.div({
 	paddingTop: '30vh',
 	zIndex: 2,
 	position: 'relative',
-	display: 'flex',
+	// display: 'flex',
 	justifyContent: 'center',
 	opacity: '0.95'
 });
+
+export const Greeting = glamorous.div({});
+export const YourSesh = glamorous.div({});
+export const Activity = glamorous.div({});
+export const BusinessName = glamorous.div({});
+export const Location = glamorous.div({});
+export const Time = glamorous.div({});
+export const Cost = glamorous.div({});
+export const Agreement = glamorous.div({});
+export const ButtonContainer = glamorous.div({});
+export const Button = glamorous.div({});
 
 export const CloseX = glamorous.div({
 	height: '100%',
