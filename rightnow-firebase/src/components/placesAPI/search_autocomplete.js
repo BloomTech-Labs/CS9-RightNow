@@ -16,7 +16,9 @@ export default class LocationSearchInput extends React.Component {
   };
 
   handleSelect = address => {
+    console.log(address);
     geocodeByAddress(address)
+      .then(results => console.log(results))
       .then(results => getLatLng(results[0]))
       .then(latLng => console.log('Success', latLng))
       .catch(error => console.error('Error', error));
@@ -29,9 +31,10 @@ export default class LocationSearchInput extends React.Component {
         onChange={this.handleChange}
         onSelect={this.handleSelect}
       >
-        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div>
-            <input
+        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => {
+          console.log(getInputProps)
+          return (<div style={{margin: "10%", fontSize: "1.5em"}}>
+            <input style={{padding: "2%", fontSize: "1.5em"}}
               {...getInputProps({
                 placeholder: 'Search Places ...',
                 className: 'location-search-input',
@@ -60,7 +63,7 @@ export default class LocationSearchInput extends React.Component {
               })}
             </div>
           </div>
-        )}
+        )}}
       </PlacesAutocomplete>
     );
   }
