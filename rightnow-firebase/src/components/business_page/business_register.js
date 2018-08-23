@@ -16,11 +16,30 @@ export default class BusinessAccount extends Component {
 
     this.state = {
       displayForms: true,
-      displaySuccess: false
+      displaySuccess: false,
+      email: "email@email.com",
+      firstName: "",
+      lastName: "",
+      phone: ""
     };
+    this.handleChange = this.handleChange.bind(this);
   }
   submitForm = () => {
-    this.setState({ displayForms: false, displaySuccess: true })
+    this.setState({
+      displayForms: false,
+      displaySuccess: true,
+      email: "",
+      firstName: "",
+      lastName: "",
+      phone: ""
+    });
+  };
+
+  handleChange(e) {
+    e.preventDefault();
+    this.setState({
+      [e.target.name]: e.target.value
+    });
   }
 
   render() {
@@ -33,16 +52,44 @@ export default class BusinessAccount extends Component {
             <Wrapper>
               <LeftSide>
                 <label>First Name:</label>
-                <input type="text" required autocomplete="off" />
+                <input
+                  type="text"
+                  name="firstName"
+                  onChange={this.handleChange}
+                  value={this.state.firstName}
+                  required
+                  autocomplete="off"
+                />
                 <label>Email:</label>
-                <input type="email" required autocomplete="off" />
+                <input
+                  type="email"
+                  onChange={this.handleChange}
+                  name="email"
+                  value={this.state.email}
+                  required
+                  autocomplete="off"
+                />
               </LeftSide>
 
               <RightSide>
                 <label>Last Name:</label>
-                <input type="text" required autocomplete="off" />
+                <input
+                  type="text"
+                  onChange={this.handleChange}
+                  name="lastName"
+                  value={this.state.lastName}
+                  required
+                  autocomplete="off"
+                />
                 <label>Phone Number:</label>
-                <input type="text" required autocomplete="off" />
+                <input
+                  type="text"
+                  onChange={this.handleChange}
+                  name="phone"
+                  value={this.state.phone}
+                  required
+                  autocomplete="off"
+                />
               </RightSide>
             </Wrapper>
             <Bottom>
@@ -50,12 +97,15 @@ export default class BusinessAccount extends Component {
               <input type="text" placeholder="API" />
             </Bottom>
             <div>
-              <Button onClick={() => this.submitForm()} type="submit">Submit</Button>
+              <Button onClick={() => this.submitForm()} type="submit">
+                Submit
+              </Button>
             </div>{" "}
           </div>
         ) : null}
-        {this.state.displaySuccess ? <h3>We got your application, thank you for the submission</h3> : null}
-     
+        {this.state.displaySuccess ? (
+          <h3>We got your application, thank you for the submission</h3>
+        ) : null}
       </Container>
     );
   }
