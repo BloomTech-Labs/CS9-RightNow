@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./appointments_business_styles.css";
+import AppointmentCard from './appointment_card/appointment_card.js';
 import firebase from "../firebase/firebase";
 const db = firebase.firestore();
 
@@ -9,7 +10,9 @@ class Biz_Appointments extends React.Component {
     this.state = {
 // Inital State
         service: '',
-        date: '',
+        day: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        dateNumber: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        occupancy: [68 + '%', 89 + '%', 43+'%', 35+'%', 55+'%', 80+'%', 'closed'],
         cost: '',
         startTime: '',
         endTime: '',
@@ -30,6 +33,7 @@ class Biz_Appointments extends React.Component {
     this.submitSession = this.submitSession.bind(this);
     this.submitMultipleSessions = this.submitMultipleSessions.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.checkOccupancy = this.checkOccupancy.bind(this);
   }
 
   componentDidMount() {
@@ -46,6 +50,26 @@ class Biz_Appointments extends React.Component {
         this.setState({ service: initalServiceState[0] });
       });
   }
+
+  // Attempting to make a function that will check the occupancy of each card
+  //  and color-code it accordingly
+  // checkOccupancy(e) {
+  //   e.preventDefault();
+  //   // console.log('tru')
+  //   // const red = document.getElementById('red');
+  //   // red.className += '' + 'newClassName'
+  //   if (this.state.occupancy[1] > 75 + '%') {
+  //     console.log('green')
+  //     // const green = document.getElementById('green');
+  //     // green.div += '' + 'newClassName';
+  //   } 
+  //   if ((this.state.occupancy[1] > 50 + '%') && (this.state.occupancy[1] < 75 + '%')) {
+  //     console.log('yellow')
+  //   } 
+  //   if (this.state.occupancy[0] < 50 + '%' ) {
+  //     console.log('red')
+  //   } 
+  // }
 
   handleChange(e) {
         e.preventDefault();
@@ -92,11 +116,11 @@ class Biz_Appointments extends React.Component {
       <div id="background">
         <div className="dashboard">
           <div className="three-four">
-            <div className="dateCard yellow">
-              <div>Monday 1</div>
-              <div>69%</div>
+            <div onClick={this.checkOccupancy} className="dateCard yellow">
+              <div>{this.state.day[0]}{this.state.dateNumber[0]}</div>
+              <div>{this.state.occupancy[0]}</div>
             </div>
-            <div className="dateCard green">
+            <div onClick='' className="dateCard green">
               <div>Tuesday 2</div>
               <div>89%</div>
             </div>
@@ -245,6 +269,7 @@ class Biz_Appointments extends React.Component {
             </div>
           </div>
         </div>
+            <AppointmentCard />
       </div>
     );
   }
