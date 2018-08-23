@@ -113,6 +113,7 @@ export const OAuthContainer = glamorous.div({
 });
 
 export const OAuthButton = glamorous.div({
+	fontFamily: 'Quicksand, sans-serif',
 	display: 'flex',
 	alignItems: 'center',
 	alignContent: 'center',
@@ -122,7 +123,7 @@ export const OAuthButton = glamorous.div({
 	marginTop: '1%',
 	margin: 'auto',
 	fontSize: '1em',
-	fontWeight: 500,
+	fontWeight: 600,
 	border: '1px solid lightgray',
 	borderRadius: '5px',
 	transition: 'background .25s, border .25s',
@@ -177,7 +178,7 @@ export const EmailButton = glamorous.div({
 	justifyContent: 'center',
 	margin: '3% 0',
 	fontSize: '1em',
-	fontWeight: 500,
+	fontWeight: 600,
 	color: 'white',
 	backgroundColor: '#FF9756',
 	border: '1px solid #FF9756',
