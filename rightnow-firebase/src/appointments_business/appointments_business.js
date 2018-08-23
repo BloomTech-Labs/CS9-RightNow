@@ -8,29 +8,34 @@ class Biz_Appointments extends React.Component {
     super();
     this.state = {
 // Inital State
-      service: '',
-      date: '',
-      cost: '',
-      startTime: '',
-      endTime: '',
+        service: '',
+        date: '',
+        cost: '',
+        startTime: '',
+        endTime: '',
 // Create Multiple Sessions
+        newMultipleSeshService: '',
+        newMultipleSeshDate: '',
+        newMultipleSeshCost: '',
+        newMultipleSeshStartTime: '',
+        newMultipleSeshEndTime: '',
 
-
-// Create Session
-      newSeshService: '',
-      newSeshDate: '',
-      newSeshCost: '',
-      newSeshStartTime: '',
-      newSeshEndTime: '',
+// Create Single Session
+        newSeshService: '',
+        newSeshDate: '',
+        newSeshCost: '',
+        newSeshStartTime: '',
+        newSeshEndTime: '',
     };
-
     this.submitSession = this.submitSession.bind(this);
     this.submitMultipleSessions = this.submitMultipleSessions.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
+
   componentDidMount() {
     // Upon mounting, this sets the state of this component to what is inside of the database.
     let initalServiceState = [];
+    console.log('inside cdm');
     db.collection("businesses")
       .doc("barber, inc.")
       .get()
@@ -43,36 +48,44 @@ class Biz_Appointments extends React.Component {
   }
 
   handleChange(e) {
-    e.preventDefault();
-    this.setState({
-        [e.target.name]: e.target.value
-    });
-}
-submitSession(e) {
-    e.preventDefault();
-    // const newFirestorePlaceholder = db... // Set space in the firestore db for the new session
-    // const item = { // Pick the items from state which are going to be added to the db
-    //   newSeshService: '',
-    //   newSeshDate: '',
-    //   newSeshCost: '',
-    //   newSeshStartTime: '',
-    //   newSeshEndTime: '',
-    // }
-        // newFirestorePlaceholder.push(item); // Push the new session to the db
-        // Reset the state for the next input
+        e.preventDefault();
         this.setState({
-            newSeshService: '',
-            newSeshDate: '',
-            newSeshCost: '',
-            newSeshStartTime: '',
-            newSeshEndTime: '',
-        })
+            [e.target.name]: e.target.value
+        });
     }
+
+    submitSession(e) {
+        e.preventDefault();
+        // const newFirestorePlaceholder = db... // Set space in the firestore db for the new session
+        // const item = { // Pick the items from state which are going to be added to the db
+        //   newSeshService: '',
+        //   newSeshDate: '',
+        //   newSeshCost: '',
+        //   newSeshStartTime: '',
+        //   newSeshEndTime: '',
+        // }
+            // newFirestorePlaceholder.push(item); // Push the new session to the db
+            // Reset the state for the next input
+            this.setState({
+                newSeshService: '',
+                newSeshDate: '',
+                newSeshCost: '',
+                newSeshStartTime: '',
+                newSeshEndTime: '',
+            })
+        }
   
   submitMultipleSessions(e) {
-    e.preventDefault();
-    // console.log('inside SAs');
-  }
+        e.preventDefault();
+
+        this.setState({
+            newMultipleSeshService: '',
+            newMultipleSeshDate: '',
+            newMultipleSeshCost: '',
+            newMultipleSeshStartTime: '',
+            newMultipleSeshEndTime: '',
+        })
+    }
 
   render() {
     return (
@@ -215,27 +228,20 @@ submitSession(e) {
             </div>
             <div className="slide">
               <h4>Create Recurring Sessions</h4>
-              <input onChange={this.handleChange} placeholder="Type of Service" />
-              <input onChange={this.handleChange} placeholder="Which days are you available?" />
-              <input onChange={this.handleChange} placeholder="What hours are you available?" />
-              <input onChange={this.handleChange} placeholder="Cost ($)" />
-              <input onChange={this.handleChange} placeholder="How long is each reservation? (30m or 60m)" />
-              <button
-                className="filterButton"
-                onClick={this.submitMultipleSessions}
-              >
-                Create Multiple Appointments
-              </button>
+              <input onChange={this.handleChange} name='newMultipleSeshService' value={this.state.newMultipleSeshService} placeholder='Type of Service' />
+              <input onChange={this.handleChange} name='newMultipleSeshDate' value={this.state.newMultipleSeshDate} placeholder='Which days are you available?' />
+              <input onChange={this.handleChange} name='newMultipleSeshStartTime' value={this.state.newMultipleSeshStartTime} placeholder='What hours are you available?' />
+              <input onChange={this.handleChange} name='newMultipleSeshCost' value={this.state.newMultipleSeshCost} placeholder='Cost ($)' />
+              <input onChange={this.handleChange} name='newMultipleSeshEndTime' value={this.state.newMultipleSeshEndTime} placeholder='When does this session end?' />
+              <button className='filterButton'onClick={this.submitMultipleSessions}>Create Multiple Appointments</button>
             </div>
-            <div className="slide">
+            <div className='slide'>
               <h4>Create a Single Session</h4>
-              <input onChange={this.handleChange} name='newSeshService' value={this.state.newSeshService}placeholder="Type of Service" />
-              <input onChange={this.handleChange} name='newSeshDate' value={this.state.newSeshDate} placeholder="Day of the Week" />
-              <input onChange={this.handleChange} name='newSeshCost' value={this.state.newSeshCost} placeholder="Cost ($)" />
-              <input onChange={this.handleChange} name='newSeshStartTime' value={this.state.newSeshStartTime} placeholder="Time" />
-              <div className="filterButton" onClick={this.submitSession}>
-                Create Single Session
-              </div>
+              <input onChange={this.handleChange} name='newSeshService' value={this.state.newSeshService}placeholder='Type of Service' />
+              <input onChange={this.handleChange} name='newSeshDate' value={this.state.newSeshDate} placeholder='Day of the Week' />
+              <input onChange={this.handleChange} name='newSeshCost' value={this.state.newSeshCost} placeholder='Cost ($)' />
+              <input onChange={this.handleChange} name='newSeshStartTime' value={this.state.newSeshStartTime} placeholder='Time' />
+              <div className='filterButton' onClick={this.submitSession}>Create Single Session</div>
             </div>
           </div>
         </div>
