@@ -122,7 +122,7 @@ export default class NavBar extends Component {
 					<RegisterModal closeModal={() => this.closeModal()} regToLog={() => this.RegToLogModal()} />
 				) : null}
 				{this.state.displayRegForm ? <RegisterForm closeModal={() => this.closeModal()} /> : null}
-				<ConfirmModal />
+				{/* <ConfirmModal /> */}
 			</NavContainer>
 		);
 	}

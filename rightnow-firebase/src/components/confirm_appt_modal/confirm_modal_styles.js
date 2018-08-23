@@ -113,7 +113,7 @@ export const Button = glamorous.div({
 	justifyContent: 'center',
 	marginTop: '3%',
 	fontSize: '1em',
-	fontWeight: 500,
+	fontWeight: 600,
 	border: '1px solid lightgray',
 	borderRadius: '5px',
 	transition: 'background .25s, border .25s',

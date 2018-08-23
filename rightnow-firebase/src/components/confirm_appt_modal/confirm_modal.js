@@ -55,7 +55,7 @@ export default class ConfirmModal extends Component {
 							<Time>
 								at <Spanner> 12:00 AM</Spanner>
 							</Time>
-							<Cost>Estimated cost: $30</Cost>
+							<Cost>Estimated cost: <Spanner>$30</Spanner></Cost>
 							<Agreement>Agreement box</Agreement>
 							<ButtonContainer>
 								<Button>Got it!</Button>
