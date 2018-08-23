@@ -213,7 +213,7 @@ export const CheckBoxWrapper = glamorous.fieldset({
 });
 
 export const CheckBoxContainer = glamorous.div({
-	width: '75%',
+	width: '65%',
 	display: 'flex',
 	justifyContent: 'space-between'
 });
@@ -223,6 +223,7 @@ export const CheckBox = glamorous.div(
 );
 
 export const RegisterButton = glamorous.div({
+	fontFamily: 'Quicksand, sans-serif',
   display: 'flex',
 	width: '100%',
 	padding: '2% 0',
@@ -231,7 +232,7 @@ export const RegisterButton = glamorous.div({
 	justifyContent: 'center',
 	margin: '3% 0',
 	fontSize: '1em',
-	fontWeight: 500,
+	fontWeight: 600	,
 	color: 'white',
 	backgroundColor: '#ef5651',
 	border: '1px solid #ef5651',

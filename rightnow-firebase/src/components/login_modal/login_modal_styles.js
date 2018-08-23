@@ -133,6 +133,7 @@ export const Input = glamorous.input({
 });
 
 export const LoginButton = glamorous.div({
+	fontFamily: 'Quicksand, sans-serif',
 	border: '1px solid #26c1a2',
 	display: 'flex',
 	width: '100%',
@@ -141,7 +142,7 @@ export const LoginButton = glamorous.div({
 	justifyContent: 'center',
 	color: 'white',
 	fontSize: '1em',
-	fontWeight: 500,
+	fontWeight: 600,
 	padding: '2% 0',
 	background: '#26c1a2',
 	marginBottom: '5%',
@@ -224,6 +225,7 @@ export const AuthLogo = glamorous.img({
 });
 
 export const OAuthButton = glamorous.div({
+	fontFamily: 'Quicksand, sans-serif',
 	display: 'flex',
 	width: '48%',
 	padding: '2% 0',
@@ -232,7 +234,7 @@ export const OAuthButton = glamorous.div({
 	justifyContent: 'center',
 	marginTop: '3%',
 	fontSize: '1em',
-	fontWeight: 500,
+	fontWeight: 600,
 	border: '1px solid lightgray',
 	borderRadius: '5px',
 	transition: 'background .25s, border .25s',
