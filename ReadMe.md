@@ -30,4 +30,5 @@ This is a full stack-application developed by Anthony, Mark, Henry, Harrison, an
 <h2>Photo Credits<h2>
 
 https://unsplash.com/search/photos/time
+
 https://www.pexels.com/photo/man-wearing-black-and-white-stripe-shirt-looking-at-white-printer-papers-on-the-wall-212286/
