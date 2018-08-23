@@ -47,10 +47,6 @@ export default class RegisterModal extends Component {
 		}
 	};
 
-	// componentDidMount() {
-	// 	console.log('GrandChild did mount.');
-	// }
-
 	render() {
 		return (
 			<Container>
@@ -60,16 +56,6 @@ export default class RegisterModal extends Component {
 						<Header>Lets get started.</Header>
 						{this.state.showRegMethods ? (
 							<div>
-								{/*<OAuthContainer>*/}
-									{/*<OAuthButton onClick={GoogleLogIn}>*/}
-										{/*<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />*/}
-										{/*Sign Up with Google*/}
-									{/*</OAuthButton>*/}
-									{/*<OAuthButton onClick={FacebookLogIn}>*/}
-										{/*<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" />*/}
-										{/*Sign Up with Facebook*/}
-									{/*</OAuthButton>*/}
-								{/*</OAuthContainer>*/}
                                 <UserContext.Consumer>
                                     {(value) => (
                                         <OAuthContainer>
