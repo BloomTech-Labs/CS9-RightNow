@@ -36,13 +36,6 @@ export default class ConfirmModal extends Component {
 	componentWillUnmount() {
 		document.body.style.overflowY = 'scroll';
 	}
-	// engageForms = () => {
-	// 	this.setState({ showRegMethods: false, showForms: true });
-	// };
-
-	// componentDidMount() {
-	// 	console.log('GrandChild did mount.');
-	// }
 
 	// use FieldSet
 	render() {

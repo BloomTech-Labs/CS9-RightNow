@@ -82,10 +82,6 @@ export default class NavBar extends Component {
 		document.body.style.overflow = 'hidden';
 	};
 
-	// openConfirm = () => {
-	// 	this.setState({ displayConfirm: true });
-	// 	document.body.style.overflow = 'hidden';
-	// };
 
 	RegToLogModal = () => {
 		this.setState({ displayRegModal: false });
