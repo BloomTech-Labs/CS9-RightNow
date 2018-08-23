@@ -3,7 +3,9 @@ import glamorous from 'glamorous';
 import SignInModal from './login_modal/login_modal';
 import RegisterModal from './register_modal/reg_modal';
 import RegisterForm from './register_modal/reg_forms';
+import { UserContext } from '../context/userContext';
 import ConfirmModal from './confirm_appt_modal/confirm_modal';
+
 import { Link } from 'react-router-dom';
 
 const NavContainer = glamorous.div({
@@ -65,7 +67,8 @@ export default class NavBar extends Component {
 		this.state = {
 			displayLoginModal: false, // true for dev purposes. set to false prior to pull.
 			displayRegModal: false,
-			displayRegForm: false
+			displayRegForm: false,
+			displayConfirm: false
 		};
 	}
 
@@ -78,6 +81,11 @@ export default class NavBar extends Component {
 		this.setState({ displayLoginModal: true });
 		document.body.style.overflow = 'hidden';
 	};
+
+	// openConfirm = () => {
+	// 	this.setState({ displayConfirm: true });
+	// 	document.body.style.overflow = 'hidden';
+	// };
 
 	RegToLogModal = () => {
 		this.setState({ displayRegModal: false });
@@ -122,7 +130,13 @@ export default class NavBar extends Component {
 					<RegisterModal closeModal={() => this.closeModal()} regToLog={() => this.RegToLogModal()} />
 				) : null}
 				{this.state.displayRegForm ? <RegisterForm closeModal={() => this.closeModal()} /> : null}
-				{/* <ConfirmModal /> */}
+
+				<UserContext.Consumer>
+					{(value) =>
+						value.data.displayConfirm ? (
+							<ConfirmModal closeModal={() => this.closeModal()} />
+						) : null}
+				</UserContext.Consumer>
 			</NavContainer>
 		);
 	}
