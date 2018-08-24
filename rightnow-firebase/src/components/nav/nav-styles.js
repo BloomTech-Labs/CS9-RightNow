@@ -13,13 +13,14 @@ export const Logo = glamorous.div({
   fontSize: "3em",
   alignSelf: "center",
   margin: "0.5% 1%",
-  textShadow: "1px 1px gray"
+  textShadow: "1px 1px gray",
+  textDecoration: "none"
 });
 
 export const ButtonContainer = glamorous.div({
   width: "50%",
   display: "flex",
-    justifyContent: "center",
+  justifyContent: "center",
   textAlign: "center",
   marginRight: "1%"
 });
