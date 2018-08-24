@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NavBar from './components/nav_bar';
 import { init as firebaseInit } from './firebase/firebase';
 import UserProvider from './context/userContext';
+import BusinessProvider from "./context/businessContext";
 import { Route } from 'react-router-dom';
 import BusinessLanding from './components/business_page/business_landing';
 import BusinessAccount from './components/business_page/business_register';
