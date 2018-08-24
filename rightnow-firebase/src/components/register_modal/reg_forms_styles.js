@@ -6,14 +6,51 @@ export const FormContainer = glamorous.div({
 	width: '100%'
 });
 
+export const Form = glamorous.form({});
+
 export const Email = glamorous.input({
+	margin: 0,
 	boxSizing: 'border-box',
 	width: '100%',
 	fontFamily: 'Quicksand, sans-serif',
 	background: '#353A50',
 	color: 'white',
 	padding: '4% 0.7%',
-	marginBottom: '3%',
+	marginBottom: '4%',
+	fontSize: '1em',
+	height: '3vh',
+	border: 0,
+	borderBottom: '1px solid #ada3a2',
+	':focus': {
+		borderBottom: '1px solid white',
+		outline: 'none',
+		'::placeholder': {
+			opacity: 0
+		}
+	},
+	'::placeholder': {
+		color: '#ada3a2',
+		fontSize: '0.9rem'
+	},
+	'::active': {
+		color: '#ada3a2',
+		fontSize: '0.9rem'
+	},
+
+	'@media(min-width: 1024px)': {
+		fontSize: '1.3em'
+	}
+});
+
+export const PW = glamorous.input({
+	margin: 0,
+	boxSizing: 'border-box',
+	width: '100%',
+	fontFamily: 'Quicksand, sans-serif',
+	background: '#353A50',
+	color: 'white',
+	padding: '4% 0.7%',
+	marginBottom: '4%',
 	fontSize: '1em',
 	height: '3vh',
 	border: 0,
@@ -44,10 +81,11 @@ export const NameContainer = glamorous.div({
 	justifyContent: 'space-between',
 	width: '100%',
 	// borderBottom: '0.5px solid #605e70',
-	paddingBottom: '2%'
+	marginBottom: '1%'
 });
 
 export const NamePlace = glamorous.input({
+	margin: 0,
 	width: '90%',
 	fontFamily: 'Quicksand, sans-serif',
 	background: '#353A50',
@@ -95,6 +133,7 @@ export const NamePlace = glamorous.input({
 export const NamePlace2 = glamorous.input({
 	// boxSizing: 'border-box',
 	// height: '100%',
+	margin: 0,
 	width: '98.5%',
 	fontFamily: 'Quicksand, sans-serif',
 	background: '#353A50',
@@ -140,6 +179,7 @@ export const NamePlace2 = glamorous.input({
 });
 
 export const PhoneNumber = glamorous.input({
+	margin: 0,
 	boxSizing: 'border-box',
 	width: '100%',
 	fontFamily: 'Quicksand, sans-serif',
@@ -173,6 +213,7 @@ export const PhoneNumber = glamorous.input({
 });
 
 export const Location = glamorous.input({
+	margin: 0,
 	boxSizing: 'border-box',
 	width: '100%',
 	// border: '2px solid red',
@@ -218,13 +259,11 @@ export const CheckBoxContainer = glamorous.div({
 	justifyContent: 'space-between'
 });
 
-export const CheckBox = glamorous.div(
-  
-);
+export const CheckBox = glamorous.div();
 
 export const RegisterButton = glamorous.div({
 	fontFamily: 'Quicksand, sans-serif',
-  display: 'flex',
+	display: 'flex',
 	width: '100%',
 	padding: '2% 0',
 	alignItems: 'center',
@@ -232,12 +271,12 @@ export const RegisterButton = glamorous.div({
 	justifyContent: 'center',
 	margin: '3% 0',
 	fontSize: '1em',
-	fontWeight: 600	,
+	fontWeight: 600,
 	color: 'white',
 	backgroundColor: '#ef5651',
 	border: '1px solid #ef5651',
-  borderRadius: '5px',
-  transition: 'background .4s, border .4s',
+	borderRadius: '5px',
+	transition: 'background .4s, border .4s',
 	':hover': { border: '1px solid #ff6b66', backgroundColor: '#ff6b66', cursor: 'pointer' },
 
 	'@media(min-width: 1024px)': {
