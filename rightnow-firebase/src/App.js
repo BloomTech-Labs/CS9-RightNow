@@ -8,7 +8,7 @@ import BusinessAccount from './components/business_page/business_register';
 import Customer from './components/customers/customers';
 import UserSettings from './components/user_settings/user_settings_form';
 import CompanySettings from './components/company_settings/company_settings';
-import BusinessProvider from './context/businessContext';
+import Biz_Appointments from './appointments_business/appointments_business';
 
 class App extends Component {
     constructor() {
@@ -30,6 +30,8 @@ class App extends Component {
                         <Route exact path="/company-settings" component={CompanySettings}/>
                     </BusinessProvider>
                 </UserProvider>
+
+                <Biz_Appointments />
             </div>
         );
     }
