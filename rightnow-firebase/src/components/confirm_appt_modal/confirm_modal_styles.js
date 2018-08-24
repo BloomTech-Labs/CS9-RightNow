@@ -12,11 +12,11 @@ export const Container = glamorous.div({
 
 export const ModalWrapper = glamorous.div({
 	// position: 'absolute',
-  // left: '50%',
-  // top: '50%',
-  // transform: 'translate(-50%, -50%)',
+	// left: '50%',
+	// top: '50%',
+	// transform: 'translate(-50%, -50%)',
 	filter: 0,
-	width: '40%',
+	width: '80%',
 	padding: '0 15%',
 	paddingTop: '20vh',
 	zIndex: 2,
@@ -89,13 +89,27 @@ export const Cost = glamorous.div({
 	fontSize: '1.5em',
 	fontWeight: 500
 });
+
+
+
 export const Agreement = glamorous.div({
+	marginTop: '3%',
+	width: '100%',
 	fontFamily: 'Nunito, sans-serif',
+	// display: 'inline',
 	fontSize: '1.5em',
-  fontWeight: 500,
-  paddingBottom: '1%',
+	fontWeight: 500,
+	paddingBottom: '1%',
 	borderBottom: '2px solid #605e70'
 });
+
+export const FinePrint = glamorous.div({
+	// textAlign: 'center',
+	marginLeft: '5%',
+	width: '100%',
+	fontSize: '0.5em'
+});
+
 export const ButtonContainer = glamorous.div({
 	display: 'flex',
 	justifyContent: 'space-between',
@@ -125,8 +139,8 @@ export const Button = glamorous.div({
 });
 
 export const Icon = glamorous.img({
-  width: '5%'
-})
+	width: '5%'
+});
 
 export const CloseX = glamorous.div({
 	height: '100%',

@@ -16,6 +16,7 @@ import {
 	Time,
 	Cost,
 	Agreement,
+	FinePrint,
 	ButtonContainer,
 	Button,
 	CloseX
@@ -62,10 +63,25 @@ export default class ConfirmModal extends Component {
 									<Cost>
 										Estimated cost: <Spanner>{value.data.theo_appt_details.cost}</Spanner>
 									</Cost>
-									<Agreement>Agreement box</Agreement>
+									<Agreement>
+										<div className="pretty p-default p-curve">
+											<input type="checkbox" />
+											<div className="state p-danger">
+												<label>
+													<FinePrint>
+														I acknowledge that by confirming this session, I am solely
+														responsible for <br />any disputes regarding the cost, time and
+														type of service I am receiveing.
+													</FinePrint>
+												</label>
+											</div>
+										</div>
+									</Agreement>
 									<ButtonContainer>
 										<Button>Got it!</Button>
-										<Button onClick={() => value.updateState({displayConfirm: false})}>Go back</Button>
+										<Button onClick={() => value.updateState({ displayConfirm: false })}>
+											Go back
+										</Button>
 									</ButtonContainer>
 								</DetailContainer>
 								{/* <CloseX onClick={() => this.props.closeModal()}>x</CloseX> */}

@@ -17,19 +17,21 @@ class App extends Component {
     this.state = {};
   }
 
-  render() {
-    return (
-      <div className="App">
-        <UserProvider>
-          <NavBar />
-          <Route exact path="/" component={Customer} />
-          <Route exact path="/biz-account" component={BusinessAccount} />
-          <Route exact path="/biz-landing" component={BusinessLanding} />
-          <Route exact path="/user-settings" component={UserSettings} />
-          <Route exact path="/company-settings" component={CompanySettings} />
-        </UserProvider>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className="App">
+                <UserProvider>
+                    <NavBar/>
+                    <Route exact path="/" component={Customer} />
+                    <Route exact path="/biz-account" component={BusinessAccount} />
+                    <Route exact path="/biz-landing" component={BusinessLanding}/>
+                    <Route exact path="/user-settings" component={UserSettings}/>
+                    <Route exact path="/company-settings" component={CompanySettings}/>
+                </UserProvider>
+
+                {/* <Biz_Appointments /> */}
+            </div>
+        );
+    }
 }
 export default App;
