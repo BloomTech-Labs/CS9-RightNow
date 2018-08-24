@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import EmailPhone from '../share_settings/email_phone'
 import UserNotification from '../share_settings/user_notification';
 import UserChangePassword from '../share_settings/user_change_password';
+import CompanyInfo from './company_info';
+
 import glamorous from "glamorous";
 
 export const FormContainer = glamorous.div({
@@ -33,6 +35,7 @@ class CompanySettings extends Component {
             <div>
                 <h1>Company Settings</h1>
                 <FormContainer>
+                    <CompanyInfo/>
                     <EmailPhone/>
                     <h1>Notifications</h1>
                     <UserNotification/>
