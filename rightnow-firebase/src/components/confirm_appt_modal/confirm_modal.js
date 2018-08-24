@@ -24,30 +24,32 @@ import {
 import { UserContext } from '../../context/userContext';
 
 export default class ConfirmModal extends Component {
-	constructor(props) {
-		super(props);
+	constructor(props, UserContext) {
+		super(props, UserContext);
 		this.state = {};
 	}
 
 	componentDidMount() {
 		document.body.style.overflowY = 'hidden';
+		// console.log(UserContext)
 	}
 
 	componentWillUnmount() {
 		document.body.style.overflowY = 'scroll';
 	}
 
-	// confirmAppt = () => {
-	// 	value.updateState({displayConfirm: false});
-	// 	let newtask = {
-	// 		type: value.data.theo_appt_details.type,
-	// 		time: value.data.theo_appt_details.time,
-	// 		cost: value.data.theo_appt_details.cost
-	// 	}
-	// 	value.updateState(prevState => ({
-	// 		appointments: [...prevState.data.appointments, newtask]
-	// 	}))
-	// }
+	confirmAppt = (value) => {
+		console.log(UserContext.Provider)
+		// let newtask = {
+		// 	type: value.data.theo_appt_details.type,
+		// 	time: value.data.theo_appt_details.time,
+		// 	cost: value.data.theo_appt_details.cost
+		// };
+		value.updateState((value) => ({
+			// appointments: [ ...value.data.appointments, newtask ]
+		})); 
+		value.updateState({ displayConfirm: false });
+	};
 
 	// use FieldSet
 	render() {
@@ -77,7 +79,7 @@ export default class ConfirmModal extends Component {
 									<Agreement>Agreement box</Agreement>
 									<ButtonContainer>
 										<Button>Got it!</Button>
-										<Button onClick={() => this.confirmAppt()}>Go back</Button>
+										<Button onClick={(value) => this.confirmAppt(value)}>Go back</Button>
 									</ButtonContainer>
 								</DetailContainer>
 								{/* <CloseX onClick={() => this.props.closeModal()}>x</CloseX> */}

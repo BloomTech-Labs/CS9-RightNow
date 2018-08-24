@@ -65,8 +65,8 @@ const MenuLine = glamorous.div({
 });
 
 export default class NavBar extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			displayLoginModal: false, // true for dev purposes. set to false prior to pull.
 			displayRegModal: false,

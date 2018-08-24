@@ -21,7 +21,7 @@ class App extends Component {
         return (
             <div className="App">
                 <UserProvider>
-                    <NavBar/>
+                    <NavBar props={this.props.value} />
                     <Route exact path="/" component={Customer} />
                     <Route exact path="/biz-account" component={BusinessAccount} />
                     <Route exact path="/biz-landing" component={BusinessLanding}/>
@@ -29,7 +29,7 @@ class App extends Component {
                     <Route exact path="/company-settings" component={CompanySettings}/>
                 </UserProvider>
 
-                <Biz_Appointments />
+                {/* <Biz_Appointments /> */}
             </div>
         );
     }
