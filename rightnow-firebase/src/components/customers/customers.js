@@ -3,7 +3,6 @@ import UserLanding from '../user_landing';
 import FeaturedAppointments from '../featured_appointments/feat_appts';
 
 import IndustryView from '../industry_view/industry_view';
-import LocationSearchInput from '../placesAPI/search_autocomplete';
 
 
 export default class Customers extends Component {
@@ -13,7 +12,6 @@ export default class Customers extends Component {
                 <UserLanding />
                 <FeaturedAppointments />
                 <IndustryView />
-                <LocationSearchInput />
             </div>
         );
     }

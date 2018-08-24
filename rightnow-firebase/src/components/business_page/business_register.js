@@ -10,6 +10,7 @@ import {
   Wrapper,
   Button
 } from "./business-styles-account";
+import { BusinessContext } from "../../context/businessContext";
 
 export default class BusinessAccount extends Component {
   constructor(props) {
@@ -44,6 +45,7 @@ export default class BusinessAccount extends Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <Container>
         {this.state.displayForms ? (
@@ -95,7 +97,9 @@ export default class BusinessAccount extends Component {
             </Wrapper>
             <Bottom>
               <label>Google API</label>
-              <PlacesAPI />
+              <BusinessContext.Consumer>
+                {value => <PlacesAPI busnContext={value} />}
+              </BusinessContext.Consumer>
             </Bottom>
             <div>
               <Button onClick={() => this.submitForm()} type="submit">

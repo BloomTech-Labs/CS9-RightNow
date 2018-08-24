@@ -2,14 +2,10 @@
 import React, { Component } from "react";
 
 export default class PlacesAPI extends Component {
-  state = {
-    street_number: "",
-    street_name: "",
-    city: "",
-    state: "",
-    zip: "",
-    query: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
   componentDidMount() {
     // Locate input element
@@ -32,13 +28,18 @@ export default class PlacesAPI extends Component {
 
     // Check if address is valid
     if (address) {
-      this.setState({ 
-        street_number: address[0].long_name, 
+      // Update business context accordingly
+      this.props.busnContext.updateBusiness({
+        name: place.name,
+        fullAddress: place.formatted_address,
+        street_number: address[0].long_name,
         street_name: address[1].long_name,
         city: address[2].long_name,
         state: address[5].long_name,
         zip: address[6].long_name,
-        query: place.formatted_address 
+        phone: place.formatted_phone_number,
+        rating: place.rating,
+        photo: place.photos[0]
       });
     }
   }
@@ -46,7 +47,6 @@ export default class PlacesAPI extends Component {
   render() {
     return (
       <div>
-
         <input 
           id="autocomplete" 
           placeholder="Enter business location" 
@@ -59,7 +59,6 @@ export default class PlacesAPI extends Component {
             fontSize: "1em"
           }}
         />
-
       </div>
     );
   }

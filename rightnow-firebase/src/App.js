@@ -8,6 +8,7 @@ import BusinessAccount from './components/business_page/business_register';
 import Customer from './components/customers/customers';
 import UserSettings from './components/user_settings/user_settings_form';
 import CompanySettings from './components/company_settings/company_settings';
+import BusinessProvider from './context/businessContext';
 
 class App extends Component {
     constructor() {
@@ -22,10 +23,12 @@ class App extends Component {
                 <UserProvider>
                     <NavBar/>
                     <Route exact path="/" component={Customer} />
-                    <Route exact path="/biz-account" component={BusinessAccount} />
-                    <Route exact path="/biz-landing" component={BusinessLanding}/>
                     <Route exact path="/user-settings" component={UserSettings}/>
-                    <Route exact path="/company-settings" component={CompanySettings}/>
+                    <BusinessProvider>
+                        <Route exact path="/biz-account" component={BusinessAccount} props={this.props.value} />
+                        <Route exact path="/biz-landing" component={BusinessLanding}/>
+                        <Route exact path="/company-settings" component={CompanySettings}/>
+                    </BusinessProvider>
                 </UserProvider>
             </div>
         );
