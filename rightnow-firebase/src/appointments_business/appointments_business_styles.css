@@ -1,0 +1,91 @@
+/* import glamorous from "glamorous"; */
+
+#background {
+    background: rgb(138, 135, 135);
+    border: 1px solid black;
+    /* height: 45rem;
+    margin-top: 10rem; */
+
+}
+
+.dashboard {
+    border: 1px solid black;
+    height: 50rem;
+    background: goldenrod;
+    margin: 1% 5%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.three-four {
+    margin: 2rem 0;
+    background: skyblue;
+    border: 1px solid black;
+    width: 70%;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.one-four {
+    margin: 2rem 0;
+    background: goldenrod;
+    /* border: 1px solid black; */
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.slide {
+    height: 30%;
+    border: 1px solid black;
+    background: skyblue;
+}
+
+h4 {
+    margin: 1.5% 5%;
+    text-align: center;
+}
+
+input {
+    margin: 1.5% 7.45%;
+    width: 85%;
+}
+
+.filterButton {
+    border: 1px solid black;
+    background: white;
+    text-align: center;
+    margin: 0 10%;
+}
+
+.filter {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.dateCard {
+    width: 12.25%;
+    background: white;
+    height: 10%;
+    margin: 1%;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    font-size: .75rem;
+}
+
+.red {
+    background: red
+}
+
+.green {
+    background: green;
+}
+
+.yellow {
+    background: yellow;
+}
