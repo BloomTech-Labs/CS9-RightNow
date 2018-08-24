@@ -1,8 +1,3 @@
-// Help:
-// Split up nested arrays to get each appointment day/item
-// Can push data from state to db, but when the field clears out, it clears out state and db
-
-
 import React, { Component } from "react";
 import "./appointments_business_styles.css";
 import AppointmentCard from "./appointment_card/appointment_card.js";
@@ -61,6 +56,7 @@ class Biz_Appointments extends React.Component {
       cost: [],
       startTime: [],
       endTime: "",
+
       // Create Multiple Sessions
       newMultipleSeshService: "",
       newMultipleSeshDate: "",
@@ -88,62 +84,57 @@ class Biz_Appointments extends React.Component {
     let initalCostState = [];
     let initalStartTimeState = [];
     let initalEndTimeState = [];
-    let coolbeans = [];
 
-    // AS is an array []
-    // gets passed into an array []
-    // State is set to the array of arrays?
-    // state has an array with a single index [0]
-    // at index [0]. there is an array with 2 items: [0, 1]
     db.collection("businesses") // Collection name per Firestore
       .doc("A Dog's Day Out") // Document name per Firestore
       .get()
       .then(function(querySnapshot) {
         initalServiceState.push(querySnapshot.data().appointmentServices[0]);
         initalServiceState.push(querySnapshot.data().appointmentServices[1]);
-        initalServiceState.push(querySnapshot.data().appointmentServices[2]);
-        initalServiceState.push(querySnapshot.data().appointmentServices[3]);
-        initalServiceState.push(querySnapshot.data().appointmentServices[4]);
-        initalServiceState.push(querySnapshot.data().appointmentServices[5]);
-        initalServiceState.push(querySnapshot.data().appointmentServices[6]);
-        initalServiceState.push(querySnapshot.data().appointmentServices[7]);
-        initalServiceState.push(querySnapshot.data().appointmentServices[8]);
-        initalDayState.push(querySnapshot.data().appointmentDays[0]);
-        initalDayState.push(querySnapshot.data().appointmentDays[1]);
-        initalDayState.push(querySnapshot.data().appointmentDays[2]);
-        initalDayState.push(querySnapshot.data().appointmentDays[3]);
-        initalDayState.push(querySnapshot.data().appointmentDays[4]);
-        initalDayState.push(querySnapshot.data().appointmentDays[5]);
-        initalDayState.push(querySnapshot.data().appointmentDays[6]);
-        initalDayState.push(querySnapshot.data().appointmentDays[7]);
-        initalDayState.push(querySnapshot.data().appointmentDays[8]);
-        initalCostState.push(querySnapshot.data().appointmentsCost[0]);
-        initalCostState.push(querySnapshot.data().appointmentsCost[1]);
-        initalCostState.push(querySnapshot.data().appointmentsCost[2]);
-        initalCostState.push(querySnapshot.data().appointmentsCost[3]);
-        initalCostState.push(querySnapshot.data().appointmentsCost[4]);
-        initalCostState.push(querySnapshot.data().appointmentsCost[5]);
-        initalCostState.push(querySnapshot.data().appointmentsCost[6]);
-        initalCostState.push(querySnapshot.data().appointmentsCost[7]);
-        initalCostState.push(querySnapshot.data().appointmentsCost[8]);
-        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[0]);
-        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[1]);
-        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[2]);
-        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[3]);
-        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[4]);
-        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[5]);
-        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[6]);
-        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[7]);
-        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[8]);
-        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[0]);
-        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[1]);
-        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[2]);
-        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[3]);
-        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[4]);
-        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[5]);
-        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[6]);
-        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[7]);
-        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[8]);
+        // initalServiceState.push(querySnapshot.data().appointmentServices[2]);
+        // initalServiceState.push(querySnapshot.data().appointmentServices[3]);
+        // initalServiceState.push(querySnapshot.data().appointmentServices[4]);
+        // initalServiceState.push(querySnapshot.data().appointmentServices[5]);
+        // initalServiceState.push(querySnapshot.data().appointmentServices[6]);
+        // initalServiceState.push(querySnapshot.data().appointmentServices[7]);
+        // initalServiceState.push(querySnapshot.data().appointmentServices[9]);
+    //     initalDayState.push(querySnapshot.data().appointmentDays[0]);
+    //     initalDayState.push(querySnapshot.data().appointmentDays[1]);
+    //     initalDayState.push(querySnapshot.data().appointmentDays[2]);
+    //     initalDayState.push(querySnapshot.data().appointmentDays[3]);
+    //     initalDayState.push(querySnapshot.data().appointmentDays[4]);
+    //     initalDayState.push(querySnapshot.data().appointmentDays[5]);
+    //     initalDayState.push(querySnapshot.data().appointmentDays[6]);
+    //     initalDayState.push(querySnapshot.data().appointmentDays[7]);
+    //     initalDayState.push(querySnapshot.data().appointmentDays[9]);
+    //     initalCostState.push(querySnapshot.data().appointmentsCost[0]);
+    //     initalCostState.push(querySnapshot.data().appointmentsCost[1]);
+    //     initalCostState.push(querySnapshot.data().appointmentsCost[2]);
+    //     initalCostState.push(querySnapshot.data().appointmentsCost[3]);
+    //     initalCostState.push(querySnapshot.data().appointmentsCost[4]);
+    //     initalCostState.push(querySnapshot.data().appointmentsCost[5]);
+    //     initalCostState.push(querySnapshot.data().appointmentsCost[6]);
+    //     initalCostState.push(querySnapshot.data().appointmentsCost[7]);
+    //     initalCostState.push(querySnapshot.data().appointmentsCost[9]);
+    //     initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[0]);
+    //     initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[1]);
+    //     initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[2]);
+    //     initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[3]);
+    //     initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[4]);
+    //     initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[5]);
+    //     initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[6]);
+    //     initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[7]);
+    //     initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[9]);
+    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[0]);
+    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[1]);
+    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[2]);
+    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[3]);
+    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[4]);
+    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[5]);
+    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[6]);
+    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[7]);
+    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[8]);
+    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[9]);
       })
       .then(data => {
         this.setState(prevState => ({
@@ -160,20 +151,7 @@ class Biz_Appointments extends React.Component {
   //  and color-code it accordingly
   checkOccupancy(e) {
     e.preventDefault();
-    console.log("tru");
-    //   // const red = document.getElementById('red');
-    //   // red.className += '' + 'newClassName'
-    //   if (this.state.occupancy[1] > 75 + '%') {
-    //     console.log('green')
-    //     // const green = document.getElementById('green');
-    //     // green.div += '' + 'newClassName';
-    //   }
-    //   if ((this.state.occupancy[1] > 50 + '%') && (this.state.occupancy[1] < 75 + '%')) {
-    //     console.log('yellow')
-    //   }
-    //   if (this.state.occupancy[0] < 50 + '%' ) {
-    //     console.log('red')
-    //   }
+
   }
 
   handleChange(e) {
@@ -185,24 +163,25 @@ class Biz_Appointments extends React.Component {
 
   submitSession(e) {
     e.preventDefault();
-    db.collection("businesses")
-      .doc("A Dog's Day Out")
-      .set({
-        sampleCost: this.state.newSeshCost,
-        // item: 'value',
-        // item: 'value'
-      })
-      .then(x => {
-        this.setState({
-          newSeshService: "",
-          newSeshDate: "",
-          // newSeshCost: "",
-          newSeshStartTime: "",
-          newSeshEndTime: ""
-        });
-      });
+    this.setState({
+      service: [...this.state.service, this.state.newSeshService],
+      newSeshService: ''
+    })
+    
   }
 
+  componentDidUpdate() {
+  db.collection("businesses")
+      .doc("A Dog's Day Out")
+      .set({
+        appointmentServices: this.state.service,
+        // appointmentDays: [...this.state.newSeshDate],
+        // appointmentsCost: [this.state.newSeshCost],
+        // appointmentsStartTime: [this.state.newSeshStartTime],
+        // appointmentsEndTime: [...this.state.newSeshEndTime]
+      })
+    }
+    
   submitMultipleSessions(e) {
     e.preventDefault();
 
@@ -275,6 +254,7 @@ class Biz_Appointments extends React.Component {
               <div>{this.state.service[8]}</div>
               <div>${this.state.cost[8]}</div>
             </div>
+
             
 
           </div>
@@ -287,6 +267,8 @@ class Biz_Appointments extends React.Component {
               <div className="filterButton">Open Appointments</div>
               <div className="filterButton">Past Appointments</div>
             </div>
+            
+            {/* Create Multiple Sessions */}
             <div className="slide">
               <h4>Create Recurring Sessions</h4>
               <input
@@ -326,8 +308,28 @@ class Biz_Appointments extends React.Component {
                 Create Multiple Appointments
               </button>
             </div>
+            
+            {/* Create Single Session */}
             <div className="slide">
               <h4>Create a Single Session</h4>
+              <input
+                onChange={this.handleChange}
+                name="newSeshStartTime"
+                value={this.state.newSeshStartTime}
+                placeholder="Start Time"
+              />
+              <input
+                onChange={this.handleChange}
+                name="newSeshEndTime"
+                value={this.state.newSeshEndTime}
+                placeholder="EndTime"
+              />
+                <input
+                  onChange={this.handleChange}
+                  name="newSeshDate"
+                  value={this.state.newSeshDate}
+                  placeholder="Day of the Week"
+                />
               <input
                 onChange={this.handleChange}
                 name="newSeshService"
@@ -336,21 +338,9 @@ class Biz_Appointments extends React.Component {
               />
               <input
                 onChange={this.handleChange}
-                name="newSeshDate"
-                value={this.state.newSeshDate}
-                placeholder="Day of the Week"
-              />
-              <input
-                onChange={this.handleChange}
                 name="newSeshCost"
                 value={this.state.newSeshCost}
                 placeholder="Cost ($)"
-              />
-              <input
-                onChange={this.handleChange}
-                name="newSeshStartTime"
-                value={this.state.newSeshStartTime}
-                placeholder="Time"
               />
               <div className="filterButton" onClick={this.submitSession}>
                 Create Single Session
