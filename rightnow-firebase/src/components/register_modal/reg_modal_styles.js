@@ -6,7 +6,7 @@ export const Container = glamorous.div({
 	position: 'absolute',
 	zIndex: 1,
 	background: 'rgba(0, 0, 0, 0.5)',
-	overflow: 'hidden',
+	overflow: 'hidden'
 	// add filter: blur() later; should affect App.js when modal is active.
 });
 
@@ -71,23 +71,6 @@ export const Header = glamorous.div({
 	}
 });
 
-// export const NormalSignIn = glamorous.div({
-//   borderTop: "0.5px solid lightgray",
-//   padding: "4% 0",
-//   display: "flex",
-//   flexDirection: "column",
-
-//   '@media(min-width: 1024px)': {
-//     marginBottom: 0
-//   },
-
-//   "@media(max-width: 550px)": {
-//     margin: "3% 0",
-//     padding: "7% 0"
-//   }
-// });
-
-
 export const Button = glamorous.button({
 	fontSize: '2em',
 	fontWeight: 600,
@@ -95,8 +78,8 @@ export const Button = glamorous.button({
 	borderRadius: '5px',
 	backgroundColor: '#00c6fd',
 	color: 'white',
+	transition: 'background .4s, border .4s',
 	':hover': { cursor: 'pointer' },
-	':focus': { outline: 'none' },
 
 	'@media(min-width: 1024px)': {
 		fontSize: '1.3em'
@@ -130,6 +113,7 @@ export const OAuthContainer = glamorous.div({
 });
 
 export const OAuthButton = glamorous.div({
+	fontFamily: 'Quicksand, sans-serif',
 	display: 'flex',
 	alignItems: 'center',
 	alignContent: 'center',
@@ -139,9 +123,10 @@ export const OAuthButton = glamorous.div({
 	marginTop: '1%',
 	margin: 'auto',
 	fontSize: '1em',
-	fontWeight: 500,
+	fontWeight: 600,
 	border: '1px solid lightgray',
 	borderRadius: '5px',
+	transition: 'background .25s, border .25s',
 	':hover': { backgroundColor: 'rgba(225, 225, 225, 0.6)', cursor: 'pointer' },
 
 	'@media(min-width: 1024px)': {
@@ -191,14 +176,14 @@ export const EmailButton = glamorous.div({
 	alignItems: 'center',
 	alignContent: 'center',
 	justifyContent: 'center',
-	marginTop: '3%',
-	margin: 'auto',
+	margin: '3% 0',
 	fontSize: '1em',
-	fontWeight: 500,
+	fontWeight: 600,
 	color: 'white',
 	backgroundColor: '#FF9756',
 	border: '1px solid #FF9756',
 	borderRadius: '5px',
+	transition: 'background .4s, border .4s',
 	':hover': { border: '1px solid #FFAF74', backgroundColor: '#FFAF74', cursor: 'pointer' },
 
 	'@media(min-width: 1024px)': {
@@ -240,7 +225,6 @@ export const AuthLogo = glamorous.img({
 
 export const NewUser = glamorous.div({
 	width: '100%',
-	marginTop: '2.5%',
 	display: 'flex',
 	justifyContent: 'center',
 	alignItems: 'center',
@@ -264,6 +248,7 @@ export const LoginClickHere = glamorous.p({
 });
 
 export const CloseX = glamorous.div({
+	height: '100%',
 	fontFamily: 'Quicksand, sans-serif',
 	position: 'relative',
 	top: '0.7vh',

@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
 import {
-	Container,
-	ModalRight,
-	Header,
-	// NormalSignIn,
-	// Input,
-	Button,
-	Or,
-	OAuthContainer,
-	OAuthButton,
-	AuthLogo,
-	EmailButton,
-	NewUser,
-	CloseX
-} from './reg_modal_styles';
+	FormContainer,
+	Email,
+	NameContainer,
+	NamePlace,
+	NamePlace2,
+	PhoneNumber,
+	Location,
+	CheckBoxWrapper,
+	CheckBoxContainer,
+	CheckBox,
+	RegisterButton
+} from './reg_forms_styles';
 
 export default class RegisterModal extends Component {
 	constructor(props) {
@@ -21,57 +19,45 @@ export default class RegisterModal extends Component {
 		this.state = {};
 	}
 
-	handleRegister = (method) => {
-		switch (method) {
-			case 'email':
-				break;
-			case 'google':
-				break;
-			case 'facebook':
-				break;
-			default:
-				break;
-		}
-	};
-
 	render() {
 		return (
-			<Container>
-				<ModalRight>
-					<Header>Lets get started.</Header>
-					{/* <NormalSignIn>
-						<Input type="text" placeholder="Email" />
-						<Input type="password" placeholder="Password" />
-						<Button onClick={() => this.handleSignIn('email')}>Sign In</Button>
-          </NormalSignIn> */}
+			<FormContainer>
+				<Email type="text" placeholder="Your Email Address" />
+				<NameContainer>
+					<div>
+						<NamePlace type="text" placeholder="First Name" />
+					</div>
+					<div>
+						<NamePlace2 type="text" placeholder="Last Name" />
+					</div>
+				</NameContainer>
+				<PhoneNumber name="phoneNum" onBlur="addDashes(this)" type="text" placeholder="Phone number" />
+				<Location type="text" placeholder="Preferred location" />
 
-					<OAuthContainer>
-						<OAuthButton onClick={() => this.handleRegister('google')}>
-							<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
-							Sign Up with Google
-						</OAuthButton>
-						<OAuthButton onClick={() => this.handleRegister('facebook')}>
-							<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" />
-							Sign Up with Facebook
-						</OAuthButton>
-					</OAuthContainer>
+				<CheckBoxWrapper>
+					<legend style={{ padding: '0 1%' }}>Contact me by</legend>
+					<CheckBoxContainer>
+						<CheckBox>
+							<div className="pretty p-default">
+								<input type="checkbox" />
+								<div className="state p-primary">
+									<label>Email</label>
+								</div>
+							</div>
+						</CheckBox>
 
-					<Or>
-						<span style={{ backgroundColor: 'white', padding: '0 3%' }}>or</span>
-					</Or>
-
-					<EmailButton>
-						<AuthLogo src="https://www.dining-out.co.za/ftp/themes/desk/images/Email_Icon.svg" />
-						Sign Up with your email
-					</EmailButton>
-
-					<NewUser>
-						<p style={{ marginRight: '2%' }}>Already have an account?</p>
-						<p style={{ color: 'green' }} onClick={this.props.regToLog }>Log in Here</p>
-					</NewUser>
-				</ModalRight>
-				<CloseX onClick={() => this.props.closeModal()}>x</CloseX>
-			</Container>
+						<CheckBox>
+							<div className="pretty p-default">
+								<input type="checkbox" />
+								<div className="state p-warning">
+									<label>Text</label>
+								</div>
+							</div>
+						</CheckBox>
+					</CheckBoxContainer>
+				</CheckBoxWrapper>
+				<RegisterButton>Let's Go!</RegisterButton>
+			</FormContainer>
 		);
 	}
 }
