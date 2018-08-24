@@ -15,6 +15,7 @@ export const init = () => {
     const auth = firebase.auth();
     const db = firebase.database();
 };
+export default firebase;
 
 
 // if (!firebase.apps.length) {
