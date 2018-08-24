@@ -9,12 +9,12 @@ class Biz_Appointments extends React.Component {
     super();
     this.state = {
 // Inital State
-        service: '',
-        day: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-        dateNumber: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        service: [], // ['Hair Coloring', 'Hair Styling', 'Hair Cut', 'Hair Styling', 'Hair Extensions', 'Hair Coloring', 'Hair Styling', 'Hair Cut', 'Hair Styling', 'Hair Extensions', 'Hair Coloring', 'Hair Styling', 'Hair Cut', 'Hair Styling', 'Hair Extensions', 'Hair Coloring', 'Hair Styling', 'Hair Cut', 'Hair Styling', 'Hair Extensions']
+        day: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        dateNumber: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,27, 28, 29, 30, 31],
         occupancy: [68 + '%', 89 + '%', 43+'%', 35+'%', 55+'%', 80+'%', 'closed'],
-        cost: '',
-        startTime: '',
+        cost: [29.99, 17.79, 15.32, 9.59, 141.41, 43.67, 23.44, 36.67, 78.4, 56, 50],
+        startTime: ['3:30 pm'],
         endTime: '',
 // Create Multiple Sessions
         newMultipleSeshService: '',
@@ -39,23 +39,39 @@ class Biz_Appointments extends React.Component {
   componentDidMount() {
     // Upon mounting, this sets the state of this component to what is inside of the database.
     let initalServiceState = [];
-    console.log('inside cdm');
-    db.collection("businesses")
-      .doc("barber, inc.")
+    let initalDayState = [];
+    let initalCostState = [];
+    let initalStartTimeState = [];
+
+  // AS is an array []
+    // gets passed into an array []
+    // State is set to the array of arrays?
+    // state has an array with a single index [0]
+      // at index [0]. there is an array with 2 items: [0, 1]
+    db.collection("businesses") // Collection name per Firestore
+      .doc("A Dog's Day Out")  // Document name per Firestore
       .get()
-      .then(function(query) {
-        initalServiceState.push(query.data().service);
+      .then(function(query) {      
+        initalServiceState.push(query.data().appointmentsService);
+        initalDayState.push(query.data().appointmentsDays);
+        initalCostState.push(query.data().appointmentsCost);
+        initalStartTimeState.push(query.data().appointmentsStartTime);
       })
       .then(data => {
-        this.setState({ service: initalServiceState[0] });
+        this.setState(prevState => ({ 
+          service: initalServiceState, 
+          day: [...prevState.day, initalDayState],
+          cost: [...prevState.cost, initalCostState],
+          startTime: [...prevState.startTime,initalStartTimeState]
+        }))
       });
   }
 
   // Attempting to make a function that will check the occupancy of each card
   //  and color-code it accordingly
-  // checkOccupancy(e) {
-  //   e.preventDefault();
-  //   // console.log('tru')
+  checkOccupancy(e) {
+     e.preventDefault();
+     console.log('tru')
   //   // const red = document.getElementById('red');
   //   // red.className += '' + 'newClassName'
   //   if (this.state.occupancy[1] > 75 + '%') {
@@ -69,7 +85,7 @@ class Biz_Appointments extends React.Component {
   //   if (this.state.occupancy[0] < 50 + '%' ) {
   //     console.log('red')
   //   } 
-  // }
+  }
 
   handleChange(e) {
         e.preventDefault();
@@ -117,10 +133,48 @@ class Biz_Appointments extends React.Component {
         <div className="dashboard">
           <div className="three-four">
             <div onClick={this.checkOccupancy} className="dateCard yellow">
-              <div>{this.state.day[0]}{this.state.dateNumber[0]}</div>
-              <div>{this.state.occupancy[0]}</div>
+              <div>{this.state.service[0]}</div>
+              <div>{this.state.day[0]} {this.state.dateNumber[0]}</div>
+              <div>${this.state.cost[0]}</div>
+              <div>{this.state.startTime[0]}</div>
             </div>
-            <div onClick='' className="dateCard green">
+            <div onClick={this.checkOccupancy} className="dateCard green">
+              <div>{this.state.service[1]}</div>
+              <div>{this.state.day[1]} {this.state.dateNumber[1]}</div>
+              <div>${this.state.cost[1]}</div>
+              <div>{this.state.startTime[1]}</div>
+            </div>
+            <div onClick={this.checkOccupancy} className="dateCard green">
+              <div>{this.state.service[2]}</div>
+              <div>{this.state.day[2]} {this.state.dateNumber[2]}</div>
+              <div>${this.state.cost[2]}</div>
+              <div>{this.state.startTime[2]}</div>
+            </div>
+            <div onClick={this.checkOccupancy} className="dateCard green">
+              <div>{this.state.service[3]}</div>
+              <div>{this.state.day[3]} {this.state.dateNumber[3]}</div>
+              <div>${this.state.cost[3]}</div>
+              <div>{this.state.startTime[3]}</div>
+            </div>
+            <div onClick={this.checkOccupancy} className="dateCard green">
+              <div>{this.state.service[4]}</div>
+              <div>{this.state.day[4]} {this.state.dateNumber[4]}</div>
+              <div>${this.state.cost[4]}</div>
+              <div>{this.state.startTime[4]}</div>
+            </div>
+            <div onClick={this.checkOccupancy} className="dateCard green">
+              <div>{this.state.service[5]}</div>
+              <div>{this.state.day[5]} {this.state.dateNumber[5]}</div>
+              <div>${this.state.cost[5]}</div>
+              <div>{this.state.startTime[5]}</div>
+            </div>
+            <div onClick={this.checkOccupancy} className="dateCard green">
+              <div>{this.state.service[6]}</div>
+              <div>{this.state.day[6]} {this.state.dateNumber[6]}</div>
+              <div>${this.state.cost[6]}</div>
+              <div>{this.state.startTime[6]}</div>
+            </div>
+            {/* <div onClick='' className="dateCard green">
               <div>Tuesday 2</div>
               <div>89%</div>
             </div>
@@ -239,7 +293,7 @@ class Biz_Appointments extends React.Component {
             <div className="dateCard red">
               <div>Saturday 6</div>
               <div>10%</div>
-            </div>
+            </div> */}
           </div>
 
           <div className="one-four">
@@ -269,7 +323,7 @@ class Biz_Appointments extends React.Component {
             </div>
           </div>
         </div>
-            <AppointmentCard />
+            {/* <AppointmentCard /> */}
       </div>
     );
   }
