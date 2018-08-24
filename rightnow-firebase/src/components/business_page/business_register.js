@@ -17,7 +17,7 @@ export default class BusinessAccount extends Component {
     this.state = {
       displayForms: true,
       displaySuccess: false,
-      email: "email@email.com",
+      email: "",
       firstName: "",
       lastName: "",
       phone: ""
