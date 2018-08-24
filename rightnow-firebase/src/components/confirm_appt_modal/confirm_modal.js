@@ -78,8 +78,8 @@ export default class ConfirmModal extends Component {
 									</Cost>
 									<Agreement>Agreement box</Agreement>
 									<ButtonContainer>
-										<Button>Got it!</Button>
-										<Button onClick={(value) => this.confirmAppt(value)}>Go back</Button>
+										<Button onClick={() => this.props.closeModal()}>Got it!</Button>
+										<Button onClick={() => this.props.closeModal()}>Go back</Button>
 									</ButtonContainer>
 								</DetailContainer>
 								{/* <CloseX onClick={() => this.props.closeModal()}>x</CloseX> */}
