@@ -91,50 +91,50 @@ class Biz_Appointments extends React.Component {
       .then(function(querySnapshot) {
         initalServiceState.push(querySnapshot.data().appointmentServices[0]);
         initalServiceState.push(querySnapshot.data().appointmentServices[1]);
-        // initalServiceState.push(querySnapshot.data().appointmentServices[2]);
-        // initalServiceState.push(querySnapshot.data().appointmentServices[3]);
-        // initalServiceState.push(querySnapshot.data().appointmentServices[4]);
-        // initalServiceState.push(querySnapshot.data().appointmentServices[5]);
-        // initalServiceState.push(querySnapshot.data().appointmentServices[6]);
-        // initalServiceState.push(querySnapshot.data().appointmentServices[7]);
+        initalServiceState.push(querySnapshot.data().appointmentServices[2]);
+        initalServiceState.push(querySnapshot.data().appointmentServices[3]);
+        initalServiceState.push(querySnapshot.data().appointmentServices[4]);
+        initalServiceState.push(querySnapshot.data().appointmentServices[5]);
+        initalServiceState.push(querySnapshot.data().appointmentServices[6]);
+        initalServiceState.push(querySnapshot.data().appointmentServices[7]);
         // initalServiceState.push(querySnapshot.data().appointmentServices[9]);
-    //     initalDayState.push(querySnapshot.data().appointmentDays[0]);
-    //     initalDayState.push(querySnapshot.data().appointmentDays[1]);
-    //     initalDayState.push(querySnapshot.data().appointmentDays[2]);
-    //     initalDayState.push(querySnapshot.data().appointmentDays[3]);
-    //     initalDayState.push(querySnapshot.data().appointmentDays[4]);
-    //     initalDayState.push(querySnapshot.data().appointmentDays[5]);
-    //     initalDayState.push(querySnapshot.data().appointmentDays[6]);
-    //     initalDayState.push(querySnapshot.data().appointmentDays[7]);
-    //     initalDayState.push(querySnapshot.data().appointmentDays[9]);
-    //     initalCostState.push(querySnapshot.data().appointmentsCost[0]);
-    //     initalCostState.push(querySnapshot.data().appointmentsCost[1]);
-    //     initalCostState.push(querySnapshot.data().appointmentsCost[2]);
-    //     initalCostState.push(querySnapshot.data().appointmentsCost[3]);
-    //     initalCostState.push(querySnapshot.data().appointmentsCost[4]);
-    //     initalCostState.push(querySnapshot.data().appointmentsCost[5]);
-    //     initalCostState.push(querySnapshot.data().appointmentsCost[6]);
-    //     initalCostState.push(querySnapshot.data().appointmentsCost[7]);
-    //     initalCostState.push(querySnapshot.data().appointmentsCost[9]);
-    //     initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[0]);
-    //     initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[1]);
-    //     initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[2]);
-    //     initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[3]);
-    //     initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[4]);
-    //     initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[5]);
-    //     initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[6]);
-    //     initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[7]);
-    //     initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[9]);
-    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[0]);
-    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[1]);
-    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[2]);
-    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[3]);
-    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[4]);
-    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[5]);
-    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[6]);
-    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[7]);
-    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[8]);
-    //     initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[9]);
+        initalDayState.push(querySnapshot.data().appointmentDays[0]);
+        initalDayState.push(querySnapshot.data().appointmentDays[1]);
+        initalDayState.push(querySnapshot.data().appointmentDays[2]);
+        initalDayState.push(querySnapshot.data().appointmentDays[3]);
+        initalDayState.push(querySnapshot.data().appointmentDays[4]);
+        initalDayState.push(querySnapshot.data().appointmentDays[5]);
+        initalDayState.push(querySnapshot.data().appointmentDays[6]);
+        initalDayState.push(querySnapshot.data().appointmentDays[7]);
+        // initalDayState.push(querySnapshot.data().appointmentDays[9]);
+        initalCostState.push(querySnapshot.data().appointmentsCost[0]);
+        initalCostState.push(querySnapshot.data().appointmentsCost[1]);
+        initalCostState.push(querySnapshot.data().appointmentsCost[2]);
+        initalCostState.push(querySnapshot.data().appointmentsCost[3]);
+        initalCostState.push(querySnapshot.data().appointmentsCost[4]);
+        initalCostState.push(querySnapshot.data().appointmentsCost[5]);
+        initalCostState.push(querySnapshot.data().appointmentsCost[6]);
+        initalCostState.push(querySnapshot.data().appointmentsCost[7]);
+        // initalCostState.push(querySnapshot.data().appointmentsCost[9]);
+        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[0]);
+        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[1]);
+        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[2]);
+        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[3]);
+        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[4]);
+        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[5]);
+        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[6]);
+        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[7]);
+        // initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[9]);
+        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[0]);
+        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[1]);
+        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[2]);
+        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[3]);
+        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[4]);
+        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[5]);
+        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[6]);
+        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[7]);
+        // initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[8]);
+        // initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[9]);
       })
       .then(data => {
         this.setState(prevState => ({
@@ -144,7 +144,7 @@ class Biz_Appointments extends React.Component {
           startTime: initalStartTimeState,
           endTime: initalEndTimeState,
         }));
-      });
+      })
   }
 
   // Attempting to make a function that will check the occupancy of each card
@@ -165,7 +165,15 @@ class Biz_Appointments extends React.Component {
     e.preventDefault();
     this.setState({
       service: [...this.state.service, this.state.newSeshService],
-      newSeshService: ''
+      newSeshService: '',
+      day: [...this.state.day, this.state.newSeshDate],
+      newSeshDate: '',
+      cost: [...this.state.cost, this.state.newSeshCost],
+      newSeshCost: '',
+      startTime: [...this.state.startTime, this.state.newSeshStartTime],
+      newSeshStartTime: '',
+      endTime: [...this.state.endTime, this.state.newSeshEndTime],
+      newSeshEndTime: '',
     })
     
   }
@@ -175,13 +183,13 @@ class Biz_Appointments extends React.Component {
       .doc("A Dog's Day Out")
       .set({
         appointmentServices: this.state.service,
-        // appointmentDays: [...this.state.newSeshDate],
-        // appointmentsCost: [this.state.newSeshCost],
-        // appointmentsStartTime: [this.state.newSeshStartTime],
-        // appointmentsEndTime: [...this.state.newSeshEndTime]
+        appointmentDays: this.state.day,
+        appointmentsCost: this.state.cost,
+        appointmentsStartTime: this.state.startTime,
+        appointmentsEndTime: this.state.endTime
       })
     }
-    
+
   submitMultipleSessions(e) {
     e.preventDefault();
 
