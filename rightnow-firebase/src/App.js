@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavBar from './components/nav_bar';
+import NavBar from './components/nav/nav_bar';
 import { init as firebaseInit } from './firebase/firebase';
 import UserProvider from './context/userContext';
 import { Route } from 'react-router-dom';
