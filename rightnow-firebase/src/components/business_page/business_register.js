@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import glamorous from "glamorous";
+import PlacesAPI from "../placesAPI/search_autocomplete";
 
 import {
   Container,
@@ -94,7 +95,7 @@ export default class BusinessAccount extends Component {
             </Wrapper>
             <Bottom>
               <label>Google API</label>
-              <input type="text" placeholder="API" />
+              <PlacesAPI />
             </Bottom>
             <div>
               <Button onClick={() => this.submitForm()} type="submit">

@@ -1,7 +1,7 @@
 //Import React Scrit Libraray to load Google object
 import React, { Component } from "react";
 
-class Search extends Component {
+export default class PlacesAPI extends Component {
   state = {
     street_number: "",
     street_name: "",
@@ -54,10 +54,9 @@ class Search extends Component {
           value={this.state.query}
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
           style={{
-            margin: '15% auto',
-            width: 800,
-            padding: "3%",
-            fontSize: "2em"
+            width: "30vw",
+            padding: "1%",
+            fontSize: "1em"
           }}
         />
 
@@ -66,4 +65,3 @@ class Search extends Component {
   }
 }
 
-export default Search;
