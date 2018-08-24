@@ -50,7 +50,6 @@ class Search extends Component {
         <input 
           id="autocomplete" 
           placeholder="Enter business location" 
-          intText="Search City"
           name="query"
           value={this.state.query}
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
