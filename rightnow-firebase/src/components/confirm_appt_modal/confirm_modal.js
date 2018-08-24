@@ -37,6 +37,18 @@ export default class ConfirmModal extends Component {
 		document.body.style.overflowY = 'scroll';
 	}
 
+	// confirmAppt = () => {
+	// 	value.updateState({displayConfirm: false});
+	// 	let newtask = {
+	// 		type: value.data.theo_appt_details.type,
+	// 		time: value.data.theo_appt_details.time,
+	// 		cost: value.data.theo_appt_details.cost
+	// 	}
+	// 	value.updateState(prevState => ({
+	// 		appointments: [...prevState.data.appointments, newtask]
+	// 	}))
+	// }
+
 	// use FieldSet
 	render() {
 		return (
@@ -65,7 +77,7 @@ export default class ConfirmModal extends Component {
 									<Agreement>Agreement box</Agreement>
 									<ButtonContainer>
 										<Button>Got it!</Button>
-										<Button onClick={() => value.updateState({displayConfirm: false})}>Go back</Button>
+										<Button onClick={() => this.confirmAppt()}>Go back</Button>
 									</ButtonContainer>
 								</DetailContainer>
 								{/* <CloseX onClick={() => this.props.closeModal()}>x</CloseX> */}
