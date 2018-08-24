@@ -13,7 +13,7 @@ export default class UserProvider extends Component {
     location: "",
     appointments: [],
     theo_appt_details: {},
-    displayConfirm: true
+    displayConfirm: false
   }
 
   updateState = data => this.setState(data);
