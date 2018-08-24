@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import "./appointments_business_styles.css";
 import AppointmentCard from "./appointment_card/appointment_card.js";
-import firebase from "../firebase/firebase";
-const db = firebase.firestore();
+// import db from "../firebase/db.js";
+import firebase from 'firebase/app';
+
+// const db = firebase.firestore();
+
 
 class Biz_Appointments extends React.Component {
   constructor() {
     super();
     this.state = {
+      db: firebase.firestore(),
       // Inital State
       service: [],
       day: [],
@@ -85,7 +89,7 @@ class Biz_Appointments extends React.Component {
     let initalStartTimeState = [];
     let initalEndTimeState = [];
 
-    db.collection("businesses") // Collection name per Firestore
+    this.state.db.collection("businesses") // Collection name per Firestore
       .doc("A Dog's Day Out") // Document name per Firestore
       .get()
       .then(function(querySnapshot) {
@@ -179,7 +183,7 @@ class Biz_Appointments extends React.Component {
   }
 
   componentDidUpdate() {
-  db.collection("businesses")
+  this.state.db.collection("businesses")
       .doc("A Dog's Day Out")
       .set({
         appointmentServices: this.state.service,
