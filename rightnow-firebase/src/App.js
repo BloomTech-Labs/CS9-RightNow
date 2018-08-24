@@ -29,7 +29,7 @@ class App extends Component {
                     <Route exact path="/company-settings" component={CompanySettings}/>
                 </UserProvider>
 
-                <Biz_Appointments />
+                {/* <Biz_Appointments /> */}
             </div>
         );
     }
