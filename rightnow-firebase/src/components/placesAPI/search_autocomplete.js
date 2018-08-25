@@ -1,6 +1,5 @@
 //Import React Scrit Libraray to load Google object
 import React, { Component } from "react";
-import db from "../../firebase/firebase";
 import { BusinessContext } from "../../context/businessContext";
 
 export default class PlacesAPI extends Component {
