@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import glamorous from "glamorous";
 import PlacesAPI from "../placesAPI/search_autocomplete";
-import { BusinessContext } from "../../context/businessContext";
-import { createNewBusiness } from "../../firebase/db_interact";
 
 import {
   Container,

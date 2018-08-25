@@ -48,23 +48,6 @@ export default class PlacesAPI extends Component {
         rating: place.rating,
         photos: photosURL
       });
-      // db.collection("busn_ACTUAL")
-      //   .add({
-      //     business: {
-      //       name: place.name,
-      //       fullAddress: place.formatted_address,
-      //       street_number: address[0].long_name,
-      //       street_name: address[1].long_name,
-      //       city: address[2].long_name,
-      //       state: address[5].long_name,
-      //       zip: address[6].long_name,
-      //       phone: place.formatted_phone_number,
-      //       rating: place.rating,
-      //       photo: photoURL
-      //     }
-      //   })
-      //   .then(info => console.log("success :)", info))
-      //   .catch(err => console.log("error :(", err));
 
       this.setState({ query: place.formatted_address });
     }
