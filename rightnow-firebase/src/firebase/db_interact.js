@@ -141,8 +141,6 @@ export const createUser = async (col, data) => {
   // @param col - string - "users_ACTUAL" or "busn_ACTUAL"
   // @params data - object - any data you wish to store - UID IS REQUIRED
 export const registerUser = async (col, data) => {
-  console.log("here")
-  console.log(col, data)
   const errorMsg = `error registering new customer with the following provided data\n\t${data}`;
 
   const ref = await db.collection(col);
