@@ -27,13 +27,14 @@ export default class BusinessAccount extends Component {
   }
 
   submitForm = () => {
-    const { first_name, last_name, email, phone } = this.state;
-    const { personal, business } = this.props.value.data;
+    this.props.value.updatePersonal({ 
+      first_name: this.state.first_name, 
+      last_name: this.state.last_name, 
+      email: this.state.email, 
+      phone: this.state.phone 
+    });
 
-    this.props.value.updatePersonal({ first_name, last_name, email, phone });
-
-    createNewBusiness({ personal, business });
-
+    // await createNewBusiness({ personal: personal, business: business });
     // this.setState({ first_name: "", last_name: "", email: "", phone: "", displayForms: false, displaySuccess: true });
   };
 

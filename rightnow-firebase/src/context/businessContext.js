@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { createNewBusiness } from "../firebase/db_interact";
 
 
 export const BusinessContext = React.createContext();
@@ -30,7 +31,9 @@ export default class BusinessProvider extends Component {
 
   updateBusiness = data => this.setState({ business: data });
 
-  updatePersonal = data => this.setState({ personal: data });
+  updatePersonal = data => {
+    createNewBusiness({ personal: data, business: this.state.business });
+  }
 
   updateAppointments = data => this.setState({ data });
 
