@@ -36,23 +36,38 @@ export const findUserByField = async (col, field, value) => {
 }
 
 
+// adds a new document to the users collection with the user id (uid) as the document id
+// returns undefined
+// @param data - object - any data you wish to store
+export const createCustomer = async data => {
+  await db
+    .collection("users_ACTUAL")
+    .doc(data.uid)
+    .set(data)
+    .catch(err => console.log("error adding doc to customer db", err));
+}
+
+
+// checks to see if the customer alread has an account
+// if they do, the account data is returned
+// if they don't, a new database doc is created with the user id (uid) as the doc id
+// @params data - object - any data you wish to store - UID IS REQUIRED
+export const registerCustomer = async data => {
+  const ref = await db.collection("users_ACTUAL");
+  const response = 
+    await ref
+      .doc(data.uid)
+      .get()
+      .then(doc => !doc.exists ? createCustomer(data) : doc.data())
+      .catch(err => console.log("error registering customer", err));
+  
+  return response;
+}
+
+
 export const createNewBusiness = data => {
   db.collection("busn_ACTUAL")
     .add(data)
     .then(info => console.log("created a new business :)", info))
     .catch(err => console.log("error :(", err));
 }
-
-
-// export const handleLogin = value => {
-//   auth.onAuthStateChanged(currentUser => {
-//     console.log("google login - current user", currentUser);
-    // value.updateState({
-    //     id: currentUser.uid || "",
-    //     name: currentUser.displayName || "",
-    //     email: currentUser.email || "",
-    //     phone: currentUser.phoneNumber || "",
-    //     photo: currentUser.photoURL || ""
-    // });
-// });
-// }

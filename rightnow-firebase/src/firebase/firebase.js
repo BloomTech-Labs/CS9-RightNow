@@ -1,7 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
-import { findUserById, findUserByField } from "./db_interact";
+import { findUserById, findUserByField, registerCustomer } from "./db_interact";
 
 
 const config = {
@@ -31,6 +31,10 @@ auth.onAuthStateChanged(async currentUser => {
   // THIS WORKS
   // const data = await findUserById("users_ACTUAL", currentUser.uid);
   // console.log(data);
+
+  // THIS WORKS
+  // const newUser = await registerCustomer({ email: "jeffreyflynn@gmail.com", uid: "314159" });
+  // console.log(newUser);
 
   // THIS WORKS
   // const byFieldValue = await findUserByField("users_ACTUAL", "uid", currentUser.uid);
