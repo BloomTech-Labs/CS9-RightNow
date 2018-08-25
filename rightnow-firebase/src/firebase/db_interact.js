@@ -5,10 +5,13 @@ import { db, auth } from "./firebase";
   // @param col - string - "users_ACTUAL" or "busn_ACTUAL"
   // @param id  - string - some id
 export const findUserById = async (col, id) => {
-  const errorMsg = `error locating customer/business in database\nprovided collection parameter: ${col}\nprovided id: ${id}`;
-
   const ref = await db.collection(col);
-  const data = await ref.doc(id).get().then(doc => doc.data()).catch(err => console.log(errorMsg, err));
+  const data = 
+    await ref
+      .doc(id)
+      .get()
+      .then(doc => doc.data())
+      .catch(err => console.log(`error locating customer/business in database\nprovided collection parameter: ${col}\nprovided id: ${id}`, err));
 
   return data;
 }
@@ -23,7 +26,11 @@ export const findUserByField = async (col, field, value) => {
 
   const ref = await db.collection(col);
   const query = await ref.where(field, "==", value);
-  const data = await query.get().then(querySnapshot => querySnapshot.docs.map(doc => doc.data())).catch(err => console.log(errorMsg, err));
+  const data = 
+    await query
+      .get()
+      .then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
+      .catch(err => console.log(errorMsg, err));
 
   return data;
 }
