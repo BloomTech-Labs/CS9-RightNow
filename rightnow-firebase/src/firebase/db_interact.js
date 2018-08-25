@@ -1,6 +1,47 @@
 import { db, auth } from "./firebase";
 
 
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+
+  Known bugs:
+
+    * If a user's login habbits varry across multiple services, 
+      a new account will br created for each service.
+
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+
+  Database structure:
+
+    bookers -- stores a collection of customer docs
+         \
+          \
+          customer -- stores user information 
+            * name, email, phone, uid 
+            * past appointments -- collection of id references to appointments attended in the past
+            * future appointments -- collection of id references to future appointments
+
+
+    bookies -- stores a collections of business docs (one doc = one business)
+              \
+               \
+              business -- stores business information
+                * business details -- object -- name, address, phone, rating, photos, hours
+                * owner details -- object -- name, email, phone
+                * available appointments -- collection of id references to corresponding appointments
+                * booked appointments -- collection of id references to corresponding appointments
+    
+    
+    appointments -- stores a collection of ALL appointments (ever?)
+                \
+                 \
+                appointment -- stores appointment details
+                  * active -- boolean -- true for future appointment - false for past appointment
+                  * business host -- reference -- ref to business id
+                  * customer -- reference -- ref to customer id
+
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
+
+
 // find business or customer by document id
   // @param col - string - "users_ACTUAL" or "busn_ACTUAL"
   // @param id  - string - some id
@@ -42,13 +83,13 @@ export const findUserByField = async (col, field, value) => {
 // returns undefined
   // @param col - string - "users_ACTUAL" or "busn_ACTUAL"
   // @param data - object - any data you wish to store - UID IS REQUIRED
-  export const createUser = async (col, data) => {
-    await db
-      .collection(col)
-      .doc(data.uid)
-      .set(data)
-      .catch(err => console.log("error adding doc to customer db", err));
-  }
+export const createUser = async (col, data) => {
+  await db
+    .collection(col)
+    .doc(data.uid)
+    .set(data)
+    .catch(err => console.log("error adding doc to customer db", err));
+}
 
 
 // checks to see if the customer alread has an account
@@ -68,12 +109,4 @@ export const registerUser = async (col, data) => {
       .catch(err => console.log(errorMsg, err));
   
   return response;
-}
-
-
-export const createNewBusiness = data => {
-  db.collection("busn_ACTUAL")
-    .add(data)
-    .then(info => console.log("created a new business :)", info))
-    .catch(err => console.log("error :(", err));
 }

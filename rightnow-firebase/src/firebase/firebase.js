@@ -40,8 +40,9 @@ auth.onAuthStateChanged(async currentUser => {
   // const newUser = await registerCustomer({ email: "jeffreyflynn@gmail.com", uid: "314159" });
   // console.log(newUser);
 
-  const newUser = await registerUser("busn_ACTUAL", { email: "thisismyemail@gmail.com", uid: "314159" });
-  console.log(newUser);
+  // THIS WORKS
+  // const newUser = await registerUser("busn_ACTUAL", { email: "thisismyemail@gmail.com", uid: "314159" });
+  // console.log(newUser);
 });
 
 

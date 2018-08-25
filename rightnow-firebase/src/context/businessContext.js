@@ -32,7 +32,7 @@ export default class BusinessProvider extends Component {
   updateBusiness = data => this.setState({ business: data });
 
   updatePersonal = data => {
-    createNewBusiness({ personal: data, business: this.state.business });
+    // createNewBusiness({ personal: data, business: this.state.business });
   }
 
   updateAppointments = data => this.setState({ data });
