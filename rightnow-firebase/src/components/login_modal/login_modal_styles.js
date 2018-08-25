@@ -13,7 +13,7 @@ export const ModalWrapper = glamorous.div({
 	fontFamily: 'Quicksand, sans-serif',
 	filter: 0,
 	padding: '0 15%',
-	paddingTop: '30vh',
+	paddingTop: '25vh',
 	zIndex: 2,
 	position: 'relative',
 	display: 'flex',
