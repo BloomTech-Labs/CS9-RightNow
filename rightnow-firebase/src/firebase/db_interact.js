@@ -36,10 +36,35 @@ import { db, auth } from "./firebase";
                  \
                 appointment -- stores appointment details
                   * active -- boolean -- true for future appointment - false for past appointment
+                  * details -- object -- business name, address, time, cost, type
                   * business host -- reference -- ref to business id
                   * customer -- reference -- ref to customer id
 
-~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+
+  To-Do:
+
+    * added newly created appointment id to corresponding business' collection of future_appointments
+
+
+    * method that adds customer id to appointment's customerId field upon confirmation
+
+
+    * option for businesses to delete an appointment 
+  
+        * i'm thinking we stay away from "updating" appointments
+
+        * if there is misleading information on an appointment card then it should be removed immediately
+
+        * ex. while the owner is trying to update something, 
+          a user could already be planning parts of their day around the current advertisement
+
+
+    * once the current time is equal to the appointment time (for open appointments), the appointment should expire
+
+        * set active field to false and delete appointment from database
+
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
 
 // find business or customer by document id
@@ -109,4 +134,28 @@ export const registerUser = async (col, data) => {
       .catch(err => console.log(errorMsg, err));
   
   return response;
+}
+
+
+// creates a new appointment
+// returns the newly created appointment id
+  // @param data -- object -- any data you want to store -- MUST INCLUDE BUSINESS ID and ACTIVE: TRUE
+export const newAppointment = async data => {
+  const errorMsg = "error creating new appointment\n";
+
+  if (!data.businessId) {
+    console.log("you must provide a business id for future reference");
+    return;
+  }
+
+  const newAppointmentId = 
+    await db
+      .collection("appt_ACTUAL")
+      .add(data)
+      .then(docRef => docRef.id)
+      .catch(err => console.log(errorMsg, err));
+  
+  // add appointment id to business' future_appointments collection
+
+  return newAppointmentId;
 }
