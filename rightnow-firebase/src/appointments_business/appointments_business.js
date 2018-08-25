@@ -1,62 +1,30 @@
 import React, { Component } from "react";
 import "./appointments_business_styles.css";
 import AppointmentCard from "./appointment_card/appointment_card.js";
-// import db from "../firebase/db.js";
-import firebase from 'firebase/app';
 
-// const db = firebase.firestore();
-
+import firebase from "../firebase/firebase";
+import { empty } from "glamor";
+const db = firebase.firestore();
 
 class Biz_Appointments extends React.Component {
   constructor() {
     super();
     this.state = {
-      db: firebase.firestore(),
       // Inital State
+      appointment1: "",
+      appointment2: "",
+      availableAppointments: [],
       service: [],
       day: [],
-      dateNumber: [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12,
-        13,
-        14,
-        15,
-        16,
-        17,
-        18,
-        19,
-        20,
-        21,
-        22,
-        23,
-        24,
-        25,
-        26,
-        27,
-        28,
-        29,
-        30,
-        31
-      ],
-      occupancy: [
-        68 + "%",
-        89 + "%",
-        43 + "%",
-        35 + "%",
-        55 + "%",
-        80 + "%",
-        "closed"
-      ],
+      //  occupancy: [
+      //   68 + "%",
+      //   89 + "%",
+      //   43 + "%",
+      //   35 + "%",
+      //   55 + "%",
+      //   80 + "%",
+      //   "closed"
+      // ],
       cost: [],
       startTime: [],
       endTime: "",
@@ -75,200 +43,160 @@ class Biz_Appointments extends React.Component {
       newSeshStartTime: "",
       newSeshEndTime: ""
     };
-    this.submitSession = this.submitSession.bind(this);
-    this.submitMultipleSessions = this.submitMultipleSessions.bind(this);
+    // this.submitSession = this.submitSession.bind(this);
+    // this.submitMultipleSessions = this.submitMultipleSessions.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.checkOccupancy = this.checkOccupancy.bind(this);
+    // this.checkOccupancy = this.checkOccupancy.bind(this); //Stretch goal
   }
 
   componentDidMount() {
     // Upon mounting, this sets the state of this component to what is inside of the database.
-    let initalServiceState = [];
-    let initalDayState = [];
-    let initalCostState = [];
-    let initalStartTimeState = [];
-    let initalEndTimeState = [];
+    let currentAppointments = [];
 
-    this.state.db.collection("businesses") // Collection name per Firestore
-      .doc("A Dog's Day Out") // Document name per Firestore
+    db
+      .collection("busn_ACTUAL") // Collection name per Firestore
+      .doc("Mn5KyfUWPMz4D6aiNT3R")
+      .collection("available_appointments")
       .get()
-      .then(function(querySnapshot) {
-        initalServiceState.push(querySnapshot.data().appointmentServices[0]);
-        initalServiceState.push(querySnapshot.data().appointmentServices[1]);
-        initalServiceState.push(querySnapshot.data().appointmentServices[2]);
-        initalServiceState.push(querySnapshot.data().appointmentServices[3]);
-        initalServiceState.push(querySnapshot.data().appointmentServices[4]);
-        initalServiceState.push(querySnapshot.data().appointmentServices[5]);
-        initalServiceState.push(querySnapshot.data().appointmentServices[6]);
-        initalServiceState.push(querySnapshot.data().appointmentServices[7]);
-        // initalServiceState.push(querySnapshot.data().appointmentServices[9]);
-        initalDayState.push(querySnapshot.data().appointmentDays[0]);
-        initalDayState.push(querySnapshot.data().appointmentDays[1]);
-        initalDayState.push(querySnapshot.data().appointmentDays[2]);
-        initalDayState.push(querySnapshot.data().appointmentDays[3]);
-        initalDayState.push(querySnapshot.data().appointmentDays[4]);
-        initalDayState.push(querySnapshot.data().appointmentDays[5]);
-        initalDayState.push(querySnapshot.data().appointmentDays[6]);
-        initalDayState.push(querySnapshot.data().appointmentDays[7]);
-        // initalDayState.push(querySnapshot.data().appointmentDays[9]);
-        initalCostState.push(querySnapshot.data().appointmentsCost[0]);
-        initalCostState.push(querySnapshot.data().appointmentsCost[1]);
-        initalCostState.push(querySnapshot.data().appointmentsCost[2]);
-        initalCostState.push(querySnapshot.data().appointmentsCost[3]);
-        initalCostState.push(querySnapshot.data().appointmentsCost[4]);
-        initalCostState.push(querySnapshot.data().appointmentsCost[5]);
-        initalCostState.push(querySnapshot.data().appointmentsCost[6]);
-        initalCostState.push(querySnapshot.data().appointmentsCost[7]);
-        // initalCostState.push(querySnapshot.data().appointmentsCost[9]);
-        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[0]);
-        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[1]);
-        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[2]);
-        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[3]);
-        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[4]);
-        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[5]);
-        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[6]);
-        initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[7]);
-        // initalStartTimeState.push(querySnapshot.data().appointmentsStartTime[9]);
-        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[0]);
-        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[1]);
-        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[2]);
-        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[3]);
-        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[4]);
-        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[5]);
-        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[6]);
-        initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[7]);
-        // initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[8]);
-        // initalEndTimeState.push(querySnapshot.data().appointmentsEndTime[9]);
-      })
-      .then(data => {
-        this.setState(prevState => ({
-          service: initalServiceState,
-          day: initalDayState,
-          cost: initalCostState,
-          startTime: initalStartTimeState,
-          endTime: initalEndTimeState,
-        }));
+      .then(querySnapshot => {
+        let emptyarray = [];
+        querySnapshot.forEach(doc => {
+          console.log(1, doc)
+          emptyarray.push({
+            newSeshCost: doc.data().newSeshCost,
+            newSeshDate: doc.data().newSeshDate,
+            newSeshService: doc.data().newSeshService,
+            newSeshStartTime: doc.data().newSeshStartTime,
+            newSeshEndTime: doc.data().newSeshEndTime,
+          })
+        })
+        this.setState({
+          availableAppointments: emptyarray,
+        })
+        console.log(this.state.availableAppointments);
       })
   }
 
-  // Attempting to make a function that will check the occupancy of each card
+  // Stretch Goal: Attempting to make a function that will check the occupancy of each card
   //  and color-code it accordingly
-  checkOccupancy(e) {
-    e.preventDefault();
+  // checkOccupancy(e) {
+  //   e.preventDefault();
 
+  // }
+
+  findById = id => {
+    return db
+    .collection("busn_ACTUAL")
+    .doc("Mn5KyfUWPMz4D6aiNT3R")
+    .collection("available_appointments")
+    .doc(id)
+    .get()
+    .then(x => {
+      return x.data();
+    })
   }
-
-  handleChange(e) {
-    e.preventDefault();
+  handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
-  }
+  };
 
-  submitSession(e) {
-    e.preventDefault();
-    this.setState({
-      service: [...this.state.service, this.state.newSeshService],
-      newSeshService: '',
-      day: [...this.state.day, this.state.newSeshDate],
-      newSeshDate: '',
-      cost: [...this.state.cost, this.state.newSeshCost],
-      newSeshCost: '',
-      startTime: [...this.state.startTime, this.state.newSeshStartTime],
-      newSeshStartTime: '',
-      endTime: [...this.state.endTime, this.state.newSeshEndTime],
-      newSeshEndTime: '',
-    })
-    
-  }
+  //
+  submitSession = e => {
+    db.collection("busn_ACTUAL") // Collection name per Firestore
+      .doc("Mn5KyfUWPMz4D6aiNT3R")
+      .collection("available_appointments")
+      .add({
+        newSeshCost: this.state.newSeshCost,
+        newSeshDate: this.state.newSeshDate,
+        newSeshService: this.state.newSeshService,
+        newSeshStartTime: this.state.newSeshStartTime,
+        newSeshEndTime: this.state.newSeshEndTime
+      })
+      .then(x => {
+          this.setState({
+          availableAppointments: [...this.state.availableAppointments, x.id],
+        })
+      })
+      .catch(x => console.log("failure"));
+  };
+
+  // // db.collection("businesses")
+  //   .doc("A Dog's Day Out")
+  //   };
+
+  //   let a = [...this.state.service, this.state.newSeshService];
+  //   let b = [...this.state.day,: this.state.newSeshDate];
+  //   let c = [...this.state.cost, this.state.newSeshCost];
+  //   let d = [...this.state.startTime, this.state.newSeshStartTime];
+  //   let f = [...this.state.endTime, this.state.newSeshEndTime];
+  //   this.setState({
+  //     service: a,
+  //     day: b,
+  //     cost: c,
+  //     startTime: d,
+  //     endTime: f
+  //   })
+  //   this.setState({
+  //     newSeshService: '',
+  //     newSeshDate: '',
+  //     newSeshCost: '',
+  //     newSeshStartTime: '',
+  //     newSeshEndTime: '',
+  //   })
 
   componentDidUpdate() {
-  this.state.db.collection("businesses")
-      .doc("A Dog's Day Out")
-      .set({
-        appointmentServices: this.state.service,
-        appointmentDays: this.state.day,
-        appointmentsCost: this.state.cost,
-        appointmentsStartTime: this.state.startTime,
-        appointmentsEndTime: this.state.endTime
+    // db.collection("businesses")
+    //     .doc("A Dog's Day Out")
+    //     .set({
+    //       appointmentServices: this.state.service,
+    //       // appointmentDays: this.state.day,
+    //       // appointmentsCost: this.state.cost,
+    //       // appointmentsStartTime: this.state.startTime,
+    //       // appointmentsEndTime: this.state.endTime
+    //     })
+    db.collection("busn_ACTUAL") // Collection name per Firestore
+      .doc("Mn5KyfUWPMz4D6aiNT3R")
+      .collection("available_appointments")
+      .get()
+      .then(querySnapshot=> {
+        querySnapshot.forEach(x => {
+        // this.setState({
+        //   availableAppointments: [...this.state.availableAppointments, x.data()]
+        // });
+        })
       })
-    }
-
-  submitMultipleSessions(e) {
-    e.preventDefault();
-
-    this.setState({
-      newMultipleSeshService: "",
-      newMultipleSeshDate: "",
-      newMultipleSeshCost: "",
-      newMultipleSeshStartTime: "",
-      newMultipleSeshEndTime: ""
-    });
+      .then(x => console.log(this.state.availableAppointments))
+      .catch()
   }
 
-  
+  // Stretch Goal
+  // submitMultipleSessions(e) {
+  //   e.preventDefault();
+
+  //   this.setState({
+  //     newMultipleSeshService: "",
+  //     newMultipleSeshDate: "",
+  //     newMultipleSeshCost: "",
+  //     newMultipleSeshStartTime: "",
+  //     newMultipleSeshEndTime: ""
+  //   });
+  // }
+
   render() {
+    console.log(this.state.availableAppointments);
     return (
       <div id="background">
         <div className="dashboard">
           <div className="three-four">
-            <div onClick={this.checkOccupancy} className="dateCard">
-              <div>{this.state.startTime[0]} - {this.state.endTime[0]}</div>
-              <div>{this.state.day[0]}</div>
-              <div>{this.state.service[0]}</div>
-              <div>${this.state.cost[0]}</div>
-            </div>
-            <div onClick={this.checkOccupancy} className="dateCard">
-              <div>{this.state.startTime[1]} - {this.state.endTime[1]}</div>
-              <div>{this.state.day[1]}</div>
-              <div>{this.state.service[1]}</div>
-              <div>${this.state.cost[1]}</div>
-            </div>
-            <div onClick={this.checkOccupancy} className="dateCard">
-              <div>{this.state.startTime[2]} - {this.state.endTime[2]}</div>
-              <div>{this.state.day[2]}</div>
-              <div>{this.state.service[2]}</div>
-              <div>${this.state.cost[2]}</div>
-            </div>
-            <div onClick={this.checkOccupancy} className="dateCard">
-              <div>{this.state.startTime[3]} - {this.state.endTime[3]}</div>
-              <div>{this.state.day[3]}</div>
-              <div>{this.state.service[3]}</div>
-              <div>${this.state.cost[3]}</div>
-            </div>
-            <div onClick={this.checkOccupancy} className="dateCard">
-              <div>{this.state.startTime[4]} - {this.state.endTime[4]}</div>
-              <div>{this.state.day[4]}</div>
-              <div>{this.state.service[4]}</div>
-              <div>${this.state.cost[4]}</div>
-            </div>
-            <div onClick={this.checkOccupancy} className="dateCard">
-              <div>{this.state.startTime[5]} - {this.state.endTime[5]}</div>
-              <div>{this.state.day[5]}</div>
-              <div>{this.state.service[5]}</div>
-              <div>${this.state.cost[5]}</div>
-            </div>
-            <div onClick={this.checkOccupancy} className="dateCard">
-              <div>{this.state.startTime[6]} - {this.state.endTime[6]}</div>
-              <div>{this.state.day[6]}</div>
-              <div>{this.state.service[6]}</div>
-              <div>${this.state.cost[6]}</div>
-            </div>
-            <div onClick={this.checkOccupancy} className="dateCard">
-              <div>{this.state.startTime[7]} - {this.state.endTime[7]}</div>
-              <div>{this.state.day[7]}</div>
-              <div>{this.state.service[7]}</div>
-              <div>${this.state.cost[7]}</div>
-            </div>
-            <div onClick={this.checkOccupancy} className="dateCard">
-              <div>{this.state.startTime[8]}-{this.state.endTime[8]}</div>
-              <div>{this.state.day[8]}</div>
-              <div>{this.state.service[8]}</div>
-              <div>${this.state.cost[8]}</div>
-            </div>
+            
+            {this.state.availableAppointments ? this.state.availableAppointments.map((element, index) => {
+              console.log(element);
+              
+              return <AppointmentCard appointment={element}/>
+            }) : null }
 
             
-
           </div>
 
           <div className="one-four">
@@ -279,7 +207,7 @@ class Biz_Appointments extends React.Component {
               <div className="filterButton">Open Appointments</div>
               <div className="filterButton">Past Appointments</div>
             </div>
-            
+
             {/* Create Multiple Sessions */}
             <div className="slide">
               <h4>Create Recurring Sessions</h4>
@@ -315,46 +243,59 @@ class Biz_Appointments extends React.Component {
               />
               <button
                 className="filterButton"
-                onClick={this.submitMultipleSessions}
+                // onClick={this.submitMultipleSessions}
               >
                 Create Multiple Appointments
               </button>
             </div>
-            
+
             {/* Create Single Session */}
             <div className="slide">
               <h4>Create a Single Session</h4>
               <input
-                onChange={this.handleChange}
+                onChange={e =>
+                  this.setState({ [e.target.name]: e.target.value })
+                }
                 name="newSeshStartTime"
                 value={this.state.newSeshStartTime}
                 placeholder="Start Time"
               />
               <input
-                onChange={this.handleChange}
+                onChange={e =>
+                  this.setState({ [e.target.name]: e.target.value })
+                }
                 name="newSeshEndTime"
                 value={this.state.newSeshEndTime}
                 placeholder="EndTime"
               />
-                <input
-                  onChange={this.handleChange}
-                  name="newSeshDate"
-                  value={this.state.newSeshDate}
-                  placeholder="Day of the Week"
-                />
               <input
-                onChange={this.handleChange}
+                onChange={e =>
+                  this.setState({ [e.target.name]: e.target.value })
+                }
+                name="newSeshDate"
+                value={this.state.newSeshDate}
+                placeholder="Day of the Week"
+              />
+              <input
+                onChange={e =>
+                  this.setState({ [e.target.name]: e.target.value })
+                }
                 name="newSeshService"
                 value={this.state.newSeshService}
                 placeholder="Type of Service"
               />
               <input
-                onChange={this.handleChange}
+                onChange={e =>
+                  this.setState({ [e.target.name]: e.target.value })
+                }
                 name="newSeshCost"
                 value={this.state.newSeshCost}
                 placeholder="Cost ($)"
               />
-              <div className="filterButton" onClick={this.submitSession}>
+              <div
+                className="filterButton"
+                onClick={e => this.submitSession(e)}
+              >
                 Create Single Session
               </div>
             </div>

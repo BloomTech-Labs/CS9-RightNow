@@ -13,4 +13,4 @@ import { db } from './firebase';
 
 // Other Entity APIs ...
 
-export default db;
+// export default db;

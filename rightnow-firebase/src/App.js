@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import NavBar from './components/nav_bar';
-import { init as firebaseInit } from './firebase/firebase';
+// import { init as firebaseInit } from './firebase/firebase';
 import UserProvider from './context/userContext';
 import { Route } from 'react-router-dom';
 import BusinessLanding from './components/business_page/business_landing';
@@ -13,7 +13,7 @@ import Biz_Appointments from './appointments_business/appointments_business';
 class App extends Component {
     constructor() {
         super();
-        firebaseInit();
+        // firebaseInit();
         this.state = {};
     }
 
@@ -27,9 +27,10 @@ class App extends Component {
                     <Route exact path="/biz-landing" component={BusinessLanding}/>
                     <Route exact path="/user-settings" component={UserSettings}/>
                     <Route exact path="/company-settings" component={CompanySettings}/>
+                    <Route exact path="/biz-app" component={Biz_Appointments}/>
                 </UserProvider>
 
-                <Biz_Appointments />
+                {/* <Biz_Appointments /> */}
             </div>
         );
     }

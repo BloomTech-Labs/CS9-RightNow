@@ -1,0 +1,8 @@
+.appointmentDisplay {
+    display: grid;
+    grid: auto auto auto auto / auto auto auto auto;
+    grid-gap: 3vw;
+    grid-auto-flow: column;
+    justify-content: center;
+    border: 1px solid blue;
+}

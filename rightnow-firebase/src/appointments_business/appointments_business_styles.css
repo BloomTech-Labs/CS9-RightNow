@@ -18,13 +18,17 @@
 }
 
 .three-four {
-    margin: 2rem 0;
+    /* margin: 2rem 0;
     background: skyblue;
     border: 1px solid black;
     width: 70%;
     display: flex;
     justify-content: flex-start;
-    flex-wrap: wrap;
+    flex-wrap: wrap; */
+    display: grid;
+    grid: auto / 25vw 25vw 25vw;
+    grid-gap: 3vw;
+    justify-content: center;
 }
 
 .one-four {
