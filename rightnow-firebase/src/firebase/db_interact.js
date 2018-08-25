@@ -70,14 +70,20 @@ import { db, auth } from "./firebase";
     * once the current time is equal to the appointment time (for open appointments), the appointment should expire
 
         * set active field to false and delete appointment from database
+    
+  
+    * get all future appointments for current user (customer or business)
+    * get all past appointments for current user (customer or business)
 
 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
 
+// returns the user id of the user that is currently logged in
 export const getUserId = async () => {
   const id = await auth.currentUser.uid;
   return id;
 }
+
 
 // find business or customer by document id
   // @param col - string - "users_ACTUAL" or "busn_ACTUAL"
