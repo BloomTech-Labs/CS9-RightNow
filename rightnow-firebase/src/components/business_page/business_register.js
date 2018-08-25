@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import glamorous from "glamorous";
 import PlacesAPI from "../placesAPI/search_autocomplete";
-
+import { registerUser, getUserId } from "../../firebase/db_interact";
 import {
   Container,
   LeftSide,
@@ -24,20 +24,25 @@ export default class BusinessAccount extends Component {
     };
   }
 
-  submitForm = () => {
-    // does this business already have an account ?
-    //  - yes - take them to login page
-    //  - no - allow registration
+  submitForm = async () => {
+    const userId = await getUserId();
 
-    // this.props.value.updatePersonal({ 
-    //   first_name: this.state.first_name, 
-    //   last_name: this.state.last_name, 
-    //   email: this.state.email, 
-    //   phone: this.state.phone 
-    // });
+    const owner = {
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
+      email: this.state.email,
+      phone: this.state.phone
+    };
 
-    // await createNewBusiness({ personal: personal, business: business });
-    // this.setState({ first_name: "", last_name: "", email: "", phone: "", displayForms: false, displaySuccess: true });
+    const business = this.props.value.data.business;
+
+    const allData = {
+      uid: userId,
+      business_information: business,
+      owner_information: owner
+    };
+
+    registerUser("busn_ACTUAL", allData);
   };
 
   render() {

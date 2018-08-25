@@ -44,6 +44,13 @@ import { db, auth } from "./firebase";
 
   To-Do:
 
+    * how are we going to allow users to browse appointments by industry?
+    
+        * key words from places api ?
+        * make business declare the type of industry?
+        * something else?
+
+
     * added newly created appointment id to corresponding business' collection of future_appointments
 
 
@@ -66,6 +73,11 @@ import { db, auth } from "./firebase";
 
 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
+
+export const getUserId = async () => {
+  const id = await auth.currentUser.uid;
+  return id;
+}
 
 // find business or customer by document id
   // @param col - string - "users_ACTUAL" or "busn_ACTUAL"
@@ -123,6 +135,8 @@ export const createUser = async (col, data) => {
   // @param col - string - "users_ACTUAL" or "busn_ACTUAL"
   // @params data - object - any data you wish to store - UID IS REQUIRED
 export const registerUser = async (col, data) => {
+  console.log("here")
+  console.log(col, data)
   const errorMsg = `error registering new customer with the following provided data\n\t${data}`;
 
   const ref = await db.collection(col);
