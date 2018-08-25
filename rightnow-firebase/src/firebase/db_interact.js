@@ -6,7 +6,7 @@ import { db, auth } from "./firebase";
   Known bugs:
 
     * If a user's login habbits varry across multiple services, 
-      a new account will br created for each service.
+      a new account will be created in the db for each service.
 
 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
 
