@@ -8,7 +8,6 @@ import BusinessAccount from './components/business_page/business_register';
 import Customer from './components/customers/customers';
 import UserSettings from './components/user_settings/user_settings_form';
 import CompanySettings from './components/company_settings/company_settings';
-// import BizAppointments from './components/appointments_business/appointments_business';
 
 class App extends Component {
     constructor(props) {
