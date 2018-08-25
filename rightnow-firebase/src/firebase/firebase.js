@@ -18,3 +18,5 @@ const db = firebase.firestore();
 db.enablePersistence().catch(err => console.log("PERSISTANCE ERROR: ", err));
 
 export default db;
+
+export const auth = firebase.auth();

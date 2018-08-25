@@ -7,6 +7,7 @@ const googleSignIn = value => {
     firebase.auth().onAuthStateChanged(currentUser => {
         console.log("google login - current user", currentUser);
         value.updateState({
+            id: currentUser.uid || "",
             name: currentUser.displayName || "",
             email: currentUser.email || "",
             phone: currentUser.phoneNumber || "",
