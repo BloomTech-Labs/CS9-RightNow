@@ -1,4 +1,4 @@
-import { db } from './firebase';
+// import { db } from './firebase';
 
 // User API
 
@@ -13,4 +13,4 @@ import { db } from './firebase';
 
 // Other Entity APIs ...
 
-export default db;
+// export default db;

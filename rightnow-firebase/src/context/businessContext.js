@@ -23,12 +23,16 @@ export default class BusinessProvider extends Component {
       phone: "",
       rating: "",
       photo: ""
-    }
+    },
+    available_appointments: [],
+    booked_appointments: []
   }
 
   updateBusiness = data => this.setState({ business: data });
 
   updatePersonal = data => this.setState({ personal: data });
+
+  updateAppointments = data => this.setState({ data });
 
   render() {
     return (
@@ -36,7 +40,8 @@ export default class BusinessProvider extends Component {
         value={{
           data: this.state, 
           updateBusiness: this.updateBusiness,
-          updatePersonal: this.updatePersonal
+          updatePersonal: this.updatePersonal,
+          updateAppointments: this.updateAppointments
           }}
         >
         {this.props.children}

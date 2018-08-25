@@ -4,7 +4,9 @@ import React, { Component } from "react";
 export default class PlacesAPI extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      query: ""
+    };
   }
 
   componentDidMount() {
@@ -41,6 +43,7 @@ export default class PlacesAPI extends Component {
         rating: place.rating,
         photo: place.photos[0]
       });
+      this.setState({ query: place.formatted_address });
     }
   }
 
