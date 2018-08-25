@@ -17,7 +17,7 @@ import {
   Text2,
   BottomRight
 } from "./styles-business";
-import BizAppointments from "../appointments_business/appointments_business";
+// import BizAppointments from "../appointments_business/appointments_business";
 
 export default class BusinessLanding extends Component {
   constructor(props) {
@@ -50,7 +50,7 @@ export default class BusinessLanding extends Component {
           </BottomRight>
         </RightSide>
 
-        <BizAppointments />
+        {/* <BizAppointments /> */}
         
       </Container>
     );
