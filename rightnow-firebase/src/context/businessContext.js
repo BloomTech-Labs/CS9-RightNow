@@ -22,7 +22,7 @@ export default class BusinessProvider extends Component {
       zip: "",
       phone: "",
       rating: "",
-      photo: ""
+      photos: []
     },
     available_appointments: [],
     booked_appointments: []

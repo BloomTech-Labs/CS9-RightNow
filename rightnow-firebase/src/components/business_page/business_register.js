@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import glamorous from "glamorous";
 import PlacesAPI from "../placesAPI/search_autocomplete";
+import { BusinessContext } from "../../context/businessContext";
+import { createNewBusiness } from "../../firebase/db_interact";
 
 import {
   Container,
@@ -10,39 +12,30 @@ import {
   Wrapper,
   Button
 } from "./business-styles-account";
-import { BusinessContext } from "../../context/businessContext";
 
 export default class BusinessAccount extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       displayForms: true,
       displaySuccess: false,
       email: "",
-      firstName: "",
-      lastName: "",
+      first_name: "",
+      last_name: "",
       phone: ""
     };
-    this.handleChange = this.handleChange.bind(this);
   }
-  submitForm = () => {
-    this.setState({
-      displayForms: false,
-      displaySuccess: true,
-      email: "",
-      firstName: "",
-      lastName: "",
-      phone: ""
-    });
-  };
 
-  handleChange(e) {
-    e.preventDefault();
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  }
+  submitForm = () => {
+    const { first_name, last_name, email, phone } = this.state;
+    const { personal, business } = this.props.value.data;
+
+    this.props.value.updatePersonal({ first_name, last_name, email, phone });
+
+    createNewBusiness({ personal, business });
+
+    // this.setState({ first_name: "", last_name: "", email: "", phone: "", displayForms: false, displaySuccess: true });
+  };
 
   render() {
     console.log(this.props);
@@ -53,20 +46,21 @@ export default class BusinessAccount extends Component {
             <h3>Business SignUp</h3>
             <hr />
             <Wrapper>
+
               <LeftSide>
                 <label>First Name:</label>
                 <input
                   type="text"
-                  name="firstName"
-                  onChange={this.handleChange}
-                  value={this.state.firstName}
+                  name="first_name"
+                  onChange={e => this.setState({ [e.target.name]: e.target.value })}
+                  value={this.state.first_name}
                   required
                   autocomplete="off"
                 />
                 <label>Email:</label>
                 <input
                   type="email"
-                  onChange={this.handleChange}
+                  onChange={e => this.setState({ [e.target.name]: e.target.value })}
                   name="email"
                   value={this.state.email}
                   required
@@ -78,16 +72,16 @@ export default class BusinessAccount extends Component {
                 <label>Last Name:</label>
                 <input
                   type="text"
-                  onChange={this.handleChange}
-                  name="lastName"
-                  value={this.state.lastName}
+                  onChange={e => this.setState({ [e.target.name]: e.target.value })}
+                  name="last_name"
+                  value={this.state.last_name}
                   required
                   autocomplete="off"
                 />
                 <label>Phone Number:</label>
                 <input
                   type="text"
-                  onChange={this.handleChange}
+                  onChange={e => this.setState({ [e.target.name]: e.target.value })}
                   name="phone"
                   value={this.state.phone}
                   required
@@ -95,22 +89,18 @@ export default class BusinessAccount extends Component {
                 />
               </RightSide>
             </Wrapper>
-            <Bottom>
-              <label>Google API</label>
-              <BusinessContext.Consumer>
-                {value => <PlacesAPI busnContext={value} />}
-              </BusinessContext.Consumer>
-            </Bottom>
-            <div>
-              <Button onClick={() => this.submitForm()} type="submit">
-                Submit
-              </Button>
-            </div>{" "}
+
+            
+              <Bottom>
+                <label>Google API</label>
+                <PlacesAPI busnContext={this.props.value} />
+                <Button onClick={() => this.submitForm()}>Submit</Button>
+              </Bottom>
+
           </div>
         ) : null}
-        {this.state.displaySuccess ? (
-          <h3>We got your application, thank you for the submission</h3>
-        ) : null}
+
+        {this.state.displaySuccess ? <h3>We got your application, thank you for the submission</h3> : null}
       </Container>
     );
   }

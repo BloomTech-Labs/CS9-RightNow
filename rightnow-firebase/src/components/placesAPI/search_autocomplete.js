@@ -1,5 +1,7 @@
 //Import React Scrit Libraray to load Google object
 import React, { Component } from "react";
+import db from "../../firebase/firebase";
+import { BusinessContext } from "../../context/businessContext";
 
 export default class PlacesAPI extends Component {
   constructor(props) {
@@ -10,6 +12,7 @@ export default class PlacesAPI extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props)
     // Locate input element
     const input = document.getElementById("autocomplete");
     // Initialize Google Autocomplete 
@@ -28,9 +31,11 @@ export default class PlacesAPI extends Component {
     let address = place.address_components;
     console.log(address);
 
+    // get photo urls now bc firestore cannot store functions (getUrl)
+    const photosURL = place.photos ? place.photos.map(pic => pic.getUrl({ maxHeight: 350, maxWidth: 350 })) : null;
+
     // Check if address is valid
     if (address) {
-      // Update business context accordingly
       this.props.busnContext.updateBusiness({
         name: place.name,
         fullAddress: place.formatted_address,
@@ -41,28 +46,50 @@ export default class PlacesAPI extends Component {
         zip: address[6].long_name,
         phone: place.formatted_phone_number,
         rating: place.rating,
-        photo: place.photos[0]
+        photos: photosURL
       });
+      // db.collection("busn_ACTUAL")
+      //   .add({
+      //     business: {
+      //       name: place.name,
+      //       fullAddress: place.formatted_address,
+      //       street_number: address[0].long_name,
+      //       street_name: address[1].long_name,
+      //       city: address[2].long_name,
+      //       state: address[5].long_name,
+      //       zip: address[6].long_name,
+      //       phone: place.formatted_phone_number,
+      //       rating: place.rating,
+      //       photo: photoURL
+      //     }
+      //   })
+      //   .then(info => console.log("success :)", info))
+      //   .catch(err => console.log("error :(", err));
+
       this.setState({ query: place.formatted_address });
     }
   }
 
   render() {
     return (
-      <div>
-        <input 
-          id="autocomplete" 
-          placeholder="Enter business location" 
-          name="query"
-          value={this.state.query}
-          onChange={e => this.setState({ [e.target.name]: e.target.value })}
-          style={{
-            width: "30vw",
-            padding: "1%",
-            fontSize: "1em"
-          }}
-        />
-      </div>
+      <BusinessContext.Consumer>
+        {value => (
+          <div>
+            <input 
+              id="autocomplete" 
+              placeholder="Enter business location" 
+              name="query"
+              value={this.state.query}
+              onChange={e => this.setState({ [e.target.name]: e.target.value })}
+              style={{
+                width: "30vw",
+                padding: "1%",
+                fontSize: "1em"
+              }}
+            />
+          </div>
+        )}
+      </BusinessContext.Consumer>
     );
   }
 }
