@@ -43,6 +43,15 @@ admin.initializeApp();
         -- the id of the new document is the same id as it is in the appointments primary collection
     4. function returns a document reference to the newly added appointment 
         -- not sure if the client can gain access
+
+  WARNING -- this function's logic is based on the following appointment data structure
+
+        appointment = {
+          active: boolean,
+          details: {},
+          business_ref: ID,
+          customer_ref: ID
+        }
 */
 
 exports.handleNewAppointment = functions.firestore
@@ -71,12 +80,21 @@ exports.handleNewAppointment = functions.firestore
   on the value of the appointment's `active` property.
 
   @returns nothing
+
+  WARNING -- this function's logic is based on the following appointment data structure
+
+        appointment = {
+          active: boolean,
+          details: {},
+          business_ref: ID,
+          customer_ref: ID
+        }
 */
 exports.handleDeleteAppointment = functions.firestore
   .document(`/appt_test/{apptId}`)
   .onDelete((snap, context) => {
     const isActive = snap.data().active;
-    const businessRef = snap.data().business_ref;
+    const businessRef = snap.data().business_ref; // NOT a reference - logic is based on this being an id for testing purposes
     const db = admin.firestore();
 
     db.settings({ timestampsInSnapshots: true });
