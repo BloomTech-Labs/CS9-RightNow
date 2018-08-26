@@ -1,8 +1,15 @@
 const functions = require('firebase-functions');
+const admin = require("firebase-admin");
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+
+// initialize admin app instance from which realtime db changes can be made
+admin.initializeApp();
+
+
+// realtime database functions
+// functions.https.onRequest((req, res) => {})
+// functions.database.ref("...")
+
+// firestore functions
+// functions.firestore.document("/path/here")
+// onCreate, on Update, onDelete, onWrite
