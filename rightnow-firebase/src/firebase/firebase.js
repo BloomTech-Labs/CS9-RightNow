@@ -25,11 +25,6 @@ const config = {
 };
 
 
-const firestoreSsettings = {
-  timestampsInSnapshots: true
-}
-
-
 firebase.initializeApp(config);
 
 
@@ -37,7 +32,7 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 
-db.settings(firestoreSsettings);
+db.settings({ timestampsInSnapshots: true });
 
 
 db.enablePersistence().catch(err => console.log("PERSISTANCE ERROR: ", err));
