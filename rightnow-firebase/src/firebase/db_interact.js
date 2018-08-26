@@ -19,6 +19,17 @@ import { db, auth } from "./firebase";
             * name, email, phone, uid 
             * past appointments -- collection of id references to appointments attended in the past
             * future appointments -- collection of id references to future appointments
+                    \
+                     \
+                     customers = {
+                       first_name: string,
+                       las_name: string,
+                       email: string,
+
+                       past_appointments: [],
+
+                       future_appointments: []
+                     }
 
 
     bookies -- stores a collections of business docs (one doc = one business)
@@ -29,6 +40,35 @@ import { db, auth } from "./firebase";
                 * owner details -- object -- name, email, phone
                 * available appointments -- collection of id references to corresponding appointments
                 * booked appointments -- collection of id references to corresponding appointments
+                     \
+                      \
+                      businesses = {
+                        business_info: {
+                          name: string,
+                          phone: string,
+                          rating: number,
+  
+                          street_number: string,
+                          street_name: string,
+                          city: string,
+                          state: string,
+                          zip: string
+
+                          photos: [],
+                          hours: unknown
+                        },
+
+                        owner_info: {
+                          first_name: string,
+                          last_name: string,
+                          email: string
+                          phone: string
+                        },
+
+                        available_appointments: [],
+
+                        booked_appointments: []
+                      }
     
     
     appointments -- stores a collection of ALL appointments (ever?)
@@ -39,6 +79,19 @@ import { db, auth } from "./firebase";
                   * details -- object -- business name, address, time, cost, type
                   * business host -- reference -- ref to business id
                   * customer -- reference -- ref to customer id
+                      \
+                       \
+                       appointment = {
+                         active: boolean,
+                         business_ref: reference,
+                         customer_ref: reference,
+
+                         details: {
+                           type: string,
+                           time: string,
+                           cost: string
+                         }
+                       }
 
 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
 
