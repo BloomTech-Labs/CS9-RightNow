@@ -187,8 +187,8 @@ export const createNewAppointment = async data => {
   // @param busnID -- string -- the doc id of the business to be updated
   // @param apptID -- string -- the doc id of the newly created appointment
 export const newFutureAppointment = async (busnID, apptID) => {
-
   const ref = await db.collection("busn_ACTUAL");
+
   const applyUpdate =
     await ref
       .doc(busnID)
@@ -198,5 +198,4 @@ export const newFutureAppointment = async (busnID, apptID) => {
       .catch(err => console.log("error adding new appointment", err));
   
   return applyUpdate;
-  
 }
