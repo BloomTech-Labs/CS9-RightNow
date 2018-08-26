@@ -51,7 +51,7 @@ import { db, auth } from "./firebase";
         * something else?
 
 
-    * added newly created appointment id to corresponding business' collection of future_appointments
+    * (DONE) added newly created appointment id to corresponding business' collection of future_appointments
 
 
     * method that adds customer id to appointment's customerId field upon confirmation
@@ -127,11 +127,14 @@ export const findUserByField = async (col, field, value) => {
   // @param col - string - "users_ACTUAL" or "busn_ACTUAL"
   // @param data - object - any data you wish to store - UID IS REQUIRED
 export const createUser = async (col, data) => {
-  await db
-    .collection(col)
-    .doc(data.uid)
-    .set(data)
-    .catch(err => console.log("error adding doc to customer db", err));
+  const freshUser = 
+    await db
+      .collection(col)
+      .doc(data.uid)
+      .set(data)
+      .catch(err => console.log("error adding doc to customer db", err));
+  
+  return freshUser;
 }
 
 
@@ -155,10 +158,10 @@ export const registerUser = async (col, data) => {
 }
 
 
-// creates a new appointment
-// returns the newly created appointment id
+// creates a new appointment and updates the business' future_appointments collection
+// returns the document id of the newly added appointment in the business' future_appointments collection
   // @param data -- object -- any data you want to store -- MUST INCLUDE BUSINESS ID and ACTIVE: TRUE
-export const newAppointment = async data => {
+export const createNewAppointment = async data => {
   const errorMsg = "error creating new appointment\n";
 
   if (!data.businessId) {
@@ -173,7 +176,27 @@ export const newAppointment = async data => {
       .then(docRef => docRef.id)
       .catch(err => console.log(errorMsg, err));
   
-  // add appointment id to business' future_appointments collection
+  const updateBusiness = await newFutureAppointment(data.businessId, newAppointmentId);
 
-  return newAppointmentId;
+  return updateBusiness;
+}
+
+
+// adds new appointment to the future_appointments collection for a specified business
+// returns the document id of the newly created entry
+  // @param busnID -- string -- the doc id of the business to be updated
+  // @param apptID -- string -- the doc id of the newly created appointment
+export const newFutureAppointment = async (busnID, apptID) => {
+
+  const ref = await db.collection("busn_ACTUAL");
+  const applyUpdate =
+    await ref
+      .doc(busnID)
+      .collection("future_appointments")
+      .add({ appointment_id: apptID })
+      .then(docRef => docRef.id)
+      .catch(err => console.log("error adding new appointment", err));
+  
+  return applyUpdate;
+  
 }

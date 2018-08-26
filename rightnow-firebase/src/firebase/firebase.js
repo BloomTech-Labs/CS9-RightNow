@@ -8,7 +8,8 @@ import {
   registerUser, 
   createUser,
   newAppointment,
-  getApptHost
+  getApptHost,
+  newFutureAppointment
 } from "./db_interact";
 
 
@@ -35,6 +36,9 @@ db.enablePersistence().catch(err => console.log("PERSISTANCE ERROR: ", err));
 auth.onAuthStateChanged(async currentUser => {
   console.log("current user status has changed");
   console.log("current user is: ", currentUser);
+
+  // const fresh = await newFutureAppointment("xGXdWn7l2mQWiLiVziOv4zJqsGi2", "mEHyeJ7nsIcsYWh9Jrqa");
+  // console.log(fresh);
 });
 
 
