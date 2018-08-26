@@ -1,28 +1,30 @@
-[debug] [2018-08-26T16:38:46.859Z] ----------------------------------------------------------------------
-[debug] [2018-08-26T16:38:46.862Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\jeffr\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase functions:shell
-[debug] [2018-08-26T16:38:46.863Z] CLI Version:   4.1.1
-[debug] [2018-08-26T16:38:46.863Z] Platform:      win32
-[debug] [2018-08-26T16:38:46.863Z] Node Version:  v6.11.5
-[debug] [2018-08-26T16:38:46.863Z] Time:          Sun Aug 26 2018 12:38:46 GMT-0400 (Eastern Daylight Time)
-[debug] [2018-08-26T16:38:46.863Z] ----------------------------------------------------------------------
+[debug] [2018-08-26T17:24:18.292Z] ----------------------------------------------------------------------
+[debug] [2018-08-26T17:24:18.294Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\jeffr\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase functions:shell
+[debug] [2018-08-26T17:24:18.295Z] CLI Version:   4.1.1
+[debug] [2018-08-26T17:24:18.295Z] Platform:      win32
+[debug] [2018-08-26T17:24:18.295Z] Node Version:  v6.11.5
+[debug] [2018-08-26T17:24:18.295Z] Time:          Sun Aug 26 2018 13:24:18 GMT-0400 (Eastern Daylight Time)
+[debug] [2018-08-26T17:24:18.295Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2018-08-26T16:38:46.876Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2018-08-26T16:38:46.877Z] > authorizing via signed-in user
-[debug] [2018-08-26T16:38:46.879Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/react-firebase-auth-f2581  
+[debug] [2018-08-26T17:24:18.307Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-08-26T17:24:18.308Z] > authorizing via signed-in user
+[debug] [2018-08-26T17:24:18.310Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/react-firebase-auth-f2581  
  
-[debug] [2018-08-26T16:38:47.240Z] <<< HTTP RESPONSE 200
-[debug] [2018-08-26T16:38:47.241Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/react-firebase-auth-f2581/tokens  
+[debug] [2018-08-26T17:24:18.709Z] <<< HTTP RESPONSE 200
+[debug] [2018-08-26T17:24:18.710Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/react-firebase-auth-f2581/tokens  
  
-[debug] [2018-08-26T16:38:47.671Z] <<< HTTP RESPONSE 200
+[debug] [2018-08-26T17:24:19.109Z] <<< HTTP RESPONSE 200
 [info] i  functions: Preparing to emulate functions.
-[debug] [2018-08-26T16:38:48.805Z] Fetching environment
-[debug] [2018-08-26T16:38:48.808Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/react-firebase-auth-f2581  
+[debug] [2018-08-26T17:24:20.167Z] Fetching environment
+[debug] [2018-08-26T17:24:20.169Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/react-firebase-auth-f2581  
  
-[debug] [2018-08-26T16:38:49.125Z] <<< HTTP RESPONSE 200
-[debug] [2018-08-26T16:38:49.126Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/549388490497:getServerAppConfig  
+[debug] [2018-08-26T17:24:20.446Z] <<< HTTP RESPONSE 200
+[debug] [2018-08-26T17:24:20.447Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/549388490497:getServerAppConfig  
  
-[debug] [2018-08-26T16:38:49.537Z] <<< HTTP RESPONSE 200
-[debug] [2018-08-26T16:38:49.538Z] Starting @google-cloud/functions-emulator
-[debug] [2018-08-26T16:38:52.091Z] Parsing function triggers
-[debug] [2018-08-26T16:38:52.491Z] Deploying functions locally
-[info] +  functions: notifyOnNewAppointment
+[debug] [2018-08-26T17:24:20.825Z] <<< HTTP RESPONSE 200
+[debug] [2018-08-26T17:24:20.825Z] Starting @google-cloud/functions-emulator
+[debug] [2018-08-26T17:24:23.369Z] Parsing function triggers
+[debug] [2018-08-26T17:24:23.798Z] Deploying functions locally
+[debug] [2018-08-26T17:24:23.800Z] Deploying functions locally
+[info] +  functions: handleDeleteAppointment
+[info] +  functions: handleNewAppointment
