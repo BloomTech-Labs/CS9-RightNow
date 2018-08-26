@@ -199,3 +199,20 @@ export const newFutureAppointment = async (busnID, apptID) => {
   
   return applyUpdate;
 }
+
+
+// when a customer confirms an appointment, the customer id will be added to the appointment doc
+// returns undefined -- firestore update method does not return anything
+  // @param customerId -- string -- document id of the customer confirming the appointment
+  // @param appointmentId -- string -- document id of the appointment being booked
+export const customerConfirmsAppt = async (customerId, appointmentId) => {
+  const ref = await db.collection("appt_ACTUAL").doc(appointmentId);
+
+  const updateRef = 
+    await ref
+      .update({ customer_id: customerId })
+      .then(() => console.log("funds secured"))
+      .catch(err => console.log("error booking appointment", err));
+
+  return updateRef;
+}

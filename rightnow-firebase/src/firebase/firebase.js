@@ -9,7 +9,8 @@ import {
   createUser,
   createNewAppointment,
   getApptHost,
-  newFutureAppointment
+  newFutureAppointment,
+  customerConfirmsAppt
 } from "./db_interact";
 
 
@@ -61,6 +62,10 @@ auth.onAuthStateChanged(async currentUser => {
   // THIS WORKS
   // const fresh = await newFutureAppointment("xGXdWn7l2mQWiLiVziOv4zJqsGi2", "mEHyeJ7nsIcsYWh9Jrqa");
   // console.log(fresh);
+
+  // THIS WORKS
+  const confirm = await customerConfirmsAppt("e4WqE9gsGOy7XVi3jesx", "GcvSXEc5IavQ8pT0FUJM");
+  console.log(confirm);
 });
 
 
