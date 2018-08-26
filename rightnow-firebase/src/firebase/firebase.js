@@ -46,30 +46,6 @@ db.enablePersistence().catch(err => console.log("PERSISTANCE ERROR: ", err));
 auth.onAuthStateChanged(async currentUser => {
   console.log("current user status has changed");
   console.log("current user is: ", currentUser);
-
-  // THIS WORKS
-  // const newAppt = await createNewAppointment({
-  //   active: true,
-  //   details: {
-  //     time: "whanever",
-  //     place: "wherever",
-  //     cost: "whatever",
-  //     type: "whyever"
-  //   },
-  //   // businessId: "xGXdWn7l2mQWiLiVziOv4zJqsGi2"
-  // }, "xGXdWn7l2mQWiLiVziOv4zJqsGi2");
-  // console.log(newAppt);
-
-  // THIS WORKS
-  // const fresh = await newFutureAppointment("xGXdWn7l2mQWiLiVziOv4zJqsGi2", "mEHyeJ7nsIcsYWh9Jrqa");
-  // console.log(fresh);
-
-  // THIS WORKS
-  // const confirm = await customerConfirmsAppt("e4WqE9gsGOy7XVi3jesx", "GcvSXEc5IavQ8pT0FUJM");
-  // console.log(confirm);
-
-  // const remove = await deleteAppointment("CWcP5P2hdb78EseMjLT9");
-  // console.log(remove);
 });
 
 
