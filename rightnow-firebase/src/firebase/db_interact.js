@@ -54,7 +54,7 @@ import { db, auth } from "./firebase";
     * (DONE) added newly created appointment id to corresponding business' collection of future_appointments
 
 
-    * method that adds customer id to appointment's customerId field upon confirmation
+    * (DONE) method that adds customer id to appointment's customerId field upon confirmation
 
 
     * option for businesses to delete an appointment 
@@ -160,41 +160,45 @@ export const registerUser = async (col, data) => {
 
 // creates a new appointment and updates the business' future_appointments collection
 // returns the document id of the newly added appointment in the business' future_appointments collection
-  // @param data -- object -- any data you want to store -- MUST INCLUDE BUSINESS ID and ACTIVE: TRUE
-export const createNewAppointment = async data => {
+  // @param data -- object -- any data you want to store
+  // @param businessId -- string -- business id 
+export const createNewAppointment = async (data, businessId) => {
   const errorMsg = "error creating new appointment\n";
 
-  if (!data.businessId) {
+  if (!businessId) {
     console.log("you must provide a business id for future reference");
     return;
   }
 
-  const newAppointmentId = 
+  const businessRef = await db.collection("busn_ACTUAL").doc(businessId);
+
+  const dataWithRef = { ...data, business_ref: businessRef };
+
+  console.log(dataWithRef)
+
+  const appointmentRef = 
     await db
       .collection("appt_ACTUAL")
-      .add(data)
-      .then(docRef => docRef.id)
+      .add(dataWithRef)
+      .then(docRef => docRef) // returns document reference
       .catch(err => console.log(errorMsg, err));
   
-  const updateBusiness = await newFutureAppointment(data.businessId, newAppointmentId);
+  const updateBusiness = await newFutureAppointment(businessRef, appointmentRef);
 
   return updateBusiness;
 }
 
 
-// adds new appointment to the future_appointments collection for a specified business
-// returns the document id of the newly created entry
-  // @param busnID -- string -- the doc id of the business to be updated
-  // @param apptID -- string -- the doc id of the newly created appointment
-export const newFutureAppointment = async (busnID, apptID) => {
-  const ref = await db.collection("busn_ACTUAL");
-
+// adds new appointment reference to the future_appointments collection for a specified business
+// returns the document reference of the newly created entry
+  // @param businessRef -- string -- the location of the business to be updated
+  // @param appointmentRef -- string -- the location of the newly created appointment
+export const newFutureAppointment = async (businessRef, appointmentRef) => {
   const applyUpdate =
-    await ref
-      .doc(busnID)
+    await businessRef
       .collection("future_appointments")
-      .add({ appointment_id: apptID })
-      .then(docRef => docRef.id)
+      .add({ appointment_ref: appointmentRef })
+      .then(docRef => docRef) // returns document reference
       .catch(err => console.log("error adding new appointment", err));
   
   return applyUpdate;
@@ -216,3 +220,25 @@ export const customerConfirmsAppt = async (customerId, appointmentId) => {
 
   return updateRef;
 }
+
+
+export const deleteAppointment = async appointmentId => {
+  const batch = db.batch();
+
+  const appointmentRef = await db.collection("appt_ACTUAL").doc(appointmentId);
+
+
+  // const businessRef = await 
+  
+  const ref =
+    await db
+      .collection("appt_ACTUAL")
+      .doc(appointmentId)
+      .delete()
+      .then(() => console.log(`appointment ${appointmentId} successfully deleted`))
+      .catch(err => console.log("error deleting appointment", err));
+
+  return ref;
+}
+
+// 012YFwRHCAjyTAqmg3ed

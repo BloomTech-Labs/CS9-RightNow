@@ -10,7 +10,8 @@ import {
   createNewAppointment,
   getApptHost,
   newFutureAppointment,
-  customerConfirmsAppt
+  customerConfirmsAppt,
+  deleteAppointment
 } from "./db_interact";
 
 
@@ -50,13 +51,13 @@ auth.onAuthStateChanged(async currentUser => {
   // const newAppt = await createNewAppointment({
   //   active: true,
   //   details: {
-  //     time: "3:30 - 5:30",
-  //     place: "some location",
-  //     cost: "$400",
-  //     type: "haircut"
+  //     time: "whanever",
+  //     place: "wherever",
+  //     cost: "whatever",
+  //     type: "whyever"
   //   },
-  //   businessId: "xGXdWn7l2mQWiLiVziOv4zJqsGi2"
-  // });
+  //   // businessId: "xGXdWn7l2mQWiLiVziOv4zJqsGi2"
+  // }, "xGXdWn7l2mQWiLiVziOv4zJqsGi2");
   // console.log(newAppt);
 
   // THIS WORKS
@@ -64,8 +65,11 @@ auth.onAuthStateChanged(async currentUser => {
   // console.log(fresh);
 
   // THIS WORKS
-  const confirm = await customerConfirmsAppt("e4WqE9gsGOy7XVi3jesx", "GcvSXEc5IavQ8pT0FUJM");
-  console.log(confirm);
+  // const confirm = await customerConfirmsAppt("e4WqE9gsGOy7XVi3jesx", "GcvSXEc5IavQ8pT0FUJM");
+  // console.log(confirm);
+
+  // const remove = await deleteAppointment("CWcP5P2hdb78EseMjLT9");
+  // console.log(remove);
 });
 
 
