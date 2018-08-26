@@ -54,7 +54,7 @@ import { db, auth } from "./firebase";
     * (DONE) added newly created appointment id to corresponding business' collection of future_appointments
 
 
-    * method that adds customer id to appointment's customerId field upon confirmation
+    * (DONE) method that adds customer id to appointment's customerId field upon confirmation
 
 
     * option for businesses to delete an appointment 
