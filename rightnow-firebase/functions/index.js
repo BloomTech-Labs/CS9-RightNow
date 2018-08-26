@@ -1,9 +1,35 @@
 const functions = require('firebase-functions');
 const admin = require("firebase-admin");
+const express = require("express");
+
+
+const app = express();
+
+
+app.get("/", (req, res) => {
+  res.send("\n\thello from the serverless express application\n")
+});
+
+
+app.get("/:primaryCollection/:id", async (req, res) => {
+  const { primaryCollection, id } = req.params;
+  if (!id) throw new Error("no id was provided");
+
+  const user = await db.collection(primaryCollection).doc(id).get();
+  if (!user.exists) throw new Error("no user exists with that ID");
+
+  res.json(user.data());
+});
+
+
+const sesho_routes = functions.https.onRequest(app);
+
 
 
 // initialize admin app instance from which realtime db changes can be made
 admin.initializeApp();
+
+
 
 
 
@@ -22,9 +48,32 @@ admin.initializeApp();
     @param context -- basic infor about the triggered event
 
       * .params -- object of wildcard key-value pairs
+      * 
+  
+
+  Resources: 
+
+    * express and firebase serverless demo 
+        * https://medium.com/@alfianlosari/serverless-node-js-rest-api-with-google-cloud-function-firestore-d7b422f58511
+      
+    * compile with babel to suit node 6.11.5
+        * https://codeburst.io/es6-in-cloud-functions-for-firebase-2-415d15205468
 
 */
 
+
+
+// exports.newSesher = functions.https.onRequest((req, res) => {
+//   const db = admin.firestore();
+//   // db.settings({ timestampsInSnapshots: true });
+
+//   db
+//     .collection("users_test")
+//     .doc(req.body.uid)
+//     .set(req.body)
+//     .then(x => res.send("success", x))
+//     .catch(err => console.log("error adding new sesher", err));
+// });
 
 
 
@@ -54,7 +103,7 @@ admin.initializeApp();
         }
 */
 
-exports.handleNewAppointment = functions.firestore
+const handleNewAppointment = functions.firestore
   .document(`/appt_test/{apptId}`)
   .onCreate((snap, context) => {
     const appointmentRef = snap.ref;
@@ -90,7 +139,7 @@ exports.handleNewAppointment = functions.firestore
           customer_ref: ID
         }
 */
-exports.handleDeleteAppointment = functions.firestore
+const handleDeleteAppointment = functions.firestore
   .document(`/appt_test/{apptId}`)
   .onDelete((snap, context) => {
     const isActive = snap.data().active;
@@ -105,3 +154,11 @@ exports.handleDeleteAppointment = functions.firestore
       .then(() => console.log("success"))
       .catch(err => console.log("error", err));
   });
+
+
+
+  module.exports = {
+    sesho_routes,
+    handleNewAppointment,
+    handleDeleteAppointment
+  }
