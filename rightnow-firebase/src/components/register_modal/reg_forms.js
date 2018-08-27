@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {doCreateUserWithEmailAndPassword} from '../../firebase/auth';
 import {
 	FormContainer,
 	Form,
@@ -18,9 +19,22 @@ import {
 export default class RegisterModal extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			email: '',
+			password: ''
+		};
 	}
 
+    onInputChange = (e) => {
+
+        this.setState({[e.target.name]: e.target.value});
+    };
+
+    createrUser = () => {
+
+		const {email, password} = this.state;
+    	doCreateUserWithEmailAndPassword(email, password);
+    };
 	render() {
 		return (
 			<FormContainer>
@@ -33,8 +47,8 @@ export default class RegisterModal extends Component {
 							<NamePlace2 type="text" placeholder="Last Name" />
 						</div>
 					</NameContainer>
-					<Email type="text" placeholder="Your Email Address" />
-					<PW type="password" placeholder="Password" />
+					<Email type="text" placeholder="Your Email Address" name="email" onChange={this.onInputChange}/>
+					<PW type="password" placeholder="Password" name="password" onChange={this.onInputChange}/>
 					<PhoneNumber name="phoneNum" onBlur="addDashes(this)" type="text" placeholder="Phone number" />
 					<Location type="text" placeholder="Preferred location" />
 				</Form>
@@ -61,7 +75,7 @@ export default class RegisterModal extends Component {
 						</CheckBox>
 					</CheckBoxContainer>
 				</CheckBoxWrapper>
-				<RegisterButton>Let's Go!</RegisterButton>
+				<RegisterButton onClick={this.createrUser}>Let's Go!</RegisterButton>
 			</FormContainer>
 		);
 	}
