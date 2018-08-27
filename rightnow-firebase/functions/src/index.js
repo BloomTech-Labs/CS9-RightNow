@@ -118,7 +118,18 @@ app.get("/:primary/:id/upcoming", async (req, res) => {
 });
 
 
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
+
+// DELETE APPOINTMENT
+app.delete("/appointment/:id", (req, res) => {
+  db
+    .collection(APPT)
+    .doc(req.params.id)
+    .delete()
+    .then(x => res.send({ message: "success", x }))
+    .catch(err => res.send({ message: "error", err }));
+})
 
 
 export const haveAsesh = functions.https.onRequest(app);
