@@ -1,18 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
-import { 
-  findUserById, 
-  findUserByField, 
-  registerCustomer, 
-  registerUser, 
-  createUser,
-  createNewAppointment,
-  getApptHost,
-  newFutureAppointment,
-  customerConfirmsAppt,
-  deleteAppointment
-} from "./db_interact";
 
 
 const config = {

@@ -127,9 +127,20 @@ app.delete("/appointment/:id", (req, res) => {
     .collection(APPT)
     .doc(req.params.id)
     .delete()
-    .then(x => res.send({ message: "success", x }))
-    .catch(err => res.send({ message: "error", err }));
-})
+    .then(() => res.send("success"))
+    .catch(err => res.send("error"));
+});
+
+
+// CONFIRM APPOINTMENT
+app.put("/appointment/:id/confirm", (req, res) => {
+  db
+    .collection(APPT)
+    .doc(req.params.id)
+    .update({ customer_ref: req.body.customerRef })
+    .then(() => res.send("success"))
+    .catch(err => res.send("error"));
+});
 
 
 export const haveAsesh = functions.https.onRequest(app);
