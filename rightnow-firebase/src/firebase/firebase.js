@@ -1,17 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
-import { 
-  findUserById, 
-  findUserByField, 
-  registerCustomer, 
-  registerUser, 
-  createUser,
-  createNewAppointment,
-  getApptHost,
-  newFutureAppointment,
-  customerConfirmsAppt
-} from "./db_interact";
 
 
 const config = {
@@ -24,11 +13,6 @@ const config = {
 };
 
 
-const firestoreSsettings = {
-  timestampsInSnapshots: true
-}
-
-
 firebase.initializeApp(config);
 
 
@@ -36,7 +20,7 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 
-db.settings(firestoreSsettings);
+db.settings({ timestampsInSnapshots: true });
 
 
 db.enablePersistence().catch(err => console.log("PERSISTANCE ERROR: ", err));
