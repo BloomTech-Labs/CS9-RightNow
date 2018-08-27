@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NavBar from './components/nav/nav_bar';
 import UserProvider from './context/userContext';
 import BusinessProvider, { BusinessContext } from "./context/businessContext";
+import { StripeProvider } from 'react-stripe-elements';
 import { Route } from 'react-router-dom';
 import BusinessLanding from './components/business_page/business_landing';
 import BusinessAccount from './components/business_page/business_register';
@@ -29,7 +30,8 @@ class App extends Component {
                                 <div>
                                     <Route exact path="/biz-landing" component={BusinessLanding} />
                                     <Route exact path="/biz-account" render={() => <BusinessAccount value={value} />} />
-                                    <Route exact path="/company-settings" component={CompanySettings}/>
+                                    <Route exact path="/company-settings" component={CompanySettings} />
+                                    <Route exact path="/billing" component={Billing} />
                                 </div>
                             )}
                         </BusinessContext.Consumer>
