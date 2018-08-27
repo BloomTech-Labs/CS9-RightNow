@@ -13,6 +13,10 @@ import BusinessAccount from './components/business_page/business_register';
 import Customer from './components/customers/customers';
 import UserSettings from './components/user_settings/user_settings_form';
 import CompanySettings from './components/company_settings/company_settings';
+<<<<<<< HEAD
+=======
+import BizAppointments from './appointments_business/appointments_business';
+>>>>>>> 5fd4e18efd2ad20c675fe0cbbb5ebf19f5b6abf2
 
 class App extends Component {
 <<<<<<< HEAD
@@ -37,7 +41,7 @@ class App extends Component {
                     <Route exact path="/biz-landing" component={BusinessLanding}/>
                     <Route exact path="/user-settings" component={UserSettings}/>
                     <Route exact path="/company-settings" component={CompanySettings}/>
-                    <Route exact path="/biz-app" component={Biz_Appointments}/>
+                    <Route exact path="/biz-app" component={BizAppointments}/>
                 </UserProvider>
 
                 {/* <Biz_Appointments /> */}
