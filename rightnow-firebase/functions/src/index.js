@@ -59,6 +59,28 @@ app.post("/appointment", (req, res) => {
 });
 
 
+// CREATE BUSINESS
+app.post("/business", (req, res) => {
+  db
+    .collection(BUSNINESS)
+    .doc(req.body.uid)
+    .set(req.body)
+    .then(() => res.send("success"))
+    .catch(err => res.send(err));
+});
+
+
+// CREATE CUSTOMER
+app.post("/customer", (req, res) => {
+  db
+    .collection(CUSTOMER)
+    .doc(req.body.uid)
+    .set(req.body)
+    .then(() => res.send("success"))
+    .catch(err => res.send(err))
+})
+
+
 // GET CUSTOMER / BUSINESS / APPOINTMENT BY ID
 app.get("/:primary/:id", forwardCollection, (req, res) => {
   db
