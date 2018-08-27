@@ -213,6 +213,29 @@ export const handleNewAppointment = functions.firestore
   });
 
 
+/* 
+  When a customer confirms an appointment, a put request will update 
+  the appointment with customer_ref. When this confirmation occurs,
+  this function will remove the corresponding entry from the business'
+  available_appointments collection into the book_appointments collection.
+
+  THIS METHOD ASSUMES THAT APPOINTMENTS CAN ONLY BE BOOKED OR DELETED
+*/
+export const handleUpdateAppointment = functions.firestore
+  .document(`/${APPT}/{apptId}`)
+  .onUpdate((snap, context) => {
+    const businessRef = snap.data().business_ref; // using id for development
+
+    const batch = db.batch();
+
+    const bookedApptsRef = db.doc(`/${BUSNINESS}/${businessRef}`).collection("booked_appointments").doc(context.params.apptId);
+    batch.set(bookedApptsRef, snap.data());
+
+    const availApptsRef = db.doc(`${BUSNINESS}/${businessRef}`).collection("available_appointments").doc(context.params.apptId);
+    batch.delete(availApptsRef);
+  });
+
+
 
 /*
   When an appointment gets deleted by a business, this method will search for identical

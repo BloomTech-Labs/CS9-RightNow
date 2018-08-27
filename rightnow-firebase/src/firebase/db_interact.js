@@ -131,11 +131,11 @@ import { db, auth } from "./firebase";
     * (DONE) get all past appointments for current user (customer or business)
  
 
-    * convert es6 methods to firebase functions and update the application accordingly
-    * 
-    * 
-    * onUpdate trigger for when user confirms appointment
-    * 
+    * (DONE) convert es6 methods to firebase functions
+
+  
+    * (DONE) onUpdate trigger for when user confirms appointment
+
         * updates corresponding business
 
 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
