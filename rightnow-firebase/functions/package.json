@@ -6,16 +6,18 @@
     "shell": "firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "logs": "firebase functions:log",
+    "compile-funcs": "babel src -d dist"
   },
   "dependencies": {
     "express": "^4.16.3",
     "firebase-admin": "~6.0.0",
     "firebase-functions": "^2.0.3"
   },
-  "private": true,
   "devDependencies": {
     "@babel/cli": "^7.0.0-rc.3",
+    "@babel/core": "^7.0.0-rc.3",
     "@babel/preset-env": "^7.0.0-rc.3"
-  }
+  },
+  "private": true
 }

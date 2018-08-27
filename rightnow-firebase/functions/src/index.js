@@ -1,79 +1,90 @@
 const functions = require('firebase-functions');
 const admin = require("firebase-admin");
-const express = require("express");
 
 
-const app = express();
+// define primary collection pasths
+const APPT = "_appointment_";
+const BUSNINESS = "_business_";
+const CUSTOMER = "_customer_";
 
 
-app.get("/", (req, res) => {
-  res.send("\n\thello from the serverless express application\n")
-});
-
-
-app.get("/:primaryCollection/:id", async (req, res) => {
-  const { primaryCollection, id } = req.params;
-  if (!id) throw new Error("no id was provided");
-
-  const user = await db.collection(primaryCollection).doc(id).get();
-  if (!user.exists) throw new Error("no user exists with that ID");
-
-  res.json(user.data());
-});
-
-
-const sesho_routes = functions.https.onRequest(app);
-
-
-
-// initialize admin app instance from which realtime db changes can be made
+// initialize admin app instance 
 admin.initializeApp();
 
 
+// initialize administrative services
+const db = admin.firestore();
+
+
+// include timestamps in document requests
+db.settings({ timestampsInSnapshots: true });
+
+
+// ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+
+import express from "express";
+
+const app = express();
+
+app.use(express.json());
 
 
 
-/*
-  Notes: 
-
-    functions.firestore.document()
-
-
-    @param snap -- query document snapshot
-
-      * snap.ref -- reference
-      * snap.data() -- data that triggered the event
-    
-
-    @param context -- basic infor about the triggered event
-
-      * .params -- object of wildcard key-value pairs
-      * 
-  
-
-  Resources: 
-
-    * express and firebase serverless demo 
-        * https://medium.com/@alfianlosari/serverless-node-js-rest-api-with-google-cloud-function-firestore-d7b422f58511
-      
-    * compile with babel to suit node 6.11.5
-        * https://codeburst.io/es6-in-cloud-functions-for-firebase-2-415d15205468
-
-*/
+// GET CUSTOMERS BY ID
+app.get("/customer/:id", (req, res) => {
+  db
+    .collection(CUSTOMER)
+    .doc(req.params.id)
+    .get()
+    .then(snapShot => res.send(snapShot.data()))
+    .catch(err => res.send(err));
+});
 
 
+// GET BUSINESSES BY ID
+app.get("/business/:id", (req, res) => {
+  db
+    .collection(BUSNINESS)
+    .doc(req.params.id)
+    .get()
+    .then(snapShot => res.send(snapShot.data()))
+    .catch(err => res.status(500).send(err));
+});
 
-// exports.newSesher = functions.https.onRequest((req, res) => {
-//   const db = admin.firestore();
-//   // db.settings({ timestampsInSnapshots: true });
 
-//   db
-//     .collection("users_test")
-//     .doc(req.body.uid)
-//     .set(req.body)
-//     .then(x => res.send("success", x))
-//     .catch(err => console.log("error adding new sesher", err));
-// });
+// GET APPOINTMENTS BY ID
+app.get("/appointment/:id", (req, res) => {
+  db
+    .collection(APPT)
+    .doc(req.params.id)
+    .get()
+    .then(snapShot => res.send(snapShot.data()))
+    .catch(err => res.status(500).send(err));
+});
+
+
+
+export const haveAsesh = functions.https.onRequest(app);
+
+
+
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
+
+
+
+exports.getAllFutureAppointments = functions.https.onRequest((req, res) => {
+  console.log(req.body)
+  db
+    .doc(`/${req.body.collection}/future_appointments`)
+    .get()
+    .then(querySnapshot => {
+      const data = [];
+      querySnapshot.forEach(doc => data.push(doc.data()));
+      console.log(data);
+      res.json(data);
+    })
+    .catch(err => res.send(`ERROR - ${err}`));
+})
 
 
 
@@ -102,8 +113,7 @@ admin.initializeApp();
           customer_ref: ID
         }
 */
-
-const handleNewAppointment = functions.firestore
+exports.handleNewAppointment = functions.firestore
   .document(`/appt_test/{apptId}`)
   .onCreate((snap, context) => {
     const appointmentRef = snap.ref;
@@ -139,7 +149,7 @@ const handleNewAppointment = functions.firestore
           customer_ref: ID
         }
 */
-const handleDeleteAppointment = functions.firestore
+exports.handleDeleteAppointment = functions.firestore
   .document(`/appt_test/{apptId}`)
   .onDelete((snap, context) => {
     const isActive = snap.data().active;
@@ -157,8 +167,17 @@ const handleDeleteAppointment = functions.firestore
 
 
 
-  module.exports = {
-    sesho_routes,
-    handleNewAppointment,
-    handleDeleteAppointment
-  }
+
+/*
+  customer confirms appointment
+*/
+// exports.customerConfirmsAppointment = functions.firebase
+//   .document(``)
+
+
+
+  // module.exports = {
+  //   sesho_routes,
+  //   handleNewAppointment,
+  //   handleDeleteAppointment
+  // }
