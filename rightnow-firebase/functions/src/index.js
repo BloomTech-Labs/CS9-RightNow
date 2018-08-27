@@ -20,7 +20,8 @@ const db = admin.firestore();
 db.settings({ timestampsInSnapshots: true });
 
 
-// ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
+
 
 import express from "express";
 
@@ -29,38 +30,48 @@ const app = express();
 app.use(express.json());
 
 
+// MIDDLEWARE -- DETERMINE PRIMARY COLLECTION 
+const forwardCollection = (req, res, next) => {
+  const primary = req.params.primary;
+  let collection;
 
-// GET CUSTOMERS BY ID
-app.get("/customer/:id", (req, res) => {
+  if (primary === "appointment") collection = APPT;
+  if (primary === "business") collection = BUSNINESS;
+  if (primary === "customer") collection = CUSTOMER;
+
+  res.locals.primaryCollection = collection;
+  next();
+}
+
+
+// GET CUSTOMER / BUSINESS / APPOINTMENT BY ID
+app.get("/:primary/:id", forwardCollection, (req, res) => {
   db
-    .collection(CUSTOMER)
+    .collection(res.locals.primaryCollection)
     .doc(req.params.id)
     .get()
-    .then(snapShot => res.send(snapShot.data()))
+    .then(docSnapshot => res.send(docSnapshot.data()))
     .catch(err => res.send(err));
 });
 
 
-// GET BUSINESSES BY ID
-app.get("/business/:id", (req, res) => {
-  db
-    .collection(BUSNINESS)
-    .doc(req.params.id)
-    .get()
-    .then(snapShot => res.send(snapShot.data()))
-    .catch(err => res.status(500).send(err));
+// GET FUTURE APPOINTMENTS FOR CUSTOMER OR BUSINESS
+app.get("/:primary/:id/upcoming", async (req, res) => {
+  const primary = req.params.primary === "business" ? BUSNINESS : CUSTOMER;
+
+  const futureAppointments = 
+    await db
+      .collection(primary)
+      .doc(req.params.id)
+      .collection("future_appointments")
+      .get()
+      .then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
+      .catch(err => res.send(err));
+
+  res.send(futureAppointments);
 });
 
 
-// GET APPOINTMENTS BY ID
-app.get("/appointment/:id", (req, res) => {
-  db
-    .collection(APPT)
-    .doc(req.params.id)
-    .get()
-    .then(snapShot => res.send(snapShot.data()))
-    .catch(err => res.status(500).send(err));
-});
 
 
 
