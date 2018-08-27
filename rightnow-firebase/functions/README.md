@@ -25,7 +25,7 @@
 
 
 
-# To test these functions...
+# To test these functions locally...
 
 0. Requirements: Firebase CLI
 
