@@ -28,7 +28,7 @@ db.settings({ timestampsInSnapshots: true });
 /~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
 
-import express from "express";
+const express = require("express");
 
 const app = express();
 
@@ -71,6 +71,51 @@ app.put("/business/:id", (req, res) => {
 });
 
 
+// GET BUSINESS' AVAILABLE APPOINTMENTS
+app.get("/business/:id/available", async (req, res) => {
+  const availableAppointments = 
+    await db
+      .collection(BUSNINESS)
+      .doc(req.params.id)
+      .collection("available_appointments")
+      .get()
+      .then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
+      .catch(err => res.send(err));
+
+  res.send(availableAppointments);
+});
+
+
+// GET BUSINESS' BOOKED APPOINTMENTS
+app.get("/business/:id/booked", async (req, res) => {
+  const bookedAppointments = 
+    await db
+      .collection(BUSNINESS)
+      .doc(req.params.id)
+      .collection("booked_appointments")
+      .get()
+      .then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
+      .catch(err => res.send(err));
+
+  res.send(bookedAppointments);
+});
+
+
+// GET BUSINESS' PAST APPOINTMENTS
+app.get("/business/:id/past", async (req, res) => {
+  const pastAppointments = 
+    await db
+      .collection(BUSNINESS)
+      .doc(req.params.id)
+      .collection("past_appointments")
+      .get()
+      .then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
+      .catch(err => res.send(err));
+
+  res.send(pastAppointments);
+});
+
+
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
 
@@ -104,6 +149,36 @@ app.put("/customer/:id", (req, res) => {
     .update(req.body)
     .then(() => res.send("success"))
     .catch(err => res.send("error", err));
+});
+
+
+// GET CUSTOMER'S FUTURE APPOINTMENTS
+app.get("/customer/:id/upcoming", async (req, res) => {
+  const futureAppointments = 
+    await db
+      .collection(CUSTOMER)
+      .doc(req.params.id)
+      .collection("future_appointments")
+      .get()
+      .then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
+      .catch(err => res.send(err));
+
+  res.send(futureAppointments);
+});
+
+
+// GET CUSTOMER'S PAST APPOINTMENTS
+app.get("/customer/:id/past", async (req, res) => {
+  const pastAppointments = 
+    await db
+      .collection(CUSTOMER)
+      .doc(req.params.id)
+      .collection("past_appointments")
+      .get()
+      .then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
+      .catch(err => res.send(err));
+
+  res.send(pastAppointments);
 });
 
 
@@ -153,43 +228,6 @@ app.put("/appointment/:id/confirm", (req, res) => {
 });
 
 
-/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
-
-
-// GET FUTURE APPOINTMENTS FOR CUSTOMER OR BUSINESS
-app.get("/:primary/:id/upcoming", async (req, res) => {
-  const primary = req.params.primary === "business" ? BUSNINESS : CUSTOMER;
-
-  const futureAppointments = 
-    await db
-      .collection(primary)
-      .doc(req.params.id)
-      .collection("future_appointments")
-      .get()
-      .then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
-      .catch(err => res.send(err));
-
-  res.send(futureAppointments);
-});
-
-
-// GET PAST APPOINTMENTS FOR CUSTOMER OR BUSINESS
-app.get("/:primary/:id/past", async (req, res) => {
-  const primary = req.params.primary === "business" ? BUSNINESS : CUSTOMER;
-
-  const pastAppointments = 
-    await db
-      .collection(primary)
-      .doc(req.params.id)
-      .collection("past_appointments")
-      .get()
-      .then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
-      .catch(err => res.send(err));
-
-  res.send(pastAppointments);
-});
-
-
 export const haveAsesh = functions.https.onRequest(app);
 
 
@@ -234,7 +272,7 @@ export const handleNewAppointment = functions.firestore
     const businessRef = snap.data().business_ref; // id for testing
 
     db
-      .doc(`/business_test/${businessRef}`)
+      .doc(`/${BUSNINESS}/${businessRef}`)
       .collection("future_appointments")
       .doc(context.params.apptId)
       .set({ appointment_ref: appointmentRef })
