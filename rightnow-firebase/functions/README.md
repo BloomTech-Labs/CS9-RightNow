@@ -24,8 +24,7 @@
 - `/appointment/:id/confirm` -- PUT -- customer confirms appointment -- adds customer ref to appointment
 
 
-
-# To test these functions locally...
+# To test NEW functions locally...
 
 0. Requirements: Firebase CLI
 
