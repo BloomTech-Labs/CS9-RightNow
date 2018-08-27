@@ -35,18 +35,7 @@ const app = express();
 app.use(express.json());
 
 
-// MIDDLEWARE -- DETERMINE PRIMARY COLLECTION 
-const forwardCollection = (req, res, next) => {
-  const primary = req.params.primary;
-  let collection;
-
-  if (primary === "appointment") collection = APPT;
-  if (primary === "business") collection = BUSNINESS;
-  if (primary === "customer") collection = CUSTOMER;
-
-  res.locals.primaryCollection = collection;
-  next();
-}
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
 
 // CREATE APPOINTMENT
@@ -78,7 +67,24 @@ app.post("/customer", (req, res) => {
     .set(req.body)
     .then(() => res.send("success"))
     .catch(err => res.send(err))
-})
+});
+
+
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
+
+
+// MIDDLEWARE -- DETERMINE PRIMARY COLLECTION 
+const forwardCollection = (req, res, next) => {
+  const primary = req.params.primary;
+  let collection;
+
+  if (primary === "appointment") collection = APPT;
+  if (primary === "business") collection = BUSNINESS;
+  if (primary === "customer") collection = CUSTOMER;
+
+  res.locals.primaryCollection = collection;
+  next();
+}
 
 
 // GET CUSTOMER / BUSINESS / APPOINTMENT BY ID
@@ -90,6 +96,9 @@ app.get("/:primary/:id", forwardCollection, (req, res) => {
     .then(docSnapshot => res.send(docSnapshot.data()))
     .catch(err => res.send(err));
 });
+
+
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
 
 // GET FUTURE APPOINTMENTS FOR CUSTOMER OR BUSINESS
@@ -107,6 +116,8 @@ app.get("/:primary/:id/upcoming", async (req, res) => {
 
   res.send(futureAppointments);
 });
+
+
 
 
 
@@ -181,16 +192,13 @@ export const handleNewAppointment = functions.firestore
         }
 */
 export const handleDeleteAppointment = functions.firestore
-  .document(`/appt_test/{apptId}`)
+  .document(`/${APPT}/{apptId}`)
   .onDelete((snap, context) => {
     const isActive = snap.data().active;
     const businessRef = snap.data().business_ref; // NOT a reference - logic is based on this being an id for testing purposes
-    const db = admin.firestore();
-
-    db.settings({ timestampsInSnapshots: true });
 
     db
-      .doc(`business_test/${businessRef}/${isActive ? "future_appointments" : "past_appointments"}/${context.params.apptId}`)
+      .doc(`${BUSNINESS}/${businessRef}/${isActive ? "future_appointments" : "past_appointments"}/${context.params.apptId}`)
       .delete()
       .then(() => console.log("success"))
       .catch(err => console.log("error", err));
