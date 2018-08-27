@@ -38,16 +38,6 @@ app.use(express.json());
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
 
-// CREATE APPOINTMENT
-app.post("/appointment", (req, res) => {
-  db
-    .collection(APPT)
-    .add(req.body)
-    .then(docRef => res.send(docRef))
-    .catch(err => res.send(err));
-});
-
-
 // CREATE BUSINESS
 app.post("/business", (req, res) => {
   db
@@ -57,6 +47,20 @@ app.post("/business", (req, res) => {
     .then(() => res.send("success"))
     .catch(err => res.send(err));
 });
+
+
+// GET BUSINESS BY ID
+app.get("/business/:id", (req, res) => {
+  db
+    .collection(BUSNINESS)
+    .doc(req.params.id)
+    .get()
+    .then(docSnapshot => res.send(docSnapshot.data()))
+    .catch(err => res.send(err));
+});
+
+
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
 
 // CREATE CUSTOMER
@@ -70,27 +74,10 @@ app.post("/customer", (req, res) => {
 });
 
 
-/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
-
-
-// MIDDLEWARE -- DETERMINE PRIMARY COLLECTION 
-const forwardCollection = (req, res, next) => {
-  const primary = req.params.primary;
-  let collection;
-
-  if (primary === "appointment") collection = APPT;
-  if (primary === "business") collection = BUSNINESS;
-  if (primary === "customer") collection = CUSTOMER;
-
-  res.locals.primaryCollection = collection;
-  next();
-}
-
-
-// GET CUSTOMER / BUSINESS / APPOINTMENT BY ID
-app.get("/:primary/:id", forwardCollection, (req, res) => {
+// GET CUSTOMER BY ID
+app.get("/customer/:id", (req, res) => {
   db
-    .collection(res.locals.primaryCollection)
+    .collection(CUSTOMER)
     .doc(req.params.id)
     .get()
     .then(docSnapshot => res.send(docSnapshot.data()))
@@ -136,6 +123,27 @@ app.get("/:primary/:id/past", (req, res) => {
 
 
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
+
+
+// GET APPOINTMENT BY ID
+app.get("/appointment/:id", (req, res) => {
+  db
+    .collection(res.locals.primaryCollection)
+    .doc(req.params.id)
+    .get()
+    .then(docSnapshot => res.send(docSnapshot.data()))
+    .catch(err => res.send(err));
+})
+
+
+// CREATE APPOINTMENT
+app.post("/appointment", (req, res) => {
+  db
+    .collection(APPT)
+    .add(req.body)
+    .then(docRef => res.send(docRef))
+    .catch(err => res.send(err));
+});
 
 
 // DELETE APPOINTMENT
@@ -211,6 +219,7 @@ export const handleNewAppointment = functions.firestore
       .then(busnDocRef => busnDocRef)
       .catch(err => console.log("error", err));
   });
+
 
 
 /* 
