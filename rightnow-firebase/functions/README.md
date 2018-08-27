@@ -1,6 +1,6 @@
 # API
 
-**URL** -- https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh
+**URL** -- https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/
 
 **Customer Paths**
 - `/customer` -- POST -- create a new customer
