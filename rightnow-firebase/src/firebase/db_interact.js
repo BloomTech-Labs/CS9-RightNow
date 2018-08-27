@@ -1,6 +1,15 @@
 import { db, auth } from "./firebase";
 
 
+
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+~ ~ ~ ~ ~ ~ ~ ~ ~ DO NOT USE THIS FILE ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+~ ~ ~ ~ ~ ~ ~ REFER TO FUNCTIONS DIRECTORY ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
+
+
+
+
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
 
   Known bugs:
@@ -19,6 +28,17 @@ import { db, auth } from "./firebase";
             * name, email, phone, uid 
             * past appointments -- collection of id references to appointments attended in the past
             * future appointments -- collection of id references to future appointments
+                    \
+                     \
+                     customers = {
+                       first_name: string,
+                       las_name: string,
+                       email: string,
+
+                       past_appointments: [],
+
+                       future_appointments: []
+                     }
 
 
     bookies -- stores a collections of business docs (one doc = one business)
@@ -29,6 +49,35 @@ import { db, auth } from "./firebase";
                 * owner details -- object -- name, email, phone
                 * available appointments -- collection of id references to corresponding appointments
                 * booked appointments -- collection of id references to corresponding appointments
+                     \
+                      \
+                      businesses = {
+                        business_info: {
+                          name: string,
+                          phone: string,
+                          rating: number,
+  
+                          street_number: string,
+                          street_name: string,
+                          city: string,
+                          state: string,
+                          zip: string
+
+                          photos: [],
+                          hours: unknown
+                        },
+
+                        owner_info: {
+                          first_name: string,
+                          last_name: string,
+                          email: string
+                          phone: string
+                        },
+
+                        available_appointments: [],
+
+                        booked_appointments: []
+                      }
     
     
     appointments -- stores a collection of ALL appointments (ever?)
@@ -39,6 +88,19 @@ import { db, auth } from "./firebase";
                   * details -- object -- business name, address, time, cost, type
                   * business host -- reference -- ref to business id
                   * customer -- reference -- ref to customer id
+                      \
+                       \
+                       appointment = {
+                         active: boolean,
+                         business_ref: reference,
+                         customer_ref: reference,
+
+                         details: {
+                           type: string,
+                           time: string,
+                           cost: string
+                         }
+                       }
 
 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
 
@@ -57,7 +119,7 @@ import { db, auth } from "./firebase";
     * (DONE) method that adds customer id to appointment's customerId field upon confirmation
 
 
-    * option for businesses to delete an appointment 
+    * (DONE) option for businesses to delete an appointment 
   
         * i'm thinking we stay away from "updating" appointments
 
@@ -72,8 +134,18 @@ import { db, auth } from "./firebase";
         * set active field to false and delete appointment from database
     
   
-    * get all future appointments for current user (customer or business)
-    * get all past appointments for current user (customer or business)
+    * (DONE) get all future appointments for current user (customer or business)
+    
+
+    * (DONE) get all past appointments for current user (customer or business)
+ 
+
+    * (DONE) convert es6 methods to firebase functions
+
+  
+    * (DONE) onUpdate trigger for when user confirms appointment
+
+        * updates corresponding business
 
 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
@@ -160,41 +232,45 @@ export const registerUser = async (col, data) => {
 
 // creates a new appointment and updates the business' future_appointments collection
 // returns the document id of the newly added appointment in the business' future_appointments collection
-  // @param data -- object -- any data you want to store -- MUST INCLUDE BUSINESS ID and ACTIVE: TRUE
-export const createNewAppointment = async data => {
+  // @param data -- object -- any data you want to store
+  // @param businessId -- string -- business id 
+export const createNewAppointment = async (data, businessId) => {
   const errorMsg = "error creating new appointment\n";
 
-  if (!data.businessId) {
+  if (!businessId) {
     console.log("you must provide a business id for future reference");
     return;
   }
 
-  const newAppointmentId = 
+  const businessRef = await db.collection("busn_ACTUAL").doc(businessId);
+
+  const dataWithRef = { ...data, business_ref: businessRef };
+
+  console.log(dataWithRef)
+
+  const appointmentRef = 
     await db
       .collection("appt_ACTUAL")
-      .add(data)
-      .then(docRef => docRef.id)
+      .add(dataWithRef)
+      .then(docRef => docRef) // returns document reference
       .catch(err => console.log(errorMsg, err));
   
-  const updateBusiness = await newFutureAppointment(data.businessId, newAppointmentId);
+  const updateBusiness = await newFutureAppointment(businessRef, appointmentRef);
 
   return updateBusiness;
 }
 
 
-// adds new appointment to the future_appointments collection for a specified business
-// returns the document id of the newly created entry
-  // @param busnID -- string -- the doc id of the business to be updated
-  // @param apptID -- string -- the doc id of the newly created appointment
-export const newFutureAppointment = async (busnID, apptID) => {
-  const ref = await db.collection("busn_ACTUAL");
-
+// adds new appointment reference to the future_appointments collection for a specified business
+// returns the document reference of the newly created entry
+  // @param businessRef -- string -- the location of the business to be updated
+  // @param appointmentRef -- string -- the location of the newly created appointment
+export const newFutureAppointment = async (businessRef, appointmentRef) => {
   const applyUpdate =
-    await ref
-      .doc(busnID)
+    await businessRef
       .collection("future_appointments")
-      .add({ appointment_id: apptID })
-      .then(docRef => docRef.id)
+      .add({ appointment_ref: appointmentRef })
+      .then(docRef => docRef) // returns document reference
       .catch(err => console.log("error adding new appointment", err));
   
   return applyUpdate;
@@ -216,3 +292,25 @@ export const customerConfirmsAppt = async (customerId, appointmentId) => {
 
   return updateRef;
 }
+
+
+export const deleteAppointment = async appointmentId => {
+  const batch = db.batch();
+
+  const appointmentRef = await db.collection("appt_ACTUAL").doc(appointmentId);
+
+
+  // const businessRef = await 
+  
+  const ref =
+    await db
+      .collection("appt_ACTUAL")
+      .doc(appointmentId)
+      .delete()
+      .then(() => console.log(`appointment ${appointmentId} successfully deleted`))
+      .catch(err => console.log("error deleting appointment", err));
+
+  return ref;
+}
+
+// 012YFwRHCAjyTAqmg3ed
