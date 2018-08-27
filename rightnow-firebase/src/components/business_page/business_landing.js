@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import * as routes from "../../constants/routes";
 import glamorous from "glamorous";
 import { Link } from "react-router-dom";
 
