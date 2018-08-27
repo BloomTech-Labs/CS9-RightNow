@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import glamorous from "glamorous";
 import PlacesAPI from "../placesAPI/search_autocomplete";
-import './business_register_styles.css';
-import { registerUser, getUserId, createUser } from "../../firebase/db_interact";
+import "./business_register_styles.css";
+import {
+  registerUser,
+  getUserId,
+  createUser
+} from "../../firebase/db_interact";
 import {
   Container,
   LeftSide,
@@ -11,33 +15,58 @@ import {
   Wrapper,
   Button
 } from "./business-styles-account";
-// import firebase, { auth } from '../../firebase/firebase.js';
-import { doCreateUserWithEmailAndPassword } from '../../firebase/auth';
-
-
+import { doCreateUserWithEmailAndPassword } from "../../firebase/auth"; // Create new user with firebase Auth
+// import firebase from "../../firebase/firebase";
+// const db = firebase.firestore();
 
 export default class BusinessAccount extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayForms: true, // what does this do? 
       // displaySuccess: false, // what does this do?
-      first_name: "",
-      last_name: "",
+      displayForms: true, // what does this do?
       email: "",
       password: "",
-      phone: "",
-      company: ""
+      business: "",
+      first_name: "",
+      last_name: "",
+      phone: ""
     };
   }
+
+  onInputChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
   createUser = () => {
+    // Creates a new user, password, user id in firestore (console > authentication > users)
     // console.log('inside createUser');
     const { email, password } = this.state;
     doCreateUserWithEmailAndPassword(email, password);
-  }
+  };
+
+  saveBusinessUserData = () => {
+    console.log("hi");
+    //   let business = this.state.business;
+    //   let first_name = this.state.first_name;
+    //   let last_name = this.state.last_name;
+    //   let phone = this.state.phone;
+
+    //   // Create user data on business db
+    //   db.collection("businesses") // Collection name per Firestore
+    //     .doc() //
+    //     .set({
+    //       employee_first: first_name,
+    //       employee_last: last_name,
+    //       phone: phone,
+    //       business: business
+    //     })
+    //     .catch(() => {
+    //       console.log("failure");
+    //     });
+  };
 
   render() {
-    console.log(this.props);
     return (
       <Container>
         {this.state.displayForms ? (
@@ -45,23 +74,12 @@ export default class BusinessAccount extends Component {
             <h3>Business SignUp</h3>
             <hr />
             <Wrapper>
-
               <LeftSide>
-
                 <form>
-                  <label>First Name:</label>
-                  <input
-                    type="text"
-                    name="first_name"
-                    onChange={e => this.setState({ [e.target.name]: e.target.value })}
-                    value={this.state.first_name}
-                    required
-                    autocomplete="off"
-                  />
                   <label>Email:</label>
                   <input
                     type="email"
-                    onChange={e => this.setState({ [e.target.name]: e.target.value })}
+                    onChange={this.onInputChange}
                     name="email"
                     value={this.state.email}
                     required
@@ -70,16 +88,37 @@ export default class BusinessAccount extends Component {
                   <label>Password:</label>
                   <input
                     type="password"
-                    onChange={e => this.setState({ [e.target.name]: e.target.value })}
+                    onChange={this.onInputChange}
                     name="password"
                     value={this.state.password}
                     required
                     autocomplete="off"
                   />
-                  <label>Last Name:</label>
+                  <Button onClick={this.createUser()}>Submit</Button>
+                </form>
+                <form>
+                  <label>Business Name:</label>
                   <input
                     type="text"
-                    onChange={e => this.setState({ [e.target.name]: e.target.value })}
+                    onChange={this.onInputChange}
+                    name="business"
+                    value={this.state.business}
+                    required
+                    autocomplete="off"
+                  />
+                  <label>Employee First Name:</label>
+                  <input
+                    type="text"
+                    name="first_name"
+                    onChange={this.onInputChange}
+                    value={this.state.first_name}
+                    required
+                    autocomplete="off"
+                  />
+                  <label>Employee Last Name:</label>
+                  <input
+                    type="text"
+                    onChange={this.onInputChange}
                     name="last_name"
                     value={this.state.last_name}
                     required
@@ -88,40 +127,28 @@ export default class BusinessAccount extends Component {
                   <label>Phone Number:</label>
                   <input
                     type="text"
-                    onChange={e => this.setState({ [e.target.name]: e.target.value })}
+                    onChange={this.onInputChange}
                     name="phone"
                     value={this.state.phone}
                     required
                     autocomplete="off"
                   />
-                  <label>Company Name:</label>
-                  <input
-                    type="text"
-                    onChange={e => this.setState({ [e.target.name]: e.target.value })}
-                    name="company"
-                    value={this.state.company}
-                    required
-                    autocomplete="off"
-                  />
-                  <Button onClick={this.createUser}>Submit</Button>
+                  {/* <Button onClick={this.saveBusinessUserData}>Submit</Button> */}
                 </form>
               </LeftSide>
 
-              <RightSide>
-              </RightSide>
+              <RightSide />
             </Wrapper>
 
-            
-              {/* <Bottom>
+            {/* <Bottom>
                 <label>Google API</label>
                 <PlacesAPI busnContext={this.props.value} />
                 
               </Bottom> */}
-
           </div>
         ) : null}
 
-        {this.state.displaySuccess ? <h3>We got your application, thank you for the submission</h3> : null}
+        {/* {this.state.displaySuccess ? <h3>We got your application, thank you for the submission</h3> : null} */}
       </Container>
     );
   }
