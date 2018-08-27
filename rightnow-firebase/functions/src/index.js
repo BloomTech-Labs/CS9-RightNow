@@ -118,6 +118,23 @@ app.get("/:primary/:id/upcoming", async (req, res) => {
 });
 
 
+// GET PAST APPOINTMENTS FOR CUSTOMER OR BUSINESS
+app.get("/:primary/:id/past", (req, res) => {
+  const primary = req.params.primary === "business" ? BUSNINESS : CUSTOMER;
+
+  const pastAppointments = 
+    await db
+      .collection(primary)
+      .doc(req.params.id)
+      .collection("past_appointments")
+      .get()
+      .then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
+      .catch(err => res.send(err));
+
+  res.send(pastAppointments);
+})
+
+
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
 

@@ -110,7 +110,7 @@ import { db, auth } from "./firebase";
     * (DONE) method that adds customer id to appointment's customerId field upon confirmation
 
 
-    * option for businesses to delete an appointment 
+    * (DONE) option for businesses to delete an appointment 
   
         * i'm thinking we stay away from "updating" appointments
 
@@ -125,8 +125,10 @@ import { db, auth } from "./firebase";
         * set active field to false and delete appointment from database
     
   
-    * get all future appointments for current user (customer or business)
-    * get all past appointments for current user (customer or business)
+    * (DONE) get all future appointments for current user (customer or business)
+    
+
+    * (DONE) get all past appointments for current user (customer or business)
  
 
     * convert es6 methods to firebase functions and update the application accordingly
