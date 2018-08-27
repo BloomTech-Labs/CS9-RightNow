@@ -9,15 +9,15 @@ import {
 } from "../../firebase/db_interact";
 import {
   Container,
-  LeftSide,
+  LeftSide, 
   RightSide,
   Bottom,
   Wrapper,
   Button
 } from "./business-styles-account";
 import { doCreateUserWithEmailAndPassword } from "../../firebase/auth"; // Create new user with firebase Auth
-// import firebase from "../../firebase/firebase";
-// const db = firebase.firestore();
+import firebase, { auth } from "../../firebase/firebase";
+const db = firebase.firestore();
 
 export default class BusinessAccount extends Component {
   constructor(props) {
@@ -35,36 +35,29 @@ export default class BusinessAccount extends Component {
   }
 
   onInputChange = e => {
+    e.preventDefault();
     this.setState({ [e.target.name]: e.target.value });
   };
 
   createUser = () => {
     // Creates a new user, password, user id in firestore (console > authentication > users)
-    // console.log('inside createUser');
-    const { email, password } = this.state;
+    const { email, password, first_name, last_name, phone, business } = this.state;
     doCreateUserWithEmailAndPassword(email, password);
+
+
+    // Create user data on business db
+    db.collection("biz") // Collection name per Firestore
+      .add({
+        employee_first: first_name,
+        employee_last: last_name,
+        phone: phone,
+        business: business
+      })
+      .catch(() => {
+        console.log("failure");
+      });    
   };
 
-  saveBusinessUserData = () => {
-    console.log("hi");
-    //   let business = this.state.business;
-    //   let first_name = this.state.first_name;
-    //   let last_name = this.state.last_name;
-    //   let phone = this.state.phone;
-
-    //   // Create user data on business db
-    //   db.collection("businesses") // Collection name per Firestore
-    //     .doc() //
-    //     .set({
-    //       employee_first: first_name,
-    //       employee_last: last_name,
-    //       phone: phone,
-    //       business: business
-    //     })
-    //     .catch(() => {
-    //       console.log("failure");
-    //     });
-  };
 
   render() {
     return (
@@ -94,9 +87,6 @@ export default class BusinessAccount extends Component {
                     required
                     autocomplete="off"
                   />
-                  <Button onClick={this.createUser()}>Submit</Button>
-                </form>
-                <form>
                   <label>Business Name:</label>
                   <input
                     type="text"
@@ -133,7 +123,7 @@ export default class BusinessAccount extends Component {
                     required
                     autocomplete="off"
                   />
-                  {/* <Button onClick={this.saveBusinessUserData}>Submit</Button> */}
+                  <Button onClick={this.createUser()}>Submit</Button>
                 </form>
               </LeftSide>
 
@@ -148,7 +138,7 @@ export default class BusinessAccount extends Component {
           </div>
         ) : null}
 
-        {/* {this.state.displaySuccess ? <h3>We got your application, thank you for the submission</h3> : null} */}
+        {this.state.displaySuccess ? <h3>We got your application, thank you for the submission</h3> : null}
       </Container>
     );
   }
