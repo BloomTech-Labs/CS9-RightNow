@@ -3,66 +3,22 @@ import React, { Component } from 'react';
 // import * as routes from "../constants/routes"; might not need
 
 import glamorous from 'glamorous';
-import SignInModal from './login_modal/login_modal';
-import RegisterModal from './register_modal/reg_modal';
-import RegisterForm from './register_modal/reg_forms';
-import { UserContext } from '../context/userContext';
-import ConfirmModal from './confirm_appt_modal/confirm_modal';
+import SignInModal from '../login_modal/login_modal';
+import RegisterModal from '../register_modal/reg_modal';
+import RegisterForm from '../register_modal/reg_forms';
+import { UserContext } from '../../context/userContext';
+import ConfirmModal from '../confirm_appt_modal/confirm_modal';
 
 import { Link } from 'react-router-dom';
 
-const NavContainer = glamorous.div({
-	width: '100%',
-	background: '#EBEBEB',
-	display: 'flex',
-	justifyContent: 'space-between'
-});
-
-const Logo = glamorous.div({
-	color: '#F45B69',
-	fontWeight: 600,
-	fontSize: '3em',
-	alignSelf: 'center',
-	margin: '0.5% 1%',
-	textShadow: '1px 1px gray'
-});
-
-const ButtonContainer = glamorous.div({
-	width: '50%',
-	display: 'flex',
-	justifyContent: 'flex-end',
-	marginRight: '1%'
-});
-
-const Button = glamorous.button({
-	borderRadius: '7px',
-	background: '#00c6fd',
-	height: '65%',
-	alignSelf: 'center',
-	margin: '0 1%',
-	padding: '0 3%',
-	fontWeight: 600,
-	fontSize: '1.3em',
-	color: '#EBEBEB',
-	':hover': {
-		cursor: 'pointer',
-		boxShadow: '2px 2px gray'
-	}
-});
-
-const Menu = glamorous.div({
-	display: 'inline-block',
-	cursor: 'pointer',
-	alignSelf: 'center',
-	marginLeft: '20px'
-});
-
-const MenuLine = glamorous.div({
-	width: '35px',
-	height: '5px',
-	background: 'black',
-	margin: '6px 0'
-});
+import {
+	NavContainer,
+	Logo,
+	Button,
+	ButtonContainer,
+	Menu,
+	MenuLine,
+} from './nav-styles';
 
 export default class NavBar extends Component {
 	constructor() {
@@ -109,10 +65,21 @@ export default class NavBar extends Component {
 	render() {
 		return (
 			<NavContainer>
-				<Logo>Right Now</Logo>
+				<Link to="/">
+				<Logo>Sesho</Logo>
+				</Link>
 				<ButtonContainer>
 					<Link to="/biz-landing">
-						<Button>Business Signup</Button>
+						<Button>Business Sign Up</Button>
+					</Link>
+					<Link to="/">
+						<Button>Sign Out</Button>
+					</Link>
+					<Link to="/user-settings">
+						<Button>User Settings</Button>
+					</Link>
+					<Link to="/company-settings">
+						<Button>Company Settings</Button>
 					</Link>
 					<Button onClick={() => this.openReg()}>Sign Up</Button>
 					<Button onClick={() => this.openLogin()}>Login</Button>

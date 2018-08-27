@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {
 	FormContainer,
+	Form,
 	Email,
+	PW,
 	NameContainer,
 	NamePlace,
 	NamePlace2,
@@ -22,17 +24,20 @@ export default class RegisterModal extends Component {
 	render() {
 		return (
 			<FormContainer>
-				<Email type="text" placeholder="Your Email Address" />
-				<NameContainer>
-					<div>
-						<NamePlace type="text" placeholder="First Name" />
-					</div>
-					<div>
-						<NamePlace2 type="text" placeholder="Last Name" />
-					</div>
-				</NameContainer>
-				<PhoneNumber name="phoneNum" onBlur="addDashes(this)" type="text" placeholder="Phone number" />
-				<Location type="text" placeholder="Preferred location" />
+				<Form>
+					<NameContainer>
+						<div>
+							<NamePlace type="text" placeholder="First Name" />
+						</div>
+						<div>
+							<NamePlace2 type="text" placeholder="Last Name" />
+						</div>
+					</NameContainer>
+					<Email type="text" placeholder="Your Email Address" />
+					<PW type="password" placeholder="Password" />
+					<PhoneNumber name="phoneNum" onBlur="addDashes(this)" type="text" placeholder="Phone number" />
+					<Location type="text" placeholder="Preferred location" />
+				</Form>
 
 				<CheckBoxWrapper>
 					<legend style={{ padding: '0 1%' }}>Contact me by</legend>

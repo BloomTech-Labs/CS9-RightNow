@@ -19,9 +19,14 @@ import {
 } from "./styles-business";
 
 export default class BusinessLanding extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
   render() {
     return (
       <Container>
+        
         <LeftSide>
           <TopLeft>TAKE ADVANTAGE</TopLeft>
           <MiddleLeft>OF YOUR BUSINESS</MiddleLeft>
@@ -43,6 +48,7 @@ export default class BusinessLanding extends Component {
             <h3>IT'S THAT EASY!!!</h3>
           </BottomRight>
         </RightSide>
+        
       </Container>
     );
   }

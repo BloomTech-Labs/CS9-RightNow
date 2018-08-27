@@ -19,8 +19,20 @@ import {
 	CloseX
 } from './login_modal_styles';
 import { UserContext } from '../../context/userContext';
+import { doSignInWithEmailAndPassword } from "../../firebase/auth";
 
 export default class SignInModal extends Component {
+	state = {
+		email: "",
+		password: ""
+	}
+
+	handleEmailSignIn = () => {
+		const { email, password } = this.state;
+		doSignInWithEmailAndPassword(email, password);
+		this.setState({ email: "", password: "" });
+	}
+
 	render() {
 		return (
 			<Container>
@@ -29,10 +41,22 @@ export default class SignInModal extends Component {
 					<ModalRight>
 						<Header>Please sign in.</Header>
 						<NormalSignIn>
-							<Input type="text" placeholder="Email" />
-							<Input type="password" placeholder="Password" />
+							<Input 
+								type="text" 
+								placeholder="Email"
+								name="email"
+								value={this.state.email}
+								onChange={e => this.setState({ [e.target.name]: e.target.value })}
+							/>
+							<Input 
+								type="password" 
+								placeholder="Password" 
+								name="password"
+								value={this.state.password}
+								onChange={e => this.setState({ [e.target.name]: e.target.value })}
+							/>
 						</NormalSignIn>
-						<LoginButton onClick={() => console.log('email login not implemented')}>Sign In</LoginButton>
+						<LoginButton onClick={() => this.handleEmailSignIn()}>Sign In</LoginButton>
 
 						<Or>
 							<span style={{ backgroundColor: '#353A50', padding: '0 3%' }}>or</span>
