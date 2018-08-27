@@ -24,6 +24,7 @@
 - `/appointment/:id/confirm` -- PUT -- customer confirms appointment -- adds customer ref to appointment
 
 
+
 # To test NEW functions locally...
 
 0. Requirements: Firebase CLI
@@ -38,19 +39,12 @@
 
 5. have some fun with postman
 
+
+
 # Database Structure
 
 ```
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
-
-  Known bugs:
-
-    * If a user's login habbits varry across multiple services, 
-      a new account will be created in the db for each service.
-
-~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
-
-  Database structure:
 
     customers -- stores a collection of customer docs (one doc = one customer)
          \
@@ -72,6 +66,7 @@
                        future_appointments: []
                      }
 
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
 
     businesses -- stores a collections of business docs (one doc = one business)
               \
@@ -113,7 +108,8 @@
                         past_appointments: []
                       }
     
-    
+  ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+
     appointments -- stores a collection of ALL appointments (ever?)
                 \
                  \
