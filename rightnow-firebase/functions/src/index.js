@@ -38,7 +38,7 @@ app.use(express.json());
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
 
-// CREATE BUSINESS
+// CREATE BUSINESS -- working
 app.post("/business", (req, res) => {
   db
     .collection(BUSNINESS)
@@ -49,7 +49,7 @@ app.post("/business", (req, res) => {
 });
 
 
-// GET BUSINESS BY ID
+// GET BUSINESS BY ID -- working
 app.get("/business/:id", (req, res) => {
   db
     .collection(BUSNINESS)
@@ -60,10 +60,21 @@ app.get("/business/:id", (req, res) => {
 });
 
 
+// UPDATE BUSINESS -- not to be used for updating business appointments collection -- working
+app.put("/business/:id", (req, res) => {
+  db
+    .collection(BUSNINESS)
+    .doc(req.params.id)
+    .update(req.body)
+    .then(() => res.send("success"))
+    .catch(err => res.send("error", err));
+});
+
+
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
 
-// CREATE CUSTOMER
+// CREATE CUSTOMER -- working
 app.post("/customer", (req, res) => {
   db
     .collection(CUSTOMER)
@@ -74,7 +85,7 @@ app.post("/customer", (req, res) => {
 });
 
 
-// GET CUSTOMER BY ID
+// GET CUSTOMER BY ID -- working
 app.get("/customer/:id", (req, res) => {
   db
     .collection(CUSTOMER)
@@ -82,6 +93,63 @@ app.get("/customer/:id", (req, res) => {
     .get()
     .then(docSnapshot => res.send(docSnapshot.data()))
     .catch(err => res.send(err));
+});
+
+
+// UPDATE CUSTOMER INFORMATION -- not to be used for updating customer appointment collections -- working
+app.put("/customer/:id", (req, res) => {
+  db
+    .collection(CUSTOMER)
+    .doc(req.params.id)
+    .update(req.body)
+    .then(() => res.send("success"))
+    .catch(err => res.send("error", err));
+});
+
+
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
+
+
+// GET APPOINTMENT BY ID -- working
+app.get("/appointment/:id", (req, res) => {
+  db
+    .collection(APPT)
+    .doc(req.params.id)
+    .get()
+    .then(docSnapshot => res.send(docSnapshot.data()))
+    .catch(err => res.send(err));
+})
+
+
+// CREATE APPOINTMENT -- working
+app.post("/appointment", (req, res) => {
+  db
+    .collection(APPT)
+    .add(req.body)
+    .then(docRef => res.send(docRef))
+    .catch(err => res.send(err));
+});
+
+
+// DELETE APPOINTMENT -- working
+app.delete("/appointment/:id", (req, res) => {
+  db
+    .collection(APPT)
+    .doc(req.params.id)
+    .delete()
+    .then(() => res.send("success"))
+    .catch(err => res.send("error"));
+});
+
+
+// CONFIRM APPOINTMENT -- working
+app.put("/appointment/:id/confirm", (req, res) => {
+  db
+    .collection(APPT)
+    .doc(req.params.id)
+    .update({ customer_ref: req.body.customerRef })
+    .then(() => res.send("success"))
+    .catch(err => res.send("error"));
 });
 
 
@@ -106,7 +174,7 @@ app.get("/:primary/:id/upcoming", async (req, res) => {
 
 
 // GET PAST APPOINTMENTS FOR CUSTOMER OR BUSINESS
-app.get("/:primary/:id/past", (req, res) => {
+app.get("/:primary/:id/past", async (req, res) => {
   const primary = req.params.primary === "business" ? BUSNINESS : CUSTOMER;
 
   const pastAppointments = 
@@ -119,52 +187,6 @@ app.get("/:primary/:id/past", (req, res) => {
       .catch(err => res.send(err));
 
   res.send(pastAppointments);
-})
-
-
-/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
-
-
-// GET APPOINTMENT BY ID
-app.get("/appointment/:id", (req, res) => {
-  db
-    .collection(res.locals.primaryCollection)
-    .doc(req.params.id)
-    .get()
-    .then(docSnapshot => res.send(docSnapshot.data()))
-    .catch(err => res.send(err));
-})
-
-
-// CREATE APPOINTMENT
-app.post("/appointment", (req, res) => {
-  db
-    .collection(APPT)
-    .add(req.body)
-    .then(docRef => res.send(docRef))
-    .catch(err => res.send(err));
-});
-
-
-// DELETE APPOINTMENT
-app.delete("/appointment/:id", (req, res) => {
-  db
-    .collection(APPT)
-    .doc(req.params.id)
-    .delete()
-    .then(() => res.send("success"))
-    .catch(err => res.send("error"));
-});
-
-
-// CONFIRM APPOINTMENT
-app.put("/appointment/:id/confirm", (req, res) => {
-  db
-    .collection(APPT)
-    .doc(req.params.id)
-    .update({ customer_ref: req.body.customerRef })
-    .then(() => res.send("success"))
-    .catch(err => res.send("error"));
 });
 
 
