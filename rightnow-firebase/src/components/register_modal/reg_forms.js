@@ -30,7 +30,7 @@ export default class RegisterModal extends Component {
         this.setState({[e.target.name]: e.target.value});
     };
 
-    createrUser = () => {
+    createUser = () => {
 
 		const {email, password} = this.state;
     	doCreateUserWithEmailAndPassword(email, password);
@@ -75,7 +75,7 @@ export default class RegisterModal extends Component {
 						</CheckBox>
 					</CheckBoxContainer>
 				</CheckBoxWrapper>
-				<RegisterButton onClick={this.createrUser}>Let's Go!</RegisterButton>
+				<RegisterButton onClick={this.createUser}>Let's Go!</RegisterButton>
 			</FormContainer>
 		);
 	}
