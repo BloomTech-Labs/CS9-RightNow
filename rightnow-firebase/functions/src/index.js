@@ -5,7 +5,7 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
-// define primary collection pasths
+// define primary collection paths
 const APPT = "_appointment_";
 const BUSNINESS = "_business_";
 const CUSTOMER = "_customer_";
@@ -47,6 +47,16 @@ const forwardCollection = (req, res, next) => {
   res.locals.primaryCollection = collection;
   next();
 }
+
+
+// CREATE APPOINTMENT
+app.post("/appointment", (req, res) => {
+  db
+    .collection(APPT)
+    .add(req.body)
+    .then(docRef => res.send(docRef))
+    .catch(err => res.send(err));
+});
 
 
 // GET CUSTOMER / BUSINESS / APPOINTMENT BY ID
@@ -115,14 +125,11 @@ export const haveAsesh = functions.https.onRequest(app);
           customer_ref: ID
         }
 */
-exports.handleNewAppointment = functions.firestore
-  .document(`/appt_test/{apptId}`)
+export const handleNewAppointment = functions.firestore
+  .document(`/${APPT}/{apptId}`)
   .onCreate((snap, context) => {
     const appointmentRef = snap.ref;
     const businessRef = snap.data().business_ref; // id for testing
-    const db = admin.firestore();
-
-    db.settings({ timestampsInSnapshots: true });
 
     db
       .doc(`/business_test/${businessRef}`)
@@ -151,7 +158,7 @@ exports.handleNewAppointment = functions.firestore
           customer_ref: ID
         }
 */
-exports.handleDeleteAppointment = functions.firestore
+export const handleDeleteAppointment = functions.firestore
   .document(`/appt_test/{apptId}`)
   .onDelete((snap, context) => {
     const isActive = snap.data().active;
