@@ -32,7 +32,7 @@
 
 2. run `yarn` to install dependencies 
 
-3. run `yarn compile-funcs` to compile the `src` folder with babel
+3. run `yarn compile-funcs` to compile with babel
 
 4. run `yarn serve`
 
