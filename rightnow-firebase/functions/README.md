@@ -35,7 +35,7 @@
 
 3. run `yarn compile-funcs` to compile with babel
 
-4. run `yarn serve`
+4. run `yarn serve` for local or `yarn deploy` for live api
 
 5. have some fun with postman
 
