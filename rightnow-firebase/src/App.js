@@ -8,6 +8,7 @@ import BusinessAccount from './components/business_page/business_register';
 import Customer from './components/customers/customers';
 import UserSettings from './components/user_settings/user_settings_form';
 import CompanySettings from './components/company_settings/company_settings';
+import PostAppt from "./components/appointments_business/post_appt";
 
 class App extends Component {
     constructor(props) {
@@ -20,7 +21,7 @@ class App extends Component {
             <div className="App">
                 <UserProvider>
                     <BusinessProvider>
-                        {/* <NavBar /> */}
+                        <NavBar />
                         <Route exact path="/" component={Customer} />
                         <Route exact path="/user-settings" component={UserSettings}/>
                         
@@ -30,6 +31,7 @@ class App extends Component {
                                     <Route exact path="/biz-landing" component={BusinessLanding} />
                                     <Route exact path="/biz-account" render={() => <BusinessAccount value={value} />} />
                                     <Route exact path="/company-settings" component={CompanySettings}/>
+                                    <Route path="/postappt" component={PostAppt} />
                                 </div>
                             )}
                         </BusinessContext.Consumer>
