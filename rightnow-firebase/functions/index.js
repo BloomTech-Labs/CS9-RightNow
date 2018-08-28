@@ -132,7 +132,7 @@ app.post("/customer", (req, res) => {
     .doc(req.body.uid)
     .set(req.body)
     .then(() => res.send("success"))
-    .catch(err => res.send(err))
+    .catch(err => res.send(err));
 });
 
 
@@ -199,7 +199,7 @@ app.get("/appointment/:id", (req, res) => {
     .get()
     .then(docSnapshot => res.send(docSnapshot.data()))
     .catch(err => res.send(err));
-})
+});
 
 
 // CREATE APPOINTMENT -- working
