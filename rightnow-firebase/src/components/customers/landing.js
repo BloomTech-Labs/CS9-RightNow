@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import glamorous from "glamorous";
+import Navigation from "./navigation";
 
 
 const Container = glamorous.div({
@@ -7,10 +8,6 @@ const Container = glamorous.div({
   background: "#B7CECE",
   display: "grid",
   grid: "10% / 100%"
-});
-
-const Nav = glamorous.div({
-  borderBottom: "1px solid black",
 });
 
 const Main = glamorous.div({
@@ -58,7 +55,7 @@ export default class Landing extends Component {
   render() {
     return (
       <Container>
-        <Nav></Nav>
+        <Navigation />
         <Main>
           <Title>Book your last minute appointments now!</Title>
           <Wrapper>
