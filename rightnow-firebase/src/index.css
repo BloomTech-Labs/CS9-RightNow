@@ -4,3 +4,8 @@ body {
   font-family: sans-serif;
   overflow-x: hidden;
 }
+
+
+:focus {
+  outline: none;
+}

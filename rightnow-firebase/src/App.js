@@ -20,7 +20,7 @@ class App extends Component {
             <div className="App">
                 <UserProvider>
                     <BusinessProvider>
-                        <NavBar />
+                        {/* <NavBar /> */}
                         <Route exact path="/" component={Customer} />
                         <Route exact path="/user-settings" component={UserSettings}/>
                         
