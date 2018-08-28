@@ -1,0 +1,58 @@
+[debug] [2018-08-28T19:05:51.446Z] ----------------------------------------------------------------------
+[debug] [2018-08-28T19:05:51.449Z] Command:       /usr/local/bin/node /usr/local/bin/firebase functions:shell
+[debug] [2018-08-28T19:05:51.449Z] CLI Version:   4.1.1
+[debug] [2018-08-28T19:05:51.449Z] Platform:      darwin
+[debug] [2018-08-28T19:05:51.449Z] Node Version:  v8.11.2
+[debug] [2018-08-28T19:05:51.449Z] Time:          Tue Aug 28 2018 15:05:51 GMT-0400 (EDT)
+[debug] [2018-08-28T19:05:51.450Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-08-28T19:05:51.458Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-08-28T19:05:51.458Z] > authorizing via signed-in user
+[debug] [2018-08-28T19:05:51.460Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-08-28T19:05:51.464Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+
+[debug] [2018-08-28T19:05:51.638Z] <<< HTTP RESPONSE 200
+[debug] [2018-08-28T19:05:51.658Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/react-firebase-auth-f2581  
+ 
+[debug] [2018-08-28T19:05:52.126Z] <<< HTTP RESPONSE 200
+[debug] [2018-08-28T19:05:52.127Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/react-firebase-auth-f2581/tokens  
+ 
+[debug] [2018-08-28T19:05:52.532Z] <<< HTTP RESPONSE 200
+[debug] [2018-08-28T19:05:52.975Z] Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules/firebase-tools/node_modules/@google-cloud/functions-emulator/logs'
+    at Object.fs.mkdirSync (fs.js:885:18)
+    at Object.assertLogsPath (/usr/local/lib/node_modules/firebase-tools/node_modules/@google-cloud/functions-emulator/src/emulator/logs.js:65:10)
+    at new Controller (/usr/local/lib/node_modules/firebase-tools/node_modules/@google-cloud/functions-emulator/src/cli/controller.js:77:32)
+    at FunctionsEmulator.start (/usr/local/lib/node_modules/firebase-tools/lib/functionsEmulator.js:113:21)
+    at Command.module.exports [as _action] (/usr/local/lib/node_modules/firebase-tools/lib/functionsShellCommandAction.js:18:6)
+    at /usr/local/lib/node_modules/firebase-tools/lib/command.js:202:29
+    at <anonymous>
+    at process._tickDomainCallback (internal/process/next_tick.js:228:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2018-08-28T19:07:24.144Z] ----------------------------------------------------------------------
+[debug] [2018-08-28T19:07:24.146Z] Command:       /usr/local/bin/node /usr/local/bin/firebase functions:shell
+[debug] [2018-08-28T19:07:24.146Z] CLI Version:   4.1.1
+[debug] [2018-08-28T19:07:24.146Z] Platform:      darwin
+[debug] [2018-08-28T19:07:24.146Z] Node Version:  v8.11.2
+[debug] [2018-08-28T19:07:24.146Z] Time:          Tue Aug 28 2018 15:07:24 GMT-0400 (EDT)
+[debug] [2018-08-28T19:07:24.146Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-08-28T19:07:24.153Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-08-28T19:07:24.153Z] > authorizing via signed-in user
+[debug] [2018-08-28T19:07:24.155Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/react-firebase-auth-f2581  
+ 
+[debug] [2018-08-28T19:07:24.446Z] <<< HTTP RESPONSE 200
+[debug] [2018-08-28T19:07:24.447Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/react-firebase-auth-f2581/tokens  
+ 
+[debug] [2018-08-28T19:07:24.796Z] <<< HTTP RESPONSE 200
+[debug] [2018-08-28T19:07:25.266Z] Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules/firebase-tools/node_modules/@google-cloud/functions-emulator/logs'
+    at Object.fs.mkdirSync (fs.js:885:18)
+    at Object.assertLogsPath (/usr/local/lib/node_modules/firebase-tools/node_modules/@google-cloud/functions-emulator/src/emulator/logs.js:65:10)
+    at new Controller (/usr/local/lib/node_modules/firebase-tools/node_modules/@google-cloud/functions-emulator/src/cli/controller.js:77:32)
+    at FunctionsEmulator.start (/usr/local/lib/node_modules/firebase-tools/lib/functionsEmulator.js:113:21)
+    at Command.module.exports [as _action] (/usr/local/lib/node_modules/firebase-tools/lib/functionsShellCommandAction.js:18:6)
+    at /usr/local/lib/node_modules/firebase-tools/lib/command.js:202:29
+    at <anonymous>
+    at process._tickDomainCallback (internal/process/next_tick.js:228:7)
+[error] 
+[error] Error: An unexpected error has occurred.

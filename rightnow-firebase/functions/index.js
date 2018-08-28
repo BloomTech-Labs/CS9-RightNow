@@ -1,3 +1,6 @@
+import { FirebaseApp } from "@firebase/app-types";
+import { auth } from "firebase";
+
   /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~/ 
  / ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ INITIALIZE FIRESTORE FUNCTIONS ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  /
 /~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
@@ -340,3 +343,50 @@ export const handleDeleteAppointment = functions.firestore
       .then(() => console.log("success"))
       .catch(err => console.log("error", err));
   });
+
+
+/* 
+  This function will save user data when a user is authenticated. 
+  Data is saved as:
+    {
+      "users": {
+        "User ID ####": {
+          "provider": "facebook",
+          "name": "Anthony"
+        },
+        "User ID ####": {
+          "provider": "twitter",
+          "name": "Jeffrey"
+        }
+      }
+    }
+
+  To Do: 
+    1. function to check if the user is a new user or not
+*/
+
+export const saveUserDataOnAuth = functions.auth
+    .user()
+    .onCreate((userData) => {
+      let user = firebase.auth().currentUser;
+
+      let newUser = true; // make this a function
+      if (newUser && user) {
+        // When a user is created. get the data from the user object and provider data 
+        // https://firebase.google.com/docs/auth/web/manage-users#get_a_users_provider-specific_profile_information
+        const name = user.providerData.displayName;
+        const email = user.providerData.email;
+        const phone = user.providerData.phoneNumber;
+        const userId = user.providerData.uid;
+  
+        // Create a new customer in the _customer_ collection with a document name equal to the user id.
+        db.collection("_customer_").doc(user.uid).set({
+          name: name,
+          email: email, 
+          phone: phone,
+          userId: userId
+        })
+      } else {
+        console.log('Error')
+      }
+    })
