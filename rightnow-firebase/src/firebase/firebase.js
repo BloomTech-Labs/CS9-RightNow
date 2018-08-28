@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
+import functions from "firebase/functions";
 
 
 const config = {
@@ -18,7 +19,7 @@ firebase.initializeApp(config);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
-
+const seshoAPI = firebase.functions();
 
 db.settings({ timestampsInSnapshots: true });
 
@@ -37,5 +38,6 @@ export default firebase;
 
 export {
   auth, 
-  db
+  db,
+  seshoAPI
 }
