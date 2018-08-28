@@ -9,6 +9,8 @@ import Customer from './components/customers/customers';
 import UserSettings from './components/user_settings/user_settings_form';
 import CompanySettings from './components/company_settings/company_settings';
 
+import MakeAppt from './components/makeappt.js';
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -29,6 +31,7 @@ class App extends Component {
                                 <div>
                                     <Route exact path="/biz-landing" component={BusinessLanding} />
                                     <Route exact path="/biz-account" render={() => <BusinessAccount value={value} />} />
+                                    <Route exact path="/make-appt" render={() => <MakeAppt value={value} />} />
                                     <Route exact path="/company-settings" component={CompanySettings}/>
                                 </div>
                             )}
