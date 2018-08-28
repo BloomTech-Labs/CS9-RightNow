@@ -10,7 +10,7 @@ import {
   Wrapper,
   Button
 } from "./business-styles-account";
-
+ 
 export default class BusinessAccount extends Component {
   constructor(props) {
     super(props);
