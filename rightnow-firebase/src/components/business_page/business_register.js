@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import glamorous from "glamorous";
 import PlacesAPI from "../placesAPI/search_autocomplete";
 import "./business_register_styles.css";
-import {
-  registerUser,
-  getUserId,
-  createUser
-} from "../../firebase/db_interact";
+// import {
+//   registerUser,
+//   getUserId,
+//   createUser
+// } from "../../firebase/db_interact";
 import {
   Container,
   LeftSide, 
@@ -41,17 +41,23 @@ export default class BusinessAccount extends Component {
   };
 
   createUser = () => {
+
     // Creates a new user, password, user id in firestore (console > authentication > users)
     const { email, password, first_name, last_name, phone, business } = this.state;
     doCreateUserWithEmailAndPassword(email, password);
   
     // Create user data on business db
-    db.collection("biz") // Collection name per Firestore
-      .add({
+    db.collection("newbiz2") // Collection name per Firestore
+      .doc()
+      .set({
         employee_first: first_name,
         employee_last: last_name,
         phone: phone,
         business: business
+      }).then(() => {
+        console.log('success!')
+      }).catch(() => {
+        console.log('failure!')
       })   
   };
 
@@ -119,7 +125,7 @@ export default class BusinessAccount extends Component {
                     autocomplete="off"
                   />
                   <Link to="/">
-                    <Button onClick={this.createUser()}>Submit</Button>
+                    <button onClick={this.createUser()} >Submit</button>
                   </Link>
                 </form>
               </LeftSide>
