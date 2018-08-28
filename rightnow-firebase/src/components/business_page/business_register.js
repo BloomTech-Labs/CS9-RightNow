@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import glamorous from "glamorous";
 import PlacesAPI from "../placesAPI/search_autocomplete";
 import "./business_register_styles.css";
-// import {
-//   registerUser,
-//   getUserId,
-//   createUser
-// } from "../../firebase/db_interact";
+import {
+  registerUser,
+  getUserId,
+  createUser
+} from "../../firebase/db_interact";
 import {
   Container,
   LeftSide, 

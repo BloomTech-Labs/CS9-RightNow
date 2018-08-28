@@ -1,7 +1,7 @@
   /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~/ 
  / ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ INITIALIZE FIRESTORE FUNCTIONS ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  /
 /~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
-
+import * as functions from 'firebase-functions'; 
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
@@ -340,3 +340,8 @@ export const handleDeleteAppointment = functions.firestore
       .then(() => console.log("success"))
       .catch(err => console.log("error", err));
   });
+
+
+export const practiceHelloWorld = functions.https.onRequest((req, res) => {
+  console.log('howdy!');
+});
