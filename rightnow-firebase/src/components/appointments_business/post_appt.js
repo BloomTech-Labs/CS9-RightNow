@@ -15,6 +15,8 @@ export default class PostAppt extends Component {
       .post("https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/appointment", this.state)
       .then(res => console.log("success\n", res))
       .catch(err => console.log("error\n", err));
+    
+    this.setState({ time: "", type: "", cost: "" });
   }
 
   render() {
