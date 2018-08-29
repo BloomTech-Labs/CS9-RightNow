@@ -204,6 +204,21 @@ app.get("/appointment/:id", (req, res) => {
     .catch(err => res.send(err));
 });
 
+  app.get("/appointment", async (req, res) => {
+
+      const ref = await db.collection(APPT);
+      const term = req.query.term;
+      const query = await ref.where("service", "==", term);
+
+      console.log(`Term: ${term}`);
+      const data =
+          await query
+          .get()
+          .then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
+          .catch(err => console.log(err));
+      res.send(data);
+  });
+
 
 // CREATE APPOINTMENT -- working
 app.post("/appointment", (req, res) => {
