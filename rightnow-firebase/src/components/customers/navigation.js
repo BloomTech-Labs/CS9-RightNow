@@ -5,7 +5,6 @@ import SignInModal from '../login_modal/login_modal';
 import RegisterModal from '../register_modal/reg_modal';
 import RegisterForm from '../register_modal/reg_forms';
 import ConfirmModal from '../confirm_appt_modal/confirm_modal';
-import { UserContext } from '../../context/userContext';
 
 
 const Container = glamorous.div({
@@ -112,12 +111,7 @@ export default class Navigation extends Component {
         
         {this.state.displayRegForm ? <RegisterForm closeModal={() => this.closeModal()} /> : null}
 
-        <UserContext.Consumer>
-					{(value) =>
-						value.data.displayConfirm ? (
-							<ConfirmModal closeModal={() => this.closeModal()} />
-						) : null}
-				</UserContext.Consumer>
+        {this.props.value.data.displayConfirm ? <ConfirmModal closeModal={() => this.closeModal()} /> : null}
         
       </Container>
     )

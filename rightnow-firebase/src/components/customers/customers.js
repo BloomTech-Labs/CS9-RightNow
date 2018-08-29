@@ -18,7 +18,7 @@ export default class Customers extends Component {
     render() {
         return (
             <HomeContainer>
-                <Landing />
+                <Landing value={this.props.value} />
                 <FeaturedAppointments />
                 <IndustryView />
             </HomeContainer>

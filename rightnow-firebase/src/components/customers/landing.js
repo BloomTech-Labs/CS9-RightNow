@@ -114,7 +114,7 @@ export default class Landing extends Component {
   render() {
     return (
       <Container>
-        <Navigation />
+        <Navigation value={this.props.value} />
         <Main>
           <Title>Book your last minute appointments today!</Title>
           <Wrapper id="primary_input">
