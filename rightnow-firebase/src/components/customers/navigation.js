@@ -13,7 +13,6 @@ const Container = glamorous.div({
   display: "flex",
   justifyContent: "space-between",
   alignContent: "center",
-  // padding: "1%",
   zIndex: 1
 });
 
@@ -22,13 +21,11 @@ const Logo = glamorous.div({
   fontWeight: 800,
   alignSelf: "center",
   color: "#EBEBEB",
-  // padding: "3%"
 });
 
 const ButtonContainer = glamorous.div({
   display: "flex",
   justifyContent: "flex-end",
-  // marginRight: "2%",
   padding: "1%",
   width: "50%"
 });
@@ -50,7 +47,7 @@ const Option = glamorous.div({
 
 export default class Navigation extends Component {
   state = {
-    displayLoginModal: false, // true for dev purposes. set to false prior to pull.
+    displayLoginModal: false, 
     displayRegModal: false,
     displayRegForm: false,
     displayConfirm: false

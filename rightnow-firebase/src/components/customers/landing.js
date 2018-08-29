@@ -53,20 +53,46 @@ const Button = glamorous.div({
   }
 });
 
+const particleOptions = {
+  particles: {
+    number: {
+      value: 60
+    }
+  },
+  opacity: {
+    value: 0.3,
+    random: true
+  },
+  interactivity: {
+    detect_on: "canvas",
+    events: {
+      onhover: {
+        enable: true,
+        mode: "grab"
+      },
+      modes: {
+        grab: {
+          distance: 500
+        }
+      }
+    }
+  }
+}
+
 export default class Landing extends Component {
   render() {
     return (
       <Container>
         <Navigation />
         <Main>
-          <Title>Book your last minute appointments now!</Title>
+          <Title>Book your last minute appointments today!</Title>
           <Wrapper id="primary_input">
             <Search placeholder="City or Zip" />
             <Button>Find Appointments</Button>
           </Wrapper>
         </Main>
-        <div style={{ position: "absolute", width: "100%" }}>
-          <Particles width="100%" />
+        <div style={{ position: "absolute", width: "100%", height: "100%" }}>
+          <Particles width="100%" height="100%" params={particleOptions} />
         </div>
       </Container>
     )
