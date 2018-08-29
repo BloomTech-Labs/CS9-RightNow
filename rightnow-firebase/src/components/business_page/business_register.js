@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // Firebase
 import PlacesAPI from '../placesAPI/search_autocomplete';
 import { auth } from '../../firebase/firebase';
-import { doSignInWithEmailAndPassword } from '../../firebase/auth';
+import { doSignInWithEmailAndPassword, doCreateUserWithEmailAndPassword } from '../../firebase/auth';
 // react scroll
 import * as Scroll from 'react-scroll';
 import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
@@ -116,7 +116,7 @@ export default class BusinessAccount extends Component {
 			.then((res) => console.log(`\nsuccessfuly created new business\n${res}`))
 			.catch((err) => console.log(`\nerror creating new business\n${err}`));
 
-		doSignInWithEmailAndPassword(this.state.email_reg, this.state.password_reg);
+		doCreateUserWithEmailAndPassword(this.state.email_reg, this.state.password_reg);
 		this.setState({
 			first_name: '',
 			last_name: '',
