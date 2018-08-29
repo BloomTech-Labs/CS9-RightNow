@@ -1,8 +1,16 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
+import glamorous from "glamorous";
 import axios from "axios";
 
 
-export default class PostAppt extends Component {
+const Container = glamorous.div({
+  width: "85%",
+  height: "25%",
+  border: "1px solid black"
+})
+
+
+export default class PostAppointment extends Component {
   state = {
     time: "",
     type: "",
@@ -20,7 +28,7 @@ export default class PostAppt extends Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <input 
           type="text"
           name="type"
@@ -43,7 +51,7 @@ export default class PostAppt extends Component {
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
         />
         <button onClick={() => this.handleSubmit()}>submit</button>
-      </div>
+      </Container>
     )
   }
 }

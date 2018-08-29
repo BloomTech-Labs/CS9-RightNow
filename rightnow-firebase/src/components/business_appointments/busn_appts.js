@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import {
   Container,
   CalendarWrapper,
-  ApptsWrapper
+  ApptsWrapper,
 } from "./busn_appts_style";
+import PostAppointment from "./post_availability";
 
 
 export default class BusnApptsView extends Component {
@@ -11,7 +12,9 @@ export default class BusnApptsView extends Component {
     return (
       <Container>
         <CalendarWrapper></CalendarWrapper>
-        <ApptsWrapper></ApptsWrapper>
+        <ApptsWrapper>
+          <PostAppointment />
+        </ApptsWrapper>
       </Container>
     )
   }
