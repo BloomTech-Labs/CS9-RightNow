@@ -4,7 +4,7 @@ export const Container = glamorous.div({
 	width: '100vw',
 	height: '100vh',
 	position: 'absolute',
-	zIndex: 1,
+	zIndex: 2,
 	background: 'rgba(0, 0, 0, 0.5)',
 	overflow: 'hidden'
 });
@@ -57,6 +57,7 @@ export const ModalRight = glamorous.div({
 export const Header = glamorous.div({
 	fontSize: '1em',
 	marginBottom: '3%',
+	zIndex: 2,
 
 	'@media(min-width: 1024px)': {
 		fontSize: '2.5em'
@@ -76,6 +77,7 @@ export const NormalSignIn = glamorous.div({
 	padding: '4% 0',
 	display: 'flex',
 	flexDirection: 'column',
+	zIndex: 2,
 
 	'@media(min-width: 1024px)': {
 		marginBottom: 0
@@ -93,7 +95,7 @@ export const Input = glamorous.input({
 	color: 'white',
 	padding: '1% 0.7%',
 	marginBottom: '2%',
-	// fontSize: '1em',
+	zIndex: 2,
 	height: '3vh',
 	border: 0,
 	borderBottom: '1px solid #ada3a2',
@@ -147,6 +149,7 @@ export const LoginButton = glamorous.div({
 	background: '#26c1a2',
 	marginBottom: '5%',
 	borderRadius: '5px',
+	zIndex: 2,
 	transition: 'background .4s, border .4s',
 	':hover': { border: '1px solid #2cd3b2', backgroundColor: '#2cd3b2', cursor: 'pointer' },
 
@@ -164,7 +167,7 @@ export const Or = glamorous.div({
 	textAlign: 'center',
 	borderBottom: '0.5px solid #605e70',
 	lineHeight: '0.1em',
-	// padding: '2% 0',
+	zIndex: 2,
 
 	'@media(min-width: 1024px)': {
 		fontSize: '1.1em',
@@ -186,7 +189,7 @@ export const OAuthContainer = glamorous.div({
 	display: 'flex',
 	justifyContent: 'space-between',
 	width: '100%',
-	// borderBottom: '0.5px solid #605e70',
+	zIndex: 2,
 	paddingBottom: '2%',
 
 	'@media(min-width: 1024px)': {
@@ -208,7 +211,7 @@ export const OAuthContainer = glamorous.div({
 export const AuthLogo = glamorous.img({
 	height: '100%',
 	width: '9%',
-	// paddingLeft: '5%',
+	zIndex: 2,
 	paddingRight: '3%',
 
 	'@media(max-width: 1024px)': {
@@ -225,6 +228,7 @@ export const AuthLogo = glamorous.img({
 });
 
 export const OAuthButton = glamorous.div({
+	zIndex: 2,
 	fontFamily: 'Quicksand, sans-serif',
 	display: 'flex',
 	width: '48%',
@@ -259,6 +263,7 @@ export const OAuthButton = glamorous.div({
 });
 
 export const NewUser = glamorous.div({
+	zIndex: 2,
 	fontFamily: 'Quicksand, sans-serif',
 	width: '100%',
 	// marginTop: '2.5%',
@@ -280,6 +285,7 @@ export const NewUser = glamorous.div({
 });
 
 export const RegClickHere = glamorous.div({
+	zIndex: 2,
 	// width: '50%',
 	color: '#FF9756',
 	':hover': { textDecoration: 'underline', cursor: 'pointer' }
@@ -291,7 +297,7 @@ export const CloseX = glamorous.div({
 	position: 'relative',
 	top: '0.7vh',
 	right: '1.5vw',
-	zIndex: 3,
+	zIndex: 2,
 	fontSize: '1.5em',
 	fontWeight: 500,
 	color: '#FF6149',
