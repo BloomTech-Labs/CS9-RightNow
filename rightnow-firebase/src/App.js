@@ -31,7 +31,6 @@ class App extends Component {
                                     <Route exact path="/biz-landing" component={BusinessLanding} />
                                     <Route exact path="/biz-account" render={() => <BusinessAccount value={value} />} />
                                     <Route exact path="/company-settings" component={CompanySettings} />
-                                    <Route exact path="/billing" component={Billing} />
                                 </div>
                             )}
                         </BusinessContext.Consumer>

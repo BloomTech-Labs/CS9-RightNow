@@ -2,11 +2,14 @@ import React, {Component} from 'react';
 import EmailPhone from '../share_settings/email_phone'
 import UserNotification from '../share_settings/user_notification';
 import UserChangePassword from '../share_settings/user_change_password';
+import UpcomingAppointments from '../share_settings/upcoming_appointments';
+import PastAppointments from '../share_settings/past_appointments';
+import ContactForm from '../share_settings/contact_form';
 import glamorous from "glamorous";
 
 export const FormContainer = glamorous.div({
     // border: '1px solid blue',
-    width: '50%',
+    width: '100%',
 });
 
 const Button = glamorous.button({
@@ -33,11 +36,12 @@ class UserSettings extends Component {
             <div>
                 <h1>User Settings</h1>
                 <FormContainer>
-                    <EmailPhone/>
+                    <UpcomingAppointments />
+                    <PastAppointments />
+                    <ContactForm/>
+                    <UserChangePassword/>
                     <h1>Notifications</h1>
                     <UserNotification/>
-                    <h1>Change Password</h1>
-                    <UserChangePassword/>
                     <Button>Save</Button>
                 </FormContainer>
             </div>

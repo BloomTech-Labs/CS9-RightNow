@@ -1,6 +1,14 @@
 import React from 'react';
 import glamorous from "glamorous";
 
+const Wrapper = glamorous.div({
+    padding: "70px",
+    border: "3px solid green",
+    borderRadius: "25px",
+    textAlign: "center",
+    margin: "20px"
+})
+
 const ChangePasswordInput = glamorous.input({
     width: '100%',
     padding: '12px 20px',
@@ -10,14 +18,15 @@ const ChangePasswordInput = glamorous.input({
     borderBottom: '2px solid red',
     fontSize: '32px'
 });
-const UserChangePassowrd = () => {
+const UserChangePassword = () => {
     return (
-        <div>
-            <h3> Old Password </h3>
-            <ChangePasswordInput/>
-            <h3> New Password </h3>
-            <ChangePasswordInput/>
-        </div>
+        <Wrapper>
+            <h3>Password</h3>
+            <label>Password</label>
+            <input type="text" placeholder="password" />
+            <label>Re-Enter Password</label>
+            <input type = "text" placeholder = "enter password" />
+        </Wrapper>
     );
 };
-export default UserChangePassowrd;
+export default UserChangePassword;
