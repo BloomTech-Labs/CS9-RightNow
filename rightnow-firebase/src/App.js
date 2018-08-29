@@ -11,42 +11,42 @@ import CompanySettings from './components/company_settings/company_settings';
 import PostAppt from "./components/appointments_business/post_appt";
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+	constructor(props) {
+		super(props);
+		this.state = {};
+	}
 
-    render() {
-        return (
-            <div className="App">
+	render() {
+		return (
+			<div className="App">
 
-                <UserProvider>
-                    <UserContext.Consumer>
-                        {value => (
-                            <div>
-                                <Route exact path="/" render={() => <Customer value={value} />} />
-                                <Route exact path="/user-settings" render={() => <UserSettings value={value} />} />
-                            </div>
-                        )}
-                    </UserContext.Consumer>
-                </UserProvider>
-                        
-                <BusinessProvider>
-                    <BusinessContext.Consumer>
-                        {value => (
-                            <div>
-                                <Route exact path="/biz-landing" component={BusinessLanding} />
-                                <Route exact path="/biz-account" render={() => <BusinessAccount value={value} />} />
-                                <Route exact path="/company-settings" component={CompanySettings}/>
-                                <Route path="/postappt" component={PostAppt} />
-                            </div>
-                        )}
-                    </BusinessContext.Consumer>
-                </BusinessProvider>
-                
-            </div>
-        );
-    }
+				<UserProvider>
+					<UserContext.Consumer>
+						{value => (
+							<div>
+								<Route exact path="/" render={() => <Customer value={value} />} />
+								<Route exact path="/user-settings" render={() => <UserSettings value={value} />} />
+							</div>
+						)}
+					</UserContext.Consumer>
+				</UserProvider>
+
+				<BusinessProvider>
+					<BusinessContext.Consumer>
+						{value => (
+							<div>
+								<Route exact path="/biz-landing" component={BusinessLanding} />
+								<Route exact path="/biz-account" render={() => <BusinessAccount value={value} />} />
+								<Route exact path="/company-settings" component={CompanySettings}/>
+								<Route path="/postappt" component={PostAppt} />
+							</div>
+						)}
+					</BusinessContext.Consumer>
+				</BusinessProvider>
+
+			</div>
+		);
+	}
 }
 export default App;
 
