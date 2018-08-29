@@ -20,6 +20,7 @@
 **Appointment Paths**
 - `/appointment` -- POST -- create a new appointment
 - `/appointment/:id` -- GET -- fetch appointment by id
+- `/appointment` -- GET -- fetch appointment by term using query string
 - `/appointment/:id` -- DELETE -- delete existing appointment
 - `/appointment/:id/confirm` -- PUT -- customer confirms appointment -- adds customer ref to appointment
 
