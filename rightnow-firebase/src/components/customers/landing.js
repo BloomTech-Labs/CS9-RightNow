@@ -116,6 +116,10 @@ export default class Landing extends Component {
     query: ""
   }
 
+  componentDidMount() {
+    this.props.uid ? this.props.value.updateState({ uid: this.props.uid }) : null;
+  }
+
   handleSearch = () => {
     console.log(this.state.query);
 

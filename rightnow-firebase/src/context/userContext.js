@@ -6,7 +6,7 @@ export const UserContext = React.createContext();
 
 export default class UserProvider extends Component {
   state = {
-    id: "",
+    uid: "",
     name: "",
     email: "",
     phone: "",

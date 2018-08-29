@@ -25,12 +25,6 @@ db.settings({ timestampsInSnapshots: true });
 db.enablePersistence().catch(err => console.log("PERSISTANCE ERROR: ", err));
 
 
-auth.onAuthStateChanged(async currentUser => {
-  console.log("current user status has changed");
-  console.log("current user is: ", currentUser);
-});
-
-
 export default firebase;
 
 
