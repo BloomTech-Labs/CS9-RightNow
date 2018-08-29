@@ -1,29 +1,57 @@
 import glamorous from 'glamorous';
 
-export const TitleBackdrop = glamorous.div({
+export const Background = glamorous.div({
 	background:
-		'linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), url("https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260")',
+	'linear-gradient(30deg, rgba(0, 0, 0, 0.50) 20%, rgba(0, 0, 0, 0.70)) 100%, url("https://images.unsplash.com/photo-1535232843222-a40c29436fd3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=09c323bdb9e5c76f82339cd9b4247a57&auto=format&fit=crop&w=1959&q=80")',
+		// 'url("https://images.unsplash.com/photo-1535232843222-a40c29436fd3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=09c323bdb9e5c76f82339cd9b4247a57&auto=format&fit=crop&w=1959&q=80")',
 	backgroundRepeat: 'repeat',
-	border: '1px solid black',
 	backgroundSize: 'cover',
+	// background: '#242326',
 	height: '100vh',
+	
+});
+
+export const TitleBackdrop = glamorous.div({
+	height: '35vh',
+	// padding: 'auto',
 	display: 'flex',
 	justifyContent: 'center',
-	flexDirection: 'column'
+	flexDirection: 'column',
+	zIndex: 20
 });
 
 export const Title = glamorous.div({
-	// textShadow: '2px 2px 7px #000000',
-	display: 'flex',
 	color: 'white',
-	// height: '100%',
-	fontFamily: 'Open Sans, sans-serif',
+	paddingTop: '60vh',
+	margin: 'auto',
+	display: 'flex',
 	marginBottom: '2%',
-	fontSize: '3em',
-	width: '100%',
-	fontWeight: 700,
+	width: '30%',
 	justifyContent: 'center',
-	alignItems: 'center'
+	alignItems: 'center',
+	flexDirection: 'column'
+});
+
+export const TitleBorder = glamorous.div({
+	fontSize: '2.8em',
+	// fontFamily: 'Quicksand, sans-serif',
+	// color: 'white',
+	fontFamily: 'Open Sans, sans-serif',
+	fontWeight: 700,
+	padding: '3% 0',
+	borderTop: '2px solid white',
+	borderBottom: '2px solid white'
+});
+
+export const Description = glamorous.div({
+	textAlign: 'center',
+	letterSpacing: '3px',
+	marginTop: '7%',
+	display: 'flex',
+	fontSize: '1.5em',
+	// color: 'white',
+	fontFamily: 'Quicksand, sans-serif',
+	fontWeight: 300
 });
 
 export const ButtonContainer = glamorous.div({
@@ -32,19 +60,23 @@ export const ButtonContainer = glamorous.div({
 });
 
 export const RegButton = glamorous.div({
+	borderRadius: '2px',
+	fontSize: '1.2em',
 	color: 'white',
 	border: '1px solid white',
 	padding: '1% 2%'
 });
 
 export const CenterLine = glamorous.div({
-    borderLeft: '3px solid white',
-    // padding: '2% 0',
+	borderLeft: '4px solid white',
+	// padding: '2% 0',
 	marginLeft: '1.5%',
 	paddingRight: '1.5%'
 });
 
 export const LoginButton = glamorous.div({
+	borderRadius: '2px',
+	fontSize: '1.2em',
 	color: 'white',
 	border: '1px solid white',
 	padding: '1% 2%'

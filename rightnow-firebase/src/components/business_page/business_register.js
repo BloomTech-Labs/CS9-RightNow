@@ -3,8 +3,11 @@ import glamorous from 'glamorous';
 import PlacesAPI from '../placesAPI/search_autocomplete';
 import { registerUser, getUserId } from '../../firebase/db_interact';
 import {
+	Background,
 	TitleBackdrop,
 	Title,
+	TitleBorder,
+	Description,
 	ButtonContainer,
 	RegButton,
 	CenterLine,
@@ -57,15 +60,23 @@ export default class BusinessAccount extends Component {
 		console.log(this.props);
 		return (
 			<div>
-				<TitleBackdrop>
-					<Title>Fire up your business with Sesho</Title>
-					<ButtonContainer>
-						<RegButton>Register</RegButton>
-						<CenterLine />
-						<LoginButton>Login</LoginButton>
-					</ButtonContainer>
-				</TitleBackdrop>
-
+				<div>
+					<Background>
+						<TitleBackdrop>
+							<div>
+								<Title>
+									<TitleBorder>Sesho: Manager</TitleBorder>
+									<Description>MANAGE YOUR APPOINTMENTS WITH A SIMPLE SESSION OF SESHO</Description>
+								</Title>
+								<ButtonContainer>
+									<RegButton>Register</RegButton>
+									<CenterLine />
+									<LoginButton>Login</LoginButton>
+								</ButtonContainer>
+							</div>
+						</TitleBackdrop>
+					</Background>
+				</div>
 				{this.state.displayForms ? (
 					<Container>
 						<div>Already a family of Sesho? click here</div>
@@ -127,7 +138,6 @@ export default class BusinessAccount extends Component {
 						<Button onClick={() => this.submitForm()}>Submit</Button>
 					</Container>
 				) : null}
-
 
 				{this.state.displayForms ? (
 					<Container>

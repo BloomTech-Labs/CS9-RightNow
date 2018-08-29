@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import NavBar from './components/nav/nav_bar';
-<<<<<<< HEAD
-import UserProvider from './context/userContext';
-import BusinessProvider, { BusinessContext } from './context/businessContext';
-=======
 import UserProvider, { UserContext } from './context/userContext';
 import BusinessProvider, { BusinessContext } from "./context/businessContext";
->>>>>>> fc5e490e789e1543c1ac4b7c7e579544eb31eca1
 import { Route } from 'react-router-dom';
 import BusinessLanding from './components/business_page/business_landing';
 import BusinessAccount from './components/business_page/business_register';
