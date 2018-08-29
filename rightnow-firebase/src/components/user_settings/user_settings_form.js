@@ -7,9 +7,9 @@ import PastAppointments from '../share_settings/past_appointments';
 import ContactForm from '../share_settings/contact_form';
 import glamorous from "glamorous";
 
-export const FormContainer = glamorous.div({
-    // border: '1px solid blue',
-    width: '100%',
+export const FormContainer = glamorous.div({ // border: '1px solid blue',
+    width: "100%",
+    backgroundColor: "#e6e6e6"
 });
 
 const Button = glamorous.button({
@@ -34,8 +34,8 @@ class UserSettings extends Component {
     render() {
         return (
             <div>
-                <h1>User Settings</h1>
-                <FormContainer>
+            <FormContainer>
+            <h1>User Settings</h1>
                     <UpcomingAppointments />
                     <PastAppointments />
                     <ContactForm/>

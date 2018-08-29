@@ -8,10 +8,12 @@ const Appointment = glamorous.div({
   // position: 'absolute',
   // margin: 'auto'
   padding: "70px",
-  border: "3px solid green",
-  borderRadius: "25px",
+  border: "3px solid white",
+  borderRadius: "5px",
   textAlign: "center",
-  margin: "20px"
+  margin: "20px",
+  backgroundColor: "#fff",
+  color: "black"
 });
 
 const Past = glamorous.h3({
@@ -23,9 +25,11 @@ const Past = glamorous.h3({
 });
 
 const PastAppointments = () => {
-    return <Appointment>
-        <Past>Past Appointments</Past>
+  return (
+    <Appointment>
+      <Past>Past Appointments</Past>
     </Appointment>
-}
+  );
+};
 
 export default PastAppointments;
