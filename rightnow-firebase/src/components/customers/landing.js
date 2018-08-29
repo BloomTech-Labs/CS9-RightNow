@@ -26,6 +26,10 @@ const Title = glamorous.div({
   color: "#EBEBEB",
   fontWeight: 600,
 
+  "@media(min-width: 1500px)": {
+    fontSize: "3.5em"
+  },
+
   "@media(max-width: 1500px)": {
     fontSize: "3.5em"
   },
