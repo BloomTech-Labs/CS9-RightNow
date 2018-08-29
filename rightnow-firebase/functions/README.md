@@ -20,7 +20,7 @@
 **Appointment Paths**
 - `/appointment` -- POST -- create a new appointment
 - `/appointment/:id` -- GET -- fetch appointment by id
-- `/appointment` -- GET -- fetch appointment by term using query string
+- `/appointment` -- GET -- fetch appointment by term using query string. To use this add this string to url when calling axios *?term=your_search_term*
 - `/appointment/:id` -- DELETE -- delete existing appointment
 - `/appointment/:id/confirm` -- PUT -- customer confirms appointment -- adds customer ref to appointment
 
