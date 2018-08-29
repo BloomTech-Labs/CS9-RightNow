@@ -31,26 +31,26 @@ const ChangePasswordInput = glamorous.input({
     fontSize: "18px"
 });
 
-const showPassword = () => {
-    let x = document.getElementById("myInput");
-    if (x.type === "password") {
-        x.type = "text";
-    } else {
-        x.type = "password";
-    } 
-}
+// const showPassword = () => {
+//     let x = document.getElementById("myInput");
+//     if (x.type === "password") {
+//         x.type = "text";
+//     } else {
+//         x.type = "password";
+//     } 
+// }
 
 const UserChangePassword = () => {
     return (
+
         <Wrapper>
-            <h3>Password</h3>
+        <h3>Password</h3>
             <Label>Password</Label>
             <ChangePasswordInput type="password" placeholder="password" id="MyInput" />
             <Label>Re-Enter Password</Label>
-            <ChangePasswordInput type="password" placeholder="enter password" id="MyInput" />
-            <input type="checkbox" onclick="showPassword()">Show Password</input>
-            
+            <ChangePasswordInput type="password" placeholder="enter password" id="MyInput" />        
         </Wrapper>
     );
 };
+
 export default UserChangePassword;

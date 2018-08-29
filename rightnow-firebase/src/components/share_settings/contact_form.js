@@ -3,8 +3,8 @@ import glamorous from "glamorous";
 
 const Container = glamorous.div({
   backgroundColor: "#fff",
-  color: "black",
-  padding: "70px",
+    color: "black",
+  //padding: "70px",
 
   border: "3px solid white",
   borderRadius: "5px",
@@ -20,15 +20,17 @@ const Label = glamorous.label({
 });
 
 const InputField = glamorous.input({
-  width: "75%",
+  width: "100%",
   height: "25px",
   fontSize: "18px"
 });
 
 const LeftSide = glamorous.div({
-  width: "100%",
-  padding: "70px",
+    width: "50%",
+    padding: '20px 25%',
+
   display: "flex",
+  justifyContent: "center",
   flexDirection: "column"
 });
 
@@ -48,7 +50,7 @@ const ContactTitle = glamorous.h3({
 const ContactForm = () => {
   return (
     <Container>
-      <ContactTitle>Contact Information</ContactTitle>
+      <ContactTitle>Profile Information</ContactTitle>
 
       <LeftSide>
         <Label for="test">First Name</Label>
