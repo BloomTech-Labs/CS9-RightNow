@@ -19,7 +19,7 @@ import {
 } from './reg_modal_styles';
 
 import RegForms from './reg_forms';
-import {UserContext} from "../../context/userContext";
+import { UserContext } from '../../context/userContext';
 
 export default class RegisterModal extends Component {
 	constructor(props) {
@@ -56,20 +56,20 @@ export default class RegisterModal extends Component {
 						<Header>Lets get started.</Header>
 						{this.state.showRegMethods ? (
 							<div>
-                                <UserContext.Consumer>
-                                    {(value) => (
-                                        <OAuthContainer>
-                                            <OAuthButton onClick={() => GoogleLogIn(value)}>
-                                                <AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
-                                                Sign Up with Google*
-                                            </OAuthButton>
-                                            <OAuthButton onClick={FacebookLogIn}>
-                                                <AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" />
-                                                Sign Up with Facebook
-                                            </OAuthButton>
-                                        </OAuthContainer>
-                                    )}
-                                </UserContext.Consumer>
+								<UserContext.Consumer>
+									{(value) => (
+										<OAuthContainer>
+											<OAuthButton onClick={() => GoogleLogIn(value)}>
+												<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+												Sign Up with Google*
+											</OAuthButton>
+											<OAuthButton onClick={FacebookLogIn}>
+												<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" />
+												Sign Up with Facebook
+											</OAuthButton>
+										</OAuthContainer>
+									)}
+								</UserContext.Consumer>
 
 								<Or>
 									<span style={{ backgroundColor: '#353A50', padding: '0 3%' }}>or</span>
