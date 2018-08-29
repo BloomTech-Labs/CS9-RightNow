@@ -6,15 +6,24 @@ import axios from "axios";
 const Container = glamorous.div({
   width: "85%",
   height: "25%",
-  border: "1px solid black"
-})
+  border: "1px solid black",
+  display: "flex",
+  flexDirection: "column"
+});
+
+const Title = glamorous.div({
+  width: "100%",
+  fontSize: "1.5em",
+  fontWeight: 600
+});
 
 
 export default class PostAppointment extends Component {
   state = {
     time: "",
     type: "",
-    cost: ""
+    cost: "",
+    description: ""
   }
 
   handleSubmit = () => {
@@ -29,6 +38,7 @@ export default class PostAppointment extends Component {
   render() {
     return (
       <Container>
+        <Title>Post New Availability</Title>
         <input 
           type="text"
           name="type"
@@ -50,6 +60,7 @@ export default class PostAppointment extends Component {
           placeholder="cost"
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
         />
+        <textarea placeholder="description" style={{height: "15%"}}></textarea>
         <button onClick={() => this.handleSubmit()}>submit</button>
       </Container>
     )
