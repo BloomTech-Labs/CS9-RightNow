@@ -111,6 +111,15 @@ const particleOptions = {
 }
 
 export default class Landing extends Component {
+  state = {
+    query: ""
+  }
+
+  handleSearch = () => {
+    console.log(this.state.query);
+    this.setState({ query: "" });
+  }
+
   render() {
     return (
       <Container>
@@ -118,8 +127,13 @@ export default class Landing extends Component {
         <Main>
           <Title>Book your last minute appointments today!</Title>
           <Wrapper id="primary_input">
-            <Search placeholder="City or Zip" />
-            <Button>Find Appointments</Button>
+            <Search 
+              placeholder="City or Zip" 
+              name="query"
+              value={this.state.query}
+              onChange={e => this.setState({ [e.target.name]: e.target.value })}
+              />
+            <Button onClick={() => this.handleSearch()}>Find Appointments</Button>
           </Wrapper>
         </Main>
         <div style={{ position: "absolute", width: "100%", height: "100%" }}>
