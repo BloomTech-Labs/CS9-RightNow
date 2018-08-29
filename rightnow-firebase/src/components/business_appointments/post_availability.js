@@ -17,13 +17,19 @@ const Title = glamorous.div({
   fontWeight: 600
 });
 
+const Description = glamorous.textarea({
+  height: "15%", 
+  maxWidth: "100%", 
+  boxSizing: "border-box"
+});
 
 export default class PostAppointment extends Component {
   state = {
     time: "",
-    type: "",
+    service: "",
     cost: "",
-    description: ""
+    description: "",
+    business_ref: "xGXdWn7l2mQWiLiVziOv4zJqsGi2"
   }
 
   handleSubmit = () => {
@@ -32,7 +38,7 @@ export default class PostAppointment extends Component {
       .then(res => console.log("success\n", res))
       .catch(err => console.log("error\n", err));
     
-    this.setState({ time: "", type: "", cost: "" });
+    this.setState({ time: "", service: "", cost: "", description: "" });
   }
 
   render() {
@@ -41,8 +47,8 @@ export default class PostAppointment extends Component {
         <Title>Post New Availability</Title>
         <input 
           type="text"
-          name="type"
-          value={this.state.type}
+          name="service"
+          value={this.state.service}
           placeholder="type"
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
         />
@@ -60,7 +66,7 @@ export default class PostAppointment extends Component {
           placeholder="cost"
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
         />
-        <textarea placeholder="description" style={{height: "15%"}}></textarea>
+        <Description placeholder="description"></Description>
         <button onClick={() => this.handleSubmit()}>submit</button>
       </Container>
     )

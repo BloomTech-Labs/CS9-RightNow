@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import glamorous from "glamorous";
 import Particles from "react-particles-js";
 import Navigation from "./navigation";
+import axios from "axios";
 
 
 /* MOSTLY RESPONSIVE DOWN TO 850vw */
@@ -117,6 +118,16 @@ export default class Landing extends Component {
 
   handleSearch = () => {
     console.log(this.state.query);
+
+    axios
+      .get(`https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/appointment?term=${this.state.query}`)
+      .then(res => {
+        // console.log(res);
+        this.props.value.updateState({ queryResults: res.data });
+        console.log("\nthis.props.value.data", this.props.value.data);
+      })
+      .catch(err => console.log(err));
+
     this.setState({ query: "" });
   }
 

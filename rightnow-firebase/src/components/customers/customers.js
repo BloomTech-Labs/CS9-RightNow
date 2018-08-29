@@ -20,7 +20,7 @@ export default class Customers extends Component {
             <HomeContainer>
                 <Landing value={this.props.value} />
                 <FeaturedAppointments />
-                <IndustryView />
+                <IndustryView value={this.props.value} />
             </HomeContainer>
         );
     }
