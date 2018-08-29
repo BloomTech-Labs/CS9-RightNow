@@ -34,6 +34,7 @@ class App extends Component {
 				<UserProvider>
 					<UserContext.Consumer>
 						{value => {
+							
 							// update user context to hold current userID
 							this.state.userId != value.data.uid ?	value.updateState({ uid: this.state.userId }) : null;
 

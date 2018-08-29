@@ -10,6 +10,8 @@ import {
   Wrapper,
   Button
 } from "./business-styles-account";
+import { auth } from "../../firebase/firebase";
+import axios from "axios";
 
 export default class BusinessAccount extends Component {
   constructor(props) {
@@ -25,7 +27,7 @@ export default class BusinessAccount extends Component {
   }
 
   submitForm = async () => {
-    const userId = await getUserId();
+    const userId = await auth.currentUser.uid;
 
     const owner = {
       first_name: this.state.first_name,
@@ -42,7 +44,10 @@ export default class BusinessAccount extends Component {
       owner_information: owner
     };
 
-    registerUser("busn_ACTUAL", allData);
+    axios
+      .post("https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/business", allData)
+      .then(res => console.log(`\nsuccessfuly created new business\n${res}`))
+      .catch(err => console.log(`\nerror creating new business\n${err}`))
   };
 
   render() {

@@ -38,7 +38,7 @@ export default class PostAppointment extends Component {
       .then(res => console.log("success\n", res))
       .catch(err => console.log("error\n", err));
     
-    this.setState({ time: "", service: "", cost: "", description: "" });
+    // this.setState({ time: "", service: "", cost: "", description: "" });
   }
 
   render() {
@@ -49,7 +49,7 @@ export default class PostAppointment extends Component {
           type="text"
           name="service"
           value={this.state.service}
-          placeholder="type"
+          placeholder="type of service"
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
         />
         <input 
@@ -66,7 +66,13 @@ export default class PostAppointment extends Component {
           placeholder="cost"
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
         />
-        <Description placeholder="description"></Description>
+        <Description 
+          placeholder="description"
+          name="description"
+          value={this.state.description}
+          onChange={e => this.setState({ [e.target.name]: e.target.value })}
+          >
+          </Description>
         <button onClick={() => this.handleSubmit()}>submit</button>
       </Container>
     )
