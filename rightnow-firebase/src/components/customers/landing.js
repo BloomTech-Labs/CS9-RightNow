@@ -83,7 +83,7 @@ const Button = glamorous.div({
 const particleOptions = {
   particles: {
     number: {
-      value: 60
+      value: 45
     }
   },
   opacity: {
