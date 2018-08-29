@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import NavBar from './components/nav/nav_bar';
-import UserProvider from './context/userContext';
+import UserProvider, { UserContext } from './context/userContext';
 import BusinessProvider, { BusinessContext } from "./context/businessContext";
 import { Route } from 'react-router-dom';
 import BusinessLanding from './components/business_page/business_landing';
@@ -19,25 +19,31 @@ class App extends Component {
     render() {
         return (
             <div className="App">
+
                 <UserProvider>
-                    <BusinessProvider>
-                        {/* <NavBar /> */}
-                        <Route exact path="/" component={Customer} />
-                        <Route exact path="/user-settings" component={UserSettings}/>
-                        
-                        <BusinessContext.Consumer>
-                            {value => (
-                                <div>
-                                    <Route exact path="/biz-landing" component={BusinessLanding} />
-                                    <Route exact path="/biz-account" render={() => <BusinessAccount value={value} />} />
-                                    <Route exact path="/company-settings" component={CompanySettings}/>
-                                    <Route path="/postappt" component={PostAppt} />
-                                </div>
-                            )}
-                        </BusinessContext.Consumer>
-                        
-                    </BusinessProvider>
+                    <UserContext.Consumer>
+                        {value => (
+                            <div>
+                                <Route exact path="/" render={() => <Customer value={value} />} />
+                                <Route exact path="/user-settings" render={() => <UserSettings value={value} />} />
+                            </div>
+                        )}
+                    </UserContext.Consumer>
                 </UserProvider>
+                        
+                <BusinessProvider>
+                    <BusinessContext.Consumer>
+                        {value => (
+                            <div>
+                                <Route exact path="/biz-landing" component={BusinessLanding} />
+                                <Route exact path="/biz-account" render={() => <BusinessAccount value={value} />} />
+                                <Route exact path="/company-settings" component={CompanySettings}/>
+                                <Route path="/postappt" component={PostAppt} />
+                            </div>
+                        )}
+                    </BusinessContext.Consumer>
+                </BusinessProvider>
+                
             </div>
         );
     }
