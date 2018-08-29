@@ -5,8 +5,9 @@ import { registerUser, getUserId } from "../../firebase/db_interact";
 import {
   Container,
   LeftSide,
-  RightSide,
-  Bottom,
+  //RightSide,
+ // Bottom,
+  InputField,
   Wrapper,
   Button
 } from "./business-styles-account";
@@ -57,8 +58,7 @@ export default class BusinessAccount extends Component {
 
               <LeftSide>
                 <label>First Name:</label>
-                <input
-                  type="text"
+                <InputField              type="text"
                   name="first_name"
                   onChange={e => this.setState({ [e.target.name]: e.target.value })}
                   value={this.state.first_name}
@@ -66,20 +66,18 @@ export default class BusinessAccount extends Component {
                   autocomplete="off"
                 />
                 <label>Email:</label>
-                <input
-                  type="email"
+                <InputField              type="email" size="35"
                   onChange={e => this.setState({ [e.target.name]: e.target.value })}
                   name="email"
                   value={this.state.email}
                   required
                   autocomplete="off"
                 />
-              </LeftSide>
+              
 
-              <RightSide>
+              
                 <label>Last Name:</label>
-                <input
-                  type="text"
+                <InputField              type="text"
                   onChange={e => this.setState({ [e.target.name]: e.target.value })}
                   name="last_name"
                   value={this.state.last_name}
@@ -87,23 +85,22 @@ export default class BusinessAccount extends Component {
                   autocomplete="off"
                 />
                 <label>Phone Number:</label>
-                <input
-                  type="text"
+                <InputField              type="text"
                   onChange={e => this.setState({ [e.target.name]: e.target.value })}
                   name="phone"
                   value={this.state.phone}
                   required
                   autocomplete="off"
-                />
-              </RightSide>
+                  />
+                  
+                    <label>Google API</label>
+                    <PlacesAPI busnContext={this.props.value} />
+                    <Button onClick={() => this.submitForm()}>Submit</Button>
+                  
+              </LeftSide>
             </Wrapper>
 
             
-              <Bottom>
-                <label>Google API</label>
-                <PlacesAPI busnContext={this.props.value} />
-                <Button onClick={() => this.submitForm()}>Submit</Button>
-              </Bottom>
 
           </div>
         ) : null}

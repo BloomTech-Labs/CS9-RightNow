@@ -5,7 +5,6 @@ const Container = glamorous.div({
   backgroundColor: "#fff",
   color: "black",
   padding: "70px",
-  display: "flex",
 
   border: "3px solid white",
   borderRadius: "5px",
@@ -27,18 +26,18 @@ const InputField = glamorous.input({
 });
 
 const LeftSide = glamorous.div({
-  width: "50%",
+  width: "100%",
   padding: "70px",
   display: "flex",
   flexDirection: "column"
 });
 
-const RightSide = glamorous.div({
-  width: "50%",
-  padding: "70px",
-  display: "flex",
-  flexDirection: "column"
-});
+// const RightSide = glamorous.div({
+//   width: "50%",
+//   padding: "70px",
+//   display: "flex",
+//   flexDirection: "column"
+// });
 
 const ContactTitle = glamorous.h3({
   display: "flex",
@@ -54,7 +53,8 @@ const ContactForm = () => {
       <LeftSide>
         <Label for="test">First Name</Label>
         <InputField type="text" placeholder="enter first name" />
-
+        <Label>Last Name</Label>
+        <InputField type="text" placeholder="enter last name" />
         <Label>Phone Number</Label>
         <InputField type="text" placeholder="enter your #" />
         <Label>Email</Label>
@@ -62,10 +62,8 @@ const ContactForm = () => {
         <Label>Location</Label>
         <InputField type="text" placeholder="enter a zip code" />
       </LeftSide>
-      <RightSide>
-        <Label>Last Name</Label>
-        <InputField type="text" placeholder="enter last name" />
-      </RightSide>
+     
+      
     </Container>
   );
 };
