@@ -25,7 +25,7 @@ export const ModalLeft = glamorous.div({
 	fontFamily: 'Quicksand, sans-serif',
 	writingMode: 'vertical-lr',
 	color: 'yellow',
-	background: '#494755',
+	background: '#EF5651',
 	width: '.6%',
 	zIndex: 2
 });
