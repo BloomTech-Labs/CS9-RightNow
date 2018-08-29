@@ -27,12 +27,17 @@ INFORMATION REQUIRED FOR THIS COMPONENT:
 */
 
 export default class AppointmentCard extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {};
 	}
 
+	// componentDidMount() {
+	// 	console.log("\n\nthis.props", this.props)
+	// }
+
 	render() {
+		console.log("\n\nbusiness info", this.props);
 		const {
 			businessImage,
 			businessName,
@@ -41,6 +46,7 @@ export default class AppointmentCard extends Component {
 			rating,
 			appointments
 		} = this.props.businessInfo;
+
 		return (
 			<Container>
 				<BusinessImage src={businessImage} />
@@ -60,7 +66,7 @@ export default class AppointmentCard extends Component {
 					</Address>
 				</BusinessInfo>
 
-				<UserContext.Consumer>
+				{/* <UserContext.Consumer>
 					{(value) => (
 						<AvailableAppts>
 							{Object.keys(appointments).map((key, index) => (
@@ -79,7 +85,7 @@ export default class AppointmentCard extends Component {
 							))}
 						</AvailableAppts>
 					)}
-				</UserContext.Consumer>
+				</UserContext.Consumer> */}
 			</Container>
 		);
 	}

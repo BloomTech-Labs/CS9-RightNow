@@ -130,14 +130,14 @@ export default class Landing extends Component {
   // }
 
   handleSearch = () => {
-    console.log(this.state.query);
+    // console.log(this.state.query);
 
     axios
       .get(`https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/appointment?term=${this.state.query}`)
       .then(res => this.props.value.updateState({ queryResults: res.data }))
       .catch(err => console.log(err));
 
-    console.log(this.props.value.data)
+    // console.log(this.props.value.data)
   }
 
   render() {

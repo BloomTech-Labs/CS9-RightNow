@@ -265,37 +265,59 @@ class Clock extends Component {
 
 
 export default class Results extends Component {
+  state = {
+    results: []
+  }
   render() {
     const { queryResults } = this.props.value.data;
+    this.cardInfo = [];
+    // console.log(queryResults);
     return (
       <Container>
 
         <Clock />
 
         {queryResults ? queryResults.map(appt => {
+          // console.log("\nquery results\n", queryResults);
+
           const business_id = appt.business_ref;
-          let card;
+          
 
           axios
             .get(`https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/business/${business_id}`)
             .then(busn => {
-              const { name, rating, street_number, street_name, city, state, zip } = busn.business_information;
-              const pic = busn.business_information.photos[0];
+              // console.log("\n\nbusiness", busn);
 
-              const info = {
+              const { name, rating, street_number, street_name, city, state, zip } = busn.data.business_information;
+              const pic = busn.data.business_information.photos[0];
+
+              this.cardInfo.push({
                 businessImage: pic,
                 businessName: name,
                 streetAddress: street_number + " " + street_name,
                 cityStateZip: `${city}, ${state} ${zip}`,
                 rating: rating,
                 appointments: appt
-              }
+              });
 
-              card = <AppointmentCard businessInfo={info} />
+              // this.setState({ results: [...this.state.results, cardInfo] });
             }).catch(err => console.log("err"));
 
-          return card;
+          this.cardInfo.map(appt => {
+            console.log(appt);
+            return <AppointmentCard businessInfo={appt} />
+          })
+
+          // console.log(this.props.value.data.queryResults);
+          // return <AppointmentCard businessInfo={cardInfo} />
+          // console.log(cardInfo);
         }) : null}
+
+
+        {/* {cardInfo ? cardInfo.map(appt => {
+          console.log(appt);
+          return <AppointmentCard businessInfo={appt} />
+        }) : null} */}
         
       </Container>
     )

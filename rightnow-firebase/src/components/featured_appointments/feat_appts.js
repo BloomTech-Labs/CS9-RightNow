@@ -86,10 +86,10 @@ export default class FeaturedAppointments extends Component {
   render() {
     return (
       <Container>
-        <Header>Featured Appointments Near You</Header>
+        {/* <Header>Featured Appointments Near You</Header>
         <CardContainer>
           {Object.keys(information).map((key, index) => <AppointmentCard businessInfo={information[key]} key={index} /> )}
-        </CardContainer>
+        </CardContainer> */}
       </Container>
     )
   }
