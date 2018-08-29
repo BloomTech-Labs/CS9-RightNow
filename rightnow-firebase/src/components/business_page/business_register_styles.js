@@ -1,14 +1,38 @@
 import glamorous from 'glamorous';
 
-export const Background = glamorous.div({
+export const Container1 = glamorous.div({
 	background:
-	'linear-gradient(30deg, rgba(0, 0, 0, 0.50) 20%, rgba(0, 0, 0, 0.70)) 100%, url("https://images.unsplash.com/photo-1535232843222-a40c29436fd3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=09c323bdb9e5c76f82339cd9b4247a57&auto=format&fit=crop&w=1959&q=80")',
-		// 'url("https://images.unsplash.com/photo-1535232843222-a40c29436fd3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=09c323bdb9e5c76f82339cd9b4247a57&auto=format&fit=crop&w=1959&q=80")',
+		'linear-gradient(30deg, rgba(0, 0, 0, 0.50) 20%, rgba(0, 0, 0, 0.70)) 100%, url("https://images.unsplash.com/photo-1535232843222-a40c29436fd3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=09c323bdb9e5c76f82339cd9b4247a57&auto=format&fit=crop&w=1959&q=80")',
+	// 'url("https://images.unsplash.com/photo-1535232843222-a40c29436fd3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=09c323bdb9e5c76f82339cd9b4247a57&auto=format&fit=crop&w=1959&q=80")',
 	backgroundRepeat: 'repeat',
 	backgroundSize: 'cover',
 	// background: '#242326',
 	height: '100vh',
-	
+	backgroundAttachment: 'fixed'
+});
+
+export const Container2 = glamorous.div({
+	margin: 'auto',
+	boxSizing: 'border-box',
+	border: '4px solid black',
+	padding: '10px',
+	width: '50%',
+	height: '100%',
+	marginBottom: '1%',
+	backgroundColor: 'rgba(201, 76, 76, 1)'
+	// backgroundRepeat: 'no-repeat',
+	// backgroundSize: 'cover'
+});
+export const Container3 = glamorous.div({
+	margin: 'auto',
+	boxSizing: 'border-box',
+	border: '4px solid black',
+	padding: '10px',
+	width: '50%',
+	height: '80vh',
+	marginBottom: '1%',
+	// backgroundRepeat: 'no-repeat',
+	// backgroundSize: 'cover'
 });
 
 export const TitleBackdrop = glamorous.div({
@@ -64,7 +88,9 @@ export const RegButton = glamorous.div({
 	fontSize: '1.2em',
 	color: 'white',
 	border: '1px solid white',
-	padding: '1% 2%'
+	padding: '1% 2%',
+	transition: 'background .25s, border .25s',
+	':hover': { backgroundColor: 'rgba(225, 225, 225, 0.6)', cursor: 'pointer' }
 });
 
 export const CenterLine = glamorous.div({
@@ -79,19 +105,9 @@ export const LoginButton = glamorous.div({
 	fontSize: '1.2em',
 	color: 'white',
 	border: '1px solid white',
-	padding: '1% 2%'
-});
-
-export const Container = glamorous.div({
-	margin: 'auto',
-	boxSizing: 'border-box',
-	border: '4px solid black',
-	padding: '10px',
-	width: '50%',
-	height: '80vh',
-	marginBottom: '1%',
-	backgroundRepeat: 'no-repeat',
-	backgroundSize: 'cover'
+	padding: '1% 2%',
+	transition: 'background .25s, border .25s',
+	':hover': { backgroundColor: 'rgba(225, 225, 225, 0.6)', cursor: 'pointer' }
 });
 
 export const LeftSide = glamorous.div({
