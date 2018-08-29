@@ -4,6 +4,9 @@ import Particles from "react-particles-js";
 import Navigation from "./navigation";
 
 
+/* MOSTLY RESPONSIVE DOWN TO 850vw */
+
+
 const Container = glamorous.div({
   height: "65vh",
   width: "100vw",
@@ -22,6 +25,18 @@ const Title = glamorous.div({
   fontSize: "4em",
   color: "#EBEBEB",
   fontWeight: 600,
+
+  "@media(max-width: 1500px)": {
+    fontSize: "3.5em"
+  },
+
+  "@media(max-width: 1224px)": {
+    fontSize: "3em"
+  },
+
+  "@media(max-width: 1050px)": {
+    fontSize: "2.5em"
+  }
 });
 
 const Wrapper = glamorous.div({
@@ -37,6 +52,14 @@ const Search = glamorous.input({
   fontSize: "1.5em",
   borderRadius: "5px",
   border: "none",
+
+  "@media(max-width: 1224px)": {
+    fontSize: "1.3em",
+  },
+
+  "@media(max-width: 1050px)": {
+    width: "25%"
+  }
 });
 
 const Button = glamorous.div({
@@ -50,6 +73,10 @@ const Button = glamorous.div({
 
   ":hover": {
     cursor: "pointer"
+  },
+
+  "@media(max-width: 1224px)": {
+    fontSize: "1.3em"
   }
 });
 
