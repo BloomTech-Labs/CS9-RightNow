@@ -20,21 +20,20 @@ export default class RegisterModal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			email: '',
-			password: ''
+			email: "",
+			password: "",
+			phone: "",
+			location: ""
 		};
 	}
 
-    onInputChange = (e) => {
+	onInputChange = (e) => this.setState({[e.target.name]: e.target.value});
 
-        this.setState({[e.target.name]: e.target.value});
-    };
-
-    createUser = () => {
-
+	createUser = () => {
 		const {email, password} = this.state;
-    	doCreateUserWithEmailAndPassword(email, password);
-    };
+		doCreateUserWithEmailAndPassword(email, password);
+	};
+		
 	render() {
 		return (
 			<FormContainer>
@@ -49,8 +48,8 @@ export default class RegisterModal extends Component {
 					</NameContainer>
 					<Email type="text" placeholder="Your Email Address" name="email" onChange={this.onInputChange}/>
 					<PW type="password" placeholder="Password" name="password" onChange={this.onInputChange}/>
-					<PhoneNumber name="phoneNum" onBlur="addDashes(this)" type="text" placeholder="Phone number" />
-					<Location type="text" placeholder="Preferred location" />
+					<PhoneNumber name="phone" onBlur="addDashes(this)" type="text" placeholder="Phone number" onChange={this.onInputChange} />
+					<Location name="location" type="text" placeholder="Preferred location" onChange={this.onInputChange} />
 				</Form>
 
 				<CheckBoxWrapper>

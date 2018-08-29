@@ -33,10 +33,13 @@ const currency = functions.config().stripe.currency || 'USD';
 
 
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
 
 app.use(express.json());
+
+app.use(cors({ origin: true }));
 
 
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
@@ -136,7 +139,7 @@ app.post("/customer", (req, res) => {
     .doc(req.body.uid)
     .set(req.body)
     .then(() => res.send("success"))
-    .catch(err => res.send(err))
+    .catch(err => res.send(err));
 });
 
 
@@ -203,7 +206,7 @@ app.get("/appointment/:id", (req, res) => {
     .get()
     .then(docSnapshot => res.send(docSnapshot.data()))
     .catch(err => res.send(err));
-})
+});
 
 
 // CREATE APPOINTMENT -- working
