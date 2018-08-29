@@ -86,7 +86,7 @@ app.get("/business/:id/available", async (req, res) => {
     await db
       .collection(BUSNINESS)
       .doc(req.params.id)
-      .collection("available_appointments")
+      .collection("future_appointments")
       .get()
       .then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
       .catch(err => res.send(err));

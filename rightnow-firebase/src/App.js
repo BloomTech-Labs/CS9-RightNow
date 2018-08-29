@@ -20,7 +20,7 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		auth.onAuthStateChanged(async currentUser => {
+		auth.onAuthStateChanged(currentUser => {
 			console.log("current user status has changed");
 			console.log("current user is: ", currentUser);
 			this.setState({ userId: currentUser.uid });
@@ -34,7 +34,7 @@ class App extends Component {
 				<UserProvider>
 					<UserContext.Consumer>
 						{value => {
-							
+
 							// update user context to hold current userID
 							this.state.userId != value.data.uid ?	value.updateState({ uid: this.state.userId }) : null;
 
@@ -66,4 +66,3 @@ class App extends Component {
 	}
 }
 export default App;
-

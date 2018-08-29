@@ -111,28 +111,33 @@ const particleOptions = {
   }
 }
 
+
+const Constilations = props => {
+  return (
+    <div style={{ position: "absolute", width: "100%", height: "100%" }}>
+      <Particles width="100%" height="100%" params={particleOptions} />
+    </div>
+  )
+}
+
 export default class Landing extends Component {
   state = {
     query: ""
   }
 
-  componentDidMount() {
-    this.props.uid ? this.props.value.updateState({ uid: this.props.uid }) : null;
-  }
+  // componentDidMount() {
+  //   this.props.uid ? this.props.value.updateState({ uid: this.props.uid }) : null;
+  // }
 
   handleSearch = () => {
     console.log(this.state.query);
 
     axios
       .get(`https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/appointment?term=${this.state.query}`)
-      .then(res => {
-        // console.log(res);
-        this.props.value.updateState({ queryResults: res.data });
-        console.log("\nthis.props.value.data", this.props.value.data);
-      })
+      .then(res => this.props.value.updateState({ queryResults: res.data }))
       .catch(err => console.log(err));
 
-    this.setState({ query: "" });
+    console.log(this.props.value.data)
   }
 
   render() {
@@ -151,9 +156,7 @@ export default class Landing extends Component {
             <Button onClick={() => this.handleSearch()}>Find Appointments</Button>
           </Wrapper>
         </Main>
-        <div style={{ position: "absolute", width: "100%", height: "100%" }}>
-          <Particles width="100%" height="100%" params={particleOptions} />
-        </div>
+        <Constilations />
       </Container>
     )
   }

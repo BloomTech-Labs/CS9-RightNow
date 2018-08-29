@@ -272,7 +272,30 @@ export default class Results extends Component {
 
         <Clock />
 
-        {queryResults ? queryResults.map(x => console.log(x)) : null}
+        {queryResults ? queryResults.map(appt => {
+          const business_id = appt.business_ref;
+          let card;
+
+          axios
+            .get(`https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/business/${business_id}`)
+            .then(busn => {
+              const { name, rating, street_number, street_name, city, state, zip } = busn.business_information;
+              const pic = busn.business_information.photos[0];
+
+              const info = {
+                businessImage: pic,
+                businessName: name,
+                streetAddress: street_number + " " + street_name,
+                cityStateZip: `${city}, ${state} ${zip}`,
+                rating: rating,
+                appointments: appt
+              }
+
+              card = <AppointmentCard businessInfo={info} />
+            }).catch(err => console.log("err"));
+
+          return card;
+        }) : null}
         
       </Container>
     )
