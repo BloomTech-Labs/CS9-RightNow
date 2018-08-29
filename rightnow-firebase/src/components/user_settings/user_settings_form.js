@@ -40,7 +40,6 @@ class UserSettings extends Component {
                     <PastAppointments />
                     <ContactForm/>
                     <UserChangePassword/>
-                    <h1>Notifications</h1>
                     <UserNotification/>
                     <Button>Save</Button>
                 </FormContainer>

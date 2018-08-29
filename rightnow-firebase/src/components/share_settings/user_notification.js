@@ -9,9 +9,19 @@ export const CheckBoxWrapper = glamorous.fieldset({
 });
 
 export const CheckBoxContainer = glamorous.div({
-    width: '75%',
+    // width: '75%',
+    // display: 'flex',
+    // justifyContent: 'space-between'
     display: 'flex',
-    justifyContent: 'space-between'
+    flexDirection: 'row',
+  padding: "70px",
+  border: "3px solid white",
+  color: "black",
+  backgroundColor: "#fff",
+  boxShadow: "0 0 3px #ccc",
+  borderRadius: "5px",
+  textAlign: "center",
+  margin: "20px"
 });
 
 export const CheckBox = glamorous.div({
@@ -21,6 +31,7 @@ const userNotification = () => {
     return (
         <CheckBoxWrapper>
             <CheckBoxContainer>
+                <h3>Communication Preferences</h3>
                 <CheckBox>
                     <div className="pretty p-default">
                         <input type="checkbox" />
