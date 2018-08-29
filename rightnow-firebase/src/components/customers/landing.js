@@ -6,17 +6,16 @@ import Navigation from "./navigation";
 
 const Container = glamorous.div({
   height: "65vh",
-  background: "#353A5",
+  width: "100vw",
+  backgroundColor: "#353A50",
   display: "grid",
-  gridTemplateRows: "16% 84%"
-  // grid: "1fr 1fr / 100%",
+  gridTemplateRows: "16% 84%",
 });
 
 const Main = glamorous.div({
   display: "grid",
   justifyContent: "center",
   alignContent: "center",
-  // zIndex: 
 });
 
 const Title = glamorous.div({
@@ -28,7 +27,8 @@ const Title = glamorous.div({
 const Wrapper = glamorous.div({
   display: "flex",
   justifyContent: "center",
-  marginTop: "3vh"
+  marginTop: "3vh",
+  zIndex: 1
 });
 
 const Search = glamorous.input({
@@ -36,7 +36,7 @@ const Search = glamorous.input({
   padding: "1% 1%",
   fontSize: "1.5em",
   borderRadius: "5px",
-  border: "none"
+  border: "none",
 });
 
 const Button = glamorous.div({
@@ -60,14 +60,14 @@ export default class Landing extends Component {
         <Navigation />
         <Main>
           <Title>Book your last minute appointments now!</Title>
-          <Wrapper>
+          <Wrapper id="primary_input">
             <Search placeholder="City or Zip" />
             <Button>Find Appointments</Button>
           </Wrapper>
         </Main>
-        {/* <div style={{ position: "absolute", width: "100%" }}>
+        <div style={{ position: "absolute", width: "100%" }}>
           <Particles width="100%" />
-        </div> */}
+        </div>
       </Container>
     )
   }

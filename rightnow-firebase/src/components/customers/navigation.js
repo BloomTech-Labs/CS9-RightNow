@@ -13,21 +13,23 @@ const Container = glamorous.div({
   display: "flex",
   justifyContent: "space-between",
   alignContent: "center",
-  padding: "1%",
-  zIndex: "1"
+  // padding: "1%",
+  zIndex: 1
 });
 
 const Logo = glamorous.div({
   fontSize: "2em",
   fontWeight: 800,
   alignSelf: "center",
-  color: "#EBEBEB"
+  color: "#EBEBEB",
+  // padding: "3%"
 });
 
 const ButtonContainer = glamorous.div({
   display: "flex",
   justifyContent: "flex-end",
-  marginRight: "2%",
+  // marginRight: "2%",
+  padding: "1%",
   width: "50%"
 });
 
@@ -56,12 +58,14 @@ export default class Navigation extends Component {
 
   openReg = () => {
 		this.setState({ displayRegModal: true });
-		document.body.style.overflow = 'hidden';
+    document.body.style.overflowY = 'hidden';
+    document.querySelector("#primary_input").style.zIndex = 0;
 	};
 
 	openLogin = () => {
 		this.setState({ displayLoginModal: true });
-		document.body.style.overflow = 'hidden';
+    document.body.style.overflowY = 'hidden';
+    document.querySelector("#primary_input").style.zIndex = 0;
 	};
 
   RegToLogModal = () => {
@@ -80,15 +84,16 @@ export default class Navigation extends Component {
 	};
 
   closeModal = () => {
-		document.body.style.overflow = 'scroll';
-		this.setState({ displayRegModal: false, displayLoginModal: false, displayRegForm: false });
+		document.body.style.overflowY = 'scroll';
+    this.setState({ displayRegModal: false, displayLoginModal: false, displayRegForm: false });
+    document.querySelector("#primary_input").style.zIndex = 1;
   };
   
   render() {
     return (
       <Container>
 
-        <Link to="/">
+        <Link to="/" style={{textDecoration: "none", padding: "1%"}}>
           <Logo>Sesho</Logo>
         </Link>
 
