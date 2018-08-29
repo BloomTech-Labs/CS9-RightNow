@@ -1,26 +1,28 @@
 import React, { Component } from "react";
 import glamorous from "glamorous";
+import Particles from "react-particles-js";
 import Navigation from "./navigation";
 
 
 const Container = glamorous.div({
-  height: "60vh",
-  background: "#B7CECE",
+  height: "65vh",
+  background: "#353A5",
   display: "grid",
-  grid: "10% / 100%"
+  gridTemplateRows: "16% 84%"
+  // grid: "1fr 1fr / 100%",
 });
 
 const Main = glamorous.div({
-  borderBottom: "1px solid black",
   display: "grid",
   justifyContent: "center",
-  alignContent: "center"
+  alignContent: "center",
+  // zIndex: 
 });
 
 const Title = glamorous.div({
   fontSize: "4em",
+  color: "#EBEBEB",
   fontWeight: 600,
-  color: "#131112"
 });
 
 const Wrapper = glamorous.div({
@@ -63,6 +65,9 @@ export default class Landing extends Component {
             <Button>Find Appointments</Button>
           </Wrapper>
         </Main>
+        {/* <div style={{ position: "absolute", width: "100%" }}>
+          <Particles width="100%" />
+        </div> */}
       </Container>
     )
   }

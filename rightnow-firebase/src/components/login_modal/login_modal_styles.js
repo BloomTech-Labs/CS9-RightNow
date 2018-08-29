@@ -4,7 +4,7 @@ export const Container = glamorous.div({
 	width: '100vw',
 	height: '100vh',
 	position: 'absolute',
-	zIndex: 1,
+	zIndex: 10000,
 	background: 'rgba(0, 0, 0, 0.5)',
 	overflow: 'hidden'
 });
