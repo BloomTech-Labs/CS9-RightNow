@@ -37,19 +37,11 @@ export default class AppointmentCard extends Component {
 	// }
 
 	render() {
-		console.log("\n\nbusiness info", this.props);
-		const {
-			businessImage,
-			businessName,
-			streetAddress,
-			cityStateZip,
-			rating,
-			appointments
-		} = this.props.businessInfo;
+		console.log("\n\nappointment details", this.props);
 
 		return (
 			<Container>
-				<BusinessImage src={businessImage} />
+				{/* <BusinessImage src={businessImage} />
 
 				<BusinessInfo>
 					<BusinessName>{businessName}</BusinessName>
@@ -66,8 +58,7 @@ export default class AppointmentCard extends Component {
 					</Address>
 				</BusinessInfo>
 
-				{/* <UserContext.Consumer>
-					{(value) => (
+
 						<AvailableAppts>
 							{Object.keys(appointments).map((key, index) => (
 								<Appointment
@@ -83,9 +74,7 @@ export default class AppointmentCard extends Component {
 									<Cost>{appointments[key].cost}</Cost>
 								</Appointment>
 							))}
-						</AvailableAppts>
-					)}
-				</UserContext.Consumer> */}
+						</AvailableAppts> */}
 			</Container>
 		);
 	}

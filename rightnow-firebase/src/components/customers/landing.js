@@ -3,6 +3,7 @@ import glamorous from "glamorous";
 import Particles from "react-particles-js";
 import Navigation from "./navigation";
 import axios from "axios";
+import { UserContext } from '../../context/userContext';
 
 
 /* MOSTLY RESPONSIVE DOWN TO 850vw */
@@ -112,51 +113,34 @@ const particleOptions = {
 }
 
 
-const Constilations = props => {
-  return (
-    <div style={{ position: "absolute", width: "100%", height: "100%" }}>
-      <Particles width="100%" height="100%" params={particleOptions} />
-    </div>
-  )
-}
-
 export default class Landing extends Component {
-  state = {
-    query: ""
-  }
-
-  // componentDidMount() {
-  //   this.props.uid ? this.props.value.updateState({ uid: this.props.uid }) : null;
-  // }
-
-  handleSearch = () => {
-    // console.log(this.state.query);
-
-    axios
-      .get(`https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/appointment?term=${this.state.query}`)
-      .then(res => this.props.value.updateState({ queryResults: res.data }))
-      .catch(err => console.log(err));
-
-    // console.log(this.props.value.data)
-  }
-
   render() {
     return (
       <Container>
-        <Navigation value={this.props.value} />
+        <Navigation />
         <Main>
           <Title>Book your last minute appointments today!</Title>
-          <Wrapper id="primary_input">
-            <Search 
-              placeholder="City or Zip" 
-              name="query"
-              value={this.state.query}
-              onChange={e => this.setState({ [e.target.name]: e.target.value })}
-              />
-            <Button onClick={() => this.handleSearch()}>Find Appointments</Button>
-          </Wrapper>
+          
+
+            <UserContext.Consumer>
+              {value => (
+                <Wrapper id="primary_input">
+                  <Search 
+                    placeholder="City or Zip" 
+                    name="query"
+                    value={value.query}
+                    onChange={e => value.handleOnChange(e)}
+                    />
+                  <Button onClick={() => value.handleSearch()}>Find Appointments</Button>
+                </Wrapper>
+              )}
+            </UserContext.Consumer>
+
+          
         </Main>
-        <Constilations />
+        <div style={{ position: "absolute", width: "100%", height: "100%" }}>
+          <Particles width="100%" height="100%" params={particleOptions} />
+        </div>
       </Container>
     )
   }

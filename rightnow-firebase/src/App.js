@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import NavBar from './components/nav/nav_bar';
-import UserProvider, { UserContext } from './context/userContext';
+// import UserProvider, { UserContext } from './context/userContext';
 import BusinessProvider, { BusinessContext } from "./context/businessContext";
 import { Route } from 'react-router-dom';
 import BusinessLanding from './components/business_page/business_landing';
@@ -31,22 +31,8 @@ class App extends Component {
 		return (
 			<div className="App">
 
-				<UserProvider>
-					<UserContext.Consumer>
-						{value => {
-
-							// update user context to hold current userID
-							this.state.userId != value.data.uid ?	value.updateState({ uid: this.state.userId }) : null;
-
-							return (
-								<div>
-									<Route exact path="/" render={() => <Customer value={value} uid={this.state.userId} />} />
-									<Route exact path="/user-settings" render={() => <UserSettings value={value} uid={this.state.userId} />} />
-								</div>
-							)
-						}}
-					</UserContext.Consumer>
-				</UserProvider>
+				<Route exact path="/" render={() => <Customer uid={this.state.userId} />} />
+				<Route exact path="/user-settings" render={() => <UserSettings uid={this.state.userId} />} />
 
 				<BusinessProvider>
 					<BusinessContext.Consumer>

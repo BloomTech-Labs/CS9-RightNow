@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 
 export const UserContext = React.createContext();
@@ -6,6 +7,7 @@ export const UserContext = React.createContext();
 
 export default class UserProvider extends Component {
   state = {
+    go: false,
     uid: "",
     name: "",
     email: "",
@@ -15,14 +17,53 @@ export default class UserProvider extends Component {
     appointments: [],
     theo_appt_details: {},
     displayConfirm: false,
-    queryResults: []
-  }
+    query: "",
+    queryResults: [],
 
-  updateState = data => this.setState(data);
+    update: data => this.setState(data),
+
+    handleOnChange: e => this.setState({ [e.target.name]: e.target.value }),
+
+    getBusinessInfo: async id => {
+      const data = await axios
+        .get(`https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/business/${id}`)
+        .then(res => {
+          const business_info = res.data.business_information;
+          return {
+            businessImage: business_info.photos[0],
+            businessName: business_info.name,
+            streetAddress: `${business_info.street_number} ${business_info.street_name}`,
+            cityStateZip: `${business_info.city}, ${business_info.state} ${business_info.zip}`,
+            rating: business_info.rating,
+            fullAddress: business_info.fullAddress
+          }
+        }).catch(err => console.log("error", err));
+      
+      console.log("returning business info", data);
+      return data;
+    },
+
+    handleSearch: async () => {
+      const data = await axios
+        .get(`https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/appointment?term=${this.state.query}`)
+        // .then(res => this.setState({ queryResults: res.data }))
+        .then(async res => {
+          const arr = await res.data.map(appt => {
+            return { ...appt, business_details: this.state.getBusinessInfo(appt.business_ref) }
+          })
+          return arr;
+        })
+        // .then(x => console.log("success", x))
+        .catch(err => console.log("error", err));
+
+      this.setState({ queryResults: data, go: true });
+      return data;
+    }
+  }
 
   render() {
     return (
-      <UserContext.Provider value={{data: this.state, updateState: this.updateState}}>
+      <UserContext.Provider value={this.state}>
         {this.props.children}
       </UserContext.Provider>
     )
@@ -31,6 +72,7 @@ export default class UserProvider extends Component {
 
 
 /*
+
 
 DIRECTIONS TO USE CONTEXT:
 

@@ -6,227 +6,23 @@ import {
   SortBy
 } from "./selection_results_styles";
 import AppointmentCard from "../appointment_card/appt_card";
-import axios from "axios";
+import { UserContext } from "../../context/userContext";
+import StarRatings from 'react-star-ratings';
 
-// DUMMY DATA
-// const information = {
-//   0: {
-//     businessImage: "https://nyoobserver.files.wordpress.com/2015/12/unnamed2.jpg",
-//     businessName: "Caputo's Bake Shop",
-//     streetAddress: "329 Court St",
-//     cityStateZip: "Brooklyn, NY 11231",
-//     rating: 4.5,
-//     appointments: {
-//       0: {
-//         type: "Haircut",
-//         time: "1:30-2:00",
-//         cost: "$45"
-//       },
-//       1: {
-//         type: "Haircut",
-//         time: "2:00-2:30",
-//         cost: "$55"
-//       },
-//       2: {
-//         type: "Haircut",
-//         time: "4:30-5:00",
-//         cost: "$105"
-//       }
-//     }
-//   },
-//   1: {
-//     businessImage: "http://shantltalibarbershop.com/assets/img/gallery/2.jpg",
-//     businessName: "Shantl Barber Shop",
-//     streetAddress: "1209 2nd Avenue",
-//     cityStateZip: "New York, NY 10065",
-//     rating: 5,
-//     appointments: {
-//       0: {
-//         type: "Shave",
-//         time: "12:30-2:00",
-//         cost: "$35"
-//       },
-//       1: {
-//         type: "Shave",
-//         time: "2:00-2:30",
-//         cost: "$55"
-//       },
-//       2: {
-//         type: "Shave",
-//         time: "3:30-5:00",
-//         cost: "$50"
-//       }
-//     }
-//   },
-//   2: {
-//     businessImage: "https://resourcedesignlab.files.wordpress.com/2010/08/storefront_smithsbar.jpg",
-//     businessName: "Smiths",
-//     streetAddress: "329 Court St",
-//     cityStateZip: "Brooklyn, NY 11231",
-//     rating: 4,
-//     appointments: {
-//       0: {
-//         type: "Something",
-//         time: "1:30-2:00",
-//         cost: "$45"
-//       },
-//       1: {
-//         type: "Goes",
-//         time: "2:00-2:30",
-//         cost: "$55"
-//       },
-//       2: {
-//         type: "Here",
-//         time: "4:30-5:00",
-//         cost: "$105"
-//       }
-//     }
-//   },
-//   3: {
-//     businessImage: "https://nyoobserver.files.wordpress.com/2015/12/unnamed2.jpg",
-//     businessName: "Caputo's Bake Shop",
-//     streetAddress: "329 Court St",
-//     cityStateZip: "Brooklyn, NY 11231",
-//     rating: 4.5,
-//     appointments: {
-//       0: {
-//         type: "Haircut",
-//         time: "1:30-2:00",
-//         cost: "$45"
-//       },
-//       1: {
-//         type: "Haircut",
-//         time: "2:00-2:30",
-//         cost: "$55"
-//       },
-//       2: {
-//         type: "Haircut",
-//         time: "4:30-5:00",
-//         cost: "$105"
-//       }
-//     }
-//   },
-//   4: {
-//     businessImage: "http://shantltalibarbershop.com/assets/img/gallery/2.jpg",
-//     businessName: "Shantl Barber Shop",
-//     streetAddress: "1209 2nd Avenue",
-//     cityStateZip: "New York, NY 10065",
-//     rating: 5,
-//     appointments: {
-//       0: {
-//         type: "Shave",
-//         time: "12:30-2:00",
-//         cost: "$35"
-//       },
-//       1: {
-//         type: "Shave",
-//         time: "2:00-2:30",
-//         cost: "$55"
-//       },
-//       2: {
-//         type: "Shave",
-//         time: "3:30-5:00",
-//         cost: "$50"
-//       }
-//     }
-//   },
-//   5: {
-//     businessImage: "https://resourcedesignlab.files.wordpress.com/2010/08/storefront_smithsbar.jpg",
-//     businessName: "Smiths",
-//     streetAddress: "329 Court St",
-//     cityStateZip: "Brooklyn, NY 11231",
-//     rating: 4,
-//     appointments: {
-//       0: {
-//         type: "Something",
-//         time: "1:30-2:00",
-//         cost: "$45"
-//       },
-//       1: {
-//         type: "Goes",
-//         time: "2:00-2:30",
-//         cost: "$55"
-//       },
-//       2: {
-//         type: "Here",
-//         time: "4:30-5:00",
-//         cost: "$105"
-//       }
-//     }
-//   },
-//   6: {
-//     businessImage: "https://nyoobserver.files.wordpress.com/2015/12/unnamed2.jpg",
-//     businessName: "Caputo's Bake Shop",
-//     streetAddress: "329 Court St",
-//     cityStateZip: "Brooklyn, NY 11231",
-//     rating: 4.5,
-//     appointments: {
-//       0: {
-//         type: "Haircut",
-//         time: "1:30-2:00",
-//         cost: "$45"
-//       },
-//       1: {
-//         type: "Haircut",
-//         time: "2:00-2:30",
-//         cost: "$55"
-//       },
-//       2: {
-//         type: "Haircut",
-//         time: "4:30-5:00",
-//         cost: "$105"
-//       }
-//     }
-//   },
-//   7: {
-//     businessImage: "http://shantltalibarbershop.com/assets/img/gallery/2.jpg",
-//     businessName: "Shantl Barber Shop",
-//     streetAddress: "1209 2nd Avenue",
-//     cityStateZip: "New York, NY 10065",
-//     rating: 5,
-//     appointments: {
-//       0: {
-//         type: "Shave",
-//         time: "12:30-2:00",
-//         cost: "$35"
-//       },
-//       1: {
-//         type: "Shave",
-//         time: "2:00-2:30",
-//         cost: "$55"
-//       },
-//       2: {
-//         type: "Shave",
-//         time: "3:30-5:00",
-//         cost: "$50"
-//       }
-//     }
-//   },
-//   8: {
-//     businessImage: "https://resourcedesignlab.files.wordpress.com/2010/08/storefront_smithsbar.jpg",
-//     businessName: "Smiths",
-//     streetAddress: "329 Court St",
-//     cityStateZip: "Brooklyn, NY 11231",
-//     rating: 4,
-//     appointments: {
-//       0: {
-//         type: "Something",
-//         time: "1:30-2:00",
-//         cost: "$45"
-//       },
-//       1: {
-//         type: "Goes",
-//         time: "2:00-2:30",
-//         cost: "$55"
-//       },
-//       2: {
-//         type: "Here",
-//         time: "4:30-5:00",
-//         cost: "$105"
-//       }
-//     }
-//   }
-// }
+
+import {
+	Container as Wrapper,
+	BusinessImage,
+	BusinessInfo,
+	AvailableAppts,
+	BusinessName,
+	Address,
+	displayConfirm,
+	Appointment,
+	Type,
+	// Time,
+	Cost
+} from '../appointment_card/appt_card_styles';
 
 
 class Clock extends Component {
@@ -265,61 +61,46 @@ class Clock extends Component {
 
 
 export default class Results extends Component {
-  state = {
-    results: []
-  }
-  render() {
-    const { queryResults } = this.props.value.data;
-    this.cardInfo = [];
-    // console.log(queryResults);
+  render() {    
     return (
-      <Container>
+      <UserContext.Consumer>
+        {value => (
+          <Container>
 
-        <Clock />
+            <Clock />
+            <div>
+            {value.go ? value.queryResults.map(async appt => {
+              const id = appt.business_ref;
+              const data = await value.getBusinessInfo(id);
+              console.log("data", typeof data)
 
-        {queryResults ? queryResults.map(appt => {
-          // console.log("\nquery results\n", queryResults);
+              return <div>here</div>
 
-          const business_id = appt.business_ref;
-          
+              // return (
+              //   <Wrapper>
+              //     <BusinessImage src={data.businessImage} />
 
-          axios
-            .get(`https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/business/${business_id}`)
-            .then(busn => {
-              // console.log("\n\nbusiness", busn);
-
-              const { name, rating, street_number, street_name, city, state, zip } = busn.data.business_information;
-              const pic = busn.data.business_information.photos[0];
-
-              this.cardInfo.push({
-                businessImage: pic,
-                businessName: name,
-                streetAddress: street_number + " " + street_name,
-                cityStateZip: `${city}, ${state} ${zip}`,
-                rating: rating,
-                appointments: appt
-              });
-
-              // this.setState({ results: [...this.state.results, cardInfo] });
-            }).catch(err => console.log("err"));
-
-          this.cardInfo.map(appt => {
-            console.log(appt);
-            return <AppointmentCard businessInfo={appt} />
-          })
-
-          // console.log(this.props.value.data.queryResults);
-          // return <AppointmentCard businessInfo={cardInfo} />
-          // console.log(cardInfo);
-        }) : null}
-
-
-        {/* {cardInfo ? cardInfo.map(appt => {
-          console.log(appt);
-          return <AppointmentCard businessInfo={appt} />
-        }) : null} */}
-        
-      </Container>
+              //     <BusinessInfo>
+              //       <BusinessName>{data.businessName}</BusinessName>
+              //       <StarRatings
+              //         rating={data.rating}
+              //         numberOfStars={5}
+              //         starRatedColor="gold"
+              //         starEmptyColor="grey"
+              //         starDimension="35px"
+              //       />
+              //       <Address>
+              //         <div>{data.streetAddress}</div>
+              //         <div>{data.cityStateZip}</div>
+              //       </Address>
+              //     </BusinessInfo>
+              //   </Wrapper>
+              // )
+            }) : null}
+        </div>
+          </Container>
+        )}
+      </UserContext.Consumer>
     )
   }
 }
