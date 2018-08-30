@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {doCreateUserWithEmailAndPassword} from '../../firebase/auth';
+import { doCreateUserWithEmailAndPassword } from '../../firebase/auth';
 import {
 	FormContainer,
 	Form,
@@ -20,20 +20,26 @@ export default class RegisterModal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			email: "",
-			password: "",
-			phone: "",
-			location: ""
+			email: '',
+			password: '',
+			phone: '',
+			location: ''
 		};
 	}
 
-	onInputChange = (e) => this.setState({[e.target.name]: e.target.value});
+	onInputChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
 	createUser = () => {
-		const {email, password} = this.state;
+		const { email, password } = this.state;
 		doCreateUserWithEmailAndPassword(email, password);
+		this.setState({
+			email: '',
+			password: '',
+			phone: '',
+			location: ''
+		});
 	};
-		
+
 	render() {
 		return (
 			<FormContainer>
@@ -46,10 +52,21 @@ export default class RegisterModal extends Component {
 							<NamePlace2 type="text" placeholder="Last Name" />
 						</div>
 					</NameContainer>
-					<Email type="text" placeholder="Your Email Address" name="email" onChange={this.onInputChange}/>
-					<PW type="password" placeholder="Password" name="password" onChange={this.onInputChange}/>
-					<PhoneNumber name="phone" onBlur="addDashes(this)" type="text" placeholder="Phone number" onChange={this.onInputChange} />
-					<Location name="location" type="text" placeholder="Preferred location" onChange={this.onInputChange} />
+					<Email type="text" placeholder="Your Email Address" name="email" onChange={this.onInputChange} />
+					<PW type="password" placeholder="Password" name="password" onChange={this.onInputChange} />
+					<PhoneNumber
+						name="phone"
+						onBlur="addDashes(this)"
+						type="text"
+						placeholder="Phone number"
+						onChange={this.onInputChange}
+					/>
+					<Location
+						name="location"
+						type="text"
+						placeholder="Preferred location"
+						onChange={this.onInputChange}
+					/>
 				</Form>
 
 				<CheckBoxWrapper>
@@ -74,7 +91,7 @@ export default class RegisterModal extends Component {
 						</CheckBox>
 					</CheckBoxContainer>
 				</CheckBoxWrapper>
-				<RegisterButton onClick={this.createUser}>Let's Go!</RegisterButton>
+				<RegisterButton onClick={() => this.createUser()}>Let's Go!</RegisterButton>
 			</FormContainer>
 		);
 	}
