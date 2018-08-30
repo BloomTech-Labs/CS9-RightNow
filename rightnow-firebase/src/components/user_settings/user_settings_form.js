@@ -21,10 +21,10 @@ export const FormContainer = glamorous.div({
 const Button = glamorous.button({
   borderRadius: "7px",
   background: "#00c6fd",
-  width: "100%",
+  width: "60%",
   height: "100%",
   alignSelf: "center",
-  margin: "0 1%",
+  //margin: "0 1%",
   padding: "0 3%",
   fontWeight: 600,
   fontSize: "1.3em",
@@ -38,9 +38,9 @@ const Button = glamorous.button({
 class UserSettings extends Component {
   render() {
       return (
-          <UserContext.Consumer>
-              {value => {
-      <div>
+          //UserContext.Consumer>
+             // {value => {
+      //<div>
         <FormContainer>
           <h1>User Settings</h1>
           <UpcomingAppointments />
@@ -50,8 +50,8 @@ class UserSettings extends Component {
           <UserNotification />
           <Button>Save</Button>
         </FormContainer>
-      </div>
-        </UserContext.Consumer>
+      //</div>
+        //</UserContext.Consumer>
     );
   }
 }
