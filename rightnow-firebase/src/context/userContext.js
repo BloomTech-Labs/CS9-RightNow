@@ -7,11 +7,12 @@ export const UserContext = React.createContext();
 export default class UserProvider extends Component {
   state = {
     id: "",
-    name: "",
-    email: "",
-    phone: "",
+    firstName: "Mark",
+    lastName: "Marchant",
+    email: "markmarchant13@gmail",
+    phone: "323.698.2579",
     photo: "",
-    location: "",
+    location: "Long Beach, CA",
     appointments: [],
     theo_appt_details: {},
     displayConfirm: false

@@ -52,27 +52,23 @@ const ContactTitle = glamorous.h3({
   textAlign: "center"
 });
 
-const ContactForm = () => {
-  return (
-    <Container>
+const ContactForm = (props) => {
+  return <Container>
       <ContactTitle>Profile Information</ContactTitle>
 
       <LeftSide>
         <Label for="test">First Name</Label>
-        <InputField type="text" placeholder="enter first name" />
+        <InputField type="text" placeholder={props.userState.firstName} />
         <Label>Last Name</Label>
-        <InputField type="text" placeholder="enter last name" />
+        <InputField type="text" placeholder={props.userState.lastName} />
         <Label>Phone Number</Label>
-        <InputField type="text" placeholder="enter your #" />
+        <InputField type="text" placeholder={props.userState.phone} />
         <Label>Email</Label>
-        <InputField type="text" placeholder="enter your email" />
+      <InputField type="text" placeholder={props.userState.email} />
         <Label>Location</Label>
-        <InputField type="text" placeholder="enter a zip code" />
+      <InputField type="text" placeholder={props.userState.location} />
       </LeftSide>
-     
-      
-    </Container>
-  );
+    </Container>;
 };
 
 export default ContactForm;

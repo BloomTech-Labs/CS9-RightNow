@@ -38,20 +38,20 @@ const Button = glamorous.button({
 class UserSettings extends Component {
   render() {
       return (
-          //UserContext.Consumer>
-             // {value => {
-      //<div>
-        <FormContainer>
-          <h1>User Settings</h1>
-          <UpcomingAppointments />
-          <PastAppointments />
-          <ContactForm />
-          <UserChangePassword />
-          <UserNotification />
-          <Button>Save</Button>
-        </FormContainer>
-      //</div>
-        //</UserContext.Consumer>
+          <UserContext.Consumer>
+          {
+            value => (
+              <FormContainer>
+                <h1>User Settings</h1>
+                <UpcomingAppointments />
+                <PastAppointments />
+                <ContactForm userState = {value.data} />
+                <UserChangePassword />
+                <UserNotification />
+                <Button>Save</Button>
+              </FormContainer>
+            )}
+        </UserContext.Consumer>
     );
   }
 }
