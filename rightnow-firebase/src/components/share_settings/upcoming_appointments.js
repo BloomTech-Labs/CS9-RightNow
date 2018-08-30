@@ -7,14 +7,14 @@ const Appointment = glamorous.div({
   // boxSizing: 'border-box',
   // position: 'absolute',
   // margin: 'auto'
-  padding: "70px",
+  padding: "40px",
+  margin: "7%",
   border: "3px solid white",
   color: "black",
   backgroundColor: "#fff",
-  boxShadow: "0 0 3px #ccc",
+  boxShadow: "0 10px 6px -6px #777",
   borderRadius: "5px",
   textAlign: "center",
-  margin: "20px"
 });
 
 const Upcoming = glamorous.h3({
