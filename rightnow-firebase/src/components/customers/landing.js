@@ -129,7 +129,7 @@ export default class Landing extends Component {
                     placeholder="City or Zip" 
                     name="query"
                     value={value.query}
-                    onChange={e => value.handleOnChange(e)}
+                    onChange={e => value.onInputChange({ [e.target.name]: e.target.value })}
                     />
                   <Button onClick={() => value.handleSearch()}>Find Appointments</Button>
                 </Wrapper>

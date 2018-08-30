@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {
-  Container, 
-  Sorting, 
+  Container,
+  Sorting,
   Time,
   SortBy
 } from "./selection_results_styles";
@@ -11,17 +11,17 @@ import StarRatings from 'react-star-ratings';
 
 
 import {
-	Container as Wrapper,
-	BusinessImage,
-	BusinessInfo,
-	AvailableAppts,
-	BusinessName,
-	Address,
-	displayConfirm,
-	Appointment,
-	Type,
-	// Time,
-	Cost
+  Container as Wrapper,
+  BusinessImage,
+  BusinessInfo,
+  AvailableAppts,
+  BusinessName,
+  Address,
+  displayConfirm,
+  Appointment,
+  Type,
+  // Time,
+  Cost
 } from '../appointment_card/appt_card_styles';
 
 
@@ -61,45 +61,74 @@ class Clock extends Component {
 
 
 export default class Results extends Component {
-  render() {    
+
+  render() {
     return (
       <UserContext.Consumer>
-        {value => (
-          <Container>
+        {value => {
+          if (value.finished) {
+            console.log("here", value.queryResults)
 
-            <Clock />
-            <div>
-            {value.go ? value.queryResults.map(async appt => {
+            const appointments = value.queryResults;
+
+            const do_it = async id => {
+              const temp = await value.getBusinessInfo(id);
+              console.log("!!!", temp);
+              return temp;
+            }
+
+            const apptsWITHbusnInfo = async () => {
+              const temp = await appointments.map(appt =>  ({ ...appt, business_details: do_it(appt.business_ref) }));
+              return temp;
+            }
+
+            const x = (async () => {
+              const y = await apptsWITHbusnInfo();
+              console.log("YYYY", y);
+              return y;
+            })();
+
+            console.log("APPOINTMENTS WITH BUSINESS INFO", x);
+          }
+
+          return (
+            <Container>
+
+              <Clock />
+
+              {/* {value.queryResults ? await value.queryResults.map(async appt => {
+              console.log("here")
               const id = appt.business_ref;
               const data = await value.getBusinessInfo(id);
               console.log("data", typeof data)
 
               return <div>here</div>
 
-              // return (
-              //   <Wrapper>
-              //     <BusinessImage src={data.businessImage} />
+              return (
+                <Wrapper>
+                  <BusinessImage src={data.businessImage} />
 
-              //     <BusinessInfo>
-              //       <BusinessName>{data.businessName}</BusinessName>
-              //       <StarRatings
-              //         rating={data.rating}
-              //         numberOfStars={5}
-              //         starRatedColor="gold"
-              //         starEmptyColor="grey"
-              //         starDimension="35px"
-              //       />
-              //       <Address>
-              //         <div>{data.streetAddress}</div>
-              //         <div>{data.cityStateZip}</div>
-              //       </Address>
-              //     </BusinessInfo>
-              //   </Wrapper>
-              // )
-            }) : null}
-        </div>
-          </Container>
-        )}
+                  <BusinessInfo>
+                    <BusinessName>{data.businessName}</BusinessName>
+                    <StarRatings
+                      rating={data.rating}
+                      numberOfStars={5}
+                      starRatedColor="gold"
+                      starEmptyColor="grey"
+                      starDimension="35px"
+                    />
+                    <Address>
+                      <div>{data.streetAddress}</div>
+                      <div>{data.cityStateZip}</div>
+                    </Address>
+                  </BusinessInfo>
+                </Wrapper>
+              )
+            }) : null} */}
+
+            </Container>
+          )
+        }}
       </UserContext.Consumer>
     )
   }

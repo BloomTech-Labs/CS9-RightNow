@@ -6,8 +6,8 @@ export const UserContext = React.createContext();
 
 
 export default class UserProvider extends Component {
+
   state = {
-    go: false,
     uid: "",
     name: "",
     email: "",
@@ -19,12 +19,37 @@ export default class UserProvider extends Component {
     displayConfirm: false,
     query: "",
     queryResults: [],
+    finished: false,
+    stupid: null,
 
-    update: data => this.setState(data),
+    onInputChange: async data => {
+      await this.setState(data);
+      console.log(this.state.query);
+    },
 
-    handleOnChange: e => this.setState({ [e.target.name]: e.target.value }),
+    handleSearch: async () => {
+      const data = await axios
+        .get(`https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/appointment?term=${this.state.query}`)
+        .then(res => this.setState({ queryResults: res.data, finished: true }))
+        // .then(async res => {
+        //   const arr = await res.data.map(async appt => {
+        //     return { ...appt, business_details: await this.state.getBusinessInfo(appt.business_ref) }
+        //   })
+        //   return arr;
+        // })
+        // .then(async res => {
+        //   await this.setState({ queryResults: res, finished: true });
+        // return res;
+        // })
+        .catch(err => console.log("error", err));
+
+      // await this.setState({ queryResults: data, finished: true });
+      // console.log(this.state);
+      // return data;
+    },
 
     getBusinessInfo: async id => {
+      let self = this;
       const data = await axios
         .get(`https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/business/${id}`)
         .then(res => {
@@ -38,36 +63,22 @@ export default class UserProvider extends Component {
             fullAddress: business_info.fullAddress
           }
         }).catch(err => console.log("error", err));
-      
+
       console.log("returning business info", data);
-      return data;
-    },
-
-    handleSearch: async () => {
-      const data = await axios
-        .get(`https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/appointment?term=${this.state.query}`)
-        // .then(res => this.setState({ queryResults: res.data }))
-        .then(async res => {
-          const arr = await res.data.map(appt => {
-            return { ...appt, business_details: this.state.getBusinessInfo(appt.business_ref) }
-          })
-          return arr;
-        })
-        // .then(x => console.log("success", x))
-        .catch(err => console.log("error", err));
-
-      this.setState({ queryResults: data, go: true });
+      // this.setState({ finished: true });
       return data;
     }
   }
 
-  render() {
-    return (
-      <UserContext.Provider value={this.state}>
-        {this.props.children}
-      </UserContext.Provider>
-    )
-  }
+
+render() {
+
+  return (
+    <UserContext.Provider value={this.state}>
+      {this.props.children}
+    </UserContext.Provider>
+  )
+}
 }
 
 
