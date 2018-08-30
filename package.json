@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "axios": "^0.18.0",
-    "react-scroll": "^1.7.10"
-  }
-}
