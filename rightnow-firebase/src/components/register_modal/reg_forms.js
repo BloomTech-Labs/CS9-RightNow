@@ -60,7 +60,7 @@ export default class RegisterModal extends Component {
 					</NameContainer>
 					<Email type="text" placeholder="Your Email Address" name="email" onChange={this.onInputChange}/>
 					<PW type="password" placeholder="Password" name="password" onChange={this.onInputChange}/>
-					<PhoneNumber name="phone" onBlur="addDashes(this)" type="text" placeholder="Phone number" onChange={this.onInputChange} />
+					<PhoneNumber name="phone" type="tel" placeholder="Phone number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" onChange={this.onInputChange} />
 					<Location name="location" type="text" placeholder="Preferred location" onChange={this.onInputChange} />
 				</Form>
 
