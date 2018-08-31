@@ -55,7 +55,6 @@ export default class AppointmentCard extends Component {
 
 				<UserContext.Consumer>
 					{value => {
-						console.log(appointments);
 						return (
 							<AvailableAppts>
 								{Object.keys(appointments).map((key, index) => (

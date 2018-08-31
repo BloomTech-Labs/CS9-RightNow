@@ -7,24 +7,8 @@ import {
 } from "./selection_results_styles";
 import AppointmentCard from "../appointment_card/appt_card";
 import { UserContext } from "../../context/userContext";
-import StarRatings from 'react-star-ratings';
 import axios from "axios";
 import { dummy_data } from "../../dummy_data";
-
-
-import {
-  Container as Wrapper,
-  BusinessImage,
-  BusinessInfo,
-  AvailableAppts,
-  BusinessName,
-  Address,
-  displayConfirm,
-  Appointment,
-  Type,
-  // Time,
-  Cost
-} from '../appointment_card/appt_card_styles';
 
 
 class Clock extends Component {
@@ -50,7 +34,7 @@ class Clock extends Component {
         <h2>Current time:</h2>
         <Time>{this.state.time}</Time>
         <SortBy>
-          <option disabled selected hidden>Sort By</option>
+          <option disabled defaultValue hidden>Sort By</option>
           <option value="2">2 hours</option>
           <option value="3">3 hours</option>
           <option value="4">4 hours</option>
@@ -63,13 +47,7 @@ class Clock extends Component {
 
 
 export default class Results extends Component {
-  state = {
-    testing: null
-  }
-
   render() {
-    console.log("STATE\n", this.state.testing);
-    let notState = null;
     return (
       <UserContext.Consumer>
         {value => {
