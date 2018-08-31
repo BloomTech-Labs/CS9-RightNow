@@ -112,7 +112,7 @@ export default class BusinessAccount extends Component {
 		};
 
 		axios
-			.post('https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/business', allData)
+			.post('https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business', allData)
 			.then((res) => console.log(`\nsuccessfuly created new business\n${res}`))
 			.catch((err) => console.log(`\nerror creating new business\n${err}`));
 

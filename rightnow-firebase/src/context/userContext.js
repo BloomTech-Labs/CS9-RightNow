@@ -32,6 +32,14 @@ export default class UserProvider extends Component {
       console.log(this.state.query);
     },
 
+    handleSearch: async () => {
+      const data = await axios
+        .get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment?term=${this.state.query}`)
+        .then(res => this.setState({ queryResults: res.data, finished: true }))
+        .catch(err => console.log("error", err));
+      return data;
+    },
+
   }
 
   componentDidMount() {
