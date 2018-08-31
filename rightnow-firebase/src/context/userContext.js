@@ -10,7 +10,8 @@ export default class UserProvider extends Component {
 
   state = {
     uid: "",
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
     photo: "",

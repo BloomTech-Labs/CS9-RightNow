@@ -45,9 +45,10 @@ class UserSettings extends Component {
             value => (
               <FormContainer>
                 <h3>User Settings</h3>
-                <UpcomingAppointments />
-                <PastAppointments />
-                <ContactForm userState = {value.data} />
+                <UpcomingAppointments userState={value} />
+                {console.log(value)}
+                <PastAppointments userState = {value} />
+                <ContactForm userState = {value} />
                 <UserChangePassword />
                 <UserNotification />
                 <Button>Save</Button>
