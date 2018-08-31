@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import UserProvider from '../../context/userContext';
 
 // import UserLanding from '../user_landing';
 import FeaturedAppointments from '../featured_appointments/feat_appts';
@@ -18,9 +19,11 @@ export default class Customers extends Component {
     render() {
         return (
             <HomeContainer>
-                <Landing />
-                <FeaturedAppointments />
-                <IndustryView />
+                <UserProvider>
+                    <Landing />
+                    <FeaturedAppointments />
+                    <IndustryView />
+                </UserProvider>
             </HomeContainer>
         );
     }

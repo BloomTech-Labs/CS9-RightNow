@@ -5,7 +5,9 @@ import SignInModal from '../login_modal/login_modal';
 import RegisterModal from '../register_modal/reg_modal';
 import RegisterForm from '../register_modal/reg_forms';
 import ConfirmModal from '../confirm_appt_modal/confirm_modal';
-import { UserContext } from '../../context/userContext';
+import { UserContext } from "../../context/userContext";
+import firebase, { auth } from "../../firebase/firebase";
+import axios from "axios";
 
 
 const Container = glamorous.div({
@@ -17,7 +19,8 @@ const Container = glamorous.div({
 });
 
 const Logo = glamorous.div({
-  fontSize: "2em",
+  fontFamily: "Syncopate, sans-serif",
+  fontSize: "2.5em",
   fontWeight: 800,
   alignSelf: "center",
   color: "#EBEBEB",
@@ -27,20 +30,26 @@ const ButtonContainer = glamorous.div({
   display: "flex",
   justifyContent: "flex-end",
   padding: "1%",
-  width: "50%"
+  width: "70%",
+  // paddingRight: "2%"
 });
 
 const Option = glamorous.div({
+  textAlign: "center",
+  width: "8%",
   color: "#EBEBEB",
   fontSize: "1.3em",
   fontWeight: 500,
-  marginRight: "3%",
+  marginRight: "2%",
   border: "1px solid transparent",
   padding: "1.5%",
   ":hover": {
     cursor: "pointer",
     border: "1px solid white",
     borderRadius: "5px"
+  },
+  ":first-child": {
+    width: "13%"
   }
 });
 
@@ -85,6 +94,41 @@ export default class Navigation extends Component {
     this.setState({ displayRegModal: false, displayLoginModal: false, displayRegForm: false });
     document.querySelector("#primary_input").style.zIndex = 1;
   };
+
+  handleEmailSignIn = (email, password) => {
+		firebase.auth().signInWithEmailAndPassword(email, password);
+		this.closeModal();
+	}
+
+	handleProviderLogin = type => {
+		let provider;
+
+		if (type === "google") provider = new firebase.auth.GoogleAuthProvider();
+		if (type === "facebook") provider = new firebase.auth.FacebookAuthProvider();
+
+		if (!provider) return;
+
+		firebase
+			.auth()
+			.signInWithPopup(provider)
+			.then(res => {
+				const newUser = res.user;
+				
+				const data = {
+					uid: newUser.uid,
+					name: newUser.displayName,
+					email: newUser.email,
+					phone: newUser.phoneNumber,
+					photo: newUser.photoURL
+				}
+
+				axios
+					.post("https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/customer", data)
+					.then(result => console.log(result)).catch(err => console.log(err));
+			})
+			.then(x => this.closeModal())
+			.catch(err => console.log(err));
+	}
   
   render() {
     return (
@@ -94,30 +138,51 @@ export default class Navigation extends Component {
           <Logo>Sesho</Logo>
         </Link>
 
-        <ButtonContainer>
-          <Option>
-            <Link to="/biz-landing" style={{textDecoration: "none", color: "#EBEBEB"}}>Business Owner?</Link>
-          </Option>
-          <Option onClick={() => this.openReg()}>Sign Up</Option>
-          <Option onClick={() => this.openLogin()}>Login</Option>
-        </ButtonContainer>
+        <UserContext.Consumer>
+          {value => {
+            if (value.userSignedIn) {
+              return (
+                <ButtonContainer>
+                  <Option>
+                    <Link to="/biz-landing" style={{textDecoration: "none", color: "#EBEBEB", width: "100%"}}>Business Owner?</Link>
+                  </Option>
+                  <Option onClick={() => auth.signOut()} >SignOut</Option>
+                </ButtonContainer>
+              )
+            }
+            else return (
+              <ButtonContainer>
+                <Option>
+                  <Link to="/biz-landing" style={{textDecoration: "none", color: "#EBEBEB"}}>Business Owner?</Link>
+                </Option>
+                <Option onClick={() => this.openReg()}>Sign Up</Option>
+                <Option onClick={() => this.openLogin()}>Login</Option>
+              </ButtonContainer>
+            )
+          }}
+        </UserContext.Consumer>
 
         {this.state.displayLoginModal ? (
-					<SignInModal closeModal={() => this.closeModal()} logToReg={() => this.LogToRegModal()} />
+          <SignInModal 
+            providerLogin={prov => this.handleProviderLogin(prov)}
+            emailLogin={(x, y) => this.handleEmailSignIn(x, y)}
+            closeModal={() => this.closeModal()} 
+            logToReg={() => this.LogToRegModal()} />
         ) : null}
         
         {this.state.displayRegModal ? (
-					<RegisterModal closeModal={() => this.closeModal()} regToLog={() => this.RegToLogModal()} />
+          <RegisterModal 
+            providerLogin={prov => this.handleProviderLogin(prov)}
+            emailLogin={(x, y) => this.handleEmailSignIn(x, y)}
+            closeModal={() => this.closeModal()} 
+            regToLog={() => this.RegToLogModal()} />
         ) : null}
         
         {this.state.displayRegForm ? <RegisterForm closeModal={() => this.closeModal()} /> : null}
 
         <UserContext.Consumer>
-					{(value) =>
-						value.data.displayConfirm ? (
-							<ConfirmModal closeModal={() => this.closeModal()} />
-						) : null}
-				</UserContext.Consumer>
+          {value => value.displayConfirm ? <ConfirmModal closeModal={() => this.closeModal()} /> : null}
+        </UserContext.Consumer>
         
       </Container>
     )

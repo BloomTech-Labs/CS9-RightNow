@@ -1,27 +1,68 @@
 import React, { Component } from "react";
+import firebase from "../firebase/firebase";
+import axios from "axios";
 
 
 export const UserContext = React.createContext();
 
 
 export default class UserProvider extends Component {
+
   state = {
-    id: "",
+    uid: "",
     name: "",
     email: "",
     phone: "",
     photo: "",
     location: "",
     appointments: [],
+    
     theo_appt_details: {},
-    displayConfirm: false
+    displayConfirm: false,
+
+    query: "",
+    queryResults: [],
+    finished: false,
+    this_is_it: null,
+
+    userSignedIn: false,
+
+    updateState: async data => {
+      await this.setState(data);
+      console.log(this.state.query);
+    },
+
   }
 
-  updateState = data => this.setState(data);
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user && !this.state.userSignedIn) {
+        this.setState({
+          userSignedIn: true,
+          uid: user.uid,
+          name: user.displayName,
+          email: user.email,
+          phone: user.email,
+          photo: user.photoURL
+        });
+      }
+      if (!user && this.state.userSignedIn) {
+        this.setState({
+          userSignedIn: false,
+          uid: null,
+          name: null,
+          email: null,
+          phone: null,
+          photo: null
+        });
+      }
+    });
+  }
+
 
   render() {
     return (
-      <UserContext.Provider value={{data: this.state, updateState: this.updateState}}>
+      <UserContext.Provider value={this.state}>
         {this.props.children}
       </UserContext.Provider>
     )
@@ -30,6 +71,7 @@ export default class UserProvider extends Component {
 
 
 /*
+
 
 DIRECTIONS TO USE CONTEXT:
 

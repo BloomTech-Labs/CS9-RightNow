@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./appointments_business_styles.css";
-import db from "../../firebase/firebase";
+// import db from "../../firebase/firebase";
 
 
 export default class BizAppointments extends Component {
@@ -11,17 +11,17 @@ export default class BizAppointments extends Component {
     };
   }
 
-  componentDidMount() {
-    db
-      .collection("busn_ACTUAL")
-      .doc("Mn5KyfUWPMz4D6aiNT3R")
-      .collection("available_appointments")
-      .doc("zX4mSwsfq5lRQSlcZ7X3")
-      .get().then(doc => console.log(doc.data()))
-      // .add({ time: "this is for", place: "anthony" })
-      // .then(() => console.log("success"))
-      .catch(() => console.log("error")); 
-  }
+  // componentDidMount() {
+  //   db
+  //     .collection("busn_ACTUAL")
+  //     .doc("Mn5KyfUWPMz4D6aiNT3R")
+  //     .collection("available_appointments")
+  //     .doc("zX4mSwsfq5lRQSlcZ7X3")
+  //     .get().then(doc => console.log(doc.data()))
+  //     // .add({ time: "this is for", place: "anthony" })
+  //     // .then(() => console.log("success"))
+  //     .catch(() => console.log("error")); 
+  // }
   
   render() {
     return (
