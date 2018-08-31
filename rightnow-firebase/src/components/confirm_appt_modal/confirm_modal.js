@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import GoogleLogIn from '../../firebase/auth.google.services';
-// import FacebookLogIn from '../../firebase/auth.facebook.services';
 
 import {
 	Container,

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import GoogleLogIn from '../../firebase/auth.google.services';
 import FacebookLogIn from '../../firebase/auth.facebook.services';
+import firebase from "../../firebase/firebase";
+import axios from "axios";
 import {
 	Container,
 	ModalWrapper,
@@ -18,9 +19,7 @@ import {
 	RegClickHere,
 	CloseX
 } from './login_modal_styles';
-import { UserContext } from '../../context/userContext';
-import firebase from "../../firebase/firebase";
-import axios from "axios";
+
 
 export default class SignInModal extends Component {
 	state = {
@@ -32,6 +31,7 @@ export default class SignInModal extends Component {
 		const { email, password } = this.state;
 		firebase.auth().signInWithEmailAndPassword(email, password);
 		this.setState({ email: "", password: "" });
+		this.props.closeModal();
 	}
 
 	handleProviderLogin = type => {
