@@ -9,6 +9,7 @@ import AppointmentCard from "../appointment_card/appt_card";
 import { UserContext } from "../../context/userContext";
 import StarRatings from 'react-star-ratings';
 import axios from "axios";
+import { dummy_data } from "../../dummy_data";
 
 
 import {
@@ -108,35 +109,7 @@ export default class Results extends Component {
 
               <Clock />
 
-              {/* {value.queryResults ? await value.queryResults.map(async appt => {
-              console.log("here")
-              const id = appt.business_ref;
-              const data = await value.getBusinessInfo(id);
-              console.log("data", typeof data)
-
-              return <div>here</div>
-
-              return (
-                <Wrapper>
-                  <BusinessImage src={data.businessImage} />
-
-                  <BusinessInfo>
-                    <BusinessName>{data.businessName}</BusinessName>
-                    <StarRatings
-                      rating={data.rating}
-                      numberOfStars={5}
-                      starRatedColor="gold"
-                      starEmptyColor="grey"
-                      starDimension="35px"
-                    />
-                    <Address>
-                      <div>{data.streetAddress}</div>
-                      <div>{data.cityStateZip}</div>
-                    </Address>
-                  </BusinessInfo>
-                </Wrapper>
-              )
-            }) : null} */}
+              {Object.keys(dummy_data).map((key, index) => <AppointmentCard businessInfo={dummy_data[key]} key={index} /> )}
 
             </Container>
           )
