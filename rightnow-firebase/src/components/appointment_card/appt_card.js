@@ -6,7 +6,6 @@ import {
 	AvailableAppts,
 	BusinessName,
 	Address,
-	displayConfirm,
 	Appointment,
 	Type,
 	Time,
@@ -14,8 +13,6 @@ import {
 } from './appt_card_styles';
 import StarRatings from 'react-star-ratings';
 import { UserContext } from '../../context/userContext';
-
-import ConfirmModal from '../confirm_appt_modal/confirm_modal';
 
 /*
 INFORMATION REQUIRED FOR THIS COMPONENT:
@@ -32,16 +29,13 @@ export default class AppointmentCard extends Component {
 		this.state = {};
 	}
 
-	// componentDidMount() {
-	// 	console.log("\n\nthis.props", this.props)
-	// }
-
 	render() {
-		console.log("\n\nappointment details", this.props);
+
+		const { businessImage, businessName, rating, streetAddress, cityStateZip, appointments } = this.props.businessInfo;
 
 		return (
 			<Container>
-				{/* <BusinessImage src={businessImage} />
+				<BusinessImage src={businessImage} />
 
 				<BusinessInfo>
 					<BusinessName>{businessName}</BusinessName>
@@ -59,22 +53,30 @@ export default class AppointmentCard extends Component {
 				</BusinessInfo>
 
 
-						<AvailableAppts>
-							{Object.keys(appointments).map((key, index) => (
-								<Appointment
-									key={index}
-									onClick={() =>
-										value.updateState({
-											theo_appt_details: appointments[key],
-											displayConfirm: true
-										})}
-								>
-									<Type>{appointments[key].type}</Type>
-									<Time>{appointments[key].time}</Time>
-									<Cost>{appointments[key].cost}</Cost>
+				<UserContext.Consumer>
+					{value => {
+						console.log(appointments);
+						return (
+							<AvailableAppts>
+								{Object.keys(appointments).map((key, index) => (
+									<Appointment
+										key={index}
+										onClick={() =>
+											value.updateState({
+												theo_appt_details: appointments[key],
+												displayConfirm: true
+											})}
+									>
+										<Type>{appointments[key].type}</Type>
+										<Time>{appointments[key].time}</Time>
+										<Cost>{appointments[key].cost}</Cost>
 								</Appointment>
 							))}
-						</AvailableAppts> */}
+						</AvailableAppts>
+						)
+					}}
+				</UserContext.Consumer>
+						
 			</Container>
 		);
 	}

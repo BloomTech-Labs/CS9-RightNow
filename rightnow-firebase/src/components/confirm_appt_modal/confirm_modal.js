@@ -36,7 +36,6 @@ export default class ConfirmModal extends Component {
 		document.body.style.overflowY = 'scroll';
 	}
 
-	// use FieldSet
 	render() {
 		return (
 			<UserContext.Consumer>
@@ -44,11 +43,11 @@ export default class ConfirmModal extends Component {
 					<Container>
 						<ModalWrapper>
 							<ElementConainer>
-								<Greeting>Hey John!</Greeting>
+								<Greeting>{value.name}</Greeting>
 								<YourSesh>Your Sesh-o is:</YourSesh>
 								<DetailContainer>
 									<Activity>
-										<Spanner>{value.data.theo_appt_details.type}</Spanner> at{' '}
+										<Spanner>{value.theo_appt_details.type}</Spanner> at{' '}
 										<Spanner>Chatters Hair Salon</Spanner>
 									</Activity>
 									<Location>
@@ -56,10 +55,10 @@ export default class ConfirmModal extends Component {
 										<Icon src="https://seeklogo.com/images/G/google-maps-2014-logo-6108508C7B-seeklogo.com.png" />
 									</Location>
 									<Time>
-										at <Spanner>{value.data.theo_appt_details.time}</Spanner>
+										at <Spanner>{value.theo_appt_details.time}</Spanner>
 									</Time>
 									<Cost>
-										Estimated cost: <Spanner>{value.data.theo_appt_details.cost}</Spanner>
+										Estimated cost: <Spanner>{value.theo_appt_details.cost}</Spanner>
 									</Cost>
 									<Agreement>
 										<div className="pretty p-default p-curve">

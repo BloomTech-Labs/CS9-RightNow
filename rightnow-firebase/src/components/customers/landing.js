@@ -87,6 +87,12 @@ const Button = glamorous.div({
   }
 });
 
+const ParticleContainment = glamorous.div({
+  position: "absolute",
+  width: "100%",
+  height: "65vh"
+});
+
 const particleOptions = {
   particles: {
     number: {
@@ -139,9 +145,11 @@ export default class Landing extends Component {
 
           
         </Main>
-        <div style={{ position: "absolute", width: "100%", height: "100%" }}>
+
+        <ParticleContainment>
           <Particles width="100%" height="100%" params={particleOptions} />
-        </div>
+        </ParticleContainment>
+
       </Container>
     )
   }

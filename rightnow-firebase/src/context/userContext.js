@@ -16,6 +16,7 @@ export default class UserProvider extends Component {
     photo: "",
     location: "",
     appointments: [],
+    
     theo_appt_details: {},
     displayConfirm: false,
 

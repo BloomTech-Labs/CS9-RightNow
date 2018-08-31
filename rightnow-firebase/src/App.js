@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import NavBar from './components/nav/nav_bar';
-// import UserProvider, { UserContext } from './context/userContext';
 import BusinessProvider, { BusinessContext } from "./context/businessContext";
 import { Route } from 'react-router-dom';
 import BusinessLanding from './components/business_page/business_landing';
