@@ -22,7 +22,10 @@ class App extends Component {
 	componentDidMount() {
 		auth.onAuthStateChanged(currentUser => {
 			console.log("current user status has changed");
-			console.log("current user is: ", currentUser);
+			console.log("current user is: ", currentUser.email);
+			console.log(currentUser);
+			console.log("claims", currentUser.getIdToken(true));
+
 			this.setState({ userId: currentUser.uid });
 		});
 	}

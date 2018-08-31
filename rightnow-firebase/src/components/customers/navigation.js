@@ -6,6 +6,7 @@ import RegisterModal from '../register_modal/reg_modal';
 import RegisterForm from '../register_modal/reg_forms';
 import ConfirmModal from '../confirm_appt_modal/confirm_modal';
 import { UserContext } from "../../context/userContext";
+import { auth } from "../../firebase/firebase";
 
 
 const Container = glamorous.div({
@@ -95,6 +96,7 @@ export default class Navigation extends Component {
         </Link>
 
         <ButtonContainer>
+          {/* <Option onClick={() => auth.signOut()} >SignOut</Option> */}
           <Option>
             <Link to="/biz-landing" style={{textDecoration: "none", color: "#EBEBEB"}}>Business Owner?</Link>
           </Option>

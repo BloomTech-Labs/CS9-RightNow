@@ -49,19 +49,26 @@ app.get("/", (req, res) => res.send("seshy"));
 
 // CREATE BUSINESS -- working
 // business users can only be create through this route --- NO 0AUTH FOR BUSINESS SIGN UP
-app.post("/business", (req, res) => {
+app.post("/business", async (req, res) => {
 	const { first_name, last_name, email, password, phone } = req.body;
 
-	admin
-		.auth()
-		.createUser({
-			email: email,
-			displayName: `${first_name}  ${last_name}`,
-			password: password,
-			phoneNumber: phone
-		})
-		.then(userRecord => res.send(userRecord))
-		.catch(err => res.send(err));
+	const newUserId = 
+		await admin
+			.auth()
+			.createUser({
+				email: email,
+				displayName: `${first_name}  ${last_name}`,
+				password: password,
+				phoneNumber: phone,
+			})
+			.then(userRecord => {
+				db.collection(BUSNINESS).doc(userRecord.uid).set(req.body).then(() => console.log("success")).catch(err => res.send(err));
+				return userRecord.uid;
+			})
+			.then(id => admin.auth().setCustomUserClaims(id, { business: true }).then(x => x).catch(err => res.send(err)))
+			.catch(err => res.send(err));
+	
+	res.send(newUserId)
 });
 
 
@@ -138,13 +145,23 @@ app.get("/business/:id/past", async (req, res) => {
 
 
 // CREATE CUSTOMER -- working
-app.post("/customer", (req, res) => {
-		db
+app.post("/customer", async (req, res) => {
+		const checkDB = 
+			await db
+				.collection(CUSTOMER)
+				.doc(req.body.uid)
+				.get()
+				.then(docSnapshot => !docSnapshot.exists ? true : false)
+				.catch(err => res.send(err));
+
+		if (checkDB) {
+			db
 				.collection(CUSTOMER)
 				.doc(req.body.uid)
 				.set(req.body)
 				.then(() => res.send("success"))
 				.catch(err => res.send(err));
+		}
 });
 
 
@@ -376,31 +393,52 @@ export const handleDeleteAppointment = functions.firestore
 
 		* only customers will be added automatically
 
+		* https://firebase.google.com/docs/auth/admin/custom-claims
+
+
+		on business register...
+
+
 */
-export const handleNewUser = functions.auth
-		.user().onCreate(async user => {
-			const user_id = user.uid;
-			const customer_ref = db.collection(CUSTOMER);
+// export const handleNewUser = functions.auth
+// 		.user().onCreate(async user => {
+			// const { uid, displayName, email, phoneNumber } = user;
+			// const user_id = user.user_id;
+			// const customer_ref = db.collection(CUSTOMER);
+			// const business_ref = db.collection(BUSNINESS);
 
-			const user_exists = 
-				await customer_ref
-					.doc(user_id)
-					.get()
-					.then(doc => !doc.exists ? false : true)
-					.catch(err => err);
+			// const customer_exists = await customer_ref.doc(user_id).then(doc => !doc.exists ? false : true).catch(err => err);
+			// const business_exists = await business_ref.doc(user_id).then(doc => !doc.exists ? false : true).catch(err => err);
 
-			const data = {
-				name: user.displayName,
-				email: user.email,
-				uid: user.uid,
-				phone: user.phoneNumber
-			}
+			// const data = { name: displayName, email: email, phone: phoneNumber, uid: user_id };
 
-			if (!user_exists) {
-				customer_ref
-					.doc(user_id)
-					.set(data)
-					.then(customerRef => customerRef)
-					.catch(err => err);
-			}
-		});
+			// if (!customer_exists && !business_exists && !user.customClaims.business) {
+			// 	customer_ref.doc(user_id).set(data).then(customerRef => customerRef).catch(err => err);
+			// } else {
+			// 	business_ref.doc(user_id).set(data).then(customerRef => customerRef).catch(err => err);
+			// }
+
+			// const user_id = user.uid;
+
+			// const user_exists = 
+			// 	await customer_ref
+			// 		.doc(user_id)
+			// 		.get()
+			// 		.then(doc => !doc.exists ? false : true)
+			// 		.catch(err => err);
+
+			// const data = {
+			// 	name: user.displayName,
+			// 	email: user.email,
+			// 	uid: user.uid,
+			// 	phone: user.phoneNumber
+			// }
+
+			// if (!user_exists) {
+			// 	customer_ref
+			// 		.doc(user_id)
+			// 		.set(data)
+			// 		.then(customerRef => customerRef)
+			// 		.catch(err => err);
+			// }
+		// });
