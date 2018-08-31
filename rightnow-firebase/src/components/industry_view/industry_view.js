@@ -42,7 +42,7 @@ export default class IndustryView extends Component {
   render() {
     return (
       <div>
-        <Header>View Appointments by Industry</Header>
+        <Header id="appointments">View Appointments by Industry</Header>
 
         <OptionContainer>
           {this.state.industries.map((industry, index) => (
