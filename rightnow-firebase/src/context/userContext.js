@@ -2,12 +2,9 @@ import React, { Component } from "react";
 import firebase from "../firebase/firebase";
 import axios from "axios";
 
-
 export const UserContext = React.createContext();
 
-
 export default class UserProvider extends Component {
-
   state = {
     uid: "",
     name: "",
@@ -16,7 +13,7 @@ export default class UserProvider extends Component {
     photo: "",
     location: "",
     appointments: [],
-    
+
     theo_appt_details: {},
     displayConfirm: false,
 
@@ -31,8 +28,18 @@ export default class UserProvider extends Component {
       await this.setState(data);
       console.log(this.state.query);
     },
-
-  }
+    handleSearch: async () => {
+      const data = await axios
+        .get(
+          `https://us-central1-sesho-dev.cloudfunctions.net/haveAsesh/appointment?term=${
+            this.state.query
+          }`
+        )
+        .then(res => this.setState({ queryResults: res.data, finished: true }))
+        .catch(err => console.log("error", err));
+      return data;
+    }
+  };
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
@@ -59,16 +66,14 @@ export default class UserProvider extends Component {
     });
   }
 
-
   render() {
     return (
       <UserContext.Provider value={this.state}>
         {this.props.children}
       </UserContext.Provider>
-    )
+    );
   }
 }
-
 
 /*
 

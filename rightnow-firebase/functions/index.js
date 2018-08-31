@@ -340,19 +340,19 @@ export const handleNewAppointment = functions.firestore
 
 	THIS METHOD ASSUMES THAT APPOINTMENTS CAN ONLY BE BOOKED OR DELETED
 */
-export const handleUpdateAppointment = functions.firestore
-		.document(`/${APPT}/{apptId}`)
-		.onUpdate((snap, context) => {
-				const businessRef = snap.data().business_ref; // using id for development
+// export const handleUpdateAppointment = functions.firestore
+// 		.document(`/${APPT}/{apptId}`)
+// 		.onUpdate((snap, context) => {
+// 				const businessRef = snap.data().business_ref; // using id for development
 
-				const batch = db.batch();
+// 				const batch = db.batch();
 
-				const bookedApptsRef = db.doc(`/${BUSNINESS}/${businessRef}`).collection("past_appointments").doc(context.params.apptId);
-				batch.set(bookedApptsRef, snap.data());
+// 				const bookedApptsRef = db.doc(`/${BUSNINESS}/${businessRef}`).collection("past_appointments").doc(context.params.apptId);
+// 				batch.set(bookedApptsRef, snap.data());
 
-				const availApptsRef = db.doc(`${BUSNINESS}/${businessRef}`).collection("future_appointments").doc(context.params.apptId);
-				batch.delete(availApptsRef);
-		});
+// 				const availApptsRef = db.doc(`${BUSNINESS}/${businessRef}`).collection("future_appointments").doc(context.params.apptId);
+// 				batch.delete(availApptsRef);
+// 		});
 
 
 /*

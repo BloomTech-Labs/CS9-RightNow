@@ -38,7 +38,7 @@ export default class RegisterModal extends Component {
 		const data = { ...this.state, uid: user.uid };
 
 		axios
-			.post("https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/customer", data)
+			.post("https://us-central1-sesho-dev.cloudfunctions.net/haveAsesh/customer", data)
 			.then(res => console.log("success", res))
 			.catch(err => console.log("error", err));
 

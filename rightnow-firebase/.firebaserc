@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "react-firebase-auth-f2581"
+    "prod": "sesho-dev",
+    "default": "sesho-dev"
   }
 }

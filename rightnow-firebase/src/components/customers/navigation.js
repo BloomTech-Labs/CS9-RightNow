@@ -123,7 +123,7 @@ export default class Navigation extends Component {
 				}
 
 				axios
-					.post("https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/customer", data)
+					.post("https://us-central1-sesho-dev.cloudfunctions.net/haveAsesh/customer", data)
 					.then(result => console.log(result)).catch(err => console.log(err));
 			})
 			.then(x => this.closeModal())
