@@ -36,7 +36,7 @@ const ButtonContainer = glamorous.div({
 
 const Option = glamorous.div({
   textAlign: "center",
-  width: "10%",
+  width: "8%",
   color: "#EBEBEB",
   fontSize: "1.3em",
   fontWeight: 500,
