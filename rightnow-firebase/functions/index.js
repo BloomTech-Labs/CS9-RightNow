@@ -87,6 +87,7 @@ app.get("/business/:id/available", async (req, res) => {
       .collection(BUSNINESS)
       .doc(req.params.id)
       .collection("future_appointments")
+      .where("is_available", "==", true) // THIS HAS NOT BEEN IMPLEMENTED YET
       .get()
       .then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
       .catch(err => res.send(err));
@@ -101,9 +102,10 @@ app.get("/business/:id/booked", async (req, res) => {
         await db
             .collection(BUSNINESS)
             .doc(req.params.id)
-            .collection("booked_appointments")
+            .collection("future_appointments") // future_appointments = new standard
+            .where("is_available", "==", true) // THIS HAS NOT BEEN IMPLEMENTED YET
             .get()
-            .then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
+            .then(querySnapshot => querySnapshot.docs.map(doc => doc.id)) // .data()
             .catch(err => res.send(err));
 
     res.send(bookedAppointments);
@@ -300,7 +302,7 @@ export const handleNewAppointment = functions.firestore
             .doc(`/${BUSNINESS}/${businessRef}`)
             .collection("future_appointments")
             .doc(context.params.apptId)
-            .set({appointment_ref: appointmentRef})
+            .set({appointment_id: context.params.apptId})
             .then(busnDocRef => busnDocRef)
             .catch(err => console.log("error", err));
     });

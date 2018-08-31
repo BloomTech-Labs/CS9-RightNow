@@ -21,8 +21,9 @@ export default class UserProvider extends Component {
     queryResults: [],
     finished: false,
     stupid: null,
+    this_is_it: null,
 
-    onInputChange: async data => {
+    updateState: async data => {
       await this.setState(data);
       console.log(this.state.query);
     },
@@ -67,6 +68,39 @@ export default class UserProvider extends Component {
       console.log("returning business info", data);
       // this.setState({ finished: true });
       return data;
+    },
+
+    setBusinessDetails: async () => {
+      this.setState({ finished: false });
+
+      // const getIT = async id => {
+      //   const temp = 
+      //     await axios
+      //       .get(`https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/business/${id}`)
+      //       .then(res => {
+      //         console.log(res.data.business_information)
+      //         return res.data.business_information;
+      //       })
+      //       .catch(err => console("error", err));
+      //   return temp;
+      // }
+      
+      const res = this.state.queryResults.map(appt => {
+        const id = appt.business_info;
+
+        const details = axios.get(`https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/business/${id}`); //.then(res => res.data.business_information).catch(err => console.log("error", err));
+        // const busn = await getIT(appt.business_ref);
+        // const final = Promise.resolve(details);
+        // const info = {
+        //   ...appt,
+        //   business_information: details
+        // }
+        return details;
+      });
+
+      const final = axios.all(res).then(axios.spread(x => console.log(x)))
+
+      console.log("RES", final);
     }
   }
 

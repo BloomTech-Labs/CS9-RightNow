@@ -24,9 +24,11 @@ const Main = glamorous.div({
 });
 
 const Title = glamorous.div({
+  fontFamily: "coquette, sans-serif",
+  fontStyle: "normal",
   fontSize: "4em",
   color: "#EBEBEB",
-  fontWeight: 600,
+  fontWeight: 800,
 
   "@media(min-width: 1500px)": {
     fontSize: "3.5em"
@@ -129,7 +131,7 @@ export default class Landing extends Component {
                     placeholder="City or Zip" 
                     name="query"
                     value={value.query}
-                    onChange={e => value.onInputChange({ [e.target.name]: e.target.value })}
+                    onChange={e => value.updateState({ [e.target.name]: e.target.value })}
                     />
                   <Button onClick={() => value.handleSearch()}>Find Appointments</Button>
                 </Wrapper>

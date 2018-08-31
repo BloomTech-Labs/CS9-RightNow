@@ -22,7 +22,7 @@ const db = firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
 
 
-db.enablePersistence().catch(err => console.log("PERSISTANCE ERROR: ", err));
+// db.enablePersistence().catch(err => console.log("PERSISTANCE ERROR: ", err));
 
 
 export default firebase;

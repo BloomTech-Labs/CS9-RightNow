@@ -8,6 +8,7 @@ import {
 import AppointmentCard from "../appointment_card/appt_card";
 import { UserContext } from "../../context/userContext";
 import StarRatings from 'react-star-ratings';
+import axios from "axios";
 
 
 import {
@@ -61,34 +62,45 @@ class Clock extends Component {
 
 
 export default class Results extends Component {
+  state = {
+    testing: null
+  }
 
   render() {
+    console.log("STATE\n", this.state.testing);
+    let notState = null;
     return (
       <UserContext.Consumer>
         {value => {
           if (value.finished) {
-            console.log("here", value.queryResults)
 
-            const appointments = value.queryResults;
+            const appointments = value.queryResults; // called properly
+            
+						const testfunction = async (appointments) => {
+							const x = await Promise.all(
+								appointments.map(appt => {
+									return axios.get(`https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/business/${appt.business_ref}`);
+								})
+							).then((res) => {
 
-            const do_it = async id => {
-              const temp = await value.getBusinessInfo(id);
-              console.log("!!!", temp);
-              return temp;
-            }
+                const final = [];
 
-            const apptsWITHbusnInfo = async () => {
-              const temp = await appointments.map(appt =>  ({ ...appt, business_details: do_it(appt.business_ref) }));
-              return temp;
-            }
+                for (let i = 0; i < appointments.length; i++) {
+                  const temp = {
+                    appointment: appointments[i],
+                    business_details: res[i].data.business_information
+                  }
+                  final.push(temp);
+                }
 
-            const x = (async () => {
-              const y = await apptsWITHbusnInfo();
-              console.log("YYYY", y);
-              return y;
-            })();
-
-            console.log("APPOINTMENTS WITH BUSINESS INFO", x);
+                return final;
+              })
+              .then(actual => value.updateState({ this_is_it: actual, finished: false }))
+              
+              return x;
+            };
+            
+            testfunction(appointments);
           }
 
           return (
