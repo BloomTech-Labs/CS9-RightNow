@@ -58,11 +58,11 @@ const ContactForm = (props) => {
 
       <LeftSide>
         <Label for="test">First Name</Label>
-        <InputField type="text" placeholder={props.userState.firstName} />
+        <InputField type="text" placeholder={props.userState.name} />
         <Label>Last Name</Label>
-        <InputField type="text" placeholder={props.userState.lastName} />
+        <InputField type="text" placeholder={props.userState.name} />
         <Label>Phone Number</Label>
-        <InputField type="text" placeholder={props.userState.phone} />
+      <InputField type="text" placeholder={props.userState.phone} />
         <Label>Email</Label>
       <InputField type="text" placeholder={props.userState.email} />
         <Label>Location</Label>

@@ -57,7 +57,7 @@ export const Appointment = glamorous.div({
   padding: "3%",
 
   ":hover": {
-    border: "1px solid #00FFFF",
+    border: "1px solid #353A50",
     fontWeight: 600,
     cursor: "pointer"
   }

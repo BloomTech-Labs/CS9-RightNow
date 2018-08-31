@@ -10,12 +10,11 @@ export default class UserProvider extends Component {
 
   state = {
     uid: "",
-    firstName: "",
-    lastName: "",
+    name: "", // need both first and last name
     email: "",
-    phone: "",
+    phone: "", // pulling data from email and not phone
     photo: "",
-    location: "Long Beach, CA",
+    location: "",
     appointments: [],
     
     theo_appt_details: {},
