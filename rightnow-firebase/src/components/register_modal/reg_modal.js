@@ -19,7 +19,6 @@ import {
 } from './reg_modal_styles';
 
 
-
 export default class RegisterModal extends Component {
 	constructor(props) {
 		super(props);

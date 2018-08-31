@@ -21,14 +21,14 @@ export default class RegisterModal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			email: "",
-			password: "",
-			phone: "",
-			location: ""
+			email: '',
+			password: '',
+			phone: '',
+			location: ''
 		};
 	}
 
-	onInputChange = (e) => this.setState({[e.target.name]: e.target.value});
+	onInputChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
 	createUser = async () => {
 		await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
@@ -45,7 +45,7 @@ export default class RegisterModal extends Component {
 		this.setState({ email: "", password: "", phone: "", location: "" });
 		this.props.closeModal();
 	};
-		
+
 	render() {
 		return (
 			<FormContainer>
