@@ -48,13 +48,20 @@ app.get("/", (req, res) => res.send("seshy"));
 
 
 // CREATE BUSINESS -- working
+// business users can only be create through this route --- NO 0AUTH FOR BUSINESS SIGN UP
 app.post("/business", (req, res) => {
-		db
-				.collection(BUSNINESS)
-				.doc(req.body.uid)
-				.set(req.body)
-				.then(() => res.send("success"))
-				.catch(err => res.send(err));
+	const { first_name, last_name, email, password, phone } = req.body;
+
+	admin
+		.auth()
+		.createUser({
+			email: email,
+			displayName: `${first_name}  ${last_name}`,
+			password: password,
+			phoneNumber: phone
+		})
+		.then(userRecord => res.send(userRecord))
+		.catch(err => res.send(err));
 });
 
 
