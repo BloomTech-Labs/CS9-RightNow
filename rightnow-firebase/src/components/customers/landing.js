@@ -77,6 +77,9 @@ const Button = glamorous.div({
   padding: "1%",
   borderRadius: "5px",
   marginLeft: "15px",
+  display: "flex",
+  justifyContent: "center",
+  alignContent: "center",
 
   ":hover": {
     cursor: "pointer"
@@ -138,7 +141,7 @@ export default class Landing extends Component {
                     value={value.query}
                     onChange={e => value.updateState({ [e.target.name]: e.target.value })}
                     />
-                  <Button onClick={() => value.handleSearch()}>Find Appointments</Button>
+                  <Button onClick={() => console.log("not connected yet")}>Find Appointments</Button>
                 </Wrapper>
               )}
             </UserContext.Consumer>
