@@ -27,27 +27,40 @@ const ChangePasswordInput = glamorous.input({
     //border: 'none',
     // borderBottom: '2px solid red',
     fontSize: "18px",
-    borderRadius: '2px'
+    borderRadius: '3px',
+    margin: '2px',
 });
 
-// const showPassword = () => {
-//     let x = document.getElementById("myInput");
-//     if (x.type === "password") {
-//         x.type = "text";
-//     } else {
-//         x.type = "password";
-//     } 
-// }
+const Button = glamorous.button({
+ 
+});
+
 
 const UserChangePassword = () => {
+    
+    const showPassword = () => {
+        let x = document.getElementById("MyInput");
+        let y = document.getElementById("MyInput2");
+        if (x.type === "password" && y.type === 'password') {
+            console.log("hello");
+            x.type = "text";
+            y.type = "text";
+        } else {
+            x.type = "password";
+            y.type = "password";
+            console.log("hello password")
+        } 
+    }
     return (
-
         <Wrapper>
         <h3>Password</h3>
             <Label>Password</Label>
+    
             <ChangePasswordInput type="password" placeholder="password" id="MyInput" />
             <Label>Re-Enter Password</Label>
-            <ChangePasswordInput type="password" placeholder="enter password" id="MyInput" />        
+            <ChangePasswordInput type="password" placeholder="enter password" id="MyInput2" />
+            <Label>Show Password</Label>
+            <ChangePasswordInput type="checkbox" onClick={showPassword} />
         </Wrapper>
     );
 };

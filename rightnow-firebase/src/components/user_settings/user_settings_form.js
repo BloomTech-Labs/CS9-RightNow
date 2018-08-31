@@ -12,10 +12,12 @@ import glamorous from "glamorous";
 export const FormContainer = glamorous.div({
   // border: '1px solid blue',
   width: "100%",
+  // margin: "2%",
+  border: "10px 10px",
   backgroundColor: "#e6e6e6",
   cover: "no-repeat",
   textAlign: "center",
-  padding: '2%'
+  paddingTop: '2%'
 });
 
 const Button = glamorous.button({
@@ -42,7 +44,7 @@ class UserSettings extends Component {
           {
             value => (
               <FormContainer>
-                <h1>User Settings</h1>
+                <h3>User Settings</h3>
                 <UpcomingAppointments />
                 <PastAppointments />
                 <ContactForm userState = {value.data} />
