@@ -12,30 +12,12 @@ import BusnApptsView from "./components/business_appointments/busn_appts";
 import { auth } from "./firebase/firebase";
 
 class App extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			userId: null
-		};
-	}
-
-	componentDidMount() {
-		auth.onAuthStateChanged(currentUser => {
-			console.log("current user status has changed");
-			console.log("current user is: ", currentUser.email);
-			console.log(currentUser);
-			console.log("claims", currentUser.getIdToken(true));
-
-			this.setState({ userId: currentUser.uid });
-		});
-	}
-
 	render() {
 		return (
 			<div className="App">
 
-				<Route exact path="/" render={() => <Customer uid={this.state.userId} />} />
-				<Route exact path="/user-settings" render={() => <UserSettings uid={this.state.userId} />} />
+				<Route exact path="/" render={() => <Customer />} />
+				<Route exact path="/user-settings" render={() => <UserSettings />} />
 
 				<BusinessProvider>
 					<BusinessContext.Consumer>

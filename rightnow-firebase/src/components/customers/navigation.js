@@ -174,11 +174,8 @@ export default class Navigation extends Component {
         {this.state.displayRegForm ? <RegisterForm closeModal={() => this.closeModal()} /> : null}
 
         <UserContext.Consumer>
-            {value => {
-              value.displayConfirm ? <ConfirmModal closeModal={() => this.closeModal()} /> : null
-            }}
-          </UserContext.Consumer>
-        {/* {this.props.value.data.displayConfirm ? <ConfirmModal closeModal={() => this.closeModal()} /> : null} */}
+          {value => value.displayConfirm ? <ConfirmModal closeModal={() => this.closeModal()} /> : null}
+        </UserContext.Consumer>
         
       </Container>
     )
