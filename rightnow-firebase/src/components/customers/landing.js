@@ -145,7 +145,7 @@ export default class Landing extends Component {
                     value={value.query}
                     onChange={e => value.updateState({ [e.target.name]: e.target.value })}
                     />
-                  <Button href="#appointments" onClick={() => console.log("not connected yet")}>Find Appointments</Button>
+                  <Button onClick={() => value.handleSearch()}>Find Appointments</Button>
                 </Wrapper>
               )}
             </UserContext.Consumer>

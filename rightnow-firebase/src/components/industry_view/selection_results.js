@@ -51,14 +51,16 @@ export default class Results extends Component {
     return (
       <UserContext.Consumer>
         {value => {
+          console.log("here")
           if (value.finished) {
+            console.log("finished is true")
 
             const appointments = value.queryResults; // called properly
             
 						const testfunction = async (appointments) => {
 							const x = await Promise.all(
 								appointments.map(appt => {
-									return axios.get(`https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/business/${appt.business_ref}`);
+									return axios.get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/${appt.business_ref}`);
 								})
 							).then((res) => {
 
