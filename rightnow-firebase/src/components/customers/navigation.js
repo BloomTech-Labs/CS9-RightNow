@@ -144,7 +144,7 @@ export default class Navigation extends Component {
               return (
                 <ButtonContainer>
                   <Option>
-                    <Link to="/biz-landing" style={{textDecoration: "none", color: "#EBEBEB", width: "100%"}}>Business Owner?</Link>
+                    <Link to="/biz-account" style={{textDecoration: "none", color: "#EBEBEB", width: "100%"}}>Business Owner?</Link>
                   </Option>
                   <Option onClick={() => auth.signOut()} >SignOut</Option>
                 </ButtonContainer>
@@ -153,7 +153,7 @@ export default class Navigation extends Component {
             else return (
               <ButtonContainer>
                 <Option>
-                  <Link to="/biz-landing" style={{textDecoration: "none", color: "#EBEBEB"}}>Business Owner?</Link>
+                  <Link to="/biz-account" style={{textDecoration: "none", color: "#EBEBEB"}}>Business Owner?</Link>
                 </Option>
                 <Option onClick={() => this.openReg()}>Sign Up</Option>
                 <Option onClick={() => this.openLogin()}>Login</Option>
