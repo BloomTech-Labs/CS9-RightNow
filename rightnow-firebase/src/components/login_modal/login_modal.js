@@ -19,7 +19,6 @@ import {
 	CloseX
 } from './login_modal_styles';
 import { UserContext } from '../../context/userContext';
-import { doSignInWithEmailAndPassword } from "../../firebase/auth";
 import firebase from "../../firebase/firebase";
 import axios from "axios";
 
@@ -31,11 +30,11 @@ export default class SignInModal extends Component {
 
 	handleEmailSignIn = () => {
 		const { email, password } = this.state;
-		doSignInWithEmailAndPassword(email, password);
+		firebase.auth().signInWithEmailAndPassword(email, password);
 		this.setState({ email: "", password: "" });
 	}
 
-	handleLogin = type => {
+	handleProviderLogin = type => {
 		let provider;
 
 		if (type === "google") provider = new firebase.auth.GoogleAuthProvider();
@@ -96,11 +95,11 @@ export default class SignInModal extends Component {
 						<UserContext.Consumer>
 							{(value) => (
 								<OAuthContainer>
-									<OAuthButton onClick={() => this.handleLogin("google")}>
+									<OAuthButton onClick={() => this.handleProviderLogin("google")}>
 										<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
 										Login with Google
 									</OAuthButton>
-									<OAuthButton onClick={() => this.handleLogin("facebook")}>
+									<OAuthButton onClick={() => this.handleProviderLogin("facebook")}>
 										<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" />
 										Login with Facebook
 									</OAuthButton>
