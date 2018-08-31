@@ -1,6 +1,4 @@
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/database";
+import * as firebase from "firebase";
 
 
 const config = {
@@ -23,13 +21,7 @@ const db = firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
 
 
-db.enablePersistence().catch(err => console.log("PERSISTANCE ERROR: ", err));
-
-
-auth.onAuthStateChanged(async currentUser => {
-  console.log("current user status has changed");
-  console.log("current user is: ", currentUser);
-});
+// db.enablePersistence().catch(err => console.log("PERSISTANCE ERROR: ", err));
 
 
 export default firebase;

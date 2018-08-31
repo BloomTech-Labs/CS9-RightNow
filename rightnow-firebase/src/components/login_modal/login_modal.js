@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import GoogleLogIn from '../../firebase/auth.google.services';
-import FacebookLogIn from '../../firebase/auth.facebook.services';
+import axios from "axios";
 import {
 	Container,
 	ModalWrapper,
@@ -18,8 +17,7 @@ import {
 	RegClickHere,
 	CloseX
 } from './login_modal_styles';
-import { UserContext } from '../../context/userContext';
-import { doSignInWithEmailAndPassword } from "../../firebase/auth";
+
 
 export default class SignInModal extends Component {
 	state = {
@@ -27,9 +25,8 @@ export default class SignInModal extends Component {
 		password: ""
 	}
 
-	handleEmailSignIn = () => {
-		const { email, password } = this.state;
-		doSignInWithEmailAndPassword(email, password);
+	handleEmailLogin = () => {
+		this.props.emailLogin(this.state.email, this.state.password);
 		this.setState({ email: "", password: "" });
 	}
 
@@ -56,26 +53,24 @@ export default class SignInModal extends Component {
 								onChange={e => this.setState({ [e.target.name]: e.target.value })}
 							/>
 						</NormalSignIn>
-						<LoginButton onClick={() => this.handleEmailSignIn()}>Sign In</LoginButton>
+						<LoginButton onClick={() => this.handleEmailLogin()}>Sign In</LoginButton>
 
 						<Or>
 							<span style={{ backgroundColor: '#353A50', padding: '0 3%' }}>or</span>
 						</Or>
 
-						<UserContext.Consumer>
-							{(value) => (
-								<OAuthContainer>
-									<OAuthButton onClick={() => GoogleLogIn(value)}>
-										<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
-										Login with Google
-									</OAuthButton>
-									<OAuthButton onClick={FacebookLogIn}>
-										<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" />
-										Login with Facebook
-									</OAuthButton>
-								</OAuthContainer>
-							)}
-						</UserContext.Consumer>
+
+						<OAuthContainer>
+							<OAuthButton onClick={() => this.props.providerLogin("google")}>
+								<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+								Login with Google
+							</OAuthButton>
+							<OAuthButton onClick={() => this.props.providerLogin("facebook")}>
+								<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" />
+								Login with Facebook
+							</OAuthButton>
+						</OAuthContainer>
+
 
 						<NewUser>
 							<p style={{ marginRight: '2%' }}>Don't have an account?</p>

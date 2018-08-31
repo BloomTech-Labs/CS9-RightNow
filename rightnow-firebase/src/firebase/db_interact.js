@@ -1,7 +1,6 @@
 import { db, auth } from "./firebase";
 
 
-
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
 ~ ~ ~ ~ ~ ~ ~ ~ ~ DO NOT USE THIS FILE ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
 ~ ~ ~ ~ ~ ~ ~ REFER TO FUNCTIONS DIRECTORY ~ ~ ~ ~ ~ ~ ~ ~ ~ ~

@@ -56,7 +56,7 @@ export default class IndustryView extends Component {
 
         {this.state.currentSelection ? <Header style={{marginLeft: "5%"}}>{`${this.state.currentSelection.innerHTML} Services`}</Header> : null}
 
-        <Results industry={this.state.currentSelection} />
+        <Results value={this.props.value} industry={this.state.currentSelection} />
         
       </div>
     )

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import glamorous from "glamorous";
 import Particles from "react-particles-js";
 import Navigation from "./navigation";
+import { UserContext } from '../../context/userContext';
 
 
 /* MOSTLY RESPONSIVE DOWN TO 850vw */
@@ -22,9 +23,12 @@ const Main = glamorous.div({
 });
 
 const Title = glamorous.div({
+  fontFamily: "coquette, sans-serif",
+  fontStyle: "normal",
   fontSize: "4em",
   color: "#EBEBEB",
-  fontWeight: 600,
+  fontWeight: 800,
+  textAlign: "center",
 
   "@media(min-width: 1500px)": {
     fontSize: "3.5em"
@@ -46,12 +50,15 @@ const Title = glamorous.div({
 const Wrapper = glamorous.div({
   display: "flex",
   justifyContent: "center",
+  alignContent: "center",
   marginTop: "3vh",
-  zIndex: 1
+  zIndex: 1,
+  // height: "10vh",
+  width: "100vw"
 });
 
 const Search = glamorous.input({
-  width: "20%",
+  width: "15%",
   padding: "1% 1%",
   fontSize: "1.5em",
   borderRadius: "5px",
@@ -74,6 +81,9 @@ const Button = glamorous.div({
   padding: "1%",
   borderRadius: "5px",
   marginLeft: "15px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
 
   ":hover": {
     cursor: "pointer"
@@ -82,6 +92,12 @@ const Button = glamorous.div({
   "@media(max-width: 1224px)": {
     fontSize: "1.3em"
   }
+});
+
+const ParticleContainment = glamorous.div({
+  position: "absolute",
+  width: "100%",
+  height: "65vh"
 });
 
 const particleOptions = {
@@ -110,6 +126,7 @@ const particleOptions = {
   }
 }
 
+
 export default class Landing extends Component {
   render() {
     return (
@@ -117,14 +134,29 @@ export default class Landing extends Component {
         <Navigation />
         <Main>
           <Title>Book your last minute appointments today!</Title>
-          <Wrapper id="primary_input">
-            <Search placeholder="City or Zip" />
-            <Button>Find Appointments</Button>
-          </Wrapper>
+          
+
+            <UserContext.Consumer>
+              {value => (
+                <Wrapper id="primary_input">
+                  <Search 
+                    placeholder="City or Zip" 
+                    name="query"
+                    value={value.query}
+                    onChange={e => value.updateState({ [e.target.name]: e.target.value })}
+                    />
+                  <Button onClick={() => console.log("not connected yet")}>Find Appointments</Button>
+                </Wrapper>
+              )}
+            </UserContext.Consumer>
+
+          
         </Main>
-        <div style={{ position: "absolute", width: "100%", height: "100%" }}>
+
+        <ParticleContainment>
           <Particles width="100%" height="100%" params={particleOptions} />
-        </div>
+        </ParticleContainment>
+
       </Container>
     )
   }
