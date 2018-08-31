@@ -60,6 +60,7 @@ export default class SignInModal extends Component {
 					.post("https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/customer", data)
 					.then(result => console.log(result)).catch(err => console.log(err));
 			})
+			.then(x => this.props.closeModal())
 			.catch(err => console.log(err));
 	}
 
@@ -92,20 +93,18 @@ export default class SignInModal extends Component {
 							<span style={{ backgroundColor: '#353A50', padding: '0 3%' }}>or</span>
 						</Or>
 
-						<UserContext.Consumer>
-							{(value) => (
-								<OAuthContainer>
-									<OAuthButton onClick={() => this.handleProviderLogin("google")}>
-										<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
-										Login with Google
-									</OAuthButton>
-									<OAuthButton onClick={() => this.handleProviderLogin("facebook")}>
-										<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" />
-										Login with Facebook
-									</OAuthButton>
-								</OAuthContainer>
-							)}
-						</UserContext.Consumer>
+
+						<OAuthContainer>
+							<OAuthButton onClick={() => this.handleProviderLogin("google")}>
+								<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+								Login with Google
+							</OAuthButton>
+							<OAuthButton onClick={() => this.handleProviderLogin("facebook")}>
+								<AuthLogo src="https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg" />
+								Login with Facebook
+							</OAuthButton>
+						</OAuthContainer>
+
 
 						<NewUser>
 							<p style={{ marginRight: '2%' }}>Don't have an account?</p>

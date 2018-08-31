@@ -31,7 +31,6 @@ export default class UserProvider extends Component {
       console.log(this.state.query);
     },
 
-
   }
 
   componentDidMount() {

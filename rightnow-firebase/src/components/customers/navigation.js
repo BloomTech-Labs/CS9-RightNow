@@ -95,14 +95,29 @@ export default class Navigation extends Component {
           <Logo>Sesho</Logo>
         </Link>
 
-        <ButtonContainer>
-          {/* <Option onClick={() => auth.signOut()} >SignOut</Option> */}
-          <Option>
-            <Link to="/biz-landing" style={{textDecoration: "none", color: "#EBEBEB"}}>Business Owner?</Link>
-          </Option>
-          <Option onClick={() => this.openReg()}>Sign Up</Option>
-          <Option onClick={() => this.openLogin()}>Login</Option>
-        </ButtonContainer>
+        <UserContext.Consumer>
+          {value => {
+            if (value.userSignedIn) {
+              return (
+                <ButtonContainer>
+                  <Option>
+                    <Link to="/biz-landing" style={{textDecoration: "none", color: "#EBEBEB"}}>Business Owner?</Link>
+                  </Option>
+                  <Option onClick={() => auth.signOut()} >SignOut</Option>
+                </ButtonContainer>
+              )
+            }
+            else return (
+              <ButtonContainer>
+                <Option>
+                  <Link to="/biz-landing" style={{textDecoration: "none", color: "#EBEBEB"}}>Business Owner?</Link>
+                </Option>
+                <Option onClick={() => this.openReg()}>Sign Up</Option>
+                <Option onClick={() => this.openLogin()}>Login</Option>
+              </ButtonContainer>
+            )
+          }}
+        </UserContext.Consumer>
 
         {this.state.displayLoginModal ? (
 					<SignInModal closeModal={() => this.closeModal()} logToReg={() => this.LogToRegModal()} />
