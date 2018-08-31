@@ -6,7 +6,8 @@ import RegisterModal from '../register_modal/reg_modal';
 import RegisterForm from '../register_modal/reg_forms';
 import ConfirmModal from '../confirm_appt_modal/confirm_modal';
 import { UserContext } from "../../context/userContext";
-import { auth } from "../../firebase/firebase";
+import firebase, { auth } from "../../firebase/firebase";
+import axios from "axios";
 
 
 const Container = glamorous.div({
@@ -86,6 +87,41 @@ export default class Navigation extends Component {
     this.setState({ displayRegModal: false, displayLoginModal: false, displayRegForm: false });
     document.querySelector("#primary_input").style.zIndex = 1;
   };
+
+  handleEmailSignIn = (email, password) => {
+		firebase.auth().signInWithEmailAndPassword(email, password);
+		this.closeModal();
+	}
+
+	handleProviderLogin = type => {
+		let provider;
+
+		if (type === "google") provider = new firebase.auth.GoogleAuthProvider();
+		if (type === "facebook") provider = new firebase.auth.FacebookAuthProvider();
+
+		if (!provider) return;
+
+		firebase
+			.auth()
+			.signInWithPopup(provider)
+			.then(res => {
+				const newUser = res.user;
+				
+				const data = {
+					uid: newUser.uid,
+					name: newUser.displayName,
+					email: newUser.email,
+					phone: newUser.phoneNumber,
+					photo: newUser.photoURL
+				}
+
+				axios
+					.post("https://us-central1-react-firebase-auth-f2581.cloudfunctions.net/haveAsesh/customer", data)
+					.then(result => console.log(result)).catch(err => console.log(err));
+			})
+			.then(x => this.closeModal())
+			.catch(err => console.log(err));
+	}
   
   render() {
     return (
@@ -120,11 +156,19 @@ export default class Navigation extends Component {
         </UserContext.Consumer>
 
         {this.state.displayLoginModal ? (
-					<SignInModal closeModal={() => this.closeModal()} logToReg={() => this.LogToRegModal()} />
+          <SignInModal 
+            providerLogin={prov => this.handleProviderLogin(prov)}
+            emailLogin={(x, y) => this.handleEmailSignIn(x, y)}
+            closeModal={() => this.closeModal()} 
+            logToReg={() => this.LogToRegModal()} />
         ) : null}
         
         {this.state.displayRegModal ? (
-					<RegisterModal closeModal={() => this.closeModal()} regToLog={() => this.RegToLogModal()} />
+          <RegisterModal 
+            providerLogin={prov => this.handleProviderLogin(prov)}
+            emailLogin={(x, y) => this.handleEmailSignIn(x, y)}
+            closeModal={() => this.closeModal()} 
+            regToLog={() => this.RegToLogModal()} />
         ) : null}
         
         {this.state.displayRegForm ? <RegisterForm closeModal={() => this.closeModal()} /> : null}

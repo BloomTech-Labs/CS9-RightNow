@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import glamorous from "glamorous";
 import Particles from "react-particles-js";
 import Navigation from "./navigation";
-import axios from "axios";
 import { UserContext } from '../../context/userContext';
-
 
 
 /* MOSTLY RESPONSIVE DOWN TO 850vw */
