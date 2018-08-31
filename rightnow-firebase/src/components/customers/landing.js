@@ -28,6 +28,7 @@ const Title = glamorous.div({
   fontSize: "4em",
   color: "#EBEBEB",
   fontWeight: 800,
+  textAlign: "center",
 
   "@media(min-width: 1500px)": {
     fontSize: "3.5em"
@@ -49,12 +50,15 @@ const Title = glamorous.div({
 const Wrapper = glamorous.div({
   display: "flex",
   justifyContent: "center",
+  alignContent: "center",
   marginTop: "3vh",
-  zIndex: 1
+  zIndex: 1,
+  // height: "10vh",
+  width: "100vw"
 });
 
 const Search = glamorous.input({
-  width: "20%",
+  width: "15%",
   padding: "1% 1%",
   fontSize: "1.5em",
   borderRadius: "5px",
@@ -79,7 +83,7 @@ const Button = glamorous.div({
   marginLeft: "15px",
   display: "flex",
   justifyContent: "center",
-  alignContent: "center",
+  alignItems: "center",
 
   ":hover": {
     cursor: "pointer"
