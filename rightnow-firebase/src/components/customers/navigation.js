@@ -19,7 +19,8 @@ const Container = glamorous.div({
 });
 
 const Logo = glamorous.div({
-  fontSize: "2em",
+  fontFamily: "Syncopate, sans-serif",
+  fontSize: "2.5em",
   fontWeight: 800,
   alignSelf: "center",
   color: "#EBEBEB",
@@ -29,20 +30,26 @@ const ButtonContainer = glamorous.div({
   display: "flex",
   justifyContent: "flex-end",
   padding: "1%",
-  width: "50%"
+  width: "70%",
+  // paddingRight: "2%"
 });
 
 const Option = glamorous.div({
+  textAlign: "center",
+  width: "10%",
   color: "#EBEBEB",
   fontSize: "1.3em",
   fontWeight: 500,
-  marginRight: "3%",
+  marginRight: "2%",
   border: "1px solid transparent",
   padding: "1.5%",
   ":hover": {
     cursor: "pointer",
     border: "1px solid white",
     borderRadius: "5px"
+  },
+  ":first-child": {
+    width: "13%"
   }
 });
 
@@ -137,7 +144,7 @@ export default class Navigation extends Component {
               return (
                 <ButtonContainer>
                   <Option>
-                    <Link to="/biz-landing" style={{textDecoration: "none", color: "#EBEBEB"}}>Business Owner?</Link>
+                    <Link to="/biz-landing" style={{textDecoration: "none", color: "#EBEBEB", width: "100%"}}>Business Owner?</Link>
                   </Option>
                   <Option onClick={() => auth.signOut()} >SignOut</Option>
                 </ButtonContainer>

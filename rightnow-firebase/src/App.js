@@ -7,7 +7,6 @@ import Customer from './components/customers/customers';
 import UserSettings from './components/user_settings/user_settings_form';
 import CompanySettings from './components/company_settings/company_settings';
 import BusnApptsView from "./components/business_appointments/busn_appts";
-import { auth } from "./firebase/firebase";
 
 class App extends Component {
 	render() {
