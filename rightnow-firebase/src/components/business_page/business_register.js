@@ -111,21 +111,6 @@ const Button = glamorous.button({
 });
 
 
-const apiStyle = {
-	margin: '1% auto',
-  width: '23%',
-  padding: '.7% 0',
-	border: 'none',
-	borderRadius: "5px",
-  fontSize: '1.3rem',
-  fontWeight: 600,
-  color: 'white',
-	textAlign: 'center',
-	textShadow: "1px 1px black",
-	backgroundColor: "rgba(225, 225, 225, 0.4)"
-}
-
-
 class BusinessAccount extends Component {
 	constructor(props) {
 		super(props);
