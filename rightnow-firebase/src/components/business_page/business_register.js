@@ -120,7 +120,7 @@ class BusinessAccount extends Component {
 			phone: "",
 			email: "",
 			password: "",
-			isBusiness: ""
+			isBusiness: false
 		};
 	}
 
@@ -168,16 +168,13 @@ class BusinessAccount extends Component {
 		});
 	};
 
-	handleEmailSignIn = () => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then(() => {
-        firebase.auth().currentUser.getIdTokenResult().then(token => {
-          if (token.claims.business) this.setState({ isBusiness: true });
-          else return;
-        });
-			}).then(() => this.setState({ email: "", password: "" }));
+	handleEmailSignIn = async () => {
+		await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
+		await firebase.auth().currentUser.getIdTokenResult().then(token => {
+			if (token.claims.business) this.setState({ isBusiness: true, email: "", password: "" });
+			else return;
+		});
+		// this.setState({ email: "", password: "" })
 		return;
 	}
 
@@ -199,9 +196,11 @@ class BusinessAccount extends Component {
 
 	render() {
 
-		if (this.state.isBusiness) <Redirect to="/busn-appts" />
+		if (this.state.isBusiness) {
+			return <Redirect to="/busn-appts" />
+		}
 		
-		return (
+		else return (
 			<FixedContainer>
 				<LandingContainer id="swoosh" >
 
