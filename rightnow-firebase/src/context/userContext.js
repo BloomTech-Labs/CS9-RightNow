@@ -46,18 +46,28 @@ export default class UserProvider extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       console.log(user);
-      user.getIdTokenResult().then(token => console.log(token)).catch(err => console.log("error", err));
-      if (user && !this.state.userSignedIn) {
-        this.setState({
-          userSignedIn: true,
-          uid: user.uid,
-          name: user.displayName,
-          email: user.email,
-          phone: user.phoneNumber,
-          photo: user.photoURL
-        });
+
+      if (user) {
+        user
+        .getIdTokenResult()
+        .then(token => token.claims.business ? true : false)
+        .then(isBusiness => {
+          if (isBusiness) return;
+          if (user && !this.state.userSignedIn) {
+            this.setState({
+              userSignedIn: true,
+              uid: user.uid,
+              name: user.displayName,
+              email: user.email,
+              phone: user.phoneNumber,
+              photo: user.photoURL
+            });
+          }
+          return;
+        }).catch(err => console.log("error", err));
       }
-      if (!user && this.state.userSignedIn) {
+      
+      else {
         this.setState({
           userSignedIn: false,
           uid: null,
@@ -68,8 +78,6 @@ export default class UserProvider extends Component {
         });
       }
     });
-
-    // firebase.auth().currentUser.getIdTokenResult().then(token => console.log(token)).catch(err => console.log("error", err));
   }
 
 
