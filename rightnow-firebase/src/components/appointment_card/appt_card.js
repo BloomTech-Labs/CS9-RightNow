@@ -32,12 +32,10 @@ export default class AppointmentCard extends Component {
 	render() {
 		// this will break the dummy
 
-		// info regarding appointments
-		// console.log(this.props.businessInfo)
-		const { business_ref, cost, description, service, time } = this.props.businessInfo.appointment;
+		// businessInfo[1] will call up the appointment list
+		const appointments = this.props.businessInfo[1];
 
-		// info regarding business itself
-		console.log(this.props.businessInfo)
+		// businessInfo[2] will call up the business info
 		const {
 			city,
 			fullAddress,
@@ -49,71 +47,61 @@ export default class AppointmentCard extends Component {
 			street_name,
 			street_number,
 			zip
-		} = this.props.businessInfo.business_details;
-
-		// renaming deconstructed const
+		} = this.props.businessInfo[2];
+		// renaming deconstruction
+		const businessImage = photos[0];
 		const businessName = name;
-		const businessImage = photos[0]; // take the first photo
-		const streetAddress = `${street_number} ${street_name}`;
-		const cityStateZip = `${city} ${state} ${zip}`;
+		const streetAddress = `${street_number} ${street_name}`
+		const cityStateZip = `${city} ${state} ${zip}`
+
+		console.log('this.props.businessInfo', this.props.businessInfo);
 
 		// <BusinessName> info about the place
 		// <AvaiableAppts> info about the appointment
 		return (
-			<UserContext.Consumer>
-				{(value) => {
-					return (
-						<Container>
-							<BusinessImage src={businessImage} />
+			<div>
+				<UserContext.Consumer>
+					{(value) => {
+						return (
+							<Container>
+								<BusinessImage src={businessImage} />
 
-							<BusinessInfo>
-								<BusinessName>{businessName}</BusinessName>
-								<StarRatings
-									rating={rating}
-									numberOfStars={5}
-									starRatedColor="gold"
-									starEmptyColor="grey"
-									starDimension="35px"
-								/>
-								<Address>
-									<div>{streetAddress}</div>
-									<div>{cityStateZip}</div>
-								</Address>
-							</BusinessInfo>
+								<BusinessInfo>
+									<BusinessName>{businessName}</BusinessName>
+									<StarRatings
+										rating={rating}
+										numberOfStars={5}
+										starRatedColor="gold"
+										starEmptyColor="grey"
+										starDimension="35px"
+									/>
+									<Address>
+										<div>{streetAddress}</div>
+										<div>{cityStateZip}</div>
+									</Address>
+								</BusinessInfo>
 
-							<AvailableAppts>
-								<Appointment
-									onClick={() =>
-										value.updateState({
-											// theo_appt_details: { type: service, time: time, cost: cost },
-											displayConfirm: true
-										})}
-								>
-									<Type>{service}</Type>
-									<Time>{time}</Time>
-									<Cost>{cost}</Cost>
-								</Appointment>
-
-								{/* BACK UP
-								{Object.keys(appointments).map((key, index) => (
-									<Appointment
-										key={index}
-										onClick={() =>
-											value.updateState({
-												theo_appt_details: appointments[key],
-												displayConfirm: true
-											})}
-									>
-										<Type>{service}</Type>
-										<Time>{appointments[key].time}</Time>
-										<Cost>{appointments[key].cost}</Cost>
-									</Appointment>
-								))} */}
-							</AvailableAppts>
-						</Container>
-					);
-				}}
-			</UserContext.Consumer>
+								<AvailableAppts>
+									{appointments.map((appt, index) => (
+										<Appointment
+											key={index}
+											onClick={() =>
+												value.updateState({
+													theo_appt_details: appt,
+													displayConfirm: true
+												})}
+										>
+											<Type>{appt.service}</Type>
+											<Time>{appt.time}</Time>
+											<Cost>{appt.cost}</Cost>
+										</Appointment>
+									))}
+								</AvailableAppts>
+							</Container>
+						);
+					}}
+				</UserContext.Consumer>
+			</div>
 		);
 	}
 }

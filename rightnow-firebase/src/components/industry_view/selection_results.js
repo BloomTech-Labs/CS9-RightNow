@@ -77,10 +77,10 @@ Finally, after all that is done, we return cache, then set it to state in contex
 
 TL;DR:
 In the end, cache will have mutliple unique businesses.
-Each unique business will have 3 properties: UID, an array of appointments, and business info.
+Each unique businesses will have 3 properties: UID, an array of appointments, and business info.
 
 UID is a string;
-array of appointment is an array containing multiple unique appointments;
+array of appointment is an array containing one or more unique appointments;
 business info is an object that contains info like location, phone number, etc.
 */
 
@@ -145,7 +145,7 @@ export default class Results extends Component {
 												if (appointments[i].business_ref === each[0]) {
 													// push business info into cache, which will now be cache[2]
 													each.push(res[i].data.business_information);
-													console.log(`sanity check for res ${i}`, each);
+													// console.log(`sanity check for res ${i}`, each);
 												}
 											});
 											// cache[].push(res[i].data.business_information);
@@ -196,15 +196,15 @@ export default class Results extends Component {
 						// console.log('queryResult', value.queryResults);
 						// console.log('this is it', value.this_is_it);
 					}
-
+					// pass in each UNIQUE business
 					if (value.this_is_it !== null) {
 						return (
 							<Container>
 								<Clock />
 
-								{/* {value.this_is_it.map((eachData, index) => (
+								{value.this_is_it.map((eachData, index) => (
 									<AppointmentCard businessInfo={eachData} key={index} />
-								))} */}
+								))}
 							</Container>
 						);
 					}
