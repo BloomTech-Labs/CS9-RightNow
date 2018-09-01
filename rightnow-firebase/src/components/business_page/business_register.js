@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-// Firebase
 import PlacesAPI from '../placesAPI/search_autocomplete';
-import { auth } from '../../firebase/firebase';
-import { doSignInWithEmailAndPassword, doCreateUserWithEmailAndPassword } from '../../firebase/auth';
-// react scroll
-import * as Scroll from 'react-scroll';
-import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
-// glamorous stuff
+import { withRouter, Redirect } from "react-router-dom";
+import axios from 'axios';
+import firebase from "../../firebase/firebase";
+import glamorous from "glamorous";
 import {
 	Container1,
 	Container2,
@@ -28,93 +25,70 @@ import {
 	Button
 } from './business_register_styles';
 
-import axios from 'axios';
-import { withRouter, Redirect } from "react-router-dom";
-import firebase from "../../firebase/firebase";
-import glamorous from "glamorous";
+
+const FixedContainer = glamorous.div({
+	height: "100vh",
+	width: "100vw",
+	position: "relative",
+	overflow: "hidden",
+	background: 'linear-gradient(30deg, rgba(0, 0, 0, 0.50) 20%, rgba(0, 0, 0, 0.70)) 100%, url("https://images.unsplash.com/photo-1535232843222-a40c29436fd3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=09c323bdb9e5c76f82339cd9b4247a57&auto=format&fit=crop&w=1959&q=80")',
+	backgroundRepeat: 'repeat',
+	backgroundSize: 'cover',
+	backgroundAttachment: 'fixed',
+});
 
 
-const Slider = glamorous.div({
+const LandingContainer = glamorous.div({
 	position: "absolute",
 	height: "100vh",
 	width: "100vw",
-	top: 0,
-	overflow: "hidden",
-	transition: "all 1s"
+	top: "30%",
+	background: "transparent",
+	transition: "all 1.2s"
 });
+
+
+const WelcomePage = glamorous.div({
+	position: "absolute",
+	height: "100vh",
+	width: "100vw",
+	background: "transparent",
+	transition: "all 1.2s",
+});
+
+
+const FormContainer = glamorous.div({
+	position: "absolute",
+	height: "100vh",
+	width: "100vw",
+	top: "100vh",
+	background: "transparent",
+	transition: "all 1.2s",
+});
+
 
 class BusinessAccount extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			email_reg: '',
-			first_name: '',
-			last_name: '',
-			password_reg: '',
-			phone: '',
-			email_log: '',
-			password_log: '',
+			first_name: "",
+			last_name: "",
+			phone: "",
+			email: "",
+			password: "",
 			isBusiness: ""
 		};
 	}
 
-	componentDidMount() {
-		Events.scrollEvent.register('begin', function() {
-			console.log('begin', arguments);
-		});
-
-		Events.scrollEvent.register('end', function() {
-			console.log('end', arguments);
-		});
-	}
-
-	scrollToTop() {
-		scroll.scrollToTop();
-	}
-	scrollTo() {
-		scroller.scrollTo('scroll-to-element', {
-			duration: 800,
-			delay: 0,
-			smooth: 'easeInOutQuart'
-		});
-	}
-	scrollToWithContainer() {
-		let goToContainer = new Promise((resolve, reject) => {
-			Events.scrollEvent.register('end', () => {
-				resolve();
-				Events.scrollEvent.remove('end');
-			});
-
-			scroller.scrollTo('scroll-container', {
-				duration: 800,
-				delay: 0,
-				smooth: 'easeInOutQuart'
-			});
-		});
-
-		goToContainer.then(() =>
-			scroller.scrollTo('scroll-container-second-element', {
-				duration: 800,
-				delay: 0,
-				smooth: 'easeInOutQuart',
-				containerId: 'scroll-container'
-			})
-		);
-	}
-	componentWillUnmount() {
-		Events.scrollEvent.remove('begin');
-		Events.scrollEvent.remove('end');
-	}
-
 	submitForm = async () => {
-		const userId = await auth.currentUser.uid;
+		const userId = await firebase.auth().currentUser.uid;
 
 		const owner = {
 			first_name: this.state.first_name,
 			last_name: this.state.last_name,
-			email: this.state.email_reg,
+			email: this.state.email,
 			phone: this.state.phone,
-			password: this.state.password_reg
+			password: this.state.password
 		};
 
 		const business = this.props.value.data.business;
@@ -134,76 +108,71 @@ class BusinessAccount extends Component {
 		this.setState({
 			first_name: '',
 			last_name: '',
-			email_reg: '',
+			email: '',
 			phone: '',
-			password_reg: ''
+			password: '',
+			isBusiness: true
 		});
 	};
 
 	handleEmailSignIn = () => {
     firebase
       .auth()
-      .signInWithEmailAndPassword(this.state.email_log, this.state.password_log)
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => {
         firebase.auth().currentUser.getIdTokenResult().then(token => {
           if (token.claims.business) this.setState({ isBusiness: true });
           else return;
         });
-			});
+			}).then(() => this.setState({ email: "", password: "" }));
 		return;
+	}
+
+	handleRegisterDisplay = () => {
+		const landingContainer = document.querySelector("#landing");
+		const regContainer = document.querySelector("#register");
+		landingContainer.style.top = "-100vh";
+		regContainer.style.top = 0;
+	}
+
+	handleLoginDisplay = () => {
+		const landingContainer = document.querySelector("#landing");
+		const loginContainer = document.querySelector("#login");
+		landingContainer.style.top = "-100vh";
+		loginContainer.style.top = 0;
 	}
 
 	render() {
 
-		if (this.state.isBusiness) {
-			return (
-				<Redirect to="/busn-appts" />
-			)
-		}
+		if (this.state.isBusiness) <Redirect to="/busn-appts" />
 		
 		return (
-			<div>
-				<Container1>
-					<TitleBackdrop>
-						<div>
+			<FixedContainer>
+
+					<LandingContainer >
+
+
+						<WelcomePage id="landing">
 							<Title>
 								<TitleBorder>Sesho: Manager</TitleBorder>
 								<Description>MANAGE YOUR APPOINTMENTS WITH A SIMPLE SESSION OF SESHO</Description>
 							</Title>
+
 							<ButtonContainer>
-								<RegButton>
-									<Link
-										activeClass="active"
-										className="toRegister"
-										to="toRegister"
-										spy={true}
-										smooth={true}
-										duration={500}
-									>
+								<RegButton onClick={() => this.handleRegisterDisplay()}>
 										Register
-									</Link>
 								</RegButton>
 								<CenterLine />
-								<LoginButton onClick={() => this.handleEmailSignIn()} >
+								<LoginButton onClick={() => this.handleLoginDisplay()}>
 									Login
-									{/* <Link
-										activeClass="active"
-										className="toRegister"
-										to="toLogin"
-										spy={true}
-										smooth={true}
-										duration={500}
-									>
-										Login
-									</Link> */}
 								</LoginButton>
 							</ButtonContainer>
-						</div>
-					</TitleBackdrop>
-				</Container1>
+						</WelcomePage>
+					
+				
 
-				<Element name="toRegister" className="element"  />
-				<Container2>
+
+				<FormContainer id="register">
 					<div>Already a family of Sesho? click here</div>
 					<TopWrapper>
 						<LeftSide>
@@ -238,7 +207,7 @@ class BusinessAccount extends Component {
 						<Input
 							type="email"
 							onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-							name="email_reg"
+							name="email"
 							placeholder="Email"
 							value={this.state.email}
 							required
@@ -248,9 +217,9 @@ class BusinessAccount extends Component {
 						<Input
 							type="password"
 							onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-							name="password_reg"
+							name="password"
 							placeholder="Password"
-							value={this.state.password_reg}
+							value={this.state.password}
 							required
 							autocomplete="off"
 						/>
@@ -270,18 +239,17 @@ class BusinessAccount extends Component {
 						</Bottom>
 					</BottomWrapper>
 					<Button onClick={() => this.submitForm()}>Submit</Button>
-				</Container2>
+				</FormContainer>
 
-				<Element name="toLogin" className="element" />
-				<Container3>
+
+				<FormContainer id="login">
 					<div>Not a family of Sesho? click here</div>
-
 					<BottomWrapper>
 						<div>Email:</div>
 						<Input
 							type="email"
 							onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-							name="email_log"
+							name="email"
 							placeholder="Email"
 							value={this.state.email}
 							required
@@ -291,21 +259,20 @@ class BusinessAccount extends Component {
 						<Input
 							type="password"
 							onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-							name="password_log"
+							name="password"
 							placeholder="Password"
-							value={this.state.password_log}
+							value={this.state.password}
 							required
 							autocomplete="off"
-						/>
+						/>\
 
-						<Bottom>
-							<div>Or Sign up with </div>
-						</Bottom>
+						<button onClick={() => this.handleEmailSignIn()}>Login</button>
 					</BottomWrapper>
-				</Container3>
+				</FormContainer>
 
 				{this.state.displaySuccess ? <h3>We got your application, thank you for the submission</h3> : null}
-			</div>
+				</LandingContainer>
+			</FixedContainer>
 		);
 	}
 }

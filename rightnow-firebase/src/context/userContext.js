@@ -49,22 +49,22 @@ export default class UserProvider extends Component {
 
       if (user && !this.state.userSignedIn) {
         user
-        .getIdTokenResult()
-        .then(token => token.claims.business ? true : false)
-        .then(isBusiness => {
-          if (isBusiness) return;
-          else {
-            this.setState({
-              userSignedIn: true,
-              uid: user.uid,
-              name: user.displayName,
-              email: user.email,
-              phone: user.phoneNumber,
-              photo: user.photoURL
-            });
-            return;
-          }
-        }).catch(err => console.log("error", err));
+          .getIdTokenResult()
+          .then(token => token.claims.business ? true : false)
+          .then(isBusiness => {
+            if (isBusiness) return;
+            else {
+              this.setState({
+                userSignedIn: true,
+                uid: user.uid,
+                name: user.displayName,
+                email: user.email,
+                phone: user.phoneNumber,
+                photo: user.photoURL
+              });
+              return;
+            }
+          }).catch(err => console.log("error", err));
       }
       
       else if (!user && this.state.userSignedIn) {
