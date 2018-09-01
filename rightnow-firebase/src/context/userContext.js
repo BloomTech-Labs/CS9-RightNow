@@ -12,7 +12,7 @@ export default class UserProvider extends Component {
     uid: "",
     name: "",
     email: "",
-    phone: "",
+    phone: "", 
     photo: "",
     location: "",
     appointments: [],
@@ -21,7 +21,7 @@ export default class UserProvider extends Component {
     displayConfirm: false,
 
     query: "",
-    queryResults: [],
+    queryResults: [], // this is without import appt info
     finished: false,
     lets_display: false,
     this_is_it: null,

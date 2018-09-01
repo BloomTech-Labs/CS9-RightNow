@@ -16,7 +16,7 @@ export default class FeaturedAppointments extends Component {
       <Container>
         <Header>Featured Appointments Near You</Header>
         <CardContainer>
-          {Object.keys(dummy).map((key, index) => <AppointmentCard businessInfo={dummy[key]} key={index} /> )}
+          {/* {Object.keys(dummy).map((key, index) => <AppointmentCard businessInfo={dummy[key]} key={index} /> )} */}
         </CardContainer>
       </Container>
     )
