@@ -30,33 +30,71 @@ export default class AppointmentCard extends Component {
 	}
 
 	render() {
+		// this will break the dummy
 
-		const { businessImage, businessName, rating, streetAddress, cityStateZip, appointments } = this.props.businessInfo;
+		// info regarding appointments
+		// console.log(this.props.businessInfo)
+		const { business_ref, cost, description, service, time } = this.props.businessInfo.appointment;
 
+		// info regarding business itself
+		console.log(this.props.businessInfo)
+		const {
+			city,
+			fullAddress,
+			name,
+			phone,
+			photos,
+			rating,
+			state,
+			street_name,
+			street_number,
+			zip
+		} = this.props.businessInfo.business_details;
+
+		// renaming deconstructed const
+		const businessName = name;
+		const businessImage = photos[0]; // take the first photo
+		const streetAddress = `${street_number} ${street_name}`;
+		const cityStateZip = `${city} ${state} ${zip}`;
+
+		// <BusinessName> info about the place
+		// <AvaiableAppts> info about the appointment
 		return (
-			<Container>
-				<BusinessImage src={businessImage} />
+			<UserContext.Consumer>
+				{(value) => {
+					return (
+						<Container>
+							<BusinessImage src={businessImage} />
 
-				<BusinessInfo>
-					<BusinessName>{businessName}</BusinessName>
-					<StarRatings
-						rating={rating}
-						numberOfStars={5}
-						starRatedColor="gold"
-						starEmptyColor="grey"
-						starDimension="35px"
-					/>
-					<Address>
-						<div>{streetAddress}</div>
-						<div>{cityStateZip}</div>
-					</Address>
-				</BusinessInfo>
+							<BusinessInfo>
+								<BusinessName>{businessName}</BusinessName>
+								<StarRatings
+									rating={rating}
+									numberOfStars={5}
+									starRatedColor="gold"
+									starEmptyColor="grey"
+									starDimension="35px"
+								/>
+								<Address>
+									<div>{streetAddress}</div>
+									<div>{cityStateZip}</div>
+								</Address>
+							</BusinessInfo>
 
-
-				<UserContext.Consumer>
-					{value => {
-						return (
 							<AvailableAppts>
+								<Appointment
+									onClick={() =>
+										value.updateState({
+											// theo_appt_details: { type: service, time: time, cost: cost },
+											displayConfirm: true
+										})}
+								>
+									<Type>{service}</Type>
+									<Time>{time}</Time>
+									<Cost>{cost}</Cost>
+								</Appointment>
+
+								{/* BACK UP
 								{Object.keys(appointments).map((key, index) => (
 									<Appointment
 										key={index}
@@ -66,17 +104,16 @@ export default class AppointmentCard extends Component {
 												displayConfirm: true
 											})}
 									>
-										<Type>{appointments[key].type}</Type>
+										<Type>{service}</Type>
 										<Time>{appointments[key].time}</Time>
 										<Cost>{appointments[key].cost}</Cost>
-								</Appointment>
-							))}
-						</AvailableAppts>
-						)
-					}}
-				</UserContext.Consumer>
-						
-			</Container>
+									</Appointment>
+								))} */}
+							</AvailableAppts>
+						</Container>
+					);
+				}}
+			</UserContext.Consumer>
 		);
 	}
 }
