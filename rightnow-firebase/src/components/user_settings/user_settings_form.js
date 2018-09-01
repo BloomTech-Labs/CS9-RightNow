@@ -52,7 +52,7 @@ class UserSettings extends Component {
                 <ContactForm userState={value} />
                 <UserChangePassword />
                 <UserNotification />
-                <Button>Save</Button>
+                <Button onClick={()=> this.props.UserProvider}>Save</Button>
               </FormContainer>
             )}
         </UserContext.Consumer>

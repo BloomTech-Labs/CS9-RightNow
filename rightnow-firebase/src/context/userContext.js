@@ -12,7 +12,7 @@ export default class UserProvider extends Component {
     uid: "",
     name: "", // need both first and last name
     email: "",
-    phone: "", // pulling data from email and not phone
+    phone: "", 
     photo: "",
     location: "",
     appointments: [],
@@ -21,9 +21,9 @@ export default class UserProvider extends Component {
     displayConfirm: false,
 
     query: "",
-    queryResults: [],
+    queryResults: [], // this is without import appt info
     finished: false,
-    this_is_it: null,
+    this_is_it: null, // use this for final appt card display
 
     userSignedIn: false,
 
@@ -44,6 +44,7 @@ export default class UserProvider extends Component {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
+      // console.log(user) // display all info from user
       if (user && !this.state.userSignedIn) {
         this.setState({
           userSignedIn: true,
