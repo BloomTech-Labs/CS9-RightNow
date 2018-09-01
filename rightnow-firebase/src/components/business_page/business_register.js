@@ -29,8 +29,10 @@ import {
 } from './business_register_styles';
 
 import axios from 'axios';
+import { withRouter, Redirect } from "react-router-dom";
+import firebase from "../../firebase/firebase";
 
-export default class BusinessAccount extends Component {
+class BusinessAccount extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -40,7 +42,8 @@ export default class BusinessAccount extends Component {
 			password_reg: '',
 			phone: '',
 			email_log: '',
-			password_log: ''
+			password_log: '',
+			isBusiness: ""
 		};
 	}
 
@@ -126,8 +129,30 @@ export default class BusinessAccount extends Component {
 		});
 	};
 
+	handleEmailSignIn = () => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(this.state.email_log, this.state.password_log)
+      .then(res => {
+
+        firebase.auth().currentUser.getIdTokenResult().then(token => {
+          if (token.claims.business) this.setState({ isBusiness: true });
+          else console.log("not a business");
+        });
+
+        return;
+      });
+	}
+
 	render() {
 		console.log(this.props);
+
+		if (this.state.isBusiness) {
+			return (
+				<Redirect to="/busn-appts" />
+			)
+		}
+		
 		return (
 			<div>
 				<Container1>
@@ -151,8 +176,9 @@ export default class BusinessAccount extends Component {
 									</Link>
 								</RegButton>
 								<CenterLine />
-								<LoginButton>
-									<Link
+								<LoginButton onClick={() => this.handleEmailSignIn()} >
+									Login
+									{/* <Link
 										activeClass="active"
 										className="toRegister"
 										to="toLogin"
@@ -161,7 +187,7 @@ export default class BusinessAccount extends Component {
 										duration={500}
 									>
 										Login
-									</Link>
+									</Link> */}
 								</LoginButton>
 							</ButtonContainer>
 						</div>
@@ -259,7 +285,7 @@ export default class BusinessAccount extends Component {
 							onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
 							name="password_log"
 							placeholder="Password"
-							value={this.state.phone}
+							value={this.state.password_log}
 							required
 							autocomplete="off"
 						/>
@@ -275,3 +301,6 @@ export default class BusinessAccount extends Component {
 		);
 	}
 }
+
+
+export default withRouter(BusinessAccount);

@@ -96,7 +96,18 @@ export default class Navigation extends Component {
   };
 
   handleEmailSignIn = (email, password) => {
-		firebase.auth().signInWithEmailAndPassword(email, password);
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(res => {
+
+        firebase.auth().currentUser.getIdTokenResult().then(token => {
+          if (token.claims.business) console.log("this is a business");
+          else console.log("not a business");
+        });
+
+        return;
+      });
 		this.closeModal();
 	}
 

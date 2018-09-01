@@ -25,7 +25,8 @@ const Description = glamorous.textarea({
 
 export default class PostAppointment extends Component {
   state = {
-    time: "",
+    start_time: "",
+    end_time: "",
     service: "",
     cost: "",
     description: "",
@@ -53,10 +54,19 @@ export default class PostAppointment extends Component {
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
         />
         <input 
+          style={{ marginTop: "5%" }}
           type="text"
-          name="time"
-          value={this.state.time}
-          placeholder="time"
+          name="start_time"
+          value={this.state.start_time}
+          placeholder="start time"
+          onChange={e => this.setState({ [e.target.name]: e.target.value })}
+        />
+        <input 
+          style={{ marginBottom: "5%" }}
+          type="text"
+          name="end_time"
+          value={this.state.end_time}
+          placeholder="end time"
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
         />
         <input 
