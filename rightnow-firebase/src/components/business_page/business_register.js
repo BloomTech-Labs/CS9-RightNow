@@ -285,7 +285,6 @@ class BusinessAccount extends Component {
 								id="phone"
 								type="text"
 								maxLength="14"
-
 								onChange={(e) => this.handlePhoneInput(e)}
 								name="phone"
 								placeholder="Phone Number"
