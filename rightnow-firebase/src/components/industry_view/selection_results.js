@@ -152,34 +152,6 @@ export default class Results extends Component {
 					}
 
 					if (value.this_is_it !== null) {
-						/*
-						const result = {};
-						
-						//  const result = [
-						// 	 {business_ref: { business_details, appointments[]}},
-						// 	 {business_ref: { business_details, appointments[]}},
-						//  ]
-						 
-
-						// const res = value.this_is_it.filter(x => x.appointment)
-
-						value.this_is_it.forEach((appt) => {
-							if (!result[appt.appointment.business_ref]) {
-								// if no element
-								result[appt.appointment.business_ref] = {
-									business_details: appt.appointment.business_details,
-									appointments: [ appt.appointment ]
-								};
-							}
-							//  else {
-							// 	result[appt.appointment.business_ref] = {
-							// 		business_details: appt.appointment.business_details,
-							// 		appointments: [ ...appt.appointment.appointments, result[appt.appointment] ]
-							// 	};
-							// }
-						});
-						*/
-						// console.log(result);
 						return (
 							<Container>
 								<Clock />
