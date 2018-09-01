@@ -173,6 +173,16 @@ class BusinessAccount extends Component {
 		return;
 	};
 
+	FromRegToLogin = () => {
+		document.querySelector('#register').style.top = '-100vh';
+		document.querySelector('#login').style.top = 0;
+	};
+
+	FromLogToRegister = () => {
+		document.querySelector('#login').style.top = '-100vh';
+		document.querySelector('#register').style.top = 0;
+	};
+
 	handleRegisterDisplay = () => {
 		document.querySelector('#landing').style.top = '-100vh';
 		document.querySelector('#register').style.top = 0;
@@ -274,6 +284,8 @@ class BusinessAccount extends Component {
 							<Input
 								id="phone"
 								type="text"
+								maxLength="14"
+
 								onChange={(e) => this.handlePhoneInput(e)}
 								name="phone"
 								placeholder="Phone Number"
