@@ -47,13 +47,13 @@ export default class UserProvider extends Component {
     firebase.auth().onAuthStateChanged(user => {
       console.log(user);
 
-      if (user) {
+      if (user && !this.state.userSignedIn) {
         user
         .getIdTokenResult()
         .then(token => token.claims.business ? true : false)
         .then(isBusiness => {
           if (isBusiness) return;
-          if (user && !this.state.userSignedIn) {
+          else {
             this.setState({
               userSignedIn: true,
               uid: user.uid,
@@ -62,12 +62,12 @@ export default class UserProvider extends Component {
               phone: user.phoneNumber,
               photo: user.photoURL
             });
+            return;
           }
-          return;
         }).catch(err => console.log("error", err));
       }
       
-      else {
+      else if (!user && this.state.userSignedIn) {
         this.setState({
           userSignedIn: false,
           uid: null,
@@ -77,6 +77,8 @@ export default class UserProvider extends Component {
           photo: null
         });
       }
+
+      else return;
     });
   }
 
