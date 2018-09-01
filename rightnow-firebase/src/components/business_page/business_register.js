@@ -111,6 +111,21 @@ const Button = glamorous.button({
 });
 
 
+const apiStyle = {
+	margin: '1% auto',
+  width: '23%',
+  padding: '.7% 0',
+	border: 'none',
+	borderRadius: "5px",
+  fontSize: '1.3rem',
+  fontWeight: 600,
+  color: 'white',
+	textAlign: 'center',
+	textShadow: "1px 1px black",
+	backgroundColor: "rgba(225, 225, 225, 0.4)"
+}
+
+
 class BusinessAccount extends Component {
 	constructor(props) {
 		super(props);
@@ -124,21 +139,30 @@ class BusinessAccount extends Component {
 		};
 	}
 
-	submitForm = async () => {
-		const userId = await firebase.auth().currentUser.uid;
+	handlePhoneInput = e => {
+		if (e.target.value.length === 3) {
+			this.setState({ phone: `(${e.target.value})-` });
+		}
+		else if (e.target.value.length === 9) {
+			this.setState({ phone: `${e.target.value}-` });
+		}
+		else this.setState({ [e.target.name]: e.target.value });
+	}
 
+	submitForm = async () => {
+		const formattedPhoneNumber = this.state.phone.replace(/\D/g,''); 
+		
 		const owner = {
 			first_name: this.state.first_name,
 			last_name: this.state.last_name,
 			email: this.state.email,
-			phone: this.state.phone,
+			phone: `+1${formattedPhoneNumber}`, // MUST BE 10 DIGIT NUMBER
 			password: this.state.password
 		};
 
 		const business = this.props.value.data.business;
 
 		const allData = {
-			uid: userId,
 			business_information: business,
 			owner_information: owner
 		};
@@ -173,10 +197,8 @@ class BusinessAccount extends Component {
 	}
 
 	handleRegisterDisplay = () => {
-		const landingContainer = document.querySelector("#landing");
-		const regContainer = document.querySelector("#register");
-		landingContainer.style.top = "-100vh";
-		regContainer.style.top = 0;
+		document.querySelector("#landing").style.top = "-100vh";
+		document.querySelector("#register").style.top = 0;
 	}
 
 	handleLoginDisplay = () => {
@@ -198,7 +220,6 @@ class BusinessAccount extends Component {
 							<TitleBorder>Sesho: Manager</TitleBorder>
 							<Description>MANAGE YOUR APPOINTMENTS WITH A SIMPLE SESSION OF SESHO</Description>
 						</Title>
-
 						<ButtonContainer>
 							<RegButton onClick={() => this.handleRegisterDisplay()}>
 									Register
@@ -212,10 +233,8 @@ class BusinessAccount extends Component {
 
 
 					<FormContainer id="register">
-						<div>Already a family of Sesho? click here</div>
-						<TopWrapper>
-							<LeftSide>
-								<div>First Name:</div>
+						<div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignContent: "center", width: "25%", height: "100%", margin: "auto" }}>
+							<div style={{ display: "flex", justifyContent: "center", alignContent: "center", width: "100%", margin: "2% auto" }}>
 								<Input
 									type="text"
 									name="first_name"
@@ -224,11 +243,9 @@ class BusinessAccount extends Component {
 									value={this.state.first_name}
 									required
 									autocomplete="off"
+									style={{ marginRight: "1%", width: "49%", padding: "2% 0" }}
 								/>
-							</LeftSide>
 
-							<RightSide>
-								<div>Last Name:</div>
 								<Input
 									type="text"
 									onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
@@ -237,12 +254,10 @@ class BusinessAccount extends Component {
 									value={this.state.last_name}
 									required
 									autocomplete="off"
+									style={{ marginLeft: "1%", width: "49%", padding: "2% 0" }}
 								/>
-							</RightSide>
-						</TopWrapper>
+							</div>
 
-						<BottomWrapper>
-							<div>Email:</div>
 							<Input
 								type="email"
 								onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
@@ -251,8 +266,8 @@ class BusinessAccount extends Component {
 								value={this.state.email}
 								required
 								autocomplete="off"
+								style={{ width: "100%", margin: "2% auto", padding: "2% 0" }}
 							/>
-							<div>Password</div>
 							<Input
 								type="password"
 								onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
@@ -261,23 +276,22 @@ class BusinessAccount extends Component {
 								value={this.state.password}
 								required
 								autocomplete="off"
+								style={{ width: "100%", margin: "2% auto", padding: "2% 0" }}
 							/>
-							<div>Phone Number:</div>
 							<Input
+								id="phone"
 								type="text"
-								onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
+								onChange={(e) => this.handlePhoneInput(e)}
 								name="phone"
 								placeholder="Phone Number"
 								value={this.state.phone}
 								required
 								autocomplete="off"
+								style={{ width: "100%", margin: "2% auto", padding: "2% 0" }}
 							/>
-							<Bottom>
-								<div>Google API</div>
-								<PlacesAPI busnContext={this.props.value} />
-							</Bottom>
-						</BottomWrapper>
-						<Button onClick={() => this.submitForm()}>Submit</Button>
+							<PlacesAPI busnContext={this.props.value} style={{padding: "2% 0"}} />
+							<Button onClick={() => this.submitForm()} style={{ margin: "3% auto", width: "50%", padding: "2% 0" }}>Submit</Button>
+						</div>
 					</FormContainer>
 
 
@@ -290,7 +304,6 @@ class BusinessAccount extends Component {
 								placeholder="Email"
 								value={this.state.email}
 								required
-								// autocomplete="off"
 							/>
 							<Input
 								type="password"
@@ -299,9 +312,7 @@ class BusinessAccount extends Component {
 								placeholder="Password"
 								value={this.state.password}
 								required
-								// autocomplete="off"
-							/>\
-
+							/>
 							<Button onClick={() => this.handleEmailSignIn()}>Login</Button>
 						</Container>
 					</FormContainer>

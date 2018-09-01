@@ -50,7 +50,7 @@ app.get("/", (req, res) => res.send("seshy"));
 // CREATE BUSINESS -- working
 // business users can only be create through this route --- NO 0AUTH FOR BUSINESS SIGN UP
 app.post("/business", async (req, res) => {
-	const { first_name, last_name, email, password, phone } = req.body;
+	const { first_name, last_name, email, password, phone } = req.body.owner_information;
 
 	const newUserId = 
 		await admin

@@ -1,7 +1,21 @@
 //Import React Scrit Libraray to load Google object
 import React, { Component } from "react";
 import { BusinessContext } from "../../context/businessContext";
+import glamorous from "glamorous";
 
+const Input = glamorous.input({
+  margin: '1% auto',
+  width: '100%',
+  padding: '2% 0',
+	border: 'none',
+	borderRadius: "5px",
+  fontSize: '1.3rem',
+  fontWeight: 600,
+  color: 'white',
+	textAlign: 'center',
+	textShadow: "1px 1px black",
+	backgroundColor: "rgba(225, 225, 225, 0.4)"
+});
 export default class PlacesAPI extends Component {
   constructor(props) {
     super(props);
@@ -57,17 +71,12 @@ export default class PlacesAPI extends Component {
       <BusinessContext.Consumer>
         {value => (
           <div>
-            <input 
+            <Input 
               id="autocomplete" 
               placeholder="Enter business location" 
               name="query"
               value={this.state.query}
               onChange={e => this.setState({ [e.target.name]: e.target.value })}
-              style={{
-                width: "30vw",
-                padding: "1%",
-                fontSize: "1em"
-              }}
             />
           </div>
         )}
