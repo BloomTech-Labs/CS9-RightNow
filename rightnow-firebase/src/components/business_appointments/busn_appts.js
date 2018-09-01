@@ -5,13 +5,16 @@ import {
   ApptsWrapper,
 } from "./busn_appts_style";
 import PostAppointment from "./post_availability";
+import Calendar from "./calendar";
 
 
 export default class BusnApptsView extends Component {
   render() {
     return (
       <Container>
-        <CalendarWrapper></CalendarWrapper>
+        <CalendarWrapper>
+          <Calendar />
+        </CalendarWrapper>
         <ApptsWrapper>
           <PostAppointment />
         </ApptsWrapper>
