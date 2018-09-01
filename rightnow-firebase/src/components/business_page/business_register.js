@@ -8,6 +8,7 @@ import * as Scroll from 'react-scroll';
 import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
 // glamorous stuff
 import {
+	TransWrapper,
 	Container1,
 	Container2,
 	Container3,
@@ -162,7 +163,7 @@ class BusinessAccount extends Component {
 		}
 		
 		return (
-			<div>
+			<TransWrapper>
 				<Container1>
 					<TitleBackdrop>
 						<div>
@@ -305,7 +306,7 @@ class BusinessAccount extends Component {
 				</Container3>
 
 				{this.state.displaySuccess ? <h3>We got your application, thank you for the submission</h3> : null}
-			</div>
+			</TransWrapper>
 		);
 	}
 }

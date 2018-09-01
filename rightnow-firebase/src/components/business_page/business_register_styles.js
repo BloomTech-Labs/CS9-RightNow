@@ -1,5 +1,9 @@
 import glamorous from 'glamorous';
 
+export const TransWrapper= glamorous.div({
+	opacity: '1'
+});
+
 export const Container1 = glamorous.div({
 	background:
 		'linear-gradient(30deg, rgba(0, 0, 0, 0.50) 20%, rgba(0, 0, 0, 0.70)) 100%, url("https://images.unsplash.com/photo-1535232843222-a40c29436fd3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=09c323bdb9e5c76f82339cd9b4247a57&auto=format&fit=crop&w=1959&q=80")',
@@ -16,10 +20,11 @@ export const Container2 = glamorous.div({
 	boxSizing: 'border-box',
 	border: '4px solid black',
 	padding: '10px',
-	width: '50%',
-	height: '100%',
+	width: '100%',
+	height: '100vh',
 	marginBottom: '1%',
-	backgroundColor: 'rgba(201, 76, 76, 1)'
+	backgroundColor: 'rgba(201, 76, 76, 0)',
+	opacity: '0'
 	// backgroundRepeat: 'no-repeat',
 	// backgroundSize: 'cover'
 });
@@ -28,9 +33,9 @@ export const Container3 = glamorous.div({
 	boxSizing: 'border-box',
 	border: '4px solid black',
 	padding: '10px',
-	width: '50%',
-	height: '80vh',
-	marginBottom: '1%',
+	width: '100%',
+	height: '100vh',
+	marginBottom: '1%'
 	// backgroundRepeat: 'no-repeat',
 	// backgroundSize: 'cover'
 });
