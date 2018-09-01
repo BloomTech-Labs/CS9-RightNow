@@ -206,6 +206,12 @@ class BusinessAccount extends Component {
 		document.querySelector("#login").style.top = 0;
 	}
 
+	goingUp = () => {
+		document.querySelector("#landing").style.top = "30%";
+		document.querySelector("#register").style.top = "100vh";
+		document.querySelector("#login").style.top = "100vh";
+	}
+
 	render() {
 
 		if (this.state.isBusiness) <Redirect to="/busn-appts" />
@@ -316,8 +322,8 @@ class BusinessAccount extends Component {
 							<Button onClick={() => this.handleEmailSignIn()}>Login</Button>
 						</Container>
 					</FormContainer>
-
-					{this.state.displaySuccess ? <h3>We got your application, thank you for the submission</h3> : null}
+					
+					
 				</LandingContainer>
 			</FixedContainer>
 		);
