@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-// Firebase
 import PlacesAPI from '../placesAPI/search_autocomplete';
-import { auth } from '../../firebase/firebase';
-import { doSignInWithEmailAndPassword, doCreateUserWithEmailAndPassword } from '../../firebase/auth';
-// react scroll
-import * as Scroll from 'react-scroll';
-import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
-// glamorous stuff
+import { withRouter, Redirect } from 'react-router-dom';
+import axios from 'axios';
+import firebase from '../../firebase/firebase';
+import glamorous from 'glamorous';
 import {
 	TransWrapper,
 	Container1,
@@ -22,106 +19,127 @@ import {
 	LoginButton,
 	LeftSide,
 	RightSide,
-	Input,
 	Bottom,
 	TopWrapper,
-	BottomWrapper,
-	Button
+	BottomWrapper
 } from './business_register_styles';
 
-import axios from 'axios';
-import { withRouter, Redirect } from "react-router-dom";
-import firebase from "../../firebase/firebase";
-import glamorous from "glamorous";
+const FixedContainer = glamorous.div({
+	height: '100vh',
+	width: '100vw',
+	position: 'relative',
+	overflow: 'hidden',
+	background:
+		'linear-gradient(30deg, rgba(0, 0, 0, 0.50) 20%, rgba(0, 0, 0, 0.70)) 100%, url("https://images.unsplash.com/photo-1535232843222-a40c29436fd3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=09c323bdb9e5c76f82339cd9b4247a57&auto=format&fit=crop&w=1959&q=80")',
+	backgroundRepeat: 'repeat',
+	backgroundSize: 'cover',
+	backgroundAttachment: 'fixed'
+});
 
+const LandingContainer = glamorous.div({
+	position: 'absolute',
+	height: '100vh',
+	width: '100vw',
+	background: 'transparent',
+	transition: 'all 1.2s'
+});
 
-const Slider = glamorous.div({
-	position: "absolute",
-	height: "100vh",
-	width: "100vw",
+const WelcomePage = glamorous.div({
+	position: 'absolute',
+	height: '100vh',
+	width: '100vw',
+	top: '30%',
+	background: 'transparent',
+	transition: 'all 1.2s'
+});
+
+const FormContainer = glamorous.div({
+	position: 'absolute',
+	height: '100vh',
+	width: '100vw',
+	top: '100vh',
+	background: 'transparent',
+	transition: 'all 1.2s'
+});
+
+const Container = glamorous.div({
+	position: 'absolute',
 	top: 0,
-	overflow: "hidden",
-	transition: "all 1s"
+	bottom: 0,
+	left: 0,
+	right: 0,
+	width: '100%',
+	height: '25%',
+	margin: 'auto',
+	display: 'flex',
+	flexDirection: 'column',
+	justifyContent: 'center',
+	alignContent: 'center'
+});
+
+const Input = glamorous.input({
+	margin: '1% auto',
+	width: '23%',
+	padding: '.7% 0',
+	border: 'none',
+	borderRadius: '5px',
+	fontSize: '1.3rem',
+	fontWeight: 600,
+	color: 'white',
+	textAlign: 'center',
+	textShadow: '1px 1px black',
+	backgroundColor: 'rgba(225, 225, 225, 0.4)'
+});
+
+const Button = glamorous.button({
+	width: '21%',
+	margin: 'auto',
+	padding: '0.7% 0',
+	color: 'white',
+	fontWeight: 600,
+	fontSize: '1.3em',
+	border: '0.3px solid white',
+	borderRadius: '5px',
+	backgroundColor: 'transparent',
+	':hover': { color: 'white', backgroundColor: 'rgba(225, 225, 225, 0.1)', cursor: 'pointer' },
+	':focus': { color: 'white', backgroundColor: 'rgba(225, 225, 225, 0.1)' }
 });
 
 class BusinessAccount extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			email_reg: '',
 			first_name: '',
 			last_name: '',
-			password_reg: '',
 			phone: '',
-			email_log: '',
-			password_log: '',
-			isBusiness: ""
+			email: '',
+			password: '',
+			isBusiness: ''
 		};
 	}
 
-	componentDidMount() {
-		Events.scrollEvent.register('begin', function() {
-			console.log('begin', arguments);
-		});
-
-		Events.scrollEvent.register('end', function() {
-			console.log('end', arguments);
-		});
-	}
-
-	scrollToTop() {
-		scroll.scrollToTop();
-	}
-	scrollTo() {
-		scroller.scrollTo('scroll-to-element', {
-			duration: 800,
-			delay: 0,
-			smooth: 'easeInOutQuart'
-		});
-	}
-	scrollToWithContainer() {
-		let goToContainer = new Promise((resolve, reject) => {
-			Events.scrollEvent.register('end', () => {
-				resolve();
-				Events.scrollEvent.remove('end');
-			});
-
-			scroller.scrollTo('scroll-container', {
-				duration: 800,
-				delay: 0,
-				smooth: 'easeInOutQuart'
-			});
-		});
-
-		goToContainer.then(() =>
-			scroller.scrollTo('scroll-container-second-element', {
-				duration: 800,
-				delay: 0,
-				smooth: 'easeInOutQuart',
-				containerId: 'scroll-container'
-			})
-		);
-	}
-	componentWillUnmount() {
-		Events.scrollEvent.remove('begin');
-		Events.scrollEvent.remove('end');
-	}
+	handlePhoneInput = (e) => {
+		if (e.target.value.length === 3) {
+			this.setState({ phone: `(${e.target.value})-` });
+		} else if (e.target.value.length === 9) {
+			this.setState({ phone: `${e.target.value}-` });
+		} else this.setState({ [e.target.name]: e.target.value });
+	};
 
 	submitForm = async () => {
-		const userId = await auth.currentUser.uid;
+		const formattedPhoneNumber = this.state.phone.replace(/\D/g, '');
 
 		const owner = {
 			first_name: this.state.first_name,
 			last_name: this.state.last_name,
-			email: this.state.email_reg,
-			phone: this.state.phone,
-			password: this.state.password_reg
+			email: this.state.email,
+			phone: `+1${formattedPhoneNumber}`, // MUST BE 10 DIGIT NUMBER
+			password: this.state.password
 		};
 
 		const business = this.props.value.data.business;
 
 		const allData = {
-			uid: userId,
 			business_information: business,
 			owner_information: owner
 		};
@@ -131,185 +149,174 @@ class BusinessAccount extends Component {
 			.then((res) => console.log(`\nsuccessfuly created new business\n${res}`))
 			.catch((err) => console.log(`\nerror creating new business\n${err}`));
 
-		// doCreateUserWithEmailAndPassword(this.state.email_reg, this.state.password_reg);
 		this.setState({
 			first_name: '',
 			last_name: '',
-			email_reg: '',
+			email: '',
 			phone: '',
-			password_reg: ''
+			password: '',
+			isBusiness: true
 		});
 	};
 
 	handleEmailSignIn = () => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(this.state.email_log, this.state.password_log)
-      .then(() => {
-        firebase.auth().currentUser.getIdTokenResult().then(token => {
-          if (token.claims.business) this.setState({ isBusiness: true });
-          else return;
-        });
-			});
+		firebase
+			.auth()
+			.signInWithEmailAndPassword(this.state.email, this.state.password)
+			.then(() => {
+				firebase.auth().currentUser.getIdTokenResult().then((token) => {
+					if (token.claims.business) this.setState({ isBusiness: true });
+					else return;
+				});
+			})
+			.then(() => this.setState({ email: '', password: '' }));
 		return;
-	}
+	};
+
+	handleRegisterDisplay = () => {
+		document.querySelector('#landing').style.top = '-100vh';
+		document.querySelector('#register').style.top = 0;
+	};
+
+	handleLoginDisplay = () => {
+		document.querySelector('#landing').style.top = '-100vh';
+		document.querySelector('#login').style.top = 0;
+	};
+
+	goingUp = () => {
+		document.querySelector('#landing').style.top = '30%';
+		document.querySelector('#register').style.top = '100vh';
+		document.querySelector('#login').style.top = '100vh';
+	};
 
 	render() {
+		if (this.state.isBusiness) <Redirect to="/busn-appts" />;
 
-		if (this.state.isBusiness) {
-			return (
-				<Redirect to="/busn-appts" />
-			)
-		}
-		
 		return (
-			<TransWrapper>
-				<Container1>
-					<TitleBackdrop>
-						<div>
-							<Title>
-								<TitleBorder>Sesho: Manager</TitleBorder>
-								<Description>MANAGE YOUR APPOINTMENTS WITH A SIMPLE SESSION OF SESHO</Description>
-							</Title>
-							<ButtonContainer>
-								<RegButton>
-									<Link
-										activeClass="active"
-										className="toRegister"
-										to="toRegister"
-										spy={true}
-										smooth={true}
-										duration={500}
-									>
-										Register
-									</Link>
-								</RegButton>
-								<CenterLine />
-								<LoginButton onClick={() => this.handleEmailSignIn()} >
-									Login
-									{/* <Link
-										activeClass="active"
-										className="toRegister"
-										to="toLogin"
-										spy={true}
-										smooth={true}
-										duration={500}
-									>
-										Login
-									</Link> */}
-								</LoginButton>
-							</ButtonContainer>
+			<FixedContainer>
+				<LandingContainer id="swoosh">
+					<WelcomePage id="landing">
+						<Title>
+							<TitleBorder>Sesho: Manager</TitleBorder>
+							<Description>MANAGE YOUR APPOINTMENTS WITH A SIMPLE SESSION OF SESHO</Description>
+						</Title>
+						<ButtonContainer>
+							<RegButton onClick={() => this.handleRegisterDisplay()}>Register</RegButton>
+							<CenterLine />
+							<LoginButton onClick={() => this.handleLoginDisplay()}>Login</LoginButton>
+						</ButtonContainer>
+					</WelcomePage>
+
+					<FormContainer id="register">
+						<div
+							style={{
+								display: 'flex',
+								flexDirection: 'column',
+								justifyContent: 'center',
+								alignContent: 'center',
+								width: '25%',
+								height: '100%',
+								margin: 'auto'
+							}}
+						>
+							<div
+								style={{
+									display: 'flex',
+									justifyContent: 'center',
+									alignContent: 'center',
+									width: '100%',
+									margin: '2% auto'
+								}}
+							>
+								<Input
+									type="text"
+									name="first_name"
+									placeholder="First Name"
+									onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
+									value={this.state.first_name}
+									required
+									autocomplete="off"
+									style={{ marginRight: '1%', width: '49%', padding: '2% 0' }}
+								/>
+
+								<Input
+									type="text"
+									onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
+									name="last_name"
+									placeholder="Last Name"
+									value={this.state.last_name}
+									required
+									autocomplete="off"
+									style={{ marginLeft: '1%', width: '49%', padding: '2% 0' }}
+								/>
+							</div>
+
+							<Input
+								type="email"
+								onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
+								name="email"
+								placeholder="Email"
+								value={this.state.email}
+								required
+								autocomplete="off"
+								style={{ width: '100%', margin: '2% auto', padding: '2% 0' }}
+							/>
+							<Input
+								type="password"
+								onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
+								name="password"
+								placeholder="Password"
+								value={this.state.password}
+								required
+								autocomplete="off"
+								style={{ width: '100%', margin: '2% auto', padding: '2% 0' }}
+							/>
+							<Input
+								id="phone"
+								type="text"
+								onChange={(e) => this.handlePhoneInput(e)}
+								name="phone"
+								placeholder="Phone Number"
+								value={this.state.phone}
+								required
+								autocomplete="off"
+								style={{ width: '100%', margin: '2% auto', padding: '2% 0' }}
+							/>
+							<PlacesAPI busnContext={this.props.value} style={{ padding: '2% 0' }} />
+							<Button
+								onClick={() => this.submitForm()}
+								style={{ margin: '3% auto', width: '50%', padding: '2% 0' }}
+							>
+								Submit
+							</Button>
 						</div>
-					</TitleBackdrop>
-				</Container1>
+					</FormContainer>
 
-				<Element name="toRegister" className="element"  />
-				<Container2>
-					<div>Already a family of Sesho? click here</div>
-					<TopWrapper>
-						<LeftSide>
-							<div>First Name:</div>
+					<FormContainer id="login">
+						<Container>
 							<Input
-								type="text"
-								name="first_name"
-								placeholder="First Name"
+								type="email"
 								onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-								value={this.state.first_name}
+								name="email"
+								placeholder="Email"
+								value={this.state.email}
 								required
-								autocomplete="off"
 							/>
-						</LeftSide>
-
-						<RightSide>
-							<div>Last Name:</div>
 							<Input
-								type="text"
+								type="password"
 								onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-								name="last_name"
-								placeholder="Last Name"
-								value={this.state.last_name}
+								name="password"
+								placeholder="Password"
+								value={this.state.password}
 								required
-								autocomplete="off"
 							/>
-						</RightSide>
-					</TopWrapper>
-
-					<BottomWrapper>
-						<div>Email:</div>
-						<Input
-							type="email"
-							onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-							name="email_reg"
-							placeholder="Email"
-							value={this.state.email}
-							required
-							autocomplete="off"
-						/>
-						<div>Password</div>
-						<Input
-							type="password"
-							onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-							name="password_reg"
-							placeholder="Password"
-							value={this.state.password_reg}
-							required
-							autocomplete="off"
-						/>
-						<div>Phone Number:</div>
-						<Input
-							type="text"
-							onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-							name="phone"
-							placeholder="Phone Number"
-							value={this.state.phone}
-							required
-							autocomplete="off"
-						/>
-						<Bottom>
-							<div>Google API</div>
-							<PlacesAPI busnContext={this.props.value} />
-						</Bottom>
-					</BottomWrapper>
-					<Button onClick={() => this.submitForm()}>Submit</Button>
-				</Container2>
-
-				<Element name="toLogin" className="element" />
-				<Container3>
-					<div>Not a family of Sesho? click here</div>
-
-					<BottomWrapper>
-						<div>Email:</div>
-						<Input
-							type="email"
-							onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-							name="email_log"
-							placeholder="Email"
-							value={this.state.email}
-							required
-							autocomplete="off"
-						/>
-						<div>Password</div>
-						<Input
-							type="password"
-							onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-							name="password_log"
-							placeholder="Password"
-							value={this.state.password_log}
-							required
-							autocomplete="off"
-						/>
-
-						<Bottom>
-							<div>Or Sign up with </div>
-						</Bottom>
-					</BottomWrapper>
-				</Container3>
-
-				{this.state.displaySuccess ? <h3>We got your application, thank you for the submission</h3> : null}
-			</TransWrapper>
+							<Button onClick={() => this.handleEmailSignIn()}>Login</Button>
+						</Container>
+					</FormContainer>
+				</LandingContainer>
+			</FixedContainer>
 		);
 	}
 }
-
 
 export default withRouter(BusinessAccount);

@@ -12,7 +12,7 @@ export default class UserProvider extends Component {
     uid: "",
     name: "",
     email: "",
-    phone: "",
+    phone: "", 
     photo: "",
     location: "",
     appointments: [],
@@ -21,7 +21,7 @@ export default class UserProvider extends Component {
     displayConfirm: false,
 
     query: "",
-    queryResults: [],
+    queryResults: [], // this is without import appt info
     finished: false,
     lets_display: false,
     this_is_it: null,
@@ -46,18 +46,28 @@ export default class UserProvider extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       console.log(user);
-      user.getIdTokenResult().then(token => console.log(token)).catch(err => console.log("error", err));
+
       if (user && !this.state.userSignedIn) {
-        this.setState({
-          userSignedIn: true,
-          uid: user.uid,
-          name: user.displayName,
-          email: user.email,
-          phone: user.phoneNumber,
-          photo: user.photoURL
-        });
+        user
+          .getIdTokenResult()
+          .then(token => token.claims.business ? true : false)
+          .then(isBusiness => {
+            if (isBusiness) return;
+            else {
+              this.setState({
+                userSignedIn: true,
+                uid: user.uid,
+                name: user.displayName,
+                email: user.email,
+                phone: user.phoneNumber,
+                photo: user.photoURL
+              });
+              return;
+            }
+          }).catch(err => console.log("error", err));
       }
-      if (!user && this.state.userSignedIn) {
+      
+      else if (!user && this.state.userSignedIn) {
         this.setState({
           userSignedIn: false,
           uid: null,
@@ -67,9 +77,9 @@ export default class UserProvider extends Component {
           photo: null
         });
       }
-    });
 
-    // firebase.auth().currentUser.getIdTokenResult().then(token => console.log(token)).catch(err => console.log("error", err));
+      else return;
+    });
   }
 
 
