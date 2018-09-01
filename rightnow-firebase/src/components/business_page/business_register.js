@@ -174,7 +174,6 @@ class BusinessAccount extends Component {
 			if (token.claims.business) this.setState({ isBusiness: true, email: "", password: "" });
 			else return;
 		});
-		// this.setState({ email: "", password: "" })
 		return;
 	}
 

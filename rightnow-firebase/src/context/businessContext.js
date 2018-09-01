@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { createNewBusiness } from "../firebase/db_interact";
+import firebase from "../firebase/firebase";
+import axios from "axios";
 
 
 export const BusinessContext = React.createContext();
@@ -7,12 +8,17 @@ export const BusinessContext = React.createContext();
 
 export default class BusinessProvider extends Component {
   state = {
+    userSignedIn: false,
+    uid: null,
+
     personal: {
+      full_name: "",
       first_name: "",
       last_name: "",
       email: "",
       phone: ""
     },
+
     business: {
       name: "",
       fullAddress: "",
@@ -25,26 +31,70 @@ export default class BusinessProvider extends Component {
       rating: "",
       photos: []
     },
+
+    future_appointments: [],
     available_appointments: [],
     booked_appointments: []
   }
 
-  updateBusiness = data => this.setState({ business: data });
+  updateBusiness = data => this.setState({ business: data }); // PLACES API USES THIS
 
-  updatePersonal = data => {
-    // createNewBusiness({ personal: data, business: this.state.business });
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      console.log(user);
+
+      if (user && !this.state.userSignedIn) {
+        user
+          .getIdTokenResult()
+          .then(token => token.claims.business ? true : false)
+          .then(isBusiness => {
+            if (!isBusiness) return;
+            else {
+              this.setState({
+                userSignedIn: true,
+                uid: user.uid,
+                personal: {
+                  full_name: user.displayName,
+                  email: user.email,
+                  phone: user.phoneNumber,
+                  photo: user.photoURL
+                }
+              });
+              return this.state.uid;
+            }
+          }).then(id => {
+            if (!id) return;
+
+            axios.get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/${id}/available`)
+              .then(appts => this.setState({ future_appointments: appts })).then(() => console.log(this.state.future_appointments))
+              .catch(err => console.log("error fetching business appointments", err));
+          })
+          .catch(err => console.log("error", err));
+      }
+      
+      else if (!user && this.state.userSignedIn) {
+        this.setState({
+          userSignedIn: false,
+          uid: null,
+          personal: {
+            full_name: null,
+            email: null,
+            phone: null,
+            photo: null
+          }
+        });
+      }
+
+      else return;
+    });
   }
-
-  updateAppointments = data => this.setState({ data });
 
   render() {
     return (
       <BusinessContext.Provider 
         value={{
           data: this.state, 
-          updateBusiness: this.updateBusiness,
-          updatePersonal: this.updatePersonal,
-          updateAppointments: this.updateAppointments
+          updateBusiness: this.updateBusiness
           }}
         >
         {this.props.children}
