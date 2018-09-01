@@ -31,6 +31,17 @@ import {
 import axios from 'axios';
 import { withRouter, Redirect } from "react-router-dom";
 import firebase from "../../firebase/firebase";
+import glamorous from "glamorous";
+
+
+const Slider = glamorous.div({
+	position: "absolute",
+	height: "100vh",
+	width: "100vw",
+	top: 0,
+	overflow: "hidden",
+	transition: "all 1s"
+});
 
 class BusinessAccount extends Component {
 	constructor(props) {
@@ -133,19 +144,16 @@ class BusinessAccount extends Component {
     firebase
       .auth()
       .signInWithEmailAndPassword(this.state.email_log, this.state.password_log)
-      .then(res => {
-
+      .then(() => {
         firebase.auth().currentUser.getIdTokenResult().then(token => {
           if (token.claims.business) this.setState({ isBusiness: true });
-          else console.log("not a business");
+          else return;
         });
-
-        return;
-      });
+			});
+		return;
 	}
 
 	render() {
-		console.log(this.props);
 
 		if (this.state.isBusiness) {
 			return (
@@ -194,7 +202,7 @@ class BusinessAccount extends Component {
 					</TitleBackdrop>
 				</Container1>
 
-				<Element name="toRegister" className="element" />
+				<Element name="toRegister" className="element"  />
 				<Container2>
 					<div>Already a family of Sesho? click here</div>
 					<TopWrapper>
@@ -242,7 +250,7 @@ class BusinessAccount extends Component {
 							onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
 							name="password_reg"
 							placeholder="Password"
-							value={this.state.phone}
+							value={this.state.password_reg}
 							required
 							autocomplete="off"
 						/>

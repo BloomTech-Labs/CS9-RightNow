@@ -53,7 +53,7 @@ export default class UserProvider extends Component {
           uid: user.uid,
           name: user.displayName,
           email: user.email,
-          phone: user.email,
+          phone: user.phoneNumber,
           photo: user.photoURL
         });
       }
