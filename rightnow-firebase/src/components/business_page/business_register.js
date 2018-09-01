@@ -116,7 +116,7 @@ export default class BusinessAccount extends Component {
 			.then((res) => console.log(`\nsuccessfuly created new business\n${res}`))
 			.catch((err) => console.log(`\nerror creating new business\n${err}`));
 
-		doCreateUserWithEmailAndPassword(this.state.email_reg, this.state.password_reg);
+		// doCreateUserWithEmailAndPassword(this.state.email_reg, this.state.password_reg);
 		this.setState({
 			first_name: '',
 			last_name: '',

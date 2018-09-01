@@ -77,6 +77,23 @@ export default class Results extends Component {
                 return final;
               })
               .then(actual => value.updateState({ this_is_it: actual, finished: false }))
+              // .then(() => {
+              //   const result = {};
+
+              //   value.this_is_it.forEach(appt => {
+              //     if (!result[appt.appointment.business_ref]) {
+              //       result[appt.appointment.business_ref] = {
+              //         business_details: appt.appointment.business_details,
+              //         appointments: [appt.appointment]
+              //       }
+              //     } else {
+              //       result[appt.appointment.business_ref] = {
+              //         business_details: appt.appointment.business_details,
+              //         appointments: [...appt.appointment.appointments, result[appt.appointment]]
+              //       }
+              //     }
+              //   })
+              // })
               
               return x;
             };
@@ -89,8 +106,11 @@ export default class Results extends Component {
 
               <Clock />
 
-              {Object.keys(dummy_data).map((key, index) => <AppointmentCard businessInfo={dummy_data[key]} key={index} /> )}
+              {/* {Object.keys(dummy_data).map((key, index) => <AppointmentCard businessInfo={dummy_data[key]} key={index} /> )} */}
 
+              {/* {value.lets_display ? (
+                
+              )} */}
             </Container>
           )
         }}
@@ -98,3 +118,7 @@ export default class Results extends Component {
     )
   }
 }
+
+
+
+

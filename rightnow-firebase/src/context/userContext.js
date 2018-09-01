@@ -23,6 +23,7 @@ export default class UserProvider extends Component {
     query: "",
     queryResults: [],
     finished: false,
+    lets_display: false,
     this_is_it: null,
 
     userSignedIn: false,
@@ -30,7 +31,7 @@ export default class UserProvider extends Component {
     updateState: async data => {
       await this.setState(data);
       console.log(this.state.query);
-    },
+    },  
 
     handleSearch: async () => {
       const data = await axios
@@ -44,6 +45,8 @@ export default class UserProvider extends Component {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
+      console.log(user);
+      user.getIdTokenResult().then(token => console.log(token)).catch(err => console.log("error", err));
       if (user && !this.state.userSignedIn) {
         this.setState({
           userSignedIn: true,
@@ -65,6 +68,8 @@ export default class UserProvider extends Component {
         });
       }
     });
+
+    // firebase.auth().currentUser.getIdTokenResult().then(token => console.log(token)).catch(err => console.log("error", err));
   }
 
 
