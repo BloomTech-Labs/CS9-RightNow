@@ -41,6 +41,11 @@ class Clock extends Component {
 	}
 }
 
+/* 
+A bit of documentation of what's happening:
+
+*/
+
 export default class Results extends Component {
 	// myself = this;
 	state = { testing: null };
@@ -48,13 +53,72 @@ export default class Results extends Component {
 		return (
 			<UserContext.Consumer>
 				{(value) => {
-					console.log('here');
+					// console.log('here');
 					if (value.finished) {
 						// console.log('finished is true');
-
-						const appointments = value.queryResults; // called properly
+						const cache = []; // store all the appointments by unique business ID
+						const appointments = value.queryResults; // All the appoints available
 
 						const testfunction = async (appointments) => {
+							const z = await Promise.all(
+								appointments.map((appt) => {
+									if (cache.length === 0) {
+										cache.push([ appt.business_ref, [ appt ] ]);
+										return axios.get(
+											`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/${appt.business_ref}`
+										);
+									} else {
+										let found = false;
+										cache.forEach((each) => {
+											for (let j = 0; j < each.length; j++) {
+												if (appt.business_ref === each[j]) {
+													// skip axios then push the appointment block to cache[1]
+													each[1].push(appt);
+													found = true;
+												}
+											}
+										});
+										// push business_ref into cache, which will be cache[0]
+										// then push arr_Appt into cache, which will be cache[1]
+										// run axios, push the result into cache, which will be cache[2]; taken care of after all promises are resolved.
+										if (found === false) {
+											cache.push([ appt.business_ref, [ appt ] ]);
+											return axios.get(
+												`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/${appt.business_ref}`
+											);
+										}
+									}
+								})
+							)
+								.then((res) => {
+									// check if res[i] exists
+									// if yes: find element in cache with same ID then push it as element[2]
+									// if no: skip
+									for (let i = 0; i < appointments.length; i++) {
+										if (res[i] !== undefined) {
+											// console.log(`res ${i}`, res[i].data.business_information);
+											// console.log(`appt ${i}`, appointments[i].business_ref);
+											cache.forEach((each) => {
+												if (appointments[i].business_ref === each[0]) {
+													each.push(res[i].data.business_information);
+													console.log(`sanity check for res ${i}`, each);
+												}
+											});
+											// cache[].push(res[i].data.business_information);
+										} else {
+											console.log(`res ${i} does not exist`);
+										}
+									}
+									console.log('cache', cache);
+									return cache;
+								})
+								.then((actual) => value.updateState({ this_is_it: actual, finished: false }));
+
+							return z;
+
+							/*
+							// USE THIS IF YOU WANT EVERY APPOITNMENT TO CARRY BUSINESS INFO
+
 							const x = await Promise.all(
 								appointments.map((appt) => {
 									return axios.get(
@@ -75,10 +139,11 @@ export default class Results extends Component {
 
 									return final;
 								})
-								.then((actual) => value.updateState({ this_is_it: actual, finished: false }))
-								.then((actual) => this.setState({ testing: actual }));
+								.then((actual) => value.updateState({ this_is_it: actual, finished: false }));
+							// .then((actual) => this.setState({ testing: actual }));
 
 							return x;
+						*/
 						};
 
 						testfunction(appointments);
@@ -87,13 +152,41 @@ export default class Results extends Component {
 					}
 
 					if (value.this_is_it !== null) {
+						/*
+						const result = {};
+						
+						//  const result = [
+						// 	 {business_ref: { business_details, appointments[]}},
+						// 	 {business_ref: { business_details, appointments[]}},
+						//  ]
+						 
+
+						// const res = value.this_is_it.filter(x => x.appointment)
+
+						value.this_is_it.forEach((appt) => {
+							if (!result[appt.appointment.business_ref]) {
+								// if no element
+								result[appt.appointment.business_ref] = {
+									business_details: appt.appointment.business_details,
+									appointments: [ appt.appointment ]
+								};
+							}
+							//  else {
+							// 	result[appt.appointment.business_ref] = {
+							// 		business_details: appt.appointment.business_details,
+							// 		appointments: [ ...appt.appointment.appointments, result[appt.appointment] ]
+							// 	};
+							// }
+						});
+						*/
+						// console.log(result);
 						return (
 							<Container>
 								<Clock />
 
-								{value.this_is_it.map((eachData, index) => (
+								{/* {value.this_is_it.map((eachData, index) => (
 									<AppointmentCard businessInfo={eachData} key={index} />
-								))}
+								))} */}
 							</Container>
 						);
 					}
