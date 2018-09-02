@@ -13,7 +13,6 @@ import {
 	Container,
 	Input,
 	Button,
-
 	Title,
 	TitleBorder,
 	Description,
@@ -21,6 +20,10 @@ import {
 	RegButton,
 	CenterLine,
 	LoginButton,
+	ChangeForm,
+	ClickHere,
+	LogClickHere,
+	RegClickHere
 } from './business_register_styles';
 
 class BusinessAccount extends Component {
@@ -36,6 +39,7 @@ class BusinessAccount extends Component {
 		};
 	}
 
+	// parses phone number and adds in parentheses and dashes
 	handlePhoneInput = (e) => {
 		if (e.target.value.length === 3) {
 			this.setState({ phone: `(${e.target.value})-` });
@@ -45,6 +49,7 @@ class BusinessAccount extends Component {
 	};
 
 	submitForm = async () => {
+		// regex only digits from phone number
 		const formattedPhoneNumber = this.state.phone.replace(/\D/g, '');
 
 		const owner = {
@@ -77,6 +82,7 @@ class BusinessAccount extends Component {
 		});
 	};
 
+	// sign in with email
 	handleEmailSignIn = () => {
 		firebase
 			.auth()
@@ -91,6 +97,7 @@ class BusinessAccount extends Component {
 		return;
 	};
 
+	// screen transitions
 	handleRegisterDisplay = () => {
 		document.querySelector('#landing').style.top = '150vh';
 		document.querySelector('#register').style.top = 0;
@@ -146,9 +153,10 @@ class BusinessAccount extends Component {
 								margin: 'auto'
 							}}
 						>
-							<div style={{ color: 'white' }} onClick={() => this.FromRegToLogin()}>
-								Already a Sesho Manager? <span style={{ color: 'red' }}>Click here</span>
-							</div>
+							<ChangeForm>
+								<p style={{ margin: 0, marginRight: '2%' }}>Already a Sesho manager?</p>
+								<RegClickHere onClick={() => this.FromRegToLogin()}>Login Here</RegClickHere>
+							</ChangeForm>
 							<div
 								style={{
 									display: 'flex',
@@ -224,10 +232,21 @@ class BusinessAccount extends Component {
 					</FormContainerReg>
 
 					<FormContainerLog id="login">
-						<Container>
-							<div onClick={() => this.FromLogToRegister()}>
-								Not a <span style={{ color: 'red' }}>Sesho Manager</span> yet?
-							</div>
+						<div
+							style={{
+								display: 'flex',
+								flexDirection: 'column',
+								justifyContent: 'center',
+								alignContent: 'center',
+								width: '25%',
+								height: '100%',
+								margin: 'auto'
+							}}
+						>
+							<ChangeForm>
+								<p style={{ marginRight: '2%' }}>Not a Sesho manager yet?</p>
+								<LogClickHere onClick={() => this.FromLogToRegister()}>Register Here</LogClickHere>
+							</ChangeForm>
 							<Input
 								type="email"
 								onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
@@ -235,6 +254,7 @@ class BusinessAccount extends Component {
 								placeholder="Email"
 								value={this.state.email}
 								required
+								style={{ width: '100%', margin: '2% auto', padding: '2% 0' }}
 							/>
 							<Input
 								type="password"
@@ -243,9 +263,15 @@ class BusinessAccount extends Component {
 								placeholder="Password"
 								value={this.state.password}
 								required
+								style={{ width: '100%', margin: '2% auto', padding: '2% 0' }}
 							/>
-							<Button onClick={() => this.handleEmailSignIn()}>Login</Button>
-						</Container>
+							<Button
+								onClick={() => this.handleEmailSignIn()}
+								style={{ margin: '3% auto', width: '50%', padding: '2% 0' }}
+							>
+								Login
+							</Button>
+						</div>
 					</FormContainerLog>
 				</LandingContainer>
 			</FixedContainer>
