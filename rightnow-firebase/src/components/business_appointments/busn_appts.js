@@ -17,7 +17,7 @@ export default class BusnApptsView extends Component {
           <Calendar busnContext={this.props.value} />
         </CalendarWrapper>
         <ApptsWrapper>
-          <PostAppointment />
+          <PostAppointment busnContext={this.props.value} />
         </ApptsWrapper>
       </Container>
     )

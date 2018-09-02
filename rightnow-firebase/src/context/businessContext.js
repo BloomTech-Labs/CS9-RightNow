@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import firebase from "../firebase/firebase";
 import axios from "axios";
+import moment from "moment";
 
 
 export const BusinessContext = React.createContext();
@@ -60,19 +61,21 @@ export default class BusinessProvider extends Component {
                   photo: user.photoURL
                 }
               });
+              this.initSnapshot();
               return this.state.uid;
             }
           }).then(id => {
             if (!id) return;
 
-            axios.get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/${id}/available`)
-              .then(appts => this.setState({ future_appointments: appts.data })).then(() => console.log(this.state.future_appointments))
-              .catch(err => console.log("error fetching business appointments", err));
+            // axios.get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/${id}/available`)
+            //   .then(appts => this.setState({ future_appointments: appts.data })).then(() => console.log(this.state.future_appointments))
+            //   .catch(err => console.log("error fetching business appointments", err));
           })
           .catch(err => console.log("error", err));
       }
       
       else if (!user && this.state.userSignedIn) {
+        this.unsubscribe();
         this.setState({
           userSignedIn: false,
           uid: null,
@@ -88,6 +91,26 @@ export default class BusinessProvider extends Component {
       else return;
     });
   }
+
+  initSnapshot = () => {
+    this.unsubscribe = firebase
+      .firestore()
+      .collection("_appointment_")
+      .where("business_ref", "==", this.state.uid)
+      .onSnapshot(snapshot => {
+        snapshot.docChanges().forEach(change => {
+          const doc = change.doc.data();
+          const docRefurbished = {
+            ...doc,
+            start: moment(doc.start).toDate(),
+            end: moment(doc.end).toDate()
+          }
+          this.setState({ future_appointments: [...this.state.future_appointments, docRefurbished] });
+          console.log("changes here", docRefurbished);
+        });
+      });
+  }
+
 
   render() {
     return (

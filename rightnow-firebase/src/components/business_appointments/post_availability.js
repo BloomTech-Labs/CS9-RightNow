@@ -29,25 +29,45 @@ const Description = glamorous.textarea({
 
 export default class PostAppointment extends Component {
   state = {
-    date: moment(),
+    today: moment(),
     start_time: moment(),
     end_time: moment().add(30, "m"),
     service: "",
     cost: "",
     description: "",
-    business_ref: "xGXdWn7l2mQWiLiVziOv4zJqsGi2"
+    business_ref: this.props.busnContext.uid
   }
 
   handleSubmit = () => {
+    this.state.start_time.set({
+      "year": this.state.today.year(),
+      "month": this.state.today.month(),
+      "day": this.state.today.day()
+    });
+
+    this.state.end_time.set({
+      "year": this.state.today.year(),
+      "month": this.state.today.month(),
+      "day": this.state.today.day()
+    });
+
+    const appointment_details = {
+      start: this.state.start_time,
+      end: this.state.end_time,
+      service: this.state.service,
+      cost: this.state.cost,
+      description: this.state.description,
+      business_ref: this.state.business_ref
+    };
+
     axios
-      .post("https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment", this.state)
+      .post("https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment", appointment_details)
       .then(res => console.log("success\n", res))
       .catch(err => console.log("error\n", err));
     
     // this.setState({ time: "", service: "", cost: "", description: "" });
   }
 
-  
 
   render() {
     return (
@@ -89,8 +109,8 @@ export default class PostAppointment extends Component {
         <DatePicker
           placeholderText="Select a Date"
           style={{ width: "100%" }}
-          selected={this.state.date}
-          onChange={date => this.setState({ date })}
+          selected={this.state.today}
+          onChange={date => this.setState({ today: date.local() })}
         />
 
         <DatePicker 

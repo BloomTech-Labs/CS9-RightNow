@@ -60,17 +60,19 @@ class BusinessAccount extends Component {
 			password: this.state.password
 		};
 
-		const business = this.props.value.data.business;
+		const business = this.props.value.business;
 
 		const allData = {
 			business_information: business,
 			owner_information: owner
 		};
 
-		axios
+		await axios
 			.post('https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business', allData)
 			.then((res) => console.log(`\nsuccessfuly created new business\n${res}`))
 			.catch((err) => console.log(`\nerror creating new business\n${err}`));
+
+		await this.handleEmailSignIn();
 
 		this.setState({
 			first_name: '',
