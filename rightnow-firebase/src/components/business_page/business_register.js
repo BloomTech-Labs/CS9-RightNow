@@ -30,21 +30,12 @@ class BusinessAccount extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-<<<<<<< HEAD
-			first_name: '',
-			last_name: '',
-			phone: '',
-			email: '',
-			password: '',
-			isBusiness: ''
-=======
 			first_name: "",
 			last_name: "",
 			phone: "",
 			email: "",
 			password: "",
 			isBusiness: false
->>>>>>> b7d77f2c8746ade472d0fcf9367f6e11c4efa054
 		};
 	}
 
@@ -91,27 +82,12 @@ class BusinessAccount extends Component {
 		});
 	};
 
-<<<<<<< HEAD
-	// sign in with email
-	handleEmailSignIn = () => {
-		firebase
-			.auth()
-			.signInWithEmailAndPassword(this.state.email, this.state.password)
-			.then(() => {
-				firebase.auth().currentUser.getIdTokenResult().then((token) => {
-					if (token.claims.business) this.setState({ isBusiness: true });
-					else return;
-				});
-			})
-			.then(() => this.setState({ email: '', password: '' }));
-=======
 	handleEmailSignIn = async () => {
 		await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
 		await firebase.auth().currentUser.getIdTokenResult().then(token => {
 			if (token.claims.business) this.setState({ isBusiness: true, email: "", password: "" });
 			else return;
 		});
->>>>>>> b7d77f2c8746ade472d0fcf9367f6e11c4efa054
 		return;
 	};
 
@@ -144,15 +120,11 @@ class BusinessAccount extends Component {
 	render() {
 		if (this.state.isBusiness) <Redirect to="/busn-appts" />;
 
-<<<<<<< HEAD
-		return (
-=======
 		if (this.state.isBusiness) {
 			return <Redirect to="/busn-appts" />
 		}
 		
 		else return (
->>>>>>> b7d77f2c8746ade472d0fcf9367f6e11c4efa054
 			<FixedContainer>
 				<LandingContainer id="swoosh">
 					<WelcomePage id="landing">
