@@ -107,11 +107,10 @@ export default class BusinessProvider extends Component {
         snapshot.docChanges().forEach(change => {
           const id = change.doc.id;
           const doc = change.doc.data();
-          // console.log(doc)
           
           const formatted = { ...doc, start: moment(doc.start).toDate(), end: moment(doc.end).toDate(), title: doc.service, id: id };
           
-          const filtered = this.state.appointments.filter(appt => appt.id !== appt);
+          const filtered = this.state.appointments.filter(appt => appt.id !== id);
           
           if (!filtered) { 
             this.setState({ appointments: [...this.state.appointments, formatted] });
