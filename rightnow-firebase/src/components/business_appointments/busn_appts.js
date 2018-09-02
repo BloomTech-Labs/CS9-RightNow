@@ -10,7 +10,6 @@ import Calendar from "./calendar";
 
 export default class BusnApptsView extends Component {
   render() {
-    console.log(this.props)
     return (
       <Container>
         <CalendarWrapper>
