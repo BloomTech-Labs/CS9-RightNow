@@ -34,10 +34,10 @@ export default class BusinessProvider extends Component {
 
     future_appointments: [],
     available_appointments: [],
-    booked_appointments: []
-  }
+    booked_appointments: [],
 
-  updateBusiness = data => this.setState({ business: data }); // PLACES API USES THIS
+    updateBusiness: data => this.setState({ business: data }) // PLACES API USES THIS
+  }
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
@@ -66,7 +66,7 @@ export default class BusinessProvider extends Component {
             if (!id) return;
 
             axios.get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/${id}/available`)
-              .then(appts => this.setState({ future_appointments: appts })).then(() => console.log(this.state.future_appointments))
+              .then(appts => this.setState({ future_appointments: appts.data })).then(() => console.log(this.state.future_appointments))
               .catch(err => console.log("error fetching business appointments", err));
           })
           .catch(err => console.log("error", err));
@@ -91,12 +91,7 @@ export default class BusinessProvider extends Component {
 
   render() {
     return (
-      <BusinessContext.Provider 
-        value={{
-          data: this.state, 
-          updateBusiness: this.updateBusiness
-          }}
-        >
+      <BusinessContext.Provider value={this.state}>
         {this.props.children}
       </BusinessContext.Provider>
     )

@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import glamorous from "glamorous";
 import axios from "axios";
+import moment from "moment";
+import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css';
 
 
 const Container = glamorous.div({
@@ -23,10 +26,12 @@ const Description = glamorous.textarea({
   boxSizing: "border-box"
 });
 
+
 export default class PostAppointment extends Component {
   state = {
-    start_time: "",
-    end_time: "",
+    date: moment(),
+    start_time: moment(),
+    end_time: moment().add(30, "m"),
     service: "",
     cost: "",
     description: "",
@@ -42,9 +47,36 @@ export default class PostAppointment extends Component {
     // this.setState({ time: "", service: "", cost: "", description: "" });
   }
 
+  
+
   render() {
     return (
       <Container>
+        <style>
+          {`
+            .react-datepicker-popper {
+              position: relative;
+            }
+            .react-datepicker__time-container {
+              width: 100%;
+              padding: 2%;
+            }
+            .react-datepicker__time {
+              width: 100%;
+            }
+            .react-datepicker__time-box {
+              margin: 0 !important;
+              width: 100% !important;
+            }
+            .react-datepicker__time-list {
+              padding-left: 0 !important;
+              padding-right: 0 !important;
+              width: 100% !important;
+            }
+            .react-datepicker__time-list-item {
+              margin: auto !important;
+          }`}
+        </style>
         <Title>Post New Availability</Title>
         <input 
           type="text"
@@ -52,23 +84,37 @@ export default class PostAppointment extends Component {
           value={this.state.service}
           placeholder="type of service"
           onChange={e => this.setState({ [e.target.name]: e.target.value })}
+        /> 
+
+        <DatePicker
+          placeholderText="Select a Date"
+          style={{ width: "100%" }}
+          selected={this.state.date}
+          onChange={date => this.setState({ date })}
         />
-        <input 
-          style={{ marginTop: "5%" }}
-          type="text"
-          name="start_time"
-          value={this.state.start_time}
-          placeholder="start time"
-          onChange={e => this.setState({ [e.target.name]: e.target.value })}
+
+        <DatePicker 
+          placeholderText="Start time"
+          selected={this.state.start_time}
+          onChange={date => this.setState({ start_time: date })}
+          showTimeSelect
+          showTimeSelectOnly
+          imeIntervals={15}
+          dateFormat="LT"
+          timeCaption="Time"
         />
-        <input 
-          style={{ marginBottom: "5%" }}
-          type="text"
-          name="end_time"
-          value={this.state.end_time}
-          placeholder="end time"
-          onChange={e => this.setState({ [e.target.name]: e.target.value })}
+
+        <DatePicker 
+          placeholderText="End time"
+          selected={this.state.end_time}
+          onChange={date => this.setState({ end_time: date })}
+          showTimeSelect
+          showTimeSelectOnly
+          imeIntervals={15}
+          dateFormat="LT"
+          timeCaption="Time"
         />
+        
         <input 
           type="text"
           name="cost"
