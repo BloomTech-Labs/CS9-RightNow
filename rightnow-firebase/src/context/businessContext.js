@@ -33,6 +33,8 @@ export default class BusinessProvider extends Component {
       photos: []
     },
 
+    appointments: [],
+
     future_appointments: [],
     available_appointments: [],
     booked_appointments: [],
@@ -72,9 +74,10 @@ export default class BusinessProvider extends Component {
           })
           // .then(id => {
           //   if (!id) return;
-          //   axios.get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/${id}/available`)
-          //     .then(appts => this.setState({ future_appointments: appts.data })).then(() => console.log(this.state.future_appointments))
-          //     .catch(err => console.log("error fetching business appointments", err));
+          //   firebase.firestore().collection("_appointment_").where("business_ref", "==", id).get()
+          //     .then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
+          //     .then(appts => this.setState({ appointments: appts }))
+          //     .catch(err => console.log("error", err));
           // })
           .catch(err => console.log("error", err));
       }
@@ -101,14 +104,21 @@ export default class BusinessProvider extends Component {
       .firestore().collection("_appointment_")
       .where("business_ref", "==", this.state.uid)
       .onSnapshot(snapshot => {
-        const moar_appts = [];
         snapshot.docChanges().forEach(change => {
+          const id = change.doc.id;
           const doc = change.doc.data();
-          const docRefurbished = { ...doc, start: moment(doc.start).toDate(), end: moment(doc.end).toDate() };
-          moar_appts.push(docRefurbished);
-          // this.setState({ future_appointments: [...this.state.future_appointments, docRefurbished] });
+          // console.log(doc)
+          
+          const formatted = { ...doc, start: moment(doc.start).toDate(), end: moment(doc.end).toDate(), title: doc.service, id: id };
+          
+          const filtered = this.state.appointments.filter(appt => appt.id !== appt);
+          
+          if (!filtered) { 
+            this.setState({ appointments: [...this.state.appointments, formatted] });
+          } else {
+            this.setState({ appointments: [...filtered, formatted] });
+          }
         });
-        this.setState({ future_appointments: moar_appts });
       });
   }
 
