@@ -1,4 +1,4 @@
-import glamorous from 'glamorous';
+import glamorous, { P } from 'glamorous';
 
 export const FixedContainer = glamorous.div({
 	height: '100vh',
@@ -6,10 +6,25 @@ export const FixedContainer = glamorous.div({
 	position: 'relative',
 	overflow: 'hidden',
 	background:
-		'linear-gradient(30deg, rgba(0, 0, 0, 0.70) 20%, rgba(0, 0, 0, 0.80)) 100%, url("https://images.unsplash.com/photo-1535232843222-a40c29436fd3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=09c323bdb9e5c76f82339cd9b4247a57&auto=format&fit=crop&w=1959&q=80")',
+		'linear-gradient(30deg, rgba(0, 0, 0, 0.80) 20%, rgba(0, 0, 0, 0.85)) 100%, url("https://images.unsplash.com/photo-1535232843222-a40c29436fd3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=09c323bdb9e5c76f82339cd9b4247a57&auto=format&fit=crop&w=1959&q=80")',
 	backgroundRepeat: 'repeat',
 	backgroundSize: 'cover',
 	backgroundAttachment: 'fixed'
+});
+
+export const Fieldset = glamorous.fieldset({
+	border: '3px solid white',
+	borderRadius: '10px',
+	padding: '4%',
+	background: 'rgba(32, 32, 32, 0.80)'
+});
+
+export const Legend = glamorous.legend({
+	padding: '0 3%',
+	fontFamily: 'Open Sans, sans-serif',
+	fontWeight: 400,
+	fontSize: '1.5em',
+	color: 'white'
 });
 
 export const LandingContainer = glamorous.div({
@@ -73,9 +88,9 @@ export const Input = glamorous.input({
 	fontWeight: 400,
 	color: 'white',
 	textAlign: 'center',
-	backgroundColor: 'rgba(0, 0, 0, 0.3)',
+	backgroundColor: 'rgba(0, 0, 0, 0.5)',
 	':focus': {
-		border: '1px solid white',
+		border: '1px solid #e5e3e3',
 		outline: 'none',
 		'::placeholder': {
 			opacity: 0
@@ -92,11 +107,12 @@ export const Input = glamorous.input({
 });
 
 export const Button = glamorous.button({
-	width: '21%',
-	margin: 'auto',
-	padding: '0.7% 0',
+	fontFamily: 'Open Sans, sans-serif',
+	width: '100%',
+	margin: '3% auto',
+	padding: '1% 0',
 	color: 'white',
-	fontWeight: 600,
+	fontWeight: 500,
 	fontSize: '1.3em',
 	border: '1px solid white',
 	borderRadius: '5px',
@@ -142,7 +158,7 @@ export const ButtonContainer = glamorous.div({
 });
 
 export const RegButton = glamorous.div({
-	borderRadius: '2px',
+	borderRadius: '4px',
 	fontSize: '1.2em',
 	color: 'white',
 	border: '1px solid white',
@@ -158,7 +174,7 @@ export const CenterLine = glamorous.div({
 });
 
 export const LoginButton = glamorous.div({
-	borderRadius: '2px',
+	borderRadius: '4px',
 	fontSize: '1.2em',
 	color: 'white',
 	border: '1px solid white',
@@ -190,10 +206,13 @@ export const ChangeForm = glamorous.div({
 });
 
 export const RegClickHere = glamorous.p({
+	fontFamily: 'Open Sans, sans-serif',
 	color: '#FF9756',
 	':hover': { textDecoration: 'underline', cursor: 'pointer' }
 });
+
 export const LogClickHere = glamorous.p({
+	fontFamily: 'Open Sans, sans-serif',
 	color: '#7cff92',
 	':hover': { textDecoration: 'underline', cursor: 'pointer' }
 });

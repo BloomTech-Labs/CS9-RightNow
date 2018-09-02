@@ -10,7 +10,7 @@ import {
 	WelcomePage,
 	FormContainerReg,
 	FormContainerLog,
-	Container,
+	Fieldset,
 	Input,
 	Button,
 	Title,
@@ -21,9 +21,9 @@ import {
 	CenterLine,
 	LoginButton,
 	ChangeForm,
-	ClickHere,
 	LogClickHere,
-	RegClickHere
+	RegClickHere,
+	Legend
 } from './business_register_styles';
 
 class BusinessAccount extends Component {
@@ -153,81 +153,79 @@ class BusinessAccount extends Component {
 								margin: 'auto'
 							}}
 						>
-							<ChangeForm>
-								<p style={{ margin: 0, marginRight: '2%' }}>Already a Sesho manager?</p>
-								<RegClickHere onClick={() => this.FromRegToLogin()}>Login Here</RegClickHere>
-							</ChangeForm>
-							<div
-								style={{
-									display: 'flex',
-									justifyContent: 'center',
-									alignContent: 'center',
-									width: '100%',
-									margin: '2% auto'
-								}}
-							>
-								<Input
-									type="text"
-									name="first_name"
-									placeholder="First Name"
-									onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-									value={this.state.first_name}
-									required
-									autocomplete="off"
-									style={{ marginRight: '1%', width: '49%', padding: '2% 0' }}
-								/>
+							<Fieldset>
+								<Legend>Registration</Legend>
+								<ChangeForm>
+									<p style={{ margin: 0, marginRight: '2%' }}>Already a Sesho manager?</p>
+									<RegClickHere onClick={() => this.FromRegToLogin()}>Login Here</RegClickHere>
+								</ChangeForm>
+								<div
+									style={{
+										display: 'flex',
+										justifyContent: 'center',
+										alignContent: 'center',
+										width: '100%',
+										margin: '2% auto'
+									}}
+								>
+									<Input
+										type="text"
+										name="first_name"
+										placeholder="First Name"
+										onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
+										value={this.state.first_name}
+										required
+										autocomplete="off"
+										style={{ marginRight: '1%', width: '49%', padding: '2% 0' }}
+									/>
+
+									<Input
+										type="text"
+										onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
+										name="last_name"
+										placeholder="Last Name"
+										value={this.state.last_name}
+										required
+										autocomplete="off"
+										style={{ marginLeft: '1%', width: '49%', padding: '2% 0' }}
+									/>
+								</div>
 
 								<Input
-									type="text"
+									type="email"
 									onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-									name="last_name"
-									placeholder="Last Name"
-									value={this.state.last_name}
+									name="email"
+									placeholder="Email"
+									value={this.state.email}
 									required
 									autocomplete="off"
-									style={{ marginLeft: '1%', width: '49%', padding: '2% 0' }}
+									style={{ width: '100%', margin: '2% auto', padding: '2% 0' }}
 								/>
-							</div>
-
-							<Input
-								type="email"
-								onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-								name="email"
-								placeholder="Email"
-								value={this.state.email}
-								required
-								autocomplete="off"
-								style={{ width: '100%', margin: '2% auto', padding: '2% 0' }}
-							/>
-							<Input
-								type="password"
-								onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-								name="password"
-								placeholder="Password"
-								value={this.state.password}
-								required
-								autocomplete="off"
-								style={{ width: '100%', margin: '2% auto', padding: '2% 0' }}
-							/>
-							<Input
-								id="phone"
-								type="text"
-								maxLength="14"
-								onChange={(e) => this.handlePhoneInput(e)}
-								name="phone"
-								placeholder="Phone Number"
-								value={this.state.phone}
-								required
-								autocomplete="off"
-								style={{ width: '100%', margin: '2% auto', padding: '2% 0' }}
-							/>
-							<PlacesAPI busnContext={this.props.value} style={{ padding: '2% 0' }} />
-							<Button
-								onClick={() => this.submitForm()}
-								style={{ margin: '3% auto', width: '50%', padding: '2% 0' }}
-							>
-								Submit
-							</Button>
+								<Input
+									type="password"
+									onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
+									name="password"
+									placeholder="Password"
+									value={this.state.password}
+									required
+									autocomplete="off"
+									style={{ width: '100%', margin: '2% auto', padding: '2% 0' }}
+								/>
+								<Input
+									id="phone"
+									type="text"
+									maxLength="14"
+									onChange={(e) => this.handlePhoneInput(e)}
+									name="phone"
+									placeholder="Phone Number"
+									value={this.state.phone}
+									required
+									autocomplete="off"
+									style={{ width: '100%', margin: '2% auto', padding: '2% 0' }}
+								/>
+								<PlacesAPI busnContext={this.props.value} style={{ padding: '2% 0' }} />
+								<Button onClick={() => this.submitForm()}>Submit</Button>
+							</Fieldset>
 						</div>
 					</FormContainerReg>
 
@@ -243,34 +241,32 @@ class BusinessAccount extends Component {
 								margin: 'auto'
 							}}
 						>
-							<ChangeForm>
-								<p style={{ marginRight: '2%' }}>Not a Sesho manager yet?</p>
-								<LogClickHere onClick={() => this.FromLogToRegister()}>Register Here</LogClickHere>
-							</ChangeForm>
-							<Input
-								type="email"
-								onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-								name="email"
-								placeholder="Email"
-								value={this.state.email}
-								required
-								style={{ width: '100%', margin: '2% auto', padding: '2% 0' }}
-							/>
-							<Input
-								type="password"
-								onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
-								name="password"
-								placeholder="Password"
-								value={this.state.password}
-								required
-								style={{ width: '100%', margin: '2% auto', padding: '2% 0' }}
-							/>
-							<Button
-								onClick={() => this.handleEmailSignIn()}
-								style={{ margin: '3% auto', width: '50%', padding: '2% 0' }}
-							>
-								Login
-							</Button>
+							<Fieldset>
+								<Legend>Welcome Back</Legend>
+								<ChangeForm>
+									<p style={{ marginRight: '2%' }}>Not a Sesho manager yet?</p>
+									<LogClickHere onClick={() => this.FromLogToRegister()}>Register Here</LogClickHere>
+								</ChangeForm>
+								<Input
+									type="email"
+									onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
+									name="email"
+									placeholder="Email"
+									value={this.state.email}
+									required
+									style={{ width: '100%', margin: '2% auto', padding: '2% 0' }}
+								/>
+								<Input
+									type="password"
+									onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
+									name="password"
+									placeholder="Password"
+									value={this.state.password}
+									required
+									style={{ width: '100%', margin: '2% auto', padding: '2% 0' }}
+								/>
+								<Button onClick={() => this.handleEmailSignIn()}>Login</Button>
+							</Fieldset>
 						</div>
 					</FormContainerLog>
 				</LandingContainer>
