@@ -5,11 +5,15 @@ import axios from 'axios';
 import firebase from '../../firebase/firebase';
 import glamorous from 'glamorous';
 import {
-	TransWrapper,
-	Container1,
-	Container2,
-	Container3,
-	TitleBackdrop,
+	FixedContainer,
+	LandingContainer,
+	WelcomePage,
+	FormContainerReg,
+	FormContainerLog,
+	Container,
+	Input,
+	Button,
+
 	Title,
 	TitleBorder,
 	Description,
@@ -17,93 +21,7 @@ import {
 	RegButton,
 	CenterLine,
 	LoginButton,
-	LeftSide,
-	RightSide,
-	Bottom,
-	TopWrapper,
-	BottomWrapper
 } from './business_register_styles';
-
-const FixedContainer = glamorous.div({
-	height: '100vh',
-	width: '100vw',
-	position: 'relative',
-	overflow: 'hidden',
-	background:
-		'linear-gradient(30deg, rgba(0, 0, 0, 0.50) 20%, rgba(0, 0, 0, 0.70)) 100%, url("https://images.unsplash.com/photo-1535232843222-a40c29436fd3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=09c323bdb9e5c76f82339cd9b4247a57&auto=format&fit=crop&w=1959&q=80")',
-	backgroundRepeat: 'repeat',
-	backgroundSize: 'cover',
-	backgroundAttachment: 'fixed'
-});
-
-const LandingContainer = glamorous.div({
-	position: 'absolute',
-	height: '100vh',
-	width: '100vw',
-	background: 'transparent',
-	transition: 'all 1.2s'
-});
-
-const WelcomePage = glamorous.div({
-	position: 'absolute',
-	height: '100vh',
-	width: '100vw',
-	top: '30%',
-	background: 'transparent',
-	transition: 'all 1.2s'
-});
-
-const FormContainer = glamorous.div({
-	position: 'absolute',
-	height: '100vh',
-	width: '100vw',
-	top: '100vh',
-	background: 'transparent',
-	transition: 'all 1.2s'
-});
-
-const Container = glamorous.div({
-	position: 'absolute',
-	top: 0,
-	bottom: 0,
-	left: 0,
-	right: 0,
-	width: '100%',
-	height: '25%',
-	margin: 'auto',
-	display: 'flex',
-	flexDirection: 'column',
-	justifyContent: 'center',
-	alignContent: 'center'
-});
-
-const Input = glamorous.input({
-	margin: '1% auto',
-	width: '23%',
-	padding: '.7% 0',
-	border: 'none',
-	borderRadius: '5px',
-	fontSize: '1.3rem',
-	fontWeight: 600,
-	color: 'white',
-	textAlign: 'center',
-	textShadow: '1px 1px black',
-	backgroundColor: 'rgba(225, 225, 225, 0.4)'
-});
-
-const Button = glamorous.button({
-	width: '21%',
-	margin: 'auto',
-	padding: '0.7% 0',
-	color: 'white',
-	fontWeight: 600,
-	fontSize: '1.3em',
-	border: '0.3px solid white',
-	borderRadius: '5px',
-	backgroundColor: 'transparent',
-	':hover': { color: 'white', backgroundColor: 'rgba(225, 225, 225, 0.1)', cursor: 'pointer' },
-	':focus': { color: 'white', backgroundColor: 'rgba(225, 225, 225, 0.1)' }
-});
 
 class BusinessAccount extends Component {
 	constructor(props) {
@@ -173,18 +91,8 @@ class BusinessAccount extends Component {
 		return;
 	};
 
-	FromRegToLogin = () => {
-		document.querySelector('#register').style.top = '-100vh';
-		document.querySelector('#login').style.top = 0;
-	};
-
-	FromLogToRegister = () => {
-		document.querySelector('#login').style.top = '-100vh';
-		document.querySelector('#register').style.top = 0;
-	};
-
 	handleRegisterDisplay = () => {
-		document.querySelector('#landing').style.top = '-100vh';
+		document.querySelector('#landing').style.top = '150vh';
 		document.querySelector('#register').style.top = 0;
 	};
 
@@ -193,11 +101,20 @@ class BusinessAccount extends Component {
 		document.querySelector('#login').style.top = 0;
 	};
 
-	goingUp = () => {
-		document.querySelector('#landing').style.top = '30%';
-		document.querySelector('#register').style.top = '100vh';
-		document.querySelector('#login').style.top = '100vh';
+	FromRegToLogin = () => {
+		document.querySelector('#register').style.top = '-100vh';
+		document.querySelector('#login').style.top = 0;
 	};
+
+	FromLogToRegister = () => {
+		document.querySelector('#login').style.top = '100vh';
+		document.querySelector('#register').style.top = 0;
+	};
+	// goingUp = () => {
+	// 	document.querySelector('#landing').style.top = '30%';
+	// 	document.querySelector('#register').style.top = '100vh';
+	// 	document.querySelector('#login').style.top = '100vh';
+	// };
 
 	render() {
 		if (this.state.isBusiness) <Redirect to="/busn-appts" />;
@@ -217,7 +134,7 @@ class BusinessAccount extends Component {
 						</ButtonContainer>
 					</WelcomePage>
 
-					<FormContainer id="register">
+					<FormContainerReg id="register">
 						<div
 							style={{
 								display: 'flex',
@@ -229,6 +146,9 @@ class BusinessAccount extends Component {
 								margin: 'auto'
 							}}
 						>
+							<div style={{ color: 'white' }} onClick={() => this.FromRegToLogin()}>
+								Already a Sesho Manager? <span style={{ color: 'red' }}>Click here</span>
+							</div>
 							<div
 								style={{
 									display: 'flex',
@@ -301,10 +221,13 @@ class BusinessAccount extends Component {
 								Submit
 							</Button>
 						</div>
-					</FormContainer>
+					</FormContainerReg>
 
-					<FormContainer id="login">
+					<FormContainerLog id="login">
 						<Container>
+							<div onClick={() => this.FromLogToRegister()}>
+								Not a <span style={{ color: 'red' }}>Sesho Manager</span> yet?
+							</div>
 							<Input
 								type="email"
 								onChange={(e) => this.setState({ [e.target.name]: e.target.value })}
@@ -323,7 +246,7 @@ class BusinessAccount extends Component {
 							/>
 							<Button onClick={() => this.handleEmailSignIn()}>Login</Button>
 						</Container>
-					</FormContainer>
+					</FormContainerLog>
 				</LandingContainer>
 			</FixedContainer>
 		);
