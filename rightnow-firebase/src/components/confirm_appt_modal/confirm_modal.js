@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import moment from "moment";
 import {
 	Container,
 	ModalWrapper,
@@ -47,18 +47,18 @@ export default class ConfirmModal extends Component {
 								<YourSesh>Your Sesh-o is:</YourSesh>
 								<DetailContainer>
 									<Activity>
-										<Spanner>{value.theo_appt_details.type}</Spanner> at{' '}
+										<Spanner>{value.init_appointment.service}</Spanner> at{' '}
 										<Spanner>Chatters Hair Salon</Spanner>
 									</Activity>
 									<Location>
-										on <Spanner>624 109 St NW, Edmonton, AB</Spanner>{' '}
+										on <Spanner>{value.init_appointment.business_details.business_information.fullAddress}</Spanner>{' '}
 										<Icon src="https://seeklogo.com/images/G/google-maps-2014-logo-6108508C7B-seeklogo.com.png" />
 									</Location>
 									<Time>
-										at <Spanner>{value.theo_appt_details.time}</Spanner>
+										at <Spanner>{`${moment(value.init_appointment.start).format("h:mm")}`}</Spanner>
 									</Time>
 									<Cost>
-										Estimated cost: <Spanner>{value.theo_appt_details.cost}</Spanner>
+										Estimated cost: <Spanner>{value.init_appointment.cost}</Spanner>
 									</Cost>
 									<Agreement>
 										<div className="pretty p-default p-curve">
@@ -81,7 +81,6 @@ export default class ConfirmModal extends Component {
 										</Button>
 									</ButtonContainer>
 								</DetailContainer>
-								{/* <CloseX onClick={() => this.props.closeModal()}>x</CloseX> */}
 							</ElementConainer>
 						</ModalWrapper>
 					</Container>

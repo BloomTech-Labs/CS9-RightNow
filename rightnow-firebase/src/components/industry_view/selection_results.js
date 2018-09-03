@@ -85,10 +85,6 @@ business info is an object that contains info like location, phone number, etc.
 */
 
 export default class Results extends Component {
-	state = { 
-		full_query: null
-	};
-
 	render() {
 		return (
 			<UserContext.Consumer>
@@ -128,7 +124,7 @@ export default class Results extends Component {
 
 					return (
 						<Container>
-							
+
 							<Clock />
 
 							{value.full_query ? Object.keys(value.full_query).map(busnRef => {

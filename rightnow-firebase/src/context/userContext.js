@@ -17,10 +17,10 @@ export default class UserProvider extends Component {
     location: "",
     appointments: [],
     
-    theo_appt_details: {},
+    init_appointment: {},
     displayConfirm: false,
 
-    query: "",
+    query: "haircut",
     queryResults: [],
     finished: false,
     full_query: null,
@@ -39,11 +39,24 @@ export default class UserProvider extends Component {
     },
 
     clientLocation: () => {
-      axios.get("http://ip-api.com/json")
-        .then(res => this.setState({ 
-          query: `${res.data.city}, ${res.data.region}`, 
-          clientZip: res.data.zip 
-        })).catch(err => console.log("error", err));
+      // axios.get("http://ip-api.com/json")
+      //   .then(res => this.setState({ 
+      //     query: `${res.data.city}, ${res.data.region}`, 
+      //     clientZip: res.data.zip 
+      //   })).catch(err => console.log("error", err));
+    },
+
+    initializeAppointment: async appt => {
+      const business_details = 
+        await axios
+          .get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/${appt.business_ref}`)
+          .then(res => res.data).catch(err => console.log("error", err));
+      const full_appointment = { ...appt, business_details };
+      this.setState({ init_appointment: full_appointment, displayConfirm: true });
+    },
+
+    confirmAppointment: () => {
+      
     }
 
   }
