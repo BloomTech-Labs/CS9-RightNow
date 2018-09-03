@@ -1,0 +1,56 @@
+.Detail__Container {
+    /* display: flex; */
+    /* justify-content: space-between; */
+    /* flex-direction: column; */
+    color: #EBEBEB;
+    margin-left: 60%;
+    margin-right: 2%;
+    margin-bottom: 5%;
+    background: #353A50;
+    border: 1px solid #353A50;
+}
+
+.Detail__content {
+    background: white; 
+    padding-left: 5%;
+}
+
+.Detail__content div {
+    background: white; 
+    padding-left: 2%;
+    display: flex;
+    margin-bottom: 1%;
+}
+
+.Detail__header {
+    color: #EBEBEB;
+    padding-left: 11%;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    color: #353A50;
+}
+
+.apptProps {
+    margin-top: 2%;
+}
+
+.delete {
+    background: #353A50;
+    color: red;
+    margin-left: 93%;
+    margin-bottom: 2%;
+    margin-top: 2%;
+    font-size: 1.15rem;
+}
+
+.delete:hover {
+    color: #ff7b7b;
+}
+
+.icon {
+    margin-top: 2%;
+    color: #353A50
+}
