@@ -9,8 +9,8 @@ export const BusinessContext = React.createContext();
 
 export default class BusinessProvider extends Component {
   state = {
-    userSignedIn: false,
     uid: null,
+    userSignedIn: false,
 
     personal: {
       full_name: "",
@@ -52,34 +52,21 @@ export default class BusinessProvider extends Component {
       console.log(user);
 
       if (user && !this.state.userSignedIn) {
-        user
-          .getIdTokenResult()
+        user.getIdTokenResult()
           .then(token => token.claims.business ? true : false)
           .then(isBusiness => {
             if (!isBusiness) return;
             else {
-              this.setState({
-                userSignedIn: true,
-                uid: user.uid,
+              this.setState({ userSignedIn: true, uid: user.uid,
                 personal: {
                   full_name: user.displayName,
                   email: user.email,
                   phone: user.phoneNumber,
                   photo: user.photoURL
-                }
-              });
+                }});
               this.initSnapshot();
-              return this.state.uid;
             }
-          })
-          // .then(id => {
-          //   if (!id) return;
-          //   firebase.firestore().collection("_appointment_").where("business_ref", "==", id).get()
-          //     .then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
-          //     .then(appts => this.setState({ appointments: appts }))
-          //     .catch(err => console.log("error", err));
-          // })
-          .catch(err => console.log("error", err));
+          }).catch(err => console.log("error", err));
       }
       
       else if (!user && this.state.userSignedIn) {
