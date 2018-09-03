@@ -8,6 +8,7 @@
     "firebase": "^5.3.1",
     "glamor": "^2.20.40",
     "glamorous": "^4.13.1",
+    "lodash.groupby": "^4.6.0",
     "moment": "^2.22.2",
     "rc-select": "^8.2.5",
     "react": "^16.4.2",

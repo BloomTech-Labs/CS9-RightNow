@@ -26,6 +26,8 @@ export default class UserProvider extends Component {
     lets_display: false,
     this_is_it: null,
 
+    full_query: null,
+
     userSignedIn: false,
 
     updateState: async data => {
@@ -40,6 +42,13 @@ export default class UserProvider extends Component {
         .catch(err => console.log("error", err));
       return data;
     },
+    // handleSearch: async () => {
+    //   const queryResults = 
+    //     await firebase
+    //       .firestore()
+    //       .collection("_appointment_")
+    //       .where("")
+    // }
 
   }
 

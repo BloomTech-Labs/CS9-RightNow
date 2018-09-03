@@ -51,6 +51,7 @@ export default class BusnCalendar extends Component {
     console.log("service", service)
     console.log("cost", cost)
     console.log("description", description)
+    console.log("\n\n", data);
   }
 
   render() {

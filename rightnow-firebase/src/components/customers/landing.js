@@ -3,6 +3,7 @@ import glamorous from "glamorous";
 import Particles from "react-particles-js";
 import Navigation from "./navigation";
 import { UserContext } from '../../context/userContext';
+import moment from "moment";
 
 
 /* MOSTLY RESPONSIVE DOWN TO 850vw */
@@ -129,6 +130,7 @@ const particleOptions = {
 
 export default class Landing extends Component {
   render() {
+    console.log(moment("2018-09-04T17:30:37.015Z").format("h:mm"))
     return (
       <Container>
         <Navigation />

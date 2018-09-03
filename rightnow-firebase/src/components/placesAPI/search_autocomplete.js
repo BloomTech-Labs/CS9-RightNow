@@ -71,7 +71,7 @@ export default class PlacesAPI extends Component {
 				street_number: address[0].long_name,
 				street_name: address[1].long_name,
 				city: address[2].long_name,
-				state: address[5].long_name,
+				state: address[4].short_name,
 				zip: address[6].long_name,
 				phone: place.formatted_phone_number,
 				rating: place.rating,
