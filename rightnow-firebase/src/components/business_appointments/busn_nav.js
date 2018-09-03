@@ -60,7 +60,7 @@ export default class BusnNav extends Component {
 
         <ButtonContainer>
           <Option>Settings</Option>
-          <Option>Sign Out</Option>
+          <Option onClick={() => this.props.logout()}>Sign Out</Option>
         </ButtonContainer>
       </Container>
     )
