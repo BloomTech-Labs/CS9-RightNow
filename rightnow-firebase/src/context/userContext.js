@@ -22,6 +22,7 @@ export default class UserProvider extends Component {
 
     query: "",
     queryResults: [], // this is without import appt info
+    getAppointment: null,
     finished: false,
     this_is_it: null, // use this for final appt card display
 
@@ -39,6 +40,17 @@ export default class UserProvider extends Component {
         .catch(err => console.log("error", err));
       return data;
     },
+
+    getCustomerInfo: async () => {
+      const data = await axios
+        .get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment/ISdGqNbq6aTxzV3VfdfW`)
+        .then(res =>
+          this.setState({ getAppointment: res.data, finished: true })
+        )
+        .catch(err => console.log("error", err));
+      console.log(data);
+        return data;
+    }
 
   }
 

@@ -1,5 +1,6 @@
 import React from "react";
 import glamorous from "glamorous";
+import AppointmentDetails from "./appointmentDetails/appointmentDetailsCustomerView";
 
 const Appointment = glamorous.div({
   // width: '50%',
@@ -26,13 +27,13 @@ const Upcoming = glamorous.h3({
 });
 
 const UpcomingAppointment = (props) => {
-  
+
   return (
     <Appointment>
       <Upcoming>Upcoming Appointments</Upcoming>
       <hr />
       <div>
-        <Upcoming>Current Appointments</Upcoming>
+      <AppointmentDetails />
       </div>
     </Appointment>
   );

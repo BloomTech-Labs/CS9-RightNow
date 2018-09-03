@@ -7,6 +7,7 @@ import PastAppointments from "../share_settings/past_appointments";
 import ContactForm from "../share_settings/contact_form";
 import UserProvider, { UserContext } from "../../context/userContext";
 
+
 import glamorous from "glamorous";
 
 export const FormContainer = glamorous.div({
@@ -39,25 +40,21 @@ const Button = glamorous.button({
 
 class UserSettings extends Component {
   render() {
-    return (
-        <UserProvider>
-          <UserContext.Consumer>
-          {
-            value => (
-              <FormContainer>
-                <h3>User Settings</h3>
-                <UpcomingAppointments userState={value} />
-                <PastAppointments userState = {value} />
-                {console.log(value)}
-                <ContactForm userState={value} />
-                <UserChangePassword />
-                <UserNotification />
-                <Button onClick={()=> this.props.UserProvider}>Save</Button>
-              </FormContainer>
-            )}
+    return <UserProvider>
+        <UserContext.Consumer>
+          {value => <FormContainer>
+              {()=> value.getCustomerInfo()}
+              {console.log(value.qetAppoinment)}
+              <h3>User Settings</h3>
+              <UpcomingAppointments userState={value} />
+              <PastAppointments userState={value} />
+              <ContactForm userState={value} />
+              <UserChangePassword />
+              <UserNotification />
+              <Button onClick={() => this.props.UserProvider}>Save</Button>
+            </FormContainer>}
         </UserContext.Consumer>
-        </UserProvider>
-    );
+      </UserProvider>;
   }
 }
 
