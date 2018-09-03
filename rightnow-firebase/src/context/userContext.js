@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import firebase from "../firebase/firebase";
 import axios from "axios";
+import moment from "moment";
 
 
 export const UserContext = React.createContext();
@@ -24,19 +25,23 @@ export default class UserProvider extends Component {
     query: "haircut",
     queryResults: [],
     finished: false,
-    full_query: null,
+    full_query: [],
 
     userSignedIn: false,
     clientZip: null,
 
     updateState: async data => await this.setState(data),
 
+    customerLogout: () => {
+      firebase.auth().signOut();
+      this.unsubscribe();
+    },
+
     handleSearch: async () => {
-      const data = await axios
+      await axios
         .get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment?term=${this.state.query}`)
         .then(res => this.setState({ queryResults: res.data, finished: true }))
-        .catch(err => console.log("error", err));
-      return data;
+        .catch(err => console.log("error", err));      
     },
 
     clientLocation: () => {
@@ -68,6 +73,28 @@ export default class UserProvider extends Component {
       // NEED FIREBASE FUNCTION FOR APPOINTMENT ON-UPDATE
       // appointment does not get added to customer's appoinment collection
       this.setState({ displayConfirm: false });
+    },
+
+    listenToResults: () => {
+      this.unsubscribe = firebase
+        .firestore().collection("_appointment_")
+        .where("service", "==", this.state.query)
+        .onSnapshot(snapshot => {
+          snapshot.docChanges().forEach(change => {
+            const id = change.doc.id;
+            const doc = change.doc.data();
+            const busn_ref = doc.business_ref;            
+            
+            if (change.type === "modified" || change.type === "removed") {
+              const copy = { ...this.state.full_query };
+              const busn_appts = copy[busn_ref].appointments;
+
+              copy[busn_ref].appointments = busn_appts.filter(appt => appt.id !== id);
+
+              this.setState({ full_query: copy });
+            } 
+          })
+        })
     }
 
   }
