@@ -42,17 +42,19 @@ export default class UserProvider extends Component {
         .catch(err => console.log("error", err));
       return data;
     },
-    // handleSearch: async () => {
-    //   const queryResults = 
-    //     await firebase
-    //       .firestore()
-    //       .collection("_appointment_")
-    //       .where("")
-    // }
+
+    clientLocation: () => {
+      axios.get("http://ip-api.com/json")
+        .then(res => this.setState({ query: `${res.data.city}, ${res.data.region}` }))
+        .catch(err => console.log("error", err));
+    }
 
   }
 
   componentDidMount() {
+    // set initial query input to client location
+    this.state.clientLocation();
+
     firebase.auth().onAuthStateChanged(user => {
       console.log(user);
 

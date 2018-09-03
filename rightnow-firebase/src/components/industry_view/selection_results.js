@@ -123,15 +123,15 @@ export default class Results extends Component {
 						}
 
 						getBusinessInfo();
-						
+
 					}
 
 					return (
 						<Container>
+							
 							<Clock />
 
 							{value.full_query ? Object.keys(value.full_query).map(busnRef => {
-								console.log(busnRef)
 								const { business_details, appointments } = value.full_query[busnRef]
 								return <AppointmentCard businessDetails={business_details} appointments={appointments} key={busnRef} />
 							}) : null}
