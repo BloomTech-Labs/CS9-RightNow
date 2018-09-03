@@ -40,11 +40,11 @@ export default class UserProvider extends Component {
     },
 
     clientLocation: () => {
-      // axios.get("http://ip-api.com/json")
-      //   .then(res => this.setState({ 
-      //     query: `${res.data.city}, ${res.data.region}`, 
-      //     clientZip: res.data.zip 
-      //   })).catch(err => console.log("error", err));
+      axios.get("http://ip-api.com/json")
+        .then(res => this.setState({ 
+          query: `${res.data.city}, ${res.data.region}`, 
+          clientZip: res.data.zip 
+        })).catch(err => console.log("error", err));
     },
 
     initializeAppointment: async appt => {
@@ -62,8 +62,12 @@ export default class UserProvider extends Component {
       firebase.firestore()
         .collection("_appointment_").doc(this.state.init_appointment.id)
         .update({ is_available: false })
-        .then(res => console.log("successful update", res))
+        .then(() => console.log("successful update"))
         .catch(err => console.log("error updating appointment", err));
+
+      // NEED FIREBASE FUNCTION FOR APPOINTMENT ON-UPDATE
+      // appointment does not get added to customer's appoinment collection
+      this.setState({ displayConfirm: false });
     }
 
   }
