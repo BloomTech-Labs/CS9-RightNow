@@ -21,14 +21,14 @@ const formats = {
 
 const propGetter = (event, start, end, isSelected) => {
   let newStyle = {
-    backgroundColor: "#26C1A2",
+    backgroundColor: "rgba(60, 70, 100, 0.95)", // "#70768f",
     color: 'white',
     borderRadius: "5px",
     border: "2px solid black"
   };
 
   if (event.is_available === false){
-    newStyle.backgroundColor = "#EF5651"
+    newStyle.backgroundColor = "rgba(190, 50, 50, 0.95)" // "#c95050"
   }
 
   return {

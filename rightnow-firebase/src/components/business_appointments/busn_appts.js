@@ -8,19 +8,21 @@ import {
 import PostAppointment from "./post_availability";
 import Calendar from "./calendar";
 import BusnNav from "./busn_nav";
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
+import BusinessContext from "../../context/businessContext";
 
 
-export default class BusnApptsView extends Component {
-  render() {
+class BusnApptsView extends Component {
+  render() {   
 
-    if (!this.props.value.userSignedIn) {
+    if (this.props.value.userSignedIn === false) {
+      console.log("here")
       return (<Redirect to="/biz-account" />)
     }
-    
+
     return (
       <PrimaryWrapper>
-        <BusnNav logout={this.props.value.business_logout} />
+        <BusnNav logout={() => this.props.value.business_logout()} />
         <Container>
           <CalendarWrapper>
             <Calendar busnContext={this.props.value} />
@@ -33,3 +35,6 @@ export default class BusnApptsView extends Component {
     )
   }
 }
+
+
+export default withRouter(BusnApptsView);

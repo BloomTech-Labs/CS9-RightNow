@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PlacesAPI from '../placesAPI/search_autocomplete';
 import { withRouter, Redirect } from 'react-router-dom';
+// import { BusinessContext } from "./context/businessContext";
 import axios from 'axios';
 import firebase from '../../firebase/firebase';
 import glamorous from 'glamorous';
@@ -113,17 +114,13 @@ class BusinessAccount extends Component {
 		document.querySelector('#login').style.top = '100vh';
 		document.querySelector('#register').style.top = 0;
 	};
-	// goingUp = () => {
-	// 	document.querySelector('#landing').style.top = '30%';
-	// 	document.querySelector('#register').style.top = '100vh';
-	// 	document.querySelector('#login').style.top = '100vh';
-	// };
+
 
 	render() {
-		if (this.state.isBusiness) <Redirect to="/busn-appts" />;
 
+		// BUG: login --> busn dashboard page --> signout --> busn login page --> login --> busn login page
 		if (this.state.isBusiness) {
-			return <Redirect to="/busn-appts" />
+			return (<Redirect to="/busn-appts" />)
 		}
 		
 		else return (
