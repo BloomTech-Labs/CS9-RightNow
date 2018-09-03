@@ -58,9 +58,9 @@ const ContactForm = (props) => {
 
       <LeftSide>
         <Label for="test">First Name</Label>
-        <InputField type="text" placeholder={props.userState.name} />
+        <InputField type="text" placeholder={props.userState.name.split(' ')[0]} />
         <Label>Last Name</Label>
-        <InputField type="text" placeholder={props.userState.name} />
+        <InputField type="text" placeholder={props.userState.name.split(' ')[1]} />
         <Label>Phone Number</Label>
       <InputField type="text" placeholder={props.userState.phone} />
         <Label>Email</Label>

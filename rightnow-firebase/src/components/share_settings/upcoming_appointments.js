@@ -25,7 +25,8 @@ const Upcoming = glamorous.h3({
   margin: "auto"
 });
 
-const UpcomingAppointment = () => {
+const UpcomingAppointment = (props) => {
+  
   return (
     <Appointment>
       <Upcoming>Upcoming Appointments</Upcoming>

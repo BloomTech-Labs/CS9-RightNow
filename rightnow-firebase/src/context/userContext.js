@@ -44,14 +44,14 @@ export default class UserProvider extends Component {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
-      // console.log(user) // display all info from user
+      console.log(user) // display all info from user
       if (user && !this.state.userSignedIn) {
         this.setState({
           userSignedIn: true,
           uid: user.uid,
           name: user.displayName,
           email: user.email,
-          phone: user.email,
+          phone: user.phoneNumber,
           photo: user.photoURL
         });
       }
