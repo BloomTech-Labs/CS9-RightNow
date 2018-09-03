@@ -19,6 +19,7 @@ export default class UserProvider extends Component {
     
     init_appointment: {},
     displayConfirm: false,
+    confirm: false,
 
     query: "haircut",
     queryResults: [],
@@ -56,7 +57,13 @@ export default class UserProvider extends Component {
     },
 
     confirmAppointment: () => {
-      
+      if (!this.state.confirm) return;
+
+      firebase.firestore()
+        .collection("_appointment_").doc(this.state.init_appointment.id)
+        .update({ is_available: false })
+        .then(res => console.log("successful update", res))
+        .catch(err => console.log("error updating appointment", err));
     }
 
   }

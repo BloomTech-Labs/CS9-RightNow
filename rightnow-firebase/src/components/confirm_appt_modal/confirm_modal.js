@@ -62,7 +62,7 @@ export default class ConfirmModal extends Component {
 									</Cost>
 									<Agreement>
 										<div className="pretty p-default p-curve">
-											<input type="checkbox" />
+											<input type="checkbox" onClick={e => value.updateState({ confirm: e.target.checked })} />
 											<div className="state p-danger">
 												<label>
 													<FinePrint>
@@ -75,7 +75,7 @@ export default class ConfirmModal extends Component {
 										</div>
 									</Agreement>
 									<ButtonContainer>
-										<Button>Got it!</Button>
+										<Button onClick={() => value.confirmAppointment()}>Got it!</Button>
 										<Button onClick={() => value.updateState({ displayConfirm: false })}>
 											Go back
 										</Button>
