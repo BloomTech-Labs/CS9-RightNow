@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Container, Sorting, Time, SortBy } from './selection_results_styles';
 import AppointmentCard from '../appointment_card/appt_card';
 import { UserContext } from '../../context/userContext';
-import axios from 'axios';
 import firebase from "../../firebase/firebase";
 import groupBy from "lodash.groupby";
 
@@ -95,44 +94,50 @@ export default class Results extends Component {
 			<UserContext.Consumer>
 				{(value) => {
 					if (value.finished) {
+						// returns { business_id: [array of corresponding appt objects], etc, etc }
 						const query_results_by_business = groupBy(value.queryResults, "business_ref");
+						// array of all business IDs from query
 						const all_businesses = Object.keys(query_results_by_business);
 
 						const getBusinessInfo = async () => {
-							const x = await Promise.all(all_businesses.map(busn => {
-								return firebase.firestore().collection("_business_").doc(busn).get().then(doc => doc.data()).catch(err => console.log("error", err));
-							})).then(businesses => {
-								return businesses.filter(x => x !== undefined).reduce((acc, cur) => {
-									acc[cur.uid] = { 
-										business_details: cur.business_information, 
-										appointments: query_results_by_business[cur.uid] 
-									}
-									return acc;
-								}, {});
-							}).then(final => value.updateState({ full_query: final, finished: false })).catch(err => console.log("oh boy", err));
+							await Promise.all(all_businesses.map(busn => {
+								return firebase
+									.firestore()
+									.collection("_business_")
+									.doc(busn).get()
+									.then(doc => doc.data())
+									.catch(err => console.log("error", err));
+							}))
+							.then(businesses => {
+								return businesses.filter(x => x !== undefined)
+									.reduce((acc, cur) => {
+										acc[cur.uid] = { 
+											business_details: cur.business_information, 
+											appointments: query_results_by_business[cur.uid] 
+										}
+										return acc;
+									}, {});
+							})
+							.then(final => value.updateState({ full_query: final, finished: false }))
+							.catch(err => console.log("oh no", err));
 						}
 
 						getBusinessInfo();
+						
 					}
-					// console.log(value.full_query)
 
-					// pass in each UNIQUE business
-					// if (this.state.full_query) {
-						return (
-							<Container>
-								<Clock />
+					return (
+						<Container>
+							<Clock />
 
-								{value.full_query ? Object.keys(value.full_query).map(busnRef => {
-									console.log(busnRef)
-									const { business_details, appointments } = value.full_query[busnRef]
-									return <AppointmentCard businessDetails={business_details} appointments={appointments} key={busnRef} />
-								}) : null}
-								{/* {value.this_is_it.map((eachData, index) => (
-									<AppointmentCard businessInfo={eachData} key={index} />
-								))} */}
-							</Container>
-						);
-					// }
+							{value.full_query ? Object.keys(value.full_query).map(busnRef => {
+								console.log(busnRef)
+								const { business_details, appointments } = value.full_query[busnRef]
+								return <AppointmentCard businessDetails={business_details} appointments={appointments} key={busnRef} />
+							}) : null}
+
+						</Container>
+					);
 				}}
 			</UserContext.Consumer>
 		);
