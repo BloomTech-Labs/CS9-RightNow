@@ -21,19 +21,14 @@ export default class UserProvider extends Component {
     displayConfirm: false,
 
     query: "",
-    queryResults: [], // this is without import appt info
+    queryResults: [],
     finished: false,
-    lets_display: false,
-    this_is_it: null,
-
     full_query: null,
 
     userSignedIn: false,
+    clientZip: null,
 
-    updateState: async data => {
-      await this.setState(data);
-      console.log(this.state.query);
-    },  
+    updateState: async data => await this.setState(data),
 
     handleSearch: async () => {
       const data = await axios
@@ -45,8 +40,10 @@ export default class UserProvider extends Component {
 
     clientLocation: () => {
       axios.get("http://ip-api.com/json")
-        .then(res => this.setState({ query: `${res.data.city}, ${res.data.region}` }))
-        .catch(err => console.log("error", err));
+        .then(res => this.setState({ 
+          query: `${res.data.city}, ${res.data.region}`, 
+          clientZip: res.data.zip 
+        })).catch(err => console.log("error", err));
     }
 
   }
