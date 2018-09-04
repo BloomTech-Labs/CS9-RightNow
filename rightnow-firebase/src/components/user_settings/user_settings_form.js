@@ -43,13 +43,17 @@ class UserSettings extends Component {
 			<UserProvider>
 				<UserContext.Consumer>
 					{(value) => {
-						if (value.getAppointment) {
+						value.getCustomerAppt(); // Get all appointments booked by the customer/user
+						// if (value.finished) {
+						// if axios request is finished
+						// if (value.queryResults.length !== 0) {
+							// check if the array is empty or not
+							console.log('UserProvider if statement check');
+
 							return (
 								<FormContainer>
-									{() => value.getCustomerInfo()}
-									{console.log(value.qetAppoinment)}
 									<h3>User Settings</h3>
-									<UpcomingAppointments userState={value} />
+									<UpcomingAppointments userState={value.queryResults} />
 									<PastAppointments userState={value} />
 									<ContactForm userState={value} />
 									<UserChangePassword />
@@ -57,7 +61,8 @@ class UserSettings extends Component {
 									<Button onClick={() => this.props.UserProvider}>Save</Button>
 								</FormContainer>
 							);
-						}
+						// }
+						// }
 					}}
 				</UserContext.Consumer>
 			</UserProvider>
