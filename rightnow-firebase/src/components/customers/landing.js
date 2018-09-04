@@ -146,7 +146,6 @@ export default class Landing extends Component {
   componentDidMount() {
     document.querySelector("#principal_pc").firstChild.style.height = "100%";
     document.querySelector("#primary_input").addEventListener("keyup", e => {
-      console.log(e)
       e.keyCode === 13 ? document.querySelector("#primary_button").click() : null;
     });
   }
