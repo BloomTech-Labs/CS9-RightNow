@@ -70,7 +70,7 @@ const Wrapper = glamorous.div({
 const Search = glamorous.input({
   // height: "auto",
   width: "15%",
-  padding: "1% 1%",
+  padding: "0.8%",
   fontSize: "1.5em",
   borderRadius: "5px",
   border: "none",
@@ -89,7 +89,7 @@ const Button = glamorous.div({
   color: "white",
   fontSize: "1.5em",
   fontWeight: 600,
-  padding: "1%",
+  padding: "0.8%",
   borderRadius: "5px",
   marginLeft: "15px",
   display: "flex",
@@ -145,6 +145,10 @@ const particleOptions = {
 export default class Landing extends Component {
   componentDidMount() {
     document.querySelector("#principal_pc").firstChild.style.height = "100%";
+    document.querySelector("#primary_input").addEventListener("keyup", e => {
+      console.log(e)
+      e.keyCode === 13 ? document.querySelector("#primary_button").click() : null;
+    });
   }
   render() {
     return (
@@ -158,12 +162,13 @@ export default class Landing extends Component {
               {value => (
                 <Wrapper id="primary_input">
                   <Search 
+                    id="primary_search"
                     placeholder="City or Zip" 
                     name="query"
                     value={value.query}
                     onChange={e => value.updateState({ [e.target.name]: e.target.value })}
                     />
-                  <Button onClick={() => value.handleSearch()}>Find Appointments</Button>
+                  <Button id="primary_button" onClick={() => value.handleSearch()}>Find Appointments</Button>
                 </Wrapper>
               )}
             </UserContext.Consumer>
