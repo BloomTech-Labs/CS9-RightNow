@@ -370,16 +370,18 @@ export const handleUpdateAppointment = functions.firestore
 					business_ref: ID,
 					customer_ref: ID
 				}
-*/
-export const handleDeleteAppointment = functions.firestore
-		.document(`/${APPT}/{apptId}`)
-		.onDelete((snap, context) => {
-				const isActive = snap.data().active;
-				const businessRef = snap.data().business_ref; // NOT a reference - logic is based on this being an id for testing purposes
 
-				db
-						.doc(`${BUSNINESS}/${businessRef}/${isActive ? "future_appointments" : "past_appointments"}/${context.params.apptId}`)
-						.delete()
-						.then(() => console.log("success"))
-						.catch(err => console.log("error", err));
-		});
+	NOT PREPARED FOR CUSTOMER'S APPOINTMENT COLLECTIONS OR ACTIVE/EXPIRED APPOINTMENTS (past/future collections)
+*/
+// export const handleDeleteAppointment = functions.firestore
+// 		.document(`/${APPT}/{apptId}`)
+// 		.onDelete((snap, context) => {
+// 				const isActive = snap.data().active;
+// 				const businessRef = snap.data().business_ref; // NOT a reference - logic is based on this being an id for testing purposes
+
+// 				db
+// 						.doc(`${BUSNINESS}/${businessRef}/${isActive ? "future_appointments" : "past_appointments"}/${context.params.apptId}`)
+// 						.delete()
+// 						.then(() => console.log("success"))
+// 						.catch(err => console.log("error", err));
+// 		});
