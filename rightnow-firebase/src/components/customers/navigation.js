@@ -96,7 +96,7 @@ export default class Navigation extends Component {
   };
 
   handleEmailSignIn = (email, password) => {
-		firebase.auth().signInWithEmailAndPassword(email, password);
+    firebase.auth().signInWithEmailAndPassword(email, password);
 		this.closeModal();
 	}
 
