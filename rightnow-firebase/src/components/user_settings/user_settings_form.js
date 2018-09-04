@@ -48,7 +48,7 @@ class UserSettings extends Component {
 						// if axios request is finished
 						// if (value.queryResults.length !== 0) {
 							// check if the array is empty or not
-							console.log('UserProvider if statement check');
+							console.log('get appts', value.getCustomerAppt());
 
 							return (
 								<FormContainer>

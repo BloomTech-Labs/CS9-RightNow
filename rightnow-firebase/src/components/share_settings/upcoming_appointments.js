@@ -15,8 +15,16 @@ const Appointment = glamorous.div({
 	backgroundColor: '#fff',
 	boxShadow: '0 10px 6px -6px #777',
 	borderRadius: '5px',
-	textAlign: 'center'
+	textAlign: 'center',
+
 });
+
+const AppointmentList = glamorous.div({
+    display: 'flex',
+    flexShrink: "0"
+
+});
+
 
 const Upcoming = glamorous.h3({
 	width: '100%',
@@ -32,9 +40,14 @@ const UpcomingAppointment = (props) => {
 		<Appointment>
 			<Upcoming>Upcoming Appointments</Upcoming>
 			<hr />
-			<div>
-				<AppointmentDetails />
-			</div>
+			<AppointmentList>
+                <div>
+                    <AppointmentDetails service={"Hair Cut"} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>
+                </div>
+                <div>
+                    <AppointmentDetails service={"Hair Cut"} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>
+                </div>
+			</AppointmentList>
 		</Appointment>
 	);
 };

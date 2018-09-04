@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import "./appointmentDetailsStyles.css";
 
 class AppointmentDetails extends Component {
-    constructor() {
-		super();
+    constructor(props) {
+		super(props);
     } 
     
     onDeleteClick = () => {
@@ -16,7 +16,7 @@ class AppointmentDetails extends Component {
         //     .then(() => res.send("success"))
         //     .catch(err => res.send("error"));
         // });
-    }
+    };
 
     render() {
         return (
@@ -27,19 +27,19 @@ class AppointmentDetails extends Component {
                             <h3 className="Detail__header">Sesh Details</h3>
                         <div className="Detail__content">
                             <div>
-                                <i class="fas icon fa-cut"></i><div className="apptProps"> this.props.service</div>
+                                <i class="fas icon fa-cut"></i><div className="apptProps"> {this.props.service}</div>
                             </div>
                             <div>
-                                <i class="far icon fa-clock"></i><div className="apptProps">this.target.props.startTime - this.props.endTime</div>
+                                <i class="far icon fa-clock"></i><div className="apptProps">{this.props.time}</div>
                             </div>
                             <div>
-                                <i class="far icon fa-calendar-plus"></i><div className="apptProps">this.target.props.day</div>
+                                <i class="far icon fa-calendar-plus"></i><div className="apptProps">{this.props.day}</div>
                             </div>
                             <div>
-                                <i class="fas icon fa-user-check"></i><div className="apptProps">this.target.props.customer.name</div> {/* user-times */}
+                                <i class="fas icon fa-user-check"></i><div className="apptProps">{this.props.company}</div> {/* user-times */}
                             </div>
                             <div>
-                                <i class="far icon fa-money-bill-alt"></i><div className="apptProps">this.target.props.cost</div>
+                                <i class="far icon fa-money-bill-alt"></i><div className="apptProps">{this.props.money}</div>
                             </div>
                         </div>
                     </div>
