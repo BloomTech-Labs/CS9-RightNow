@@ -6209,13 +6209,12 @@ react-star-ratings@^2.3.0:
     prop-types "^15.6.0"
     react "^16.1.0"
 
-<<<<<<< HEAD
 react-stripe-elements@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-stripe-elements/-/react-stripe-elements-2.0.1.tgz#197db4762c57bf73a07d852564ebdbac52954094"
   dependencies:
     prop-types "^15.5.10"
-=======
+
 react-time-picker@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/react-time-picker/-/react-time-picker-2.6.0.tgz#740d4dc17082f695e289e92b0e54d85548143410"
@@ -6226,7 +6225,6 @@ react-time-picker@^2.6.0:
     prop-types "^15.6.0"
     react-clock "^2.3.0"
     react-lifecycles-compat "^3.0.4"
->>>>>>> 697df7826eae6fed4018d6d63a34a6dbe4a5d600
 
 react@^16.1.0, react@^16.4.2:
   version "16.4.2"
