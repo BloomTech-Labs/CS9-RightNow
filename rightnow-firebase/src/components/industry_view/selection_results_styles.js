@@ -10,17 +10,23 @@ export const Container = glamorous.div({
 
 
 export const Sorting = glamorous.div({
-  display: "grid",
-  gridTemplateRows: "8% 25% 10% 55%",
-  justifyItems: "center"
+  display: "flex",
+  // gridTemplateRows: "8% 25% 10% 55%",
+  alignContent: "center",
+  height: "100%",
+  marginLeft: "7%",
 });
 
 
 export const Time = glamorous.div({
+  display: "flex",
   fontFamily: "Orbitron",
   fontWeight: 600,
-  fontSize: "3em",
-  letterSpacing: "0.1em"
+  fontSize: "2em",
+  letterSpacing: "0.1em",
+  zIndex: 2,
+  alignSelf: "center",
+  alignItems: "center"
 });
 
 
