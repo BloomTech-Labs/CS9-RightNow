@@ -18,18 +18,25 @@ const Container = glamorous.div({
 });
 
 const Main = glamorous.div({
-  display: "grid",
+  display: "flex",
+  flexDirection: "column",
   justifyContent: "center",
   alignContent: "center",
+  paddingBottom: "5%"
+  // height: "85%"
+  // padding: "5%"
 });
 
 const Title = glamorous.div({
-  fontFamily: "coquette, sans-serif",
-  fontStyle: "normal",
-  fontSize: "4em",
+  // fontFamily: "coquette, sans-serif",
+  // fontStyle: "normal",
+  // height: "50%",
+  fontFamily: "Raleway, sans-serif",
+  fontSize: "3.5em",
   color: "#EBEBEB",
   fontWeight: 800,
   textAlign: "center",
+  marginBottom: "3%",
 
   "@media(min-width: 1500px)": {
     fontSize: "3.5em"
@@ -49,16 +56,19 @@ const Title = glamorous.div({
 });
 
 const Wrapper = glamorous.div({
+  // height: "50%",
+  alignSelf: "flex-start",
   display: "flex",
   justifyContent: "center",
   alignContent: "center",
-  marginTop: "3vh",
+  // marginTop: "3%",
   zIndex: 1,
   // height: "10vh",
   width: "100vw"
 });
 
 const Search = glamorous.input({
+  // height: "auto",
   width: "15%",
   padding: "1% 1%",
   fontSize: "1.5em",
@@ -98,7 +108,11 @@ const Button = glamorous.div({
 const ParticleContainment = glamorous.div({
   position: "absolute",
   width: "100%",
-  height: "65vh"
+  height: "65vh",
+  // "&first-child": {
+  //   position: "absolute !important",
+  //   height: "100%"
+  // }
 });
 
 const particleOptions = {
@@ -129,6 +143,9 @@ const particleOptions = {
 
 
 export default class Landing extends Component {
+  componentDidMount() {
+    document.querySelector("#principal_pc").firstChild.style.height = "100%";
+  }
   render() {
     return (
       <Container>
@@ -154,7 +171,7 @@ export default class Landing extends Component {
           
         </Main>
 
-        <ParticleContainment>
+        <ParticleContainment id="principal_pc">
           <Particles width="100%" height="100%" params={particleOptions} />
         </ParticleContainment>
 
