@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./appointmentDetailsStyles.css";
+import "./shareAppointmentDetailsStyles.css";
 
 class AppointmentDetails extends Component {
     constructor(props) {
