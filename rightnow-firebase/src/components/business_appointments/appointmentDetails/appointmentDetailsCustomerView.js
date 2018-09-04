@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./appointmentDetailsStyles.css";
+import moment from 'moment';
 
 class AppointmentDetails extends Component {
     constructor() {
@@ -27,25 +28,21 @@ class AppointmentDetails extends Component {
                             <h3 className="Detail__header">Sesh Details</h3>
                         <div className="Detail__content">
                             <div>
-                                <i class="fas icon fa-cut"></i><div className="apptProps"> this.target.props.service</div>
+                                <i class="fas icon fa-cut"></i><div className="apptProps">{this.props.busnContext.selectedItem.service}</div>
+                            </div>
+                            <div><i class="far icon fa-clock"></i><div className="apptProps">{`${moment(this.props.busnContext.start).format('LLL')} --- ${moment(this.props.busnContext.end).format('LLL')}`}</div></div>
+                            {/* <div><i class="far icon fa-calendar-plus"></i><div className="apptProps">{this.props.busnContext.service}</div></div> */}
+                            <div>
+                                <i class="fas icon fa-user-check"></i><div className="apptProps">{this.props.busnContext.selectedItem.customer_ref}</div> {/* user-times */}
                             </div>
                             <div>
-                                <i class="far icon fa-clock"></i><div className="apptProps">this.target.props.startTime - this.props.endTime</div>
-                            </div>
-                            <div>
-                                <i class="far icon fa-calendar-plus"></i><div className="apptProps">this.target.props.day</div>
-                            </div>
-                            <div>
-                                <i class="fas icon fa-user-check"></i><div className="apptProps">this.target.props.customer.name</div> {/* user-times */}
-                            </div>
-                            <div>
-                                <i class="far icon fa-money-bill-alt"></i><div className="apptProps">this.target.props.cost</div>
+                                <i class="far icon fa-money-bill-alt"></i><div className="apptProps">{this.props.busnContext.selectedItem.cost}</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 }
 

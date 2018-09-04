@@ -49,14 +49,20 @@ export default class BusnCalendar extends Component {
     const { start, end, service, cost, description } = data;
     console.log(moment(start).format("LLL"), " --- ", moment(end).format("LLL"))
     console.log("service", service)
+    this.props.busnContext.updateState({
+      selectedItem: data
+    })
     console.log("cost", cost)
     console.log("description", description)
     console.log("\n\n", data);
-  }
 
+  }
+  
+  
   render() {
     return (
       <div>
+        {console.log(this.props.busnContext, "Hi Henry")}
 
         <Calendar 
           id="calendar"
@@ -71,7 +77,7 @@ export default class BusnCalendar extends Component {
           max={maxTime}
           style={{ height: "100vh" }}
           eventPropGetter={propGetter}
-        />
+          />
 
       </div>
     )

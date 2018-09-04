@@ -30,10 +30,9 @@ class BusnApptsView extends Component {
           </CalendarWrapper>
           <ApptsWrapper>
             <PostAppointment busnContext={this.props.value} />
-            <AppointmentDetails />
+            <AppointmentDetails busnContext={this.props.value} />
           </ApptsWrapper>
-        </Container>
-        
+        </Container> 
       </PrimaryWrapper>
     )
   }

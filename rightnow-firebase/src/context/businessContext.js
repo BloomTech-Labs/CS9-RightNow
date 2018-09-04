@@ -33,6 +33,8 @@ export default class BusinessProvider extends Component {
       photos: []
     },
 
+    selectedItem: "",
+
     appointments: [],
 
     future_appointments: [],
@@ -40,6 +42,8 @@ export default class BusinessProvider extends Component {
     booked_appointments: [],
 
     updateBusiness: data => this.setState({ business: data }), // PLACES API USES THIS
+
+    updateState: async data => await this.setState(data),
 
     business_logout: () => {
       firebase.auth().signOut();
