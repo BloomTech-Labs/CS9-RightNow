@@ -29,6 +29,8 @@ const ChangePasswordInput = glamorous.input({
     fontSize: "18px",
     borderRadius: '3px',
     margin: '2px',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    color: 'white'
 });
 
 const Button = glamorous.button({

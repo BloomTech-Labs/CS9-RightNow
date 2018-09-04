@@ -14,11 +14,15 @@ export const FormContainer = glamorous.div({
     width: '100%',
     // margin: "2%",
     border: '10px 10px',
-    backgroundColor: '#e6e6e6',
+    backgroundColor: '#232123',
     cover: 'no-repeat',
     textAlign: 'center',
     paddingTop: '2%'
 });
+
+export const Title = glamorous.h3({
+    color: 'white'
+})
 
 const Button = glamorous.button({
     borderRadius: '7px',
@@ -52,12 +56,12 @@ class UserSettings extends Component {
                         console.log('test',value);
                         return (
                             <FormContainer>
-                                <h3>Business Settings</h3>
+                                <Title>Business Settings</Title>
                                 <UpcomingAppointments userState={value.queryResults} />
                                 <PastAppointments userState={value} />
                                 <CompanyContactForm userState={value} />
                                 <UserChangePassword />
-                                <UserNotification />
+                                {/* <UserNotification /> */}
                                 <Button onClick={() => this.props.UserProvider}>Save</Button>
                             </FormContainer>
                         );

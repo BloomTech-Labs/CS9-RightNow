@@ -27,7 +27,9 @@ const InputField = glamorous.input({
     width: "100%",
     height: "25px",
     fontSize: "18px",
-    borderRadius: '3px'
+    borderRadius: '3px',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    color: 'white'
 });
 
 const LeftSide = glamorous.div({
