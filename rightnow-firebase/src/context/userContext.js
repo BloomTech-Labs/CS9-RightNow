@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import firebase from "../firebase/firebase";
 import axios from "axios";
-import moment from "moment";
 
 
 export const UserContext = React.createContext();
@@ -22,7 +21,7 @@ export default class UserProvider extends Component {
     displayConfirm: false,
     confirm: false,
 
-    query: "haircut",
+    query: "",
     queryResults: [],
     finished: false,
     full_query: [],
@@ -66,7 +65,7 @@ export default class UserProvider extends Component {
 
       firebase.firestore()
         .collection("_appointment_").doc(this.state.init_appointment.id)
-        .update({ is_available: false })
+        .update({ is_available: false, customer_ref: this.state.uid })
         .then(() => console.log("successful update"))
         .catch(err => console.log("error updating appointment", err));
 
@@ -100,8 +99,7 @@ export default class UserProvider extends Component {
   }
 
   componentDidMount() {
-    // set initial query input to client location
-    this.state.clientLocation();
+    // this.state.clientLocation(); // set initial query input to client location
 
     firebase.auth().onAuthStateChanged(user => {
       console.log(user);
