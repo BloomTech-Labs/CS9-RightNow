@@ -40,7 +40,7 @@ export default class UserProvider extends Component {
 			return data;
 		},
 
-		// getCustomerInfo: async () => {
+		// getCustomerAppt: async () => {
 		// 	const data = await axios
 		// 		.get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment/ISdGqNbq6aTxzV3VfdfW`)
 		// 		.then((res) => this.setState({ queryResults: data }))
