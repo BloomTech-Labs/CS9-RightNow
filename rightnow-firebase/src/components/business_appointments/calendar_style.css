@@ -1,45 +1,73 @@
 .rbc-current-time-indicator {
-  height: 2px;
+	height: 2px;
 }
 
-.react-datepicker-ignore-onclickoutside {
-  padding: 5px;
-  font-size: 1.3em;
-  font-weight: 600;
+/* when clicked */
+.react-datepicker__time-list {
+	padding: 0 0;
+	width: 100%;
 }
 
+
+/* Field for day/month/year */
+.react-datepicker-wrapper {
+	width: 100%;
+}
+.react-datepicker__input-container {
+	width: 100%;
+}
+.dmyField {
+	font-size: 1.2em;
+	margin: 3% 0;
+	color: red;
+	background: #dee1ed;
+	border: 1px solid grey;
+	width: 30%;
+}
+
+/* Field for start time and end time */
+.react-datepicker-wrapper {
+	width: 100%;
+}
+.react-datepicker__input-container {
+	width: 100%;
+}
+.timeFields {
+	font-size: 1.2em;
+	width: 100%;
+	box-sizing: border-box;
+	border: 1px solid grey;
+	color: red;
+	background: #dee1ed;
+}
 
 .rbc-events-container {
-  right: 0 !important;
+	right: 0 !important;
 }
 
 .rbc-today {
-  background-color: rgba(240, 236, 236, 0.5);
+	background-color: rgba(240, 236, 236, 0.5);
 }
 
 .available {
-  background-color: #26C1A2;
-  border: none !important;
+	background-color: #26c1a2;
+	border: none !important;
 }
 
 .booked {
-  background-color: #EF5651;
-  border: none !important;
+	background-color: #ef5651;
+	border: none !important;
 }
 
 /* event displayed on calendar */
 .rbc-event {
-  background-color: #353A50;
-  border: none !important;
-  right: 0;
+	background-color: #353a50;
+	border: none !important;
+	right: 0;
 }
-
-
 
 /* primary event label */
 /* .rbc-event-label {} */
-
-
 
 /* sub header on event */
 /* .rbc-event-content {} */
