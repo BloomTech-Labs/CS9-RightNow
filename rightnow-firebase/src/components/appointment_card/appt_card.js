@@ -64,7 +64,7 @@ export default class AppointmentCard extends Component {
 									{appointments.map((appt, index) => (
 										<Appointment
 											key={index}
-											onClick={() => value.updateState({ theo_appt_details: appt, displayConfirm: true })}
+											onClick={() => value.initializeAppointment(appt)}
 										>
 											<Type>{appt.service}</Type>
 											<Time>{`${moment(appt.start).format("h:mm")} - ${moment(appt.end).format("h:mm")}`}</Time>

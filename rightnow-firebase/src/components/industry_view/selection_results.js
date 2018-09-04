@@ -85,10 +85,6 @@ business info is an object that contains info like location, phone number, etc.
 */
 
 export default class Results extends Component {
-	state = { 
-		full_query: null
-	};
-
 	render() {
 		return (
 			<UserContext.Consumer>
@@ -119,19 +115,20 @@ export default class Results extends Component {
 									}, {});
 							})
 							.then(final => value.updateState({ full_query: final, finished: false }))
+							.then(() => value.listenToResults())
 							.catch(err => console.log("oh no", err));
 						}
 
 						getBusinessInfo();
-						
+
 					}
 
 					return (
 						<Container>
+
 							<Clock />
 
 							{value.full_query ? Object.keys(value.full_query).map(busnRef => {
-								console.log(busnRef)
 								const { business_details, appointments } = value.full_query[busnRef]
 								return <AppointmentCard businessDetails={business_details} appointments={appointments} key={busnRef} />
 							}) : null}

@@ -35,8 +35,7 @@ class BusinessAccount extends Component {
 			last_name: "",
 			phone: "",
 			email: "",
-			password: "",
-			isBusiness: false
+			password: ""
 		};
 	}
 
@@ -80,18 +79,21 @@ class BusinessAccount extends Component {
 			last_name: '',
 			email: '',
 			phone: '',
-			password: '',
-			isBusiness: true
+			password: ''
 		});
 	};
 
 	handleEmailSignIn = async () => {
-		await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
-		await firebase.auth().currentUser.getIdTokenResult().then(token => {
-			if (token.claims.business) this.setState({ isBusiness: true, email: "", password: "" });
-			else return;
-		});
-		return;
+		const confirm_account = await firebase
+			.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+			.then(res => firebase
+				.auth().currentUser.getIdTokenResult()
+				.then(token => token.claims.business ? true : false)
+				.then(x => x ? this.setState({ email: "", password: "" }) : null)
+				.catch(err => console.log("error!", err)))
+			.catch(err => console.log("oh dear...", err));
+
+		return confirm_account;
 	};
 
 	// screen transitions
@@ -118,8 +120,7 @@ class BusinessAccount extends Component {
 
 	render() {
 
-		// BUG: login --> busn dashboard page --> signout --> busn login page --> login --> busn login page
-		if (this.state.isBusiness) {
+		if (this.props.value.uid) {
 			return (<Redirect to="/busn-appts" />)
 		}
 		

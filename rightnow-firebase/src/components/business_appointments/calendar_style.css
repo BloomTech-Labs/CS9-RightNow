@@ -2,6 +2,12 @@
   height: 2px;
 }
 
+.react-datepicker-ignore-onclickoutside {
+  padding: 5px;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
 
 .rbc-events-container {
   right: 0 !important;
