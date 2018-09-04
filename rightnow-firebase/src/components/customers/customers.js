@@ -23,7 +23,7 @@ export default class Customers extends Component {
                 <UserProvider>
                     <Landing />
                     <QuickSearch />
-                    <FeaturedAppointments />
+                    {/* <FeaturedAppointments /> */}
                     <IndustryView />
                 </UserProvider>
             </HomeContainer>

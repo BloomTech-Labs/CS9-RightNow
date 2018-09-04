@@ -50,9 +50,10 @@ export default class AppointmentCard extends Component {
 									<StarRatings
 										rating={rating}
 										numberOfStars={5}
-										starRatedColor="gold"
+										starRatedColor="red"
 										starEmptyColor="grey"
-										starDimension="35px"
+										starDimension="19px"
+										styling={{width: '100%'}}
 									/>
 									<Address>
 										<div>{`${street_number} ${street_name}`}</div>
