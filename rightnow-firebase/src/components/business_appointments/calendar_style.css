@@ -1,0 +1,45 @@
+.rbc-current-time-indicator {
+  height: 2px;
+}
+
+.react-datepicker-ignore-onclickoutside {
+  padding: 5px;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+
+.rbc-events-container {
+  right: 0 !important;
+}
+
+.rbc-today {
+  background-color: rgba(240, 236, 236, 0.5);
+}
+
+.available {
+  background-color: #26C1A2;
+  border: none !important;
+}
+
+.booked {
+  background-color: #EF5651;
+  border: none !important;
+}
+
+/* event displayed on calendar */
+.rbc-event {
+  background-color: #353A50;
+  border: none !important;
+  right: 0;
+}
+
+
+
+/* primary event label */
+/* .rbc-event-label {} */
+
+
+
+/* sub header on event */
+/* .rbc-event-content {} */

@@ -17,45 +17,114 @@ export default class UserProvider extends Component {
     location: "",
     appointments: [],
     
-    theo_appt_details: {},
+    init_appointment: {},
     displayConfirm: false,
+    confirm: false,
 
     query: "",
-    queryResults: [], // this is without import appt info
+    queryResults: [],
     finished: false,
-    this_is_it: null, // use this for final appt card display
+    full_query: [],
 
     userSignedIn: false,
+    clientZip: null,
 
-    updateState: async data => {
-      await this.setState(data);
-      console.log(this.state.query);
+    updateState: async data => await this.setState(data),
+
+    customerLogout: () => {
+      firebase.auth().signOut();
+      this.unsubscribe();
     },
 
     handleSearch: async () => {
-      const data = await axios
+      await axios
         .get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment?term=${this.state.query}`)
         .then(res => this.setState({ queryResults: res.data, finished: true }))
-        .catch(err => console.log("error", err));
-      return data;
+        .catch(err => console.log("error", err));      
     },
+
+    clientLocation: () => {
+      axios.get("http://ip-api.com/json")
+        .then(res => this.setState({ 
+          query: `${res.data.city}, ${res.data.region}`, 
+          clientZip: res.data.zip 
+        })).catch(err => console.log("error", err));
+    },
+
+    initializeAppointment: async appt => {
+      const business_details = 
+        await axios
+          .get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/${appt.business_ref}`)
+          .then(res => res.data).catch(err => console.log("error", err));
+      const full_appointment = { ...appt, business_details };
+      this.setState({ init_appointment: full_appointment, displayConfirm: true });
+    },
+
+    confirmAppointment: () => {
+      if (!this.state.confirm || !this.state.uid) return;
+
+      firebase.firestore()
+        .collection("_appointment_").doc(this.state.init_appointment.id)
+        .update({ is_available: false, customer_ref: this.state.uid })
+        .then(() => console.log("successful update"))
+        .catch(err => console.log("error updating appointment", err));
+
+      // NEED FIREBASE FUNCTION FOR APPOINTMENT ON-UPDATE
+      // appointment does not get added to customer's appoinment collection
+      this.setState({ displayConfirm: false });
+    },
+
+    listenToResults: () => {
+      this.unsubscribe = firebase
+        .firestore().collection("_appointment_")
+        .where("service", "==", this.state.query)
+        .onSnapshot(snapshot => {
+          snapshot.docChanges().forEach(change => {
+            const id = change.doc.id;
+            const doc = change.doc.data();
+            const busn_ref = doc.business_ref;            
+            
+            if (change.type === "modified" || change.type === "removed") {
+              const copy = { ...this.state.full_query };
+              const busn_appts = copy[busn_ref].appointments;
+
+              copy[busn_ref].appointments = busn_appts.filter(appt => appt.id !== id);
+
+              this.setState({ full_query: copy });
+            } 
+          })
+        })
+    }
 
   }
 
   componentDidMount() {
+    // this.state.clientLocation(); // set initial query input to client location
+
     firebase.auth().onAuthStateChanged(user => {
-      // console.log(user) // display all info from user
+      console.log(user);
+
       if (user && !this.state.userSignedIn) {
-        this.setState({
-          userSignedIn: true,
-          uid: user.uid,
-          name: user.displayName,
-          email: user.email,
-          phone: user.email,
-          photo: user.photoURL
-        });
+        user
+          .getIdTokenResult()
+          .then(token => token.claims.business ? true : false)
+          .then(isBusiness => {
+            if (isBusiness) return;
+            else {
+              this.setState({
+                userSignedIn: true,
+                uid: user.uid,
+                name: user.displayName,
+                email: user.email,
+                phone: user.phoneNumber,
+                photo: user.photoURL
+              });
+              return;
+            }
+          }).catch(err => console.log("error", err));
       }
-      if (!user && this.state.userSignedIn) {
+      
+      else if (!user && this.state.userSignedIn) {
         this.setState({
           userSignedIn: false,
           uid: null,
@@ -65,6 +134,8 @@ export default class UserProvider extends Component {
           photo: null
         });
       }
+
+      else return;
     });
   }
 
