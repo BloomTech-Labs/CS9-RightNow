@@ -126,7 +126,7 @@ export default class Results extends Component {
 					return (
 						<Container>
 
-							{/* <Clock /> */}
+							<Clock />
 
 							{value.full_query ? Object.keys(value.full_query).map(busnRef => {
 								const { business_details, appointments } = value.full_query[busnRef]
