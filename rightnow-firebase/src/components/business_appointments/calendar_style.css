@@ -3,11 +3,15 @@
 }
 
 /* when clicked */
+.react-datepicker__time-container {
+	width: 100%;
+	padding: auto;
+	margin: auto;
+}
 .react-datepicker__time-list {
 	padding: 0 0;
 	width: 100%;
 }
-
 
 /* Field for day/month/year */
 .react-datepicker-wrapper {
