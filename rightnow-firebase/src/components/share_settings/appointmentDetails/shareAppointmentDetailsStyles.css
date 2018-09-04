@@ -2,10 +2,12 @@
     /* display: flex; */
     /* justify-content: space-between; */
     /* flex-direction: column; */
-    width: 35%;
+    /*width: 100%;*/
+    width: 20vw;
     color: #ebebeb;
     /* margin-right: 2%;
-    margin-bottom: 5%; */
+    /*margin-bottom: 5%; *!*/
+    margin: 0 10%;
     background: #353A50;
     border: 1px solid #353A50;
 }
@@ -25,6 +27,7 @@
 .Detail__header {
     color: #EBEBEB;
     padding-left: 11%;
+
 }
 
 .content {

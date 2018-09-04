@@ -43,12 +43,12 @@ class UserSettings extends Component {
 			<UserProvider>
 				<UserContext.Consumer>
 					{(value) => {
-						value.getCustomerAppt(); // Get all appointments booked by the customer/user
+						// value.getCustomerAppt(); // Get all appointments booked by the customer/user
 						// if (value.finished) {
 						// if axios request is finished
 						// if (value.queryResults.length !== 0) {
 							// check if the array is empty or not
-							console.log('get appts', value.getCustomerAppt());
+							// console.log('get appts', value.getCustomerAppt());
 
 							return (
 								<FormContainer>

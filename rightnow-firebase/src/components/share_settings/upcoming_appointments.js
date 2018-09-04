@@ -21,7 +21,9 @@ const Appointment = glamorous.div({
 
 const AppointmentList = glamorous.div({
     display: 'flex',
-    flexShrink: "0"
+    // flexShrink: "0"
+	flexDirection: 'row',
+	justifyContent:'space-between'
 
 });
 
@@ -41,12 +43,12 @@ const UpcomingAppointment = (props) => {
 			<Upcoming>Upcoming Appointments</Upcoming>
 			<hr />
 			<AppointmentList>
-                <div>
+
                     <AppointmentDetails service={"Hair Cut"} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>
-                </div>
-                <div>
+
                     <AppointmentDetails service={"Hair Cut"} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>
-                </div>
+                    <AppointmentDetails service={"Hair Cut"} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>
+
 			</AppointmentList>
 		</Appointment>
 	);
