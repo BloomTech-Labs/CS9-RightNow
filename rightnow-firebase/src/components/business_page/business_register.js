@@ -132,7 +132,7 @@ export default class BusinessAccount extends Component {
 			<div>
 				<Container1>
 					<TitleBackdrop>
-						<div>
+						<div> 
 							<Title>
 								<TitleBorder>Sesho: Manager</TitleBorder>
 								<Description>MANAGE YOUR APPOINTMENTS WITH A SIMPLE SESSION OF SESHO</Description>
