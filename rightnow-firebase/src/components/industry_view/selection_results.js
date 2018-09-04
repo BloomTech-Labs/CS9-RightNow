@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Container, Sorting, Time, SortBy } from './selection_results_styles';
 import AppointmentCard from '../appointment_card/appt_card';
 import { UserContext } from '../../context/userContext';
-import axios from 'axios';
-import { dummy_data } from '../../dummy_data';
+import firebase from "../../firebase/firebase";
+import groupBy from "lodash.groupby";
 
 export class Clock extends Component {
 	state = {
@@ -85,131 +85,62 @@ business info is an object that contains info like location, phone number, etc.
 */
 
 export default class Results extends Component {
-	// myself = this;
-	state = { testing: null };
 	render() {
 		return (
 			<UserContext.Consumer>
 				{(value) => {
-					// console.log('here');
 					if (value.finished) {
-						// console.log('finished is true');
-						const cache = []; // store all the appointments by unique business ID
-						const appointments = value.queryResults; // All the appoints available
+						// returns { business_id: [array of corresponding appt objects], etc, etc }
+						const query_results_by_business = groupBy(value.queryResults, "business_ref");
+						// array of all business IDs from query
+						const all_businesses = Object.keys(query_results_by_business);
 
-						const testfunction = async (appointments) => {
-							const z = await Promise.all(
-								appointments.map((appt) => {
-									// if cache is empty
-									if (cache.length === 0) {
-										// push business_ref into cache, which will be cache[0]
-										// then push array of appointments into cache, which will be cache[1]
-										// run axios, push the result into cache, which will later become cache[2]; taken care of after all promises are resolved.
-										cache.push([ appt.business_ref, [ appt ] ]);
-										return axios.get(
-											`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/${appt.business_ref}`
-										);
-									} else {
-										// if cache is not empty
-										let found = false;
-										cache.forEach((each) => {
-											for (let j = 0; j < each.length; j++) {
-												// if we found a matching UID
-												if (appt.business_ref === each[j]) {
-													// skip axios then push the appointment block to cache[1]
-													each[1].push(appt);
-													found = true;
-												}
-											}
-										});
-										// same as line 85-87
-										if (found === false) {
-											cache.push([ appt.business_ref, [ appt ] ]);
-											return axios.get(
-												`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/${appt.business_ref}`
-											);
+						const getBusinessInfo = async () => {
+							await Promise.all(all_businesses.map(busn => {
+								return firebase
+									.firestore()
+									.collection("_business_")
+									.doc(busn).get()
+									.then(doc => doc.data())
+									.catch(err => console.log("error", err));
+							}))
+							.then(businesses => {
+								return businesses.filter(x => x !== undefined)
+									.reduce((acc, cur) => {
+										acc[cur.uid] = { 
+											business_details: cur.business_information, 
+											appointments: query_results_by_business[cur.uid] 
 										}
-									}
-								})
-							)
-								.then((res) => {
-									// check if res[i] exists/axios was called
-									// if yes: find element in cache with same ID then push it as element[2]
-									// if no: skip
-									for (let i = 0; i < appointments.length; i++) {
-										if (res[i] !== undefined) {
-											// console.log(`res ${i}`, res[i].data.business_information);
-											// console.log(`appt ${i}`, appointments[i].business_ref);
-											cache.forEach((each) => {
-												// look for matching UID
-												if (appointments[i].business_ref === each[0]) {
-													// push business info into cache, which will now be cache[2]
-													each.push(res[i].data.business_information);
-													// console.log(`sanity check for res ${i}`, each);
-												}
-											});
-											// cache[].push(res[i].data.business_information);
-										} else {
-											// console.log(`res ${i} does not exist`);
-										}
-									}
-									// return the entire cache
-									// console.log('cache', cache);
-									return cache;
-								})
-								// set to state in context
-								.then((actual) => value.updateState({ this_is_it: actual, finished: false }));
+										return acc;
+									}, {});
+							})
+							.then(final => value.updateState({ full_query: final, finished: false }))
+							.then(() => value.listenToResults())
+							.catch(err => console.log("oh no", err));
+						}
 
-							return z;
+						getBusinessInfo();
 
-							/*
-							// USE THIS IF YOU WANT EVERY APPOITNMENT TO CARRY BUSINESS INFO
-
-							const x = await Promise.all(
-								appointments.map((appt) => {
-									return axios.get(
-										`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/${appt.business_ref}`
-									);
-								})
-							)
-								.then((res) => {
-									const final = [];
-
-									for (let i = 0; i < appointments.length; i++) {
-										const temp = {
-											appointment: appointments[i],
-											business_details: res[i].data.business_information
-										};
-										final.push(temp);
-									}
-
-									return final;
-								})
-								.then((actual) => value.updateState({ this_is_it: actual, finished: false }));
-							// .then((actual) => this.setState({ testing: actual }));
-
-							return x;
-						*/
-						};
-
-						testfunction(appointments);
-						// console.log('queryResult', value.queryResults);
-						// console.log('this is it', value.this_is_it);
 					}
-					// pass in each UNIQUE business
-					if (value.this_is_it !== null) {
-						return (
-							<Container>
-								<Clock />
 
-								{value.this_is_it.map((eachData, index) => (
-									<AppointmentCard businessInfo={eachData} key={index} />
-								))}
-							</Container>
-						);
-					}
+					return (
+						<Container>
+
+							<Clock />
+
+							{value.full_query ? Object.keys(value.full_query).map(busnRef => {
+								const { business_details, appointments } = value.full_query[busnRef]
+								return <AppointmentCard businessDetails={business_details} appointments={appointments} key={busnRef} />
+							}) : null}
+
+						</Container>
+					);
 				}}
 			</UserContext.Consumer>
 		);
 	}
 }
+
+
+
+

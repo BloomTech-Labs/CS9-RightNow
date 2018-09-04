@@ -50,7 +50,7 @@ app.get("/", (req, res) => res.send("seshy"));
 // CREATE BUSINESS -- working
 // business users can only be create through this route --- NO 0AUTH FOR BUSINESS SIGN UP
 app.post("/business", async (req, res) => {
-	const { first_name, last_name, email, password, phone } = req.body;
+	const { first_name, last_name, email, password, phone } = req.body.owner_information;
 
 	const newUserId = 
 		await admin
@@ -62,7 +62,7 @@ app.post("/business", async (req, res) => {
 				phoneNumber: phone,
 			})
 			.then(userRecord => {
-				db.collection(BUSNINESS).doc(userRecord.uid).set(req.body).then(() => console.log("success")).catch(err => res.send(err));
+				db.collection(BUSNINESS).doc(userRecord.uid).set({...req.body, uid: userRecord.uid}).then(() => console.log("success")).catch(err => res.send(err));
 				return userRecord.uid;
 			})
 			.then(id => admin.auth().setCustomUserClaims(id, { business: true }).then(x => x).catch(err => res.send(err)))
@@ -95,19 +95,19 @@ app.put("/business/:id", (req, res) => {
 
 
 // GET BUSINESS' AVAILABLE APPOINTMENTS
-app.get("/business/:id/available", async (req, res) => {
-	const availableAppointments = 
-		await db
-			.collection(BUSNINESS)
-			.doc(req.params.id)
-			.collection("future_appointments")
-			.where("is_available", "==", true) // THIS HAS NOT BEEN IMPLEMENTED YET
-			.get()
-			.then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
-			.catch(err => res.send(err));
+// app.get("/business/:id/available", async (req, res) => {
+// 	const availableAppointments = 
+// 		await db
+// 			.collection(BUSNINESS)
+// 			.doc(req.params.id)
+// 			.collection("future_appointments")
+// 			// .where("is_available", "==", true) // THIS HAS NOT BEEN IMPLEMENTED YET
+// 			.get()
+// 			.then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
+// 			.catch(err => res.send(err));
 
-	res.send(availableAppointments);
-});
+// 	res.send(availableAppointments);
+// });
 
 
 // GET BUSINESS' BOOKED APPOINTMENTS
@@ -232,18 +232,17 @@ app.get("/appointment/:id", (req, res) => {
 
 // GET APPOINTMENT BY TERM -- working
 app.get("/appointment", async (req, res) => {
-
-		const ref = await db.collection(APPT);
-		// get term off query string
 		const term = req.query.term;
+		const ref = await db.collection(APPT);
 		const query = await ref.where("service", "==", term);
+		const only_available = await query.where("is_available", "==", true);
 
-		console.log(`Term: ${term}`);
 		const data =
-				await query
+				await only_available
 						.get()
-						.then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
+						.then(querySnapshot => querySnapshot.docs.map(doc => ({...doc.data(), id: doc.id })))
 						.catch(err => console.log(err));
+
 		res.send(data);
 });
 
@@ -339,20 +338,21 @@ export const handleNewAppointment = functions.firestore
 	available_appointments collection into the book_appointments collection.
 
 	THIS METHOD ASSUMES THAT APPOINTMENTS CAN ONLY BE BOOKED OR DELETED
+
+	THIS METHOD WORKS!!!
 */
-// export const handleUpdateAppointment = functions.firestore
-// 		.document(`/${APPT}/{apptId}`)
-// 		.onUpdate((snap, context) => {
-// 				const businessRef = snap.data().business_ref; // using id for development
-
-// 				const batch = db.batch();
-
-// 				const bookedApptsRef = db.doc(`/${BUSNINESS}/${businessRef}`).collection("past_appointments").doc(context.params.apptId);
-// 				batch.set(bookedApptsRef, snap.data());
-
-// 				const availApptsRef = db.doc(`${BUSNINESS}/${businessRef}`).collection("future_appointments").doc(context.params.apptId);
-// 				batch.delete(availApptsRef);
-// 		});
+export const handleUpdateAppointment = functions.firestore
+		.document(`/${APPT}/{apptId}`)
+		.onUpdate((change, context) => {
+			const updated_doc = change.after.data();
+			
+			db.doc(`/${CUSTOMER}/${updated_doc.customer_ref}`)
+				.collection("future_appointments")
+				.doc(context.params.apptId)
+				.set({ appointment_id: context.params.apptId })
+				.then(busnDocRef => busnDocRef)
+				.catch(err => console.log("error", err));
+		});
 
 
 /*
@@ -370,16 +370,18 @@ export const handleNewAppointment = functions.firestore
 					business_ref: ID,
 					customer_ref: ID
 				}
-*/
-export const handleDeleteAppointment = functions.firestore
-		.document(`/${APPT}/{apptId}`)
-		.onDelete((snap, context) => {
-				const isActive = snap.data().active;
-				const businessRef = snap.data().business_ref; // NOT a reference - logic is based on this being an id for testing purposes
 
-				db
-						.doc(`${BUSNINESS}/${businessRef}/${isActive ? "future_appointments" : "past_appointments"}/${context.params.apptId}`)
-						.delete()
-						.then(() => console.log("success"))
-						.catch(err => console.log("error", err));
-		});
+	NOT PREPARED FOR CUSTOMER'S APPOINTMENT COLLECTIONS OR ACTIVE/EXPIRED APPOINTMENTS (past/future collections)
+*/
+// export const handleDeleteAppointment = functions.firestore
+// 		.document(`/${APPT}/{apptId}`)
+// 		.onDelete((snap, context) => {
+// 				const isActive = snap.data().active;
+// 				const businessRef = snap.data().business_ref; // NOT a reference - logic is based on this being an id for testing purposes
+
+// 				db
+// 						.doc(`${BUSNINESS}/${businessRef}/${isActive ? "future_appointments" : "past_appointments"}/${context.params.apptId}`)
+// 						.delete()
+// 						.then(() => console.log("success"))
+// 						.catch(err => console.log("error", err));
+// 		});
