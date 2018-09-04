@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./appointmentDetailsStyles.css";
 import moment from 'moment';
+import axios from "axios";
 
 class AppointmentDetails extends Component {
     constructor() {
@@ -8,23 +9,19 @@ class AppointmentDetails extends Component {
     } 
     
     onDeleteClick = () => {
-        // axios... for delete appointment function
-        // app.delete("/appointment/:id", (req, res) => {
-        //     db
-        //     .collection(APPT)
-        //     .doc(req.params.id)
-        //     .delete()
-        //     .then(() => res.send("success"))
-        //     .catch(err => res.send("error"));
-        // });
-    }
+        axios.delete(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment/${this.props.busnContext.selectedItem.id}`)
+            .then(res => {
+                console.log(res, "success");
+            })
+            .catch(err => err)
+        }
 
     render() {
         return (
             <div>
                 <div className="Detail__Container">
                     <div className='content'>
-                            <i onClick={this.onDeleteClick()} class="far delete fa-trash-alt"></i>
+                            <i onClick={() => this.onDeleteClick()} class="far delete fa-trash-alt"></i>
                             <h3 className="Detail__header">Sesh Details</h3>
                         <div className="Detail__content">
                             <div>

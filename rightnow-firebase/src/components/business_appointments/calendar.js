@@ -46,7 +46,7 @@ export default class BusnCalendar extends Component {
   }
 
   apptSelect = data => {
-    const { start, end, service, cost, description } = data;
+    const { start, end, service, cost, description, id } = data;
     console.log(moment(start).format("LLL"), " --- ", moment(end).format("LLL"))
     console.log("service", service)
     this.props.busnContext.updateState({
