@@ -61,7 +61,7 @@ export default class UserProvider extends Component {
     },
 
     confirmAppointment: () => {
-      if (!this.state.confirm) return;
+      if (!this.state.confirm || !this.state.uid) return;
 
       firebase.firestore()
         .collection("_appointment_").doc(this.state.init_appointment.id)
