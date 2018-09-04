@@ -1,13 +1,8 @@
 .Detail__Container {
-    /* display: flex; */
-    /* justify-content: space-between; */
-    /* flex-direction: column; */
     color: #EBEBEB;
-    margin-left: 60%;
-    margin-right: 2%;
-    margin-bottom: 5%;
     background: #353A50;
     border: 1px solid #353A50;
+    height: 50%;
 }
 
 .Detail__content {
