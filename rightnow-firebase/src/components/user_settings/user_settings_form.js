@@ -46,8 +46,9 @@ class UserSettings extends Component {
 						value.getCustomerAppt(); // Get all appointments booked by the customer/user
 						// if (value.finished) {
 						// if axios request is finished
-						if (value.queryResults.length !== 0) {
+						// if (value.queryResults.length !== 0) {
 							// check if the array is empty or not
+							console.log('UserProvider if statement check');
 
 							return (
 								<FormContainer>
@@ -60,7 +61,7 @@ class UserSettings extends Component {
 									<Button onClick={() => this.props.UserProvider}>Save</Button>
 								</FormContainer>
 							);
-						}
+						// }
 						// }
 					}}
 				</UserContext.Consumer>

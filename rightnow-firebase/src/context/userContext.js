@@ -40,14 +40,14 @@ export default class UserProvider extends Component {
 			return data;
 		},
 
-		// getCustomerAppt: async () => {
-		// 	const data = await axios
-		// 		.get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh//customer/:id/upcoming`)
-		// 		.then((res) => this.setState({ queryResults: data }))
-		// 		.catch((err) => console.log('error', err));
-		// 	console.log(data);
-		// 	return data;
-		// }
+		getCustomerAppt: async () => {
+			const data = await axios
+				.get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/customer/${this.state.uid}/upcoming`)
+				.then((res) => this.setState({ queryResults: data }))
+				.catch((err) => console.log('error', err));
+			console.log(data);
+			return data;
+		}
 	};
 
 	componentDidMount() {
