@@ -73,8 +73,32 @@ export default class PostAppointment extends Component {
 	render() {
 		return (
 			<Container>
+				<style>
+					{`
+            .react-datepicker-popper {
+							position: relative;
+            }
+            .react-datepicker__time-container {
+							width: 100%;
+              padding: 2%;
+            }
+            .react-datepicker__time {
+							width: 100%;
+            }
+            .react-datepicker__time-box {
+							margin: 0 !important;
+              width: 100% !important;
+            }
+            .react-datepicker__time-list {
+							padding-left: 0 !important;
+              padding-right: 0 !important;
+              width: 100% !important;
+            }
+            .react-datepicker__time-list-item {
+							margin: auto !important;
+						}`}
+				</style>
 				<Title>Post New Availability</Title>
-
 				<div style={{ padding: '3%' }}>
 					<input
 						style={{
