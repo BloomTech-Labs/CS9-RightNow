@@ -375,14 +375,6 @@ export const handleUpdateAppointment = functions.firestore
 					customer_ref: ID
 				}
 
-<<<<<<< HEAD
-				db
-						.doc(`${BUSNINESS}/${businessRef}/${isActive ? "future_appointments" : "past_appointments"}/${context.params.apptId}`)
-						.delete()
-						.then(() => console.log("success"))
-						.catch(err => console.log("error", err));
-		});
-=======
 	NOT PREPARED FOR CUSTOMER'S APPOINTMENT COLLECTIONS OR ACTIVE/EXPIRED APPOINTMENTS (past/future collections)
 */
 // export const handleDeleteAppointment = functions.firestore
@@ -397,4 +389,3 @@ export const handleUpdateAppointment = functions.firestore
 // 						.then(() => console.log("success"))
 // 						.catch(err => console.log("error", err));
 // 		});
->>>>>>> ef78dc195e5f73b7878c3f1e87f94f0686f2967c

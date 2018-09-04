@@ -5,82 +5,6 @@ import axios from 'axios';
 export const UserContext = React.createContext();
 
 export default class UserProvider extends Component {
-<<<<<<< HEAD
-	state = {
-		uid: '',
-		name: '', // need both first and last name
-		email: '',
-		phone: '',
-		photo: '',
-		location: '',
-		appointments: [],
-
-		theo_appt_details: {},
-		displayConfirm: false,
-
-		query: '',
-		queryResults: [], // this is without import appt info
-		getAppointment: null,
-		finished: false,
-		this_is_it: null, // use this for final appt card display
-
-		userSignedIn: false,
-
-		updateState: async (data) => {
-			await this.setState(data);
-			console.log(this.state.query);
-		},
-
-		handleSearch: async () => {
-			const data = await axios
-				.get(
-					`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment?term=${this.state.query}`
-				)
-				.then((res) => this.setState({ queryResults: res.data, finished: true }))
-				.catch((err) => console.log('error', err));
-			return data;
-		},
-
-		getCustomerAppt: async () => {
-			const data = await axios
-				.get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/customer/${this.state.uid}/upcoming`)
-				.then((res) => this.setState({ queryResults: data }))
-				.catch((err) => console.log('error', err));
-			console.log(data);
-			return data;
-		}
-	};
-
-	componentDidMount() {
-		firebase.auth().onAuthStateChanged((user) => {
-			console.log(user); // display all info from user
-			if (user && !this.state.userSignedIn) {
-				this.setState({
-					userSignedIn: true,
-					uid: user.uid,
-					name: user.displayName,
-					email: user.email,
-					phone: user.phoneNumber,
-					photo: user.photoURL
-				});
-			}
-			if (!user && this.state.userSignedIn) {
-				this.setState({
-					userSignedIn: false,
-					uid: null,
-					name: null,
-					email: null,
-					phone: null,
-					photo: null
-				});
-			}
-		});
-	}
-
-	render() {
-		return <UserContext.Provider value={this.state}>{this.props.children}</UserContext.Provider>;
-	}
-=======
 
   state = {
     uid: "",
@@ -221,7 +145,6 @@ export default class UserProvider extends Component {
       </UserContext.Provider>
     )
   }
->>>>>>> ef78dc195e5f73b7878c3f1e87f94f0686f2967c
 }
 
 /*

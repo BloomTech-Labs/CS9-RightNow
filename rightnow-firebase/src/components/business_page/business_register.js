@@ -84,49 +84,6 @@ class BusinessAccount extends Component {
 		});
 	};
 
-<<<<<<< HEAD
-	render() {
-		console.log(this.props);
-		return (
-			<div>
-				<Container1>
-					<TitleBackdrop>
-						<div> 
-							<Title>
-								<TitleBorder>Sesho: Manager</TitleBorder>
-								<Description>MANAGE YOUR APPOINTMENTS WITH A SIMPLE SESSION OF SESHO</Description>
-							</Title>
-							<ButtonContainer>
-								<RegButton>
-									<Link
-										activeClass="active"
-										className="toRegister"
-										to="toRegister"
-										spy={true}
-										smooth={true}
-										duration={500}
-									>
-										Register
-									</Link>
-								</RegButton>
-								<CenterLine />
-								<LoginButton>
-									<Link
-										activeClass="active"
-										className="toRegister"
-										to="toLogin"
-										spy={true}
-										smooth={true}
-										duration={500}
-									>
-										Login
-									</Link>
-								</LoginButton>
-							</ButtonContainer>
-						</div>
-					</TitleBackdrop>
-				</Container1>
-=======
 	handleEmailSignIn = async () => {
 		const confirm_account = await firebase
 			.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
@@ -145,7 +102,6 @@ class BusinessAccount extends Component {
 		document.querySelector('#landing').style.top = '150vh';
 		document.querySelector('#register').style.top = 0;
 	};
->>>>>>> ef78dc195e5f73b7878c3f1e87f94f0686f2967c
 
 	handleLoginDisplay = () => {
 		document.querySelector('#landing').style.top = '-100vh';
@@ -316,10 +272,6 @@ class BusinessAccount extends Component {
 			</FixedContainer>
 		);
 	}
-<<<<<<< HEAD
-}
-=======
 }
 
 export default withRouter(BusinessAccount);
->>>>>>> ef78dc195e5f73b7878c3f1e87f94f0686f2967c
