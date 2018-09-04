@@ -1,8 +1,12 @@
+
 import React, { Component } from 'react';
 // Firebase
 import PlacesAPI from '../placesAPI/search_autocomplete';
 import { auth } from '../../firebase/firebase';
 import { doSignInWithEmailAndPassword, doCreateUserWithEmailAndPassword } from '../../firebase/auth';
+// react scroll
+import * as Scroll from 'react-scroll';
+import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
 // glamorous stuff
 import {
 	Container1,
@@ -39,6 +43,54 @@ export default class BusinessAccount extends Component {
 			email_log: '',
 			password_log: ''
 		};
+	}
+
+	componentDidMount() {
+		Events.scrollEvent.register('begin', function() {
+			console.log('begin', arguments);
+		});
+
+		Events.scrollEvent.register('end', function() {
+			console.log('end', arguments);
+		});
+	}
+
+	scrollToTop() {
+		scroll.scrollToTop();
+	}
+	scrollTo() {
+		scroller.scrollTo('scroll-to-element', {
+			duration: 800,
+			delay: 0,
+			smooth: 'easeInOutQuart'
+		});
+	}
+	scrollToWithContainer() {
+		let goToContainer = new Promise((resolve, reject) => {
+			Events.scrollEvent.register('end', () => {
+				resolve();
+				Events.scrollEvent.remove('end');
+			});
+
+			scroller.scrollTo('scroll-container', {
+				duration: 800,
+				delay: 0,
+				smooth: 'easeInOutQuart'
+			});
+		});
+
+		goToContainer.then(() =>
+			scroller.scrollTo('scroll-container-second-element', {
+				duration: 800,
+				delay: 0,
+				smooth: 'easeInOutQuart',
+				containerId: 'scroll-container'
+			})
+		);
+	}
+	componentWillUnmount() {
+		Events.scrollEvent.remove('begin');
+		Events.scrollEvent.remove('end');
 	}
 
 	submitForm = async () => {
@@ -81,21 +133,43 @@ export default class BusinessAccount extends Component {
 			<div>
 				<Container1>
 					<TitleBackdrop>
-						<div>
+						<div> 
 							<Title>
 								<TitleBorder>Sesho: Manager</TitleBorder>
 								<Description>MANAGE YOUR APPOINTMENTS WITH A SIMPLE SESSION OF SESHO</Description>
 							</Title>
 							<ButtonContainer>
-								<RegButton>Register</RegButton>
+								<RegButton>
+									<Link
+										activeClass="active"
+										className="toRegister"
+										to="toRegister"
+										spy={true}
+										smooth={true}
+										duration={500}
+									>
+										Register
+									</Link>
+								</RegButton>
 								<CenterLine />
-								<LoginButton>Login</LoginButton>
+								<LoginButton>
+									<Link
+										activeClass="active"
+										className="toRegister"
+										to="toLogin"
+										spy={true}
+										smooth={true}
+										duration={500}
+									>
+										Login
+									</Link>
+								</LoginButton>
 							</ButtonContainer>
 						</div>
 					</TitleBackdrop>
 				</Container1>
 
-				{/* <Element name="toRegister" className="element" /> */}
+				<Element name="toRegister" className="element" />
 				<Container2>
 					<div>Already a family of Sesho? click here</div>
 					<TopWrapper>
@@ -165,7 +239,7 @@ export default class BusinessAccount extends Component {
 					<Button onClick={() => this.submitForm()}>Submit</Button>
 				</Container2>
 
-				{/* <Element name="toLogin" className="element" /> */}
+				<Element name="toLogin" className="element" />
 				<Container3>
 					<div>Not a family of Sesho? click here</div>
 
