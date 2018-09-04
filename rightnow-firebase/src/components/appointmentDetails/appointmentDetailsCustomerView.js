@@ -1,76 +1,107 @@
 import React, { Component } from "react";
 import "./appointmentDetailsStyles.css";
 import glamorous from "glamorous";
+import axios from "axios";
+import moment from "moment";
 
 
 const Container = glamorous.div({
-    alignSelf: "flex-start",
+    display: "flex",
+    flexDirection: "column",
     width: "100%",
-    height: "35%",
+    height: "37%",
     color: "#EBEBEB",
     background: "#353A50",
     border: "1px solid #353A50",
+    borderRadius: "5px"
 });
 
+const Header = glamorous.div({
+    display: "flex",
+    justifyContent: "space-between",
+    alignContent: "center",
+    padding: "1%"
+});
+
+const Title = glamorous.div({
+    fontFamily: "Raleway, sans-serif",
+    fontSize: "1.3em",
+    fontWeight: 600,
+    color: "#EBEBEB",
+    padding: "2%"
+});
 
 const TrashCan = glamorous.div({
-    position: "relative",
-    top: "5",
-    right: "5"
+    height: "100%",
+    width: "10%",
+    marginRight: "3%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    ":hover": {
+        cursor: "pointer"
+    }
 });
 
+const Content = glamorous.div({
+    height: "100%",
+    padding: "0 3%",
+    backgroundColor: "#EBEBEB",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-around"
+});
+
+const Detail = glamorous.div({ color: "#353A50" })
+
+
+
 class AppointmentDetails extends Component {
-    constructor() {
-		super();
-    } 
     
     onDeleteClick = () => {
-        console.log(this.props)
-        // axios... for delete appointment function
-        // app.delete("/appointment/:id", (req, res) => {
-        //     db
-        //     .collection(APPT)
-        //     .doc(req.params.id)
-        //     .delete()
-        //     .then(() => res.send("success"))
-        //     .catch(err => res.send("error"));
-        // });
+        axios.delete(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment/${this.props.busnContext.selected_appointment.id}`)
+            .then(res => console.log(res, "success"))
+            .then(() => this.props.busnContext.updateState({ selected_appointment: null }))
+            .catch(err => err)
     }
 
     render() {
-        return (
-            <Container>
 
+        if (this.props.busnContext.selected_appointment) {
 
-                <div className='content'>
+            const { start, end, service, cost, description, customer_ref, is_available } = this.props.busnContext.selected_appointment;
 
-                        <TrashCan onClick={() => this.onDeleteClick()} className="far delete fa-trash-alt"></TrashCan>
-                        <h3 className="Detail__header">Sesh Details</h3>
-                        
+            return (
+            
+                <Container>
 
-                    <div className="Detail__content">
-                        <div>
-                            <i class="fas icon fa-cut"></i><div className="apptProps"> this.target.props.service</div>
-                        </div>
-                        <div>
-                            <i class="far icon fa-clock"></i><div className="apptProps">this.target.props.startTime - this.props.endTime</div>
-                        </div>
-                        <div>
-                            <i class="far icon fa-calendar-plus"></i><div className="apptProps">this.target.props.day</div>
-                        </div>
-                        <div>
-                            <i class="fas icon fa-user-check"></i><div className="apptProps">this.target.props.customer.name</div> {/* user-times */}
-                        </div>
-                        <div>
-                            <i class="far icon fa-money-bill-alt"></i><div className="apptProps">this.target.props.cost</div>
-                        </div>
-                    </div>
+                        <Header>
+                            <Title>Sesh Details</Title>
+                            <TrashCan onClick={() => this.onDeleteClick()}><i className="far delete fa-trash-alt"></i></TrashCan>
+                        </Header>
 
-                </div>
+                        <Content>
+                            <div style={{display: "flex", alignItems: "center"}}>
+                                <i style={{ marginRight: "2%", color: "#353A50" }} className="fas fa-briefcase"></i><Detail>{service}</Detail>
+                            </div>
+                            <div style={{display: "flex", alignItems: "center"}}>
+                                <i style={{ marginRight: "2%", color: "#353A50" }} className="far icon fa-clock"></i><Detail>{`${moment(start).format("LLL")} - ${moment(end).format("h:mm A")}`}</Detail>
+                            </div>
+                            <div style={{display: "flex", alignItems: "center"}}>
+                                <i style={{ marginRight: "2%", color: "#353A50" }} className={is_available ? "fas fa-user-times" : "fas icon fa-user-check"}></i><Detail>{!is_available && customer_ref ? customer_ref : "this appointment is still available"}</Detail> {/* user-times */}
+                            </div>
+                            <div style={{display: "flex", alignItems: "center"}}>
+                                <i style={{ marginRight: "2%", color: "#353A50" }} className="far icon fa-money-bill-alt"></i><Detail>{cost}</Detail>
+                            </div>
+                            <div style={{display: "flex", alignItems: "center"}}>
+                                <i style={{ marginRight: "2%", color: "#353A50" }} className="far fa-sticky-note"></i><Detail>{description}</Detail>
+                            </div>
+                        </Content>
 
+                </Container>
 
-            </Container>
-        );
+            );
+        } else return <div></div>
     }
 }
 

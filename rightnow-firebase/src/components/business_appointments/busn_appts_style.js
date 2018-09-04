@@ -28,7 +28,7 @@ export const ApptsWrapper = glamorous.div({
   width: "35vw",
   height: "90vh",
   display: "flex",
-  padding: "2%",
+  padding: "1.5%",
   flexDirection: "column",
   justifyContent: "flex-start",
   alignItems: "center"

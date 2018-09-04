@@ -14,7 +14,8 @@ const Container = glamorous.div({
   display: "flex",
   flexDirection: "column",
   marginBottom: "10%",
-  borderRadius: "5px"
+  borderRadius: "5px",
+  backgroundColor: "#EBEBEB"
 });
 
 const Title = glamorous.div({
@@ -72,7 +73,7 @@ const Button = glamorous.button({
 	borderRadius: '5px',
 	backgroundColor: '#353A50',
 	':hover': { color: '#353A50', backgroundColor: '#EBEBEB', cursor: 'pointer', fontWeight: 800 },
-	':focus': { color: '#353A50', backgroundColor: '#EBEBEB' }
+	':focus': { color: '#EBEBEB', backgroundColor: '#353A50', outline: "none", textDecoration: "none" }
 });
 
 const Date = glamorous.input({
@@ -93,7 +94,7 @@ const Date = glamorous.input({
 
 const Time = glamorous.input({
   fontFamily: 'Open Sans, sans-serif',
-  width: '65%',
+  width: '90%',
   textAlign: "center",
 	padding: '3% !important',
 	borderRadius: '3px',
@@ -103,7 +104,10 @@ const Time = glamorous.input({
   backgroundColor: 'white',
   outline: "none",
   border: "1px solid #353A50",
-  float: "right"
+  // float: "right",
+  // ":first-child": {
+  //   float: "left"
+  // }
 })
 
 
@@ -146,7 +150,7 @@ export default class PostAppointment extends Component {
       .then(res => console.log("success\n", res))
       .catch(err => console.log("error\n", err));
     
-    // this.setState({ time: "", service: "", cost: "", description: "" });
+    this.setState({ today: "", start_time: "", end_time: "", service: "", cost: "", description: "" });
   }
 
 
@@ -206,7 +210,7 @@ export default class PostAppointment extends Component {
               customInput={<Date />}
             />
 
-            <div style={{ display: "flex", marginTop: "3%", alignSelf: "flex-end", paddingRight: "2%", width: "90%" }}>
+            <div style={{ display: "flex", marginTop: "3%", justifyContent: "space-between", alignSelf: "flex-end", paddingRight: "2%", width: "90%" }}>
               <DatePicker 
                 placeholderText="Start time"
                 selected={this.state.start_time}
