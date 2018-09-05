@@ -1,13 +1,13 @@
 import glamorous from 'glamorous';
 
-
 export const Container = glamorous.div({
 	// background: 'rgb(225, 225, 225)',
 	background: '#fcfcfc',
 	border: '1px solid #353A50',
 	borderRadius: '5px',
 	width: '100%',
-	minHeight: '100%'
+	// minHeight: '100%',
+	height: '100%'
 });
 
 export const BusinessImage = glamorous.img({
@@ -50,20 +50,16 @@ export const Address = glamorous.div({
 });
 
 export const AvailableAppts = glamorous.div({
-	border: '1px solid red',
-	maxHeight: '17vh',
 	boxSizing: 'border-box',
+	maxHeight: '100%',
 	marginTop: '2%',
 	padding: '0 3%',
-	paddingTop: '3%',
-	// overflowY: 'auto'
-	// display: 'grid',
-	// grid: '30% 30% 30% / 95%',
-	// gridRowGap: '5%',
+	paddingTop: '3%'
 });
 
 export const Appointment = glamorous.div({
 	// fontFamily: 'Quicksand, sans-serif',
+	boxSizing: 'border-box',
 	fontFamily: 'Raleway, sans-serif',
 	fontWeight: 400,
 

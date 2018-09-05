@@ -15,7 +15,7 @@ import StarRatings from 'react-star-ratings';
 import { UserContext } from '../../context/userContext';
 import moment from 'moment';
 
-import SimpleBar from 'simplebar';
+import 'simplebar';
 import 'simplebar/dist/simplebar.css';
 
 /*
@@ -33,14 +33,7 @@ export default class AppointmentCard extends Component {
 		this.state = {};
 	}
 
-	componentDidMount() {
-		var el = new SimpleBar(document.getElementById('apptOF'));
-		el.recalculate();
-	
-	}
-
 	render() {
-
 		const { appointments, businessDetails } = this.props;
 
 		const { name, street_number, street_name, city, state, zip, rating, photos, phone } = businessDetails;
@@ -68,17 +61,30 @@ export default class AppointmentCard extends Component {
 									</Address>
 								</BusinessInfo>
 
-								<AvailableAppts id='apptOF'>
-									{appointments.map((appt, index) => (
-										<Appointment key={index} onClick={() => value.initializeAppointment(appt)}>
-											<Type>{appt.service}</Type>
-											<Time>{`${moment(appt.start).format('h:mm')} - ${moment(appt.end).format(
-												'h:mm'
-											)}`}</Time>
-											<Cost>{appt.cost}</Cost>
-										</Appointment>
-									))}
-								</AvailableAppts>
+								{appointments !== null ? (
+										<div
+											data-simplebar
+											id="apptScroll"
+											style={{
+												maxHeight: '21.5vh'
+											}}
+										>
+											<AvailableAppts>
+												{appointments.map((appt, index) => (
+													<Appointment
+														key={index}
+														onClick={() => value.initializeAppointment(appt)}
+													>
+														<Type>{appt.service}</Type>
+														<Time>{`${moment(appt.start).format('h:mm')} - ${moment(
+															appt.end
+														).format('h:mm')}`}</Time>
+														<Cost>{appt.cost}</Cost>
+													</Appointment>
+												))}
+											</AvailableAppts>
+										</div>
+								) : null}
 							</Container>
 						);
 					}}
