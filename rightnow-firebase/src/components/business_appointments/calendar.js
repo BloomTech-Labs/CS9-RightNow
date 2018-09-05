@@ -46,7 +46,13 @@ export default class BusnCalendar extends Component {
   }
 
   apptSelect = data => {
+<<<<<<< HEAD
     const { start, end, service, cost, description, id } = data;
+=======
+    console.log(data)
+    this.props.busnContext.updateState({ selected_appointment: data })
+    const { start, end, service, cost, description } = data;
+>>>>>>> 384fb0ddca0c17c9450e31914270c54f5ade1401
     console.log(moment(start).format("LLL"), " --- ", moment(end).format("LLL"))
     console.log("service", service)
     this.props.busnContext.updateState({
@@ -60,6 +66,7 @@ export default class BusnCalendar extends Component {
   
   
   render() {
+    console.log(this.props)
     return (
       <div>
         {console.log(this.props.busnContext, "Hi Henry")}

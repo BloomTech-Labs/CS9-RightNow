@@ -5,7 +5,9 @@ export const Container = glamorous.div({
   display: "grid",
   grid: "auto / 18vw 18vw 18vw 18vw",
   gridGap: "4.5vw",
-  justifyContent: "center"
+  justifyContent: "center",
+  width: "85vw",
+  margin: "auto"
 });
 
 

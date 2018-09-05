@@ -10,7 +10,11 @@ import Calendar from "./calendar";
 import BusnNav from "./busn_nav";
 import { Redirect, withRouter } from "react-router-dom";
 import BusinessContext from "../../context/businessContext";
+<<<<<<< HEAD
 import AppointmentDetails from "./appointmentDetails/appointmentDetailsCustomerView"
+=======
+import AppointmentDetails from "../appointmentDetails/appointmentDetailsCustomerView";
+>>>>>>> 384fb0ddca0c17c9450e31914270c54f5ade1401
 
 
 class BusnApptsView extends Component {
