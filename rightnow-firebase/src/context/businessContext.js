@@ -11,6 +11,7 @@ export default class BusinessProvider extends Component {
   state = {
     uid: null,
     userSignedIn: false,
+    display_delete_modal: false,
 
     personal: {
       full_name: "",
