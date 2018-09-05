@@ -2,20 +2,22 @@ import glamorous from "glamorous";
 
 
 export const Container = glamorous.div({
-  width: "100vw"
+  width: "85vw",
+  margin: "auto"
 });
 
 
 export const Header = glamorous.div({
-  width: "45%",
-  fontSize: "2.5em",
+  width: "98%",
+  fontFamily: "Raleway, sans-serif",
+  fontSize: "2.2em",
   fontWeight: 600,
-  padding: "1% 1%",
+  padding: "1% 0.5%",
   margin: "1%",
-  borderBottom: "1px solid black",
+  borderBottom: "1px solid #b4b4b4",
 
   "@media(min-width: 1800px)": {
-    width: "45%"
+    width: "90%"
   },
 
   "@media(max-width: 1800px)": {

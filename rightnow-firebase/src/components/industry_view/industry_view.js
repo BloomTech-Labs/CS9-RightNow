@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Header } from "../featured_appointments/feat_appts_styles";
+import { Header, Container } from "../featured_appointments/feat_appts_styles";
 import {
   CircleOption,
   OptionContainer,
@@ -7,6 +7,7 @@ import {
   Options
 } from "./industry_view_styles";
 import Results from "./selection_results";
+
 
 
 const IndustryOption = props => {
@@ -25,7 +26,7 @@ const IndustryOption = props => {
 export default class IndustryView extends Component {
   state = {
     industries: ["All", "Hair", "Auto", "Nails", "etc.", "etc."],
-    currentSelection: null
+    currentSelection: "All"
   }
 
   componentDidMount() {
@@ -41,10 +42,10 @@ export default class IndustryView extends Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <Header id="appointments">View Appointments by Industry</Header>
 
-        <OptionContainer>
+        {/* <OptionContainer>
           {this.state.industries.map((industry, index) => (
             <IndustryOption 
               key={index}
@@ -52,13 +53,14 @@ export default class IndustryView extends Component {
               handleSelection={this.handleIndustrySelection} 
               />
           ))}
-        </OptionContainer>
+        </OptionContainer> */}
 
-        {this.state.currentSelection ? <Header style={{marginLeft: "5%"}}>{`${this.state.currentSelection.innerHTML} Services`}</Header> : null}
+        {/* {this.state.currentSelection ? <Header >{`${this.state.currentSelection.innerHTML} Services`}</Header> : null} */}
+        <Header>All Services</Header>
 
         <Results value={this.props.value} industry={this.state.currentSelection} />
         
-      </div>
+      </Container>
     )
   }
 }

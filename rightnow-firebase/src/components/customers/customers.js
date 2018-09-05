@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import UserProvider from '../../context/userContext';
+import QuickSearch from "../_quickSearch/quickSearch";
 
 // import UserLanding from '../user_landing';
 import FeaturedAppointments from '../featured_appointments/feat_appts';
@@ -21,6 +22,7 @@ export default class Customers extends Component {
             <HomeContainer>
                 <UserProvider>
                     <Landing />
+                    <QuickSearch />
                     <FeaturedAppointments />
                     <IndustryView />
                 </UserProvider>
