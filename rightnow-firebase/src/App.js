@@ -10,6 +10,7 @@ import CompanySettings from './components/company_settings/company_settings';
 import BusnApptsView from "./components/business_appointments/busn_appts";
 
 class App extends Component {
+	
 	render() {
 		return (
 			<div className="App">
@@ -21,7 +22,6 @@ class App extends Component {
 					<BusinessContext.Consumer>
 						{value => (
 							<div>
-								<Route exact path="/biz-landing" component={BusinessLanding} />
 								<Route exact path="/biz-account" render={() => <BusinessAccount value={value} />} />
 								<Route exact path="/company-settings" component={CompanySettings}/>
 								<Route path="/busn-appts" render={() => <BusnApptsView value={value} />} />

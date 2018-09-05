@@ -42,22 +42,20 @@ class UserSettings extends Component {
 		return (
 			<UserProvider>
 				<UserContext.Consumer>
-          {(value) => {
-      
-							return ( <FormContainer>
-                  <h3>User Settings</h3>
-                  <UpcomingAppointments userState={value.queryResults} />
-                  <PastAppointments userState={value} />
-                  <ContactForm userState={value} />
-                {console.log(value)}
-                
-                {value.ifOAuth.includes("google") || value.ifOAuth.includes("facebook") ? null : <UserChangePassword />}
-                  <UserNotification />
-                  <Button onClick={() => this.props.UserProvider}>
-                    Save
-                  </Button>
-                </FormContainer>
-              )
+					{(value) => {
+						return (
+							<FormContainer>
+								<h3>User Settings</h3>
+								<UpcomingAppointments userState={value.queryResults} />
+								<PastAppointments userState={value} />
+								<ContactForm userState={value} />
+								{value.ifOAuth.includes('google') || value.ifOAuth.includes('facebook') ? null : (
+									<UserChangePassword />
+								)}
+								<UserNotification />
+								<Button onClick={() => this.props.UserProvider}>Save</Button>
+							</FormContainer>
+						);
 					}}
 				</UserContext.Consumer>
 			</UserProvider>
