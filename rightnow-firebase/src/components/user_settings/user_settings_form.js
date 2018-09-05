@@ -49,7 +49,8 @@ class UserSettings extends Component {
 						// if (value.queryResults.length !== 0) {
 							// check if the array is empty or not
 							// console.log('get appts', value.getCustomerAppt());
-
+						value.upcomingAppointments();
+						console.log(`appts id: ${value.upcoming_appointments}`);
 							return (
 								<FormContainer>
 									<h3>User Settings</h3>
