@@ -22,6 +22,10 @@ const db = admin.firestore();
 // include timestamps in document requests
 db.settings({timestampsInSnapshots: true});
 
+// Stripe stuff
+const logging = require('@google-cloud/logging')();
+const stripe = require('stripe')(functions.config().stripe.token);
+const currency = functions.config().stripe.currency || 'USD';
 
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~/
 / ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ FIRESTORE CRUD FUNCTIONS ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  /
