@@ -124,12 +124,14 @@ export default class UserProvider extends Component {
 			console.log(user);
 
 			if (user && !this.state.userSignedIn) {
+				// console.log(user)
 				user
 					.getIdTokenResult()
 					.then((token) => (token.claims.business ? true : false))
 					.then((isBusiness) => {
 						if (isBusiness) return;
 						else {
+							console.log(user);
 							this.setState({
 								userSignedIn: true,
 								uid: user.uid,
