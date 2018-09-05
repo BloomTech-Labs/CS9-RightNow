@@ -44,12 +44,11 @@ export const Header = glamorous.div({
 
 
 export const CardContainer = glamorous.div({
-  display: "grid",
-  gridTemplateColumns: "18% 18% 18%",
-  gridColumnGap: "5%",
-  justifyContent: "center"
-
-  // "@media(max-width: 1550px)": {
-  //   gridTemplateColumns: "23% 23% 23% 23%",
-  // }
+  display: 'grid',
+	grid: 'auto / 18vw 18vw 18vw',
+	gridGap: '4.5vw',
+	justifyContent: 'center',
+	width: '85vw',
+	// minHeight: '80vh',
+	margin: 'auto'
 });
