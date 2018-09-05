@@ -5,11 +5,15 @@ import moment from "moment";
 
 
 const Container = glamorous.div({
+  position: "relative",
   width: "85vw",
   height: "15vh",
   margin: "auto",
   display: "grid",
   grid: "100% / 80% 20%",
+  backgroundColor: "rgba(255, 255, 255, 0.97)",
+  zIndex: 5,
+  transition: "all 2s",
 });
 
 
@@ -177,7 +181,7 @@ export default class QuickSearch extends Component {
 
   render() {
         return (
-          <Container>
+          <Container id="selection_container">
 
 
               <SelectionWrapper>
