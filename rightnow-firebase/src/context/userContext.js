@@ -1,154 +1,162 @@
-import React, { Component } from "react";
-import firebase from "../firebase/firebase";
-import axios from "axios";
-
+import React, { Component } from 'react';
+import firebase from '../firebase/firebase';
+import axios from 'axios';
 
 export const UserContext = React.createContext();
 
-
 export default class UserProvider extends Component {
+	state = {
+		uid: '',
+		name: '',
+		email: '',
+		phone: '',
+		photo: '',
+		location: '',
+		appointments: [],
 
-  state = {
-    uid: "",
-    name: "",
-    email: "",
-    phone: "", 
-    photo: "",
-    location: "",
-    appointments: [],
-    
-    init_appointment: {},
-    displayConfirm: false,
-    confirm: false,
+		init_appointment: {},
+		displayConfirm: false,
+		confirm: false,
 
-    query: "",
-    queryResults: [],
-    finished: false,
-    full_query: [],
+		query: '',
+		queryResults: [],
+		finished: false,
+		full_query: [],
 
-    userSignedIn: false,
-    clientZip: null,
+		userSignedIn: false,
+		clientZip: null,
 
-    updateState: async data => await this.setState(data),
+		updateState: async (data) => await this.setState(data),
 
-    customerLogout: () => {
-      firebase.auth().signOut();
-      this.unsubscribe();
-    },
+		customerLogout: () => {
+			firebase.auth().signOut();
+			this.unsubscribe();
+		},
 
-    handleSearch: async () => {
-      await axios
-        .get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment?term=${this.state.query}`)
-        .then(res => this.setState({ queryResults: res.data, finished: true }))
-        .catch(err => console.log("error", err));      
-    },
+		searchAll: async () => {
+			const x = await firebase
+				.firestore()
+				.collection('_appointment_')
+				.where('is_available', '==', true)
+				.get()
+				.then((res) => res.docs.map((doc) => doc.data()))
+				.catch((err) => console.log('err', err));
+			this.setState({ queryResults: x, finished: true });
+		},
 
-    clientLocation: () => {
-      axios.get("http://ip-api.com/json")
-        .then(res => this.setState({ 
-          query: `${res.data.city}, ${res.data.region}`, 
-          clientZip: res.data.zip 
-        })).catch(err => console.log("error", err));
-    },
+		handleSearch: async () => {
+			await axios
+				.get(
+					`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment?term=${this.state.query}`
+				)
+				.then((res) => this.setState({ queryResults: res.data, finished: true }))
+				.catch((err) => console.log('error', err));
+		},
 
-    initializeAppointment: async appt => {
-      const business_details = 
-        await axios
-          .get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/${appt.business_ref}`)
-          .then(res => res.data).catch(err => console.log("error", err));
-      const full_appointment = { ...appt, business_details };
-      this.setState({ init_appointment: full_appointment, displayConfirm: true });
-    },
+		clientLocation: () => {
+			axios
+				.get('http://ip-api.com/json')
+				.then((res) =>
+					this.setState({
+						query: `${res.data.city}, ${res.data.region}`,
+						clientZip: res.data.zip
+					})
+				)
+				.catch((err) => console.log('error', err));
+		},
 
-    confirmAppointment: () => {
-      if (!this.state.confirm || !this.state.uid) return;
+		initializeAppointment: async (appt) => {
+			const business_details = await axios
+				.get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/${appt.business_ref}`)
+				.then((res) => res.data)
+				.catch((err) => console.log('error', err));
+			const full_appointment = { ...appt, business_details };
+			this.setState({ init_appointment: full_appointment, displayConfirm: true });
+		},
 
-      firebase.firestore()
-        .collection("_appointment_").doc(this.state.init_appointment.id)
-        .update({ is_available: false, customer_ref: this.state.uid })
-        .then(() => console.log("successful update"))
-        .catch(err => console.log("error updating appointment", err));
+		confirmAppointment: () => {
+			if (!this.state.confirm || !this.state.uid) return;
 
-      // NEED FIREBASE FUNCTION FOR APPOINTMENT ON-UPDATE
-      // appointment does not get added to customer's appoinment collection
-      this.setState({ displayConfirm: false });
-    },
+			firebase
+				.firestore()
+				.collection('_appointment_')
+				.doc(this.state.init_appointment.id)
+				.update({ is_available: false, customer_ref: this.state.uid })
+				.then(() => console.log('successful update'))
+				.catch((err) => console.log('error updating appointment', err));
 
-    listenToResults: () => {
-      this.unsubscribe = firebase
-        .firestore().collection("_appointment_")
-        .where("service", "==", this.state.query)
-        .onSnapshot(snapshot => {
-          snapshot.docChanges().forEach(change => {
-            const id = change.doc.id;
-            const doc = change.doc.data();
-            const busn_ref = doc.business_ref;            
-            
-            if (change.type === "modified" || change.type === "removed") {
-              const copy = { ...this.state.full_query };
-              const busn_appts = copy[busn_ref].appointments;
+			// NEED FIREBASE FUNCTION FOR APPOINTMENT ON-UPDATE
+			// appointment does not get added to customer's appoinment collection
+			this.setState({ displayConfirm: false });
+		},
 
-              copy[busn_ref].appointments = busn_appts.filter(appt => appt.id !== id);
+		listenToResults: () => {
+			this.unsubscribe = firebase
+				.firestore()
+				.collection('_appointment_')
+				.where('service', '==', this.state.query)
+				.onSnapshot((snapshot) => {
+					snapshot.docChanges().forEach((change) => {
+						const id = change.doc.id;
+						const doc = change.doc.data();
+						const busn_ref = doc.business_ref;
 
-              this.setState({ full_query: copy });
-            } 
-          })
-        })
-    }
+						if (change.type === 'modified' || change.type === 'removed') {
+							const copy = { ...this.state.full_query };
+							const busn_appts = copy[busn_ref].appointments;
 
-  }
+							copy[busn_ref].appointments = busn_appts.filter((appt) => appt.id !== id);
 
-  componentDidMount() {
-    // this.state.clientLocation(); // set initial query input to client location
+							this.setState({ full_query: copy });
+						}
+					});
+				});
+		}
+	};
 
-    firebase.auth().onAuthStateChanged(user => {
-      console.log(user);
+	componentDidMount() {
+		// this.state.clientLocation(); // set initial query input to client location
+		this.state.searchAll(); // searching for all appts: TEMPORARY
 
-      if (user && !this.state.userSignedIn) {
-        user
-          .getIdTokenResult()
-          .then(token => token.claims.business ? true : false)
-          .then(isBusiness => {
-            if (isBusiness) return;
-            else {
-              this.setState({
-                userSignedIn: true,
-                uid: user.uid,
-                name: user.displayName,
-                email: user.email,
-                phone: user.phoneNumber,
-                photo: user.photoURL
-              });
-              return;
-            }
-          }).catch(err => console.log("error", err));
-      }
-      
-      else if (!user && this.state.userSignedIn) {
-        this.setState({
-          userSignedIn: false,
-          uid: null,
-          name: null,
-          email: null,
-          phone: null,
-          photo: null
-        });
-      }
+		firebase.auth().onAuthStateChanged((user) => {
+			console.log(user);
 
-      else return;
-    });
-  }
+			if (user && !this.state.userSignedIn) {
+				user
+					.getIdTokenResult()
+					.then((token) => (token.claims.business ? true : false))
+					.then((isBusiness) => {
+						if (isBusiness) return;
+						else {
+							this.setState({
+								userSignedIn: true,
+								uid: user.uid,
+								name: user.displayName,
+								email: user.email,
+								phone: user.phoneNumber,
+								photo: user.photoURL
+							});
+							return;
+						}
+					})
+					.catch((err) => console.log('error', err));
+			} else if (!user && this.state.userSignedIn) {
+				this.setState({
+					userSignedIn: false,
+					uid: null,
+					name: null,
+					email: null,
+					phone: null,
+					photo: null
+				});
+			} else return;
+		});
+	}
 
-
-  render() {
-    return (
-      <UserContext.Provider value={this.state}>
-        {this.props.children}
-      </UserContext.Provider>
-    )
-  }
+	render() {
+		return <UserContext.Provider value={this.state}>{this.props.children}</UserContext.Provider>;
+	}
 }
-
 
 /*
 

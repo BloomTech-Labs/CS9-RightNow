@@ -1,13 +1,13 @@
 import glamorous from 'glamorous';
 
+
 export const Container = glamorous.div({
 	// background: 'rgb(225, 225, 225)',
 	background: '#fcfcfc',
 	border: '1px solid #353A50',
 	borderRadius: '5px',
 	width: '100%',
-	minHeight: '50vh', // temp
-	maxHeight: '50vh' // temp
+	minHeight: '100%'
 });
 
 export const BusinessImage = glamorous.img({
@@ -25,19 +25,22 @@ export const BusinessInfo = glamorous.div({
 	display: 'grid',
 	grid: '30% 30% 30% / 100%',
 	justifyItems: 'center',
-	marginTop: '1.5vh'
+	marginTop: '2%'
 });
 
 export const BusinessName = glamorous.div({
 	// fontFamily: 'Quicksand, sans-serif',
+	// marginTop: '2%',
+	marginBottom: '3%',
 	fontFamily: 'Raleway, sans-serif',
 	fontWeight: 400,
 	textAlign: 'center',
-	fontSize: '1.5em'
+	fontSize: '1.3em'
 	// fontWeight: 600
 });
 
 export const Address = glamorous.div({
+	marginTop: '2%',
 	display: 'flex',
 	flexDirection: 'column',
 	justifyContent: 'center',
@@ -47,12 +50,16 @@ export const Address = glamorous.div({
 });
 
 export const AvailableAppts = glamorous.div({
+	border: '1px solid red',
+	maxHeight: '17vh',
 	boxSizing: 'border-box',
-	marginTop: '5%',
-	display: 'grid',
-	grid: '30% 30% 30% / 95%',
-	gridRowGap: '5%',
-	justifyContent: 'center'
+	marginTop: '2%',
+	padding: '0 3%',
+	paddingTop: '3%',
+	// overflowY: 'auto'
+	// display: 'grid',
+	// grid: '30% 30% 30% / 95%',
+	// gridRowGap: '5%',
 });
 
 export const Appointment = glamorous.div({

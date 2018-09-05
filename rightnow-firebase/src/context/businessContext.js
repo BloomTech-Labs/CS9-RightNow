@@ -34,12 +34,15 @@ export default class BusinessProvider extends Component {
     },
 
     appointments: [],
+    selected_appointment: "",
 
     future_appointments: [],
     available_appointments: [],
     booked_appointments: [],
 
     updateBusiness: data => this.setState({ business: data }), // PLACES API USES THIS
+
+    updateState: async data => await this.setState( data ),
 
     business_logout: () => {
       firebase.auth().signOut();

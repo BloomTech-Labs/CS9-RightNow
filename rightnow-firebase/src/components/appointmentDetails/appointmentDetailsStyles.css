@@ -44,13 +44,14 @@
     margin-bottom: 2%;
     margin-top: 2%;
     font-size: 1.15rem;
+    z-index: 3;
 }
 
 .delete:hover {
     color: #ff7b7b;
 }
 
-.icon {
+/* .icon {
     margin-top: 2%;
     color: #353A50
-}
+} */
