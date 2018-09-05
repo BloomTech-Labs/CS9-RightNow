@@ -14,14 +14,6 @@ import {
 
 
 class AppointmentDetails extends Component {
-   
-    onDeleteClick = () => {
-        this.props.busnContext.updateState({ display_delete_modal: true });
-        // axios.delete(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment/${this.props.busnContext.selected_appointment.id}`)
-        //     .then(res => console.log(res, "success"))
-        //     .then(() => this.props.busnContext.updateState({ selected_appointment: null }))
-        //     .catch(err => err)
-    }
 
     render() {
 
@@ -35,7 +27,7 @@ class AppointmentDetails extends Component {
 
                         <Header>
                             <Title>Sesh Details</Title>
-                            <TrashCan onClick={() => this.onDeleteClick()}><i className="far delete fa-trash-alt"></i></TrashCan>
+                            <TrashCan onClick={() => this.props.busnContext.updateState({ display_delete_modal: true })}><i className="far delete fa-trash-alt"></i></TrashCan>
                         </Header>
 
                         <Content>

@@ -68,7 +68,7 @@ export default class BusinessProvider extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount() {    
     firebase.auth().onAuthStateChanged(user => {
       console.log(`current user: ${user}`);
 
