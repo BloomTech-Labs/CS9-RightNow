@@ -6,8 +6,8 @@ import QuickSearch from "../_quickSearch/quickSearch";
 
 export default class IndustryView extends Component {
   state = {
-    industries: ["All", "Hair", "Auto", "Nails", "etc.", "etc."],
-    currentSelection: "All"
+    industry_actual: "All",
+    time_actual: "All"
   }
 
   componentDidMount() {
@@ -22,24 +22,19 @@ export default class IndustryView extends Component {
   }
 
   render() {
+    let time;
+    if (this.state.time_actual !== "All") {
+
+    }
     return (
       <Container>
         <Header id="appointments">View Appointments by Industry</Header>
 
-        <QuickSearch />
+        <QuickSearch updateResults={data => this.setState(data)} />
 
-        {/* <OptionContainer>
-          {this.state.industries.map((industry, index) => (
-            <IndustryOption 
-              key={index}
-              text={industry} 
-              handleSelection={this.handleIndustrySelection} 
-              />
-          ))}
-        </OptionContainer> */}
-
-        {/* {this.state.currentSelection ? <Header >{`${this.state.currentSelection.innerHTML} Services`}</Header> : null} */}
-        <Header>All Services</Header>
+        <Header>{this.state.time_actual !== "All" ? 
+            `${this.state.industry_actual} Services within the next ${this.state.time_actual}` :
+            `${this.state.industry_actual} Services`}</Header>
 
         <Results value={this.props.value} industry={this.state.currentSelection} />
         

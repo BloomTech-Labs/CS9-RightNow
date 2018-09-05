@@ -156,7 +156,8 @@ export default class QuickSearch extends Component {
 
       e.target.id = "active_time";
       this.setState({ active_time: document.querySelector("#active_time") });
-      this.setState({ time_actual: this.state.active_time.innerHTML });
+      // this.setState({ time_actual: this.state.active_time.innerHTML });
+      this.props.updateResults({ time_actual: this.state.active_time.innerHTML })
     } 
     
     else {
@@ -169,7 +170,8 @@ export default class QuickSearch extends Component {
 
       e.target.id = "active_industry";
       this.setState({ active_industry: document.querySelector("#active_industry") });
-      this.setState({ industry_actual: this.state.active_industry.innerHTML });
+      // this.setState({ industry_actual: this.state.active_industry.innerHTML });
+      this.props.updateResults({ industry_actual: this.state.active_industry.innerHTML })
     }
   }
 
