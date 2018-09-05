@@ -39,18 +39,18 @@ const Option = glamorous.div({
   width: "8%",
   color: "#EBEBEB",
   fontSize: "1.3em",
-  fontWeight: 500,
+  fontWeight: 600,
   marginRight: "2%",
   border: "1px solid transparent",
   padding: "1.5%",
+  ":first-child": {
+    width: "15%",
+  },
   ":hover": {
     cursor: "pointer",
     border: "1px solid white",
-    borderRadius: "5px"
+    borderRadius: "5px",
   },
-  ":first-child": {
-    width: "13%"
-  }
 });
 
 
@@ -144,7 +144,7 @@ export default class Navigation extends Component {
               return (
                 <ButtonContainer>
                   <Option>
-                    <Link to="/biz-account" style={{textDecoration: "none", color: "#EBEBEB", width: "100%"}}>Business Owner?</Link>
+                    <Link to="/biz-account" style={{textDecoration: "none", color: "#EBEBEB", width: "100%", "&hover": { color: "#353A50 !important" }}}>Business Owner?</Link>
                   </Option>
                   <Option onClick={() => auth.signOut()} >SignOut</Option>
                 </ButtonContainer>
