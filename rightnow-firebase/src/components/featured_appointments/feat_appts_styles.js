@@ -3,7 +3,7 @@ import glamorous from "glamorous";
 
 export const Container = glamorous.div({
   width: "85vw",
-  margin: "auto"
+  margin: "1% auto 5%"
 });
 
 
@@ -13,7 +13,7 @@ export const Header = glamorous.div({
   fontSize: "2.2em",
   fontWeight: 600,
   padding: "1% 0.5%",
-  margin: "1%",
+  margin: "3% 1%",
   borderBottom: "1px solid #b4b4b4",
 
   "@media(min-width: 1800px)": {

@@ -1,26 +1,7 @@
 import React, { Component } from "react";
 import { Header, Container } from "../featured_appointments/feat_appts_styles";
-import {
-  CircleOption,
-  OptionContainer,
-  DropDown,
-  Options
-} from "./industry_view_styles";
 import Results from "./selection_results";
-
-
-
-const IndustryOption = props => {
-  if (props.text === "All") {
-    return (
-      <CircleOption 
-        id="defaultSelection"
-        style={{ border: "3px solid red" }}
-        onClick={(e) => props.handleSelection(e)}>{props.text}</CircleOption>
-    );
-  }
-  return <CircleOption onClick={(e) => props.handleSelection(e)}>{props.text}</CircleOption>
-}
+import QuickSearch from "../_quickSearch/quickSearch";
 
 
 export default class IndustryView extends Component {
@@ -44,6 +25,8 @@ export default class IndustryView extends Component {
     return (
       <Container>
         <Header id="appointments">View Appointments by Industry</Header>
+
+        <QuickSearch />
 
         {/* <OptionContainer>
           {this.state.industries.map((industry, index) => (
