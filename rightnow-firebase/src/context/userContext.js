@@ -1,10 +1,8 @@
-import React, { Component } from "react";
-import firebase from "../firebase/firebase";
-import axios from "axios";
-
+import React, { Component } from 'react';
+import firebase from '../firebase/firebase';
+import axios from 'axios';
 
 export const UserContext = React.createContext();
-
 
 export default class UserProvider extends Component {
 
@@ -148,7 +146,6 @@ export default class UserProvider extends Component {
     )
   }
 }
-
 
 /*
 

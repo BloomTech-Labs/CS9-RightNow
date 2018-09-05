@@ -16,6 +16,7 @@ const config = {
   messagingSenderId: "903659903905"
 };
 
+//Stripe.setPublishableKey("pk_test_QVBVL73Xpp3epBxQSasMR294");
 
 firebase.initializeApp(config);
 
