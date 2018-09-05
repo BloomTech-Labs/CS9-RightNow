@@ -48,6 +48,17 @@ export default class BusinessProvider extends Component {
     business_logout: () => {
       firebase.auth().signOut();
       this.unsubscribe();
+    },
+
+    delete_appointment: () => {
+      const appt_id = this.state.selected_appointment.id;
+
+      firebase.firestore().collection("_appointment_").doc(appt_id).delete()
+        .then(res => console.log("success", res)).catch(err => console.log("error", err));
+
+      firebase.firestore().collection("_business_").doc(this.state.uid)
+        .collection("future_appointments").doc(appt_id).delete()
+        .then(res => console.log("success", res)).catch(err => console.log("error", err));
     }
   }
 
