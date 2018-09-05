@@ -11,6 +11,7 @@ export default class BusinessProvider extends Component {
   state = {
     uid: null,
     userSignedIn: false,
+    display_delete_modal: false,
 
     personal: {
       full_name: "",
@@ -34,7 +35,7 @@ export default class BusinessProvider extends Component {
     },
 
     appointments: [],
-    selected_appointment: "",
+    selected_appointment: null,
 
     future_appointments: [],
     available_appointments: [],
@@ -47,10 +48,27 @@ export default class BusinessProvider extends Component {
     business_logout: () => {
       firebase.auth().signOut();
       this.unsubscribe();
+    },
+
+    delete_appointment: () => {
+      if (!this.state.selected_appointment.is_available) return false;
+
+      const appt_id = this.state.selected_appointment.id;
+
+      firebase.firestore().collection("_appointment_").doc(appt_id).delete()
+        .then(res => console.log("success", res)).catch(err => console.log("error", err));
+
+      firebase.firestore().collection("_business_").doc(this.state.uid)
+        .collection("future_appointments").doc(appt_id).delete()
+        .then(res => console.log("success", res)).catch(err => console.log("error", err));
+
+      this.setState({ display_delete_modal: false, selected_appointment: null });
+
+      return true;
     }
   }
 
-  componentDidMount() {
+  componentDidMount() {    
     firebase.auth().onAuthStateChanged(user => {
       console.log(`current user: ${user}`);
 

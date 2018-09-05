@@ -38,7 +38,7 @@ const Button = glamorous.button({
 });
 
 class UserSettings extends Component {
-	render() {
+  render() {
 		return (
 			<UserProvider>
 				<UserContext.Consumer>

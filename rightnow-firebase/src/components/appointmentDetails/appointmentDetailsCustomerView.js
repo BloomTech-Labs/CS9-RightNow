@@ -1,69 +1,19 @@
 import React, { Component } from "react";
-import "./appointmentDetailsStyles.css";
-import glamorous from "glamorous";
+// import "./appointmentDetailsStyles.css";
 import axios from "axios";
 import moment from "moment";
-
-
-const Container = glamorous.div({
-    display: "flex",
-    flexDirection: "column",
-    width: "100%",
-    height: "37%",
-    color: "#EBEBEB",
-    background: "#353A50",
-    border: "1px solid #353A50",
-    borderRadius: "5px"
-});
-
-const Header = glamorous.div({
-    display: "flex",
-    justifyContent: "space-between",
-    alignContent: "center",
-    padding: "1%"
-});
-
-const Title = glamorous.div({
-    fontFamily: "Raleway, sans-serif",
-    fontSize: "1.3em",
-    fontWeight: 600,
-    color: "#EBEBEB",
-    padding: "2%"
-});
-
-const TrashCan = glamorous.div({
-    height: "100%",
-    width: "10%",
-    marginRight: "3%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    ":hover": {
-        cursor: "pointer"
-    }
-});
-
-const Content = glamorous.div({
-    height: "100%",
-    padding: "0 3%",
-    backgroundColor: "#EBEBEB",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-around"
-});
-
-const Detail = glamorous.div({ color: "#353A50" })
+import {
+    Container,
+    Header,
+    Title,
+    TrashCan,
+    Content,
+    Detail,
+} from "./appt_details_styles";
 
 
 
 class AppointmentDetails extends Component {
-    
-    onDeleteClick = () => {
-        axios.delete(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment/${this.props.busnContext.selected_appointment.id}`)
-            .then(res => console.log(res, "success"))
-            .then(() => this.props.busnContext.updateState({ selected_appointment: null }))
-            .catch(err => err)
-    }
 
     render() {
 
@@ -77,24 +27,24 @@ class AppointmentDetails extends Component {
 
                         <Header>
                             <Title>Sesh Details</Title>
-                            <TrashCan onClick={() => this.onDeleteClick()}><i className="far delete fa-trash-alt"></i></TrashCan>
+                            <TrashCan onClick={() => this.props.busnContext.updateState({ display_delete_modal: true })}><i className="far delete fa-trash-alt"></i></TrashCan>
                         </Header>
 
                         <Content>
                             <div style={{display: "flex", alignItems: "center"}}>
-                                <i style={{ marginRight: "2%", color: "#353A50" }} className="fas fa-briefcase"></i><Detail>{service}</Detail>
+                                <i style={{ marginRight: "2%", marginTop: 0, color: "#353A50" }} className="fas fa-briefcase"></i><Detail>{service}</Detail>
                             </div>
                             <div style={{display: "flex", alignItems: "center"}}>
-                                <i style={{ marginRight: "2%", color: "#353A50" }} className="far icon fa-clock"></i><Detail>{`${moment(start).format("LLL")} - ${moment(end).format("h:mm A")}`}</Detail>
+                                <i style={{ marginRight: "2%", marginTop: 0, color: "#353A50" }} className="far icon fa-clock"></i><Detail>{`${moment(start).format("LLL")} - ${moment(end).format("h:mm A")}`}</Detail>
                             </div>
                             <div style={{display: "flex", alignItems: "center"}}>
-                                <i style={{ marginRight: "2%", color: "#353A50" }} className={is_available ? "fas fa-user-times" : "fas icon fa-user-check"}></i><Detail>{!is_available && customer_ref ? customer_ref : "this appointment is still available"}</Detail> {/* user-times */}
+                                <i style={{ marginRight: "2%", marginTop: 0, color: "#353A50" }} className={is_available ? "fas fa-user-times" : "fas icon fa-user-check"}></i><Detail>{!is_available && customer_ref ? customer_ref : "this appointment is still available"}</Detail> {/* user-times */}
                             </div>
                             <div style={{display: "flex", alignItems: "center"}}>
-                                <i style={{ marginRight: "2%", color: "#353A50" }} className="far icon fa-money-bill-alt"></i><Detail>{cost}</Detail>
+                                <i style={{ marginRight: "2%", marginTop: 0, color: "#353A50" }} className="far icon fa-money-bill-alt"></i><Detail>{cost}</Detail>
                             </div>
                             <div style={{display: "flex", alignItems: "center"}}>
-                                <i style={{ marginRight: "2%", color: "#353A50" }} className="far fa-sticky-note"></i><Detail>{description}</Detail>
+                                <i style={{ marginRight: "2%", marginTop: 0, color: "#353A50" }} className="far fa-sticky-note"></i><Detail>{description}</Detail>
                             </div>
                         </Content>
 
