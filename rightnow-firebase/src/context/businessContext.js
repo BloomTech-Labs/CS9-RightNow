@@ -35,7 +35,7 @@ export default class BusinessProvider extends Component {
     },
 
     appointments: [],
-    selected_appointment: "",
+    selected_appointment: null,
 
     future_appointments: [],
     available_appointments: [],
@@ -61,6 +61,8 @@ export default class BusinessProvider extends Component {
       firebase.firestore().collection("_business_").doc(this.state.uid)
         .collection("future_appointments").doc(appt_id).delete()
         .then(res => console.log("success", res)).catch(err => console.log("error", err));
+
+      this.setState({ display_delete_modal: false, selected_appointment: null });
 
       return true;
     }

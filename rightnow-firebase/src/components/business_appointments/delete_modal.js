@@ -62,7 +62,6 @@ const ButtonContainer = glamorous.div({
   height: "30%",
   display: "flex",
   justifyContent: "flex-end",
-  // padding: "3%"
 });
 
 const DeleteButton = glamorous.button({
@@ -125,7 +124,7 @@ export default class DeleteModal extends Component {
 
           <ButtonContainer>
             <AbortButton onClick={() => this.props.busnContext.updateState({ display_delete_modal: false })}>Abort</AbortButton>
-            <DeleteButton>Delete</DeleteButton>
+            <DeleteButton onClick={() => this.props.busnContext.delete_appointment()}>Delete</DeleteButton>
           </ButtonContainer>
 
         </Modal>
