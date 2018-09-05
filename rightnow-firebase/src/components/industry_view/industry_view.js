@@ -1,32 +1,13 @@
 import React, { Component } from "react";
 import { Header, Container } from "../featured_appointments/feat_appts_styles";
-import {
-  CircleOption,
-  OptionContainer,
-  DropDown,
-  Options
-} from "./industry_view_styles";
 import Results from "./selection_results";
-
-
-
-const IndustryOption = props => {
-  if (props.text === "All") {
-    return (
-      <CircleOption 
-        id="defaultSelection"
-        style={{ border: "3px solid red" }}
-        onClick={(e) => props.handleSelection(e)}>{props.text}</CircleOption>
-    );
-  }
-  return <CircleOption onClick={(e) => props.handleSelection(e)}>{props.text}</CircleOption>
-}
+import QuickSearch from "../_quickSearch/quickSearch";
 
 
 export default class IndustryView extends Component {
   state = {
-    industries: ["All", "Hair", "Auto", "Nails", "etc.", "etc."],
-    currentSelection: "All"
+    industry_actual: "All",
+    time_actual: "All"
   }
 
   componentDidMount() {
@@ -45,18 +26,11 @@ export default class IndustryView extends Component {
       <Container>
         <Header id="appointments">View Appointments by Industry</Header>
 
-        {/* <OptionContainer>
-          {this.state.industries.map((industry, index) => (
-            <IndustryOption 
-              key={index}
-              text={industry} 
-              handleSelection={this.handleIndustrySelection} 
-              />
-          ))}
-        </OptionContainer> */}
+        <QuickSearch updateResults={data => this.setState(data)} />
 
-        {/* {this.state.currentSelection ? <Header >{`${this.state.currentSelection.innerHTML} Services`}</Header> : null} */}
-        <Header>All Services</Header>
+        <Header>{this.state.time_actual !== "All" ? 
+            `${this.state.industry_actual} Services within the next ${this.state.time_actual}` :
+            `${this.state.industry_actual} Services`}</Header>
 
         <Results value={this.props.value} industry={this.state.currentSelection} />
         

@@ -112,18 +112,6 @@
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.2.8.tgz#38a936b60b898a1ad0f3719543ff1a1031f60f8b"
 
-"@wojtekmaj/react-datetimerange-picker@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@wojtekmaj/react-datetimerange-picker/-/react-datetimerange-picker-1.1.0.tgz#df34a5cbfc488219610a7c73efdffc285439e15b"
-  dependencies:
-    detect-element-overflow "^1.1.1"
-    merge-class-names "^1.1.1"
-    prop-types "^15.6.0"
-    react-calendar "^2.17.0"
-    react-clock "^2.3.0"
-    react-datetime-picker "^1.5.0"
-    react-lifecycles-compat "^3.0.4"
-
 abab@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
@@ -2179,10 +2167,6 @@ destroy@~1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/destroy/-/destroy-1.0.4.tgz#978857442c44749e4206613e37946205826abd80"
 
-detect-element-overflow@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/detect-element-overflow/-/detect-element-overflow-1.1.1.tgz#771c50ec9d69f487477fef9728db0766a8f6962d"
-
 detect-indent@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/detect-indent/-/detect-indent-4.0.0.tgz#f76d064352cdf43a1cb6ce619c4ee3a9475de208"
@@ -3137,12 +3121,6 @@ get-stdin@^4.0.1:
 get-stream@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/get-stream/-/get-stream-3.0.0.tgz#8e943d1358dc37555054ecbe2edb05aa174ede14"
-
-get-user-locale@1.1.0, get-user-locale@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/get-user-locale/-/get-user-locale-1.1.0.tgz#55266068c2e1289c3106cf4cef14ddb11dcea928"
-  dependencies:
-    lodash.once "^4.1.1"
 
 get-value@^2.0.3, get-value@^2.0.6:
   version "2.0.6"
@@ -4572,10 +4550,6 @@ lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
 
-lodash.once@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/lodash.once/-/lodash.once-4.1.1.tgz#0dd3971213c7c56df880977d504c88fb471a97ac"
-
 lodash.template@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.template/-/lodash.template-4.4.0.tgz#e73a0385c8355591746e020b99679c690e68fba0"
@@ -4709,10 +4683,6 @@ meow@^3.3.0, meow@^3.7.0:
     read-pkg-up "^1.0.1"
     redent "^1.0.0"
     trim-newlines "^1.0.0"
-
-merge-class-names@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/merge-class-names/-/merge-class-names-1.1.1.tgz#3bd2f38eb5418c464a0fef615484fdf6c8932256"
 
 merge-descriptors@1.0.1:
   version "1.0.1"
@@ -6000,33 +5970,6 @@ react-big-calendar@^0.19.2:
     uncontrollable "^4.0.0"
     warning "^2.0.0"
 
-react-calendar@^2.17.0:
-  version "2.17.1"
-  resolved "https://registry.yarnpkg.com/react-calendar/-/react-calendar-2.17.1.tgz#57fdffe188ac8128d3616e14d5d1b1fa3b0d06c1"
-  dependencies:
-    get-user-locale "^1.1.0"
-    merge-class-names "^1.1.1"
-    prop-types "^15.6.0"
-    react-lifecycles-compat "^3.0.4"
-
-react-clock@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/react-clock/-/react-clock-2.3.0.tgz#de5c328c7bdcec58348da5c2ccd8d8ca4fc10b76"
-  dependencies:
-    merge-class-names "^1.1.1"
-    prop-types "^15.6.0"
-
-react-date-picker@^6.12.0:
-  version "6.12.0"
-  resolved "https://registry.yarnpkg.com/react-date-picker/-/react-date-picker-6.12.0.tgz#147e22e95dadb13e4495e303a96778431e2bcfcf"
-  dependencies:
-    detect-element-overflow "^1.1.1"
-    get-user-locale "^1.1.0"
-    merge-class-names "^1.1.1"
-    prop-types "^15.6.0"
-    react-calendar "^2.17.0"
-    react-lifecycles-compat "^3.0.4"
-
 react-datepicker@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-1.6.0.tgz#6b7a87e949f3bbd94872554be6a0119bd908a987"
@@ -6035,20 +5978,6 @@ react-datepicker@^1.6.0:
     prop-types "^15.6.0"
     react-onclickoutside "^6.7.1"
     react-popper "^0.9.1"
-
-react-datetime-picker@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/react-datetime-picker/-/react-datetime-picker-1.5.0.tgz#cbb42c7590daf1dc99678b907b802c1ba0394b0f"
-  dependencies:
-    detect-element-overflow "^1.1.1"
-    get-user-locale "1.1.0"
-    merge-class-names "^1.1.1"
-    prop-types "^15.6.0"
-    react-calendar "^2.17.0"
-    react-clock "^2.3.0"
-    react-date-picker "^6.12.0"
-    react-lifecycles-compat "^3.0.4"
-    react-time-picker "^2.6.0"
 
 react-dev-utils@^5.0.1:
   version "5.0.1"
