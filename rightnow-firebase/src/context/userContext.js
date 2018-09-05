@@ -25,6 +25,7 @@ export default class UserProvider extends Component {
 
 		userSignedIn: false,
 		clientZip: null,
+		ifOAuth: '',
 
 		updateState: async (data) => await this.setState(data),
 
@@ -135,7 +136,8 @@ export default class UserProvider extends Component {
 								name: user.displayName,
 								email: user.email,
 								phone: user.phoneNumber,
-								photo: user.photoURL
+								photo: user.photoURL,
+								ifOAuth: user.providerData[0].providerId
 							});
 							return;
 						}
@@ -148,7 +150,8 @@ export default class UserProvider extends Component {
 					name: null,
 					email: null,
 					phone: null,
-					photo: null
+					photo: null,
+					ifOAuth: ''
 				});
 			} else return;
 		});

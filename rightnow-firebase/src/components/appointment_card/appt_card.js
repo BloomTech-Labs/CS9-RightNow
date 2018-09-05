@@ -62,28 +62,29 @@ export default class AppointmentCard extends Component {
 								</BusinessInfo>
 
 								{appointments !== null ? (
-										<div
-											data-simplebar
-											id="apptScroll"
-											style={{
-												maxHeight: '21.5vh'
-											}}
-										>
-											<AvailableAppts>
-												{appointments.map((appt, index) => (
-													<Appointment
-														key={index}
-														onClick={() => value.initializeAppointment(appt)}
-													>
-														<Type>{appt.service}</Type>
-														<Time>{`${moment(appt.start).format('h:mm')} - ${moment(
-															appt.end
-														).format('h:mm')}`}</Time>
-														<Cost>{appt.cost}</Cost>
-													</Appointment>
-												))}
-											</AvailableAppts>
-										</div>
+									<div
+										data-simplebar
+										id="apptScroll"
+										style={{
+											maxHeight: '21.5vh'
+										}}
+									>
+										<AvailableAppts>
+											{appointments.map((appt, index) => (
+												<Appointment
+													key={index}
+													onClick={() => value.initializeAppointment(appt)}
+												>
+													<Type>{appt.service}</Type>
+													<Time>{`${moment(appt.start).format('h:mm')} - ${moment(
+														appt.end
+													).format('h:mm')}`}</Time>
+													<Cost>{appt.cost}</Cost>
+												</Appointment>
+											))}
+											<div>View More</div>
+										</AvailableAppts>
+									</div>
 								) : null}
 							</Container>
 						);

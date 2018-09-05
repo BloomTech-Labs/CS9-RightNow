@@ -43,26 +43,19 @@ class UserSettings extends Component {
 			<UserProvider>
 				<UserContext.Consumer>
 					{(value) => {
-						// value.getCustomerAppt(); // Get all appointments booked by the customer/user
-						// if (value.finished) {
-						// if axios request is finished
-						// if (value.queryResults.length !== 0) {
-							// check if the array is empty or not
-							// console.log('get appts', value.getCustomerAppt());
-
-							return (
-								<FormContainer>
-									<h3>User Settings</h3>
-									<UpcomingAppointments userState={value.queryResults} />
-									<PastAppointments userState={value} />
-									<ContactForm userState={value} />
+						return (
+							<FormContainer>
+								<h3>User Settings</h3>
+								<UpcomingAppointments userState={value.queryResults} />
+								<PastAppointments userState={value} />
+								<ContactForm userState={value} />
+								{value.ifOAuth.includes('google') || value.ifOAuth.includes('facebook') ? null : (
 									<UserChangePassword />
-									<UserNotification />
-									<Button onClick={() => this.props.UserProvider}>Save</Button>
-								</FormContainer>
-							);
-						// }
-						// }
+								)}
+								<UserNotification />
+								<Button onClick={() => this.props.UserProvider}>Save</Button>
+							</FormContainer>
+						);
 					}}
 				</UserContext.Consumer>
 			</UserProvider>
