@@ -84,13 +84,13 @@ const AbortButton = glamorous.button({
 	fontFamily: 'Raleway, sans-serif',
 	margin: '2.5% 3%',
   padding: '1% 3%',
-	color: 'black',
+	color: '#EBEBEB',
 	fontWeight: 800,
 	fontSize: '1.3em',
-	border: '3px solid black',
+	border: '3px solid #353A50',
 	borderRadius: '5px',
-	backgroundColor: '#EBEBEB',
-	':hover': { cursor: 'pointer'  },
+	backgroundColor: '#353A50',
+	':hover': { cursor: 'pointer', backgroundColor: '#EBEBEB', color: "#353A50"  },
 	':focus': { outline: "none", textDecoration: "none" }
 });
 
