@@ -61,7 +61,7 @@ export default class AppointmentCard extends Component {
 								</BusinessInfo>
 
 								<AvailableAppts>
-									{appointments.map((appt, index) => (
+									{appointments.slice(0, 3).map((appt, index) => (
 										<Appointment
 											key={index}
 											onClick={() => value.initializeAppointment(appt)}
