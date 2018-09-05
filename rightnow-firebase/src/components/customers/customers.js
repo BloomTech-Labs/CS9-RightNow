@@ -20,10 +20,10 @@ export default class Customers extends Component {
 
     componentDidMount() {
         const selectionContainer = document.getElementById("selection_container");
+
         let sticky = selectionContainer.offsetTop + 566;
 
         window.onscroll = () => {
-            console.log(sticky, window.pageYOffset)
             if (window.pageYOffset > sticky) {
                 selectionContainer.style.position = "fixed";
                 selectionContainer.style.top = 0;

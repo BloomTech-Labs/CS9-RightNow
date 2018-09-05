@@ -15,6 +15,7 @@ export const Header = glamorous.div({
   padding: "1% 0.5%",
   margin: "3% 1%",
   borderBottom: "1px solid #b4b4b4",
+  // transition: "all 1s",
 
   "@media(min-width: 1800px)": {
     width: "90%"
