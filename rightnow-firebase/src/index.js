@@ -13,5 +13,5 @@ ReactDOM.render(
         </Router>
     </StripeProvider>, 
     document.getElementById('root'));
-    
+
 registerServiceWorker();
