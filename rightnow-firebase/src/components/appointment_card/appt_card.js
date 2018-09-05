@@ -15,8 +15,8 @@ import StarRatings from 'react-star-ratings';
 import { UserContext } from '../../context/userContext';
 import moment from 'moment';
 
-import 'simplebar';
-import 'simplebar/dist/simplebar.css';
+// import 'simplebar';
+// import 'simplebar/dist/simplebar.css';
 
 /*
 INFORMATION REQUIRED FOR THIS COMPONENT:

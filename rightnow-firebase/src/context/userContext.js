@@ -41,6 +41,7 @@ export default class UserProvider extends Component {
 				.get()
 				.then((res) => res.docs.map((doc) => doc.data()))
 				.catch((err) => console.log('err', err));
+
 			this.setState({ queryResults: x, finished: true });
 		},
 
