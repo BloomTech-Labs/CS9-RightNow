@@ -22,10 +22,6 @@ export default class IndustryView extends Component {
   }
 
   render() {
-    let time;
-    if (this.state.time_actual !== "All") {
-
-    }
     return (
       <Container>
         <Header id="appointments">View Appointments by Industry</Header>

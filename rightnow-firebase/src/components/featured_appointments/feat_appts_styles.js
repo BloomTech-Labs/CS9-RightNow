@@ -45,7 +45,7 @@ export const Header = glamorous.div({
 
 export const CardContainer = glamorous.div({
   display: 'grid',
-	grid: 'auto / 18vw 18vw 18vw',
+	grid: 'auto / 20vw 20vw 20vw',
 	gridGap: '4.5vw',
 	justifyContent: 'center',
 	width: '85vw',
