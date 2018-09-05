@@ -15,6 +15,7 @@ export default class UserProvider extends Component {
     location: "",
     appointments: [],
     
+    
     init_appointment: {},
     displayConfirm: false,
     confirm: false,
@@ -25,6 +26,7 @@ export default class UserProvider extends Component {
     full_query: [],
 
     userSignedIn: false,
+    ifOAuth: '',
     clientZip: null,
 
     updateState: async data => await this.setState(data),
@@ -58,6 +60,14 @@ export default class UserProvider extends Component {
       this.setState({ init_appointment: full_appointment, displayConfirm: true });
     },
 
+//     updateSettings = (user, provider) => {
+//       let user;
+//       let provider;
+// e,
+    
+//       if (user === userSignedInWithOAuth) provider = new 
+//     }
+
     confirmAppointment: () => {
       if (!this.state.confirm || !this.state.uid) return;
 
@@ -68,7 +78,7 @@ export default class UserProvider extends Component {
         .catch(err => console.log("error updating appointment", err));
 
       // NEED FIREBASE FUNCTION FOR APPOINTMENT ON-UPDATE
-      // appointment does not get added to customer's appoinment collection
+      // appointment does not get added to customer's appointment collection
       this.setState({ displayConfirm: false });
     },
 
@@ -109,13 +119,15 @@ export default class UserProvider extends Component {
           .then(isBusiness => {
             if (isBusiness) return;
             else {
+              console.log('user', user);
               this.setState({
                 userSignedIn: true,
                 uid: user.uid,
                 name: user.displayName,
                 email: user.email,
                 phone: user.phoneNumber,
-                photo: user.photoURL
+                photo: user.photoURL,
+                ifOAuth: user.ProviderData.ProviderID
               });
               return;
             }
@@ -129,10 +141,10 @@ export default class UserProvider extends Component {
           name: null,
           email: null,
           phone: null,
-          photo: null
+          photo: null,
+          ifOAuth: ''
         });
       }
-
       else return;
     });
   }
