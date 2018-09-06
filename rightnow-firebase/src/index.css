@@ -5,10 +5,6 @@ body {
   overflow-x: hidden;
 }
 
-/* prevent body from scrolling when scrolling appt card elemtn */
-body.noScroll { /* ...or body.dialogShowing */
-  overflow: hidden;
-}
 
 :focus {
   outline: none;
