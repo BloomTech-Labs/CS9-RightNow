@@ -15,6 +15,7 @@ export default class UserProvider extends Component {
 		location: "",
 		appointments: [],
 		upcoming_appointments: [],
+		upcomingComplete: false,
 
 		init_appointment: {},
 		displayConfirm: false,
@@ -64,13 +65,41 @@ export default class UserProvider extends Component {
 
 			const db = firebase.firestore();
 
-			const appointmentIds = await db
+			const appointmentIds = await firebase.firestore()
 				.collection('_customer_')
 				.doc(this.state.uid)
 				.collection('future_appointments')
 				.get()
-				.then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
-			console.log(appointmentIds);
+				.then(querySnapshot => querySnapshot.docs.map(doc => doc.data()));
+
+
+      // testing stuff here
+			const appointments = [];
+
+			appointmentIds.forEach(async (appt) => {
+				const current = await db.collection('_appointment_').doc(appt['appointment_id']);
+				appointments.push(current);
+			});
+
+
+
+
+			// 	await appointmentIds.map(async (appt) => {
+			// 	// console.log(appt);
+			// 	const curruent = await firebase.firestore().collection('_appointment_')
+			// 		.doc(appt['appointment_id'])
+			// 		.get()
+			// 		.then(docSnapshot => {
+			// 			// console.log('Data Snapshot', docSnapshot.data());
+			// 			return docSnapshot.data()
+			// 		})
+			// 		.catch(err => console.log(err));
+			// 	return curruent;
+			//
+			// });
+			console.log('app form user context', appointments);
+			this.setState({upcoming_appointments: appointments});
+
 		},
 
 		confirmAppointment: () => {
@@ -124,6 +153,7 @@ export default class UserProvider extends Component {
 					.then(isBusiness => {
 						if (isBusiness) return;
 						else {
+
 							this.setState({
 								userSignedIn: true,
 								uid: user.uid,
@@ -132,6 +162,10 @@ export default class UserProvider extends Component {
 								phone: user.phoneNumber,
 								photo: user.photoURL
 							});
+							if (!this.state.upcomingComplete) {
+								this.state.upcomingAppointments();
+								this.setState({upcomingComplete: true});
+							}
 							return;
 						}
 					}).catch(err => console.log("error", err));

@@ -20,10 +20,10 @@ const Appointment = glamorous.div({
 });
 
 const AppointmentList = glamorous.div({
-    display: 'flex',
-    // flexShrink: "0"
+	display: 'flex',
+	// flexShrink: "0"
 	flexDirection: 'row',
-	justifyContent:'space-between'
+	justifyContent: 'space-between'
 
 });
 
@@ -36,22 +36,48 @@ const Upcoming = glamorous.h3({
 	margin: 'auto'
 });
 
-const UpcomingAppointment = (props) => {
-	console.log('props', props);
-	return (
-		<Appointment>
-			<Upcoming>Upcoming Appointments</Upcoming>
-			<hr />
-			<AppointmentList>
+class UpcomingAppointment extends React.Component {
 
-                    <AppointmentDetails service={"Hair Cut"} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>
+	constructor(props) {
+		super(props);
+		this.state = {
+			appts: []
+		};
+	}
 
-                    <AppointmentDetails service={"Hair Cut"} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>
-                    <AppointmentDetails service={"Hair Cut"} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>
+	// componentDidMount() {
+	// 	if (this.props.userState.length > 0) {
+	//
+	// 		this.setState({appts: this.props.userState});
+	// 	}
+	// }
 
-			</AppointmentList>
-		</Appointment>
-	);
-};
+
+	// console.log('props', props);
+	render() {
+
+
+		const list = this.props.userState;
+		return (
+			<Appointment>
+				<Upcoming>Upcoming Appointments</Upcoming>
+				<hr/>
+				<AppointmentList>
+
+
+
+					{/*<AppointmentDetails service={'test'} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>*/}
+					{list.map((appointment) => {
+					return (<div>
+
+					</div>)
+					})}
+
+
+					</AppointmentList>
+			</Appointment>
+		);
+	}
+}
 
 export default UpcomingAppointment;

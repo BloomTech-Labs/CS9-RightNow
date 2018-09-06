@@ -6,7 +6,7 @@ import UpcomingAppointments from '../share_settings/upcoming_appointments';
 import PastAppointments from '../share_settings/past_appointments';
 import ContactForm from '../share_settings/contact_form';
 import UserProvider, { UserContext } from '../../context/userContext';
-
+import Appointment from '../share_settings/appointmentDetails/appointmentDetailsCustomerView';
 import glamorous from 'glamorous';
 
 export const FormContainer = glamorous.div({
@@ -49,12 +49,14 @@ class UserSettings extends Component {
 						// if (value.queryResults.length !== 0) {
 							// check if the array is empty or not
 							// console.log('get appts', value.getCustomerAppt());
-						value.upcomingAppointments();
-						console.log(`appts id: ${value.upcoming_appointments}`);
+						// value.upcomingAppointments();
+						// console.log(`appts id: ${value.upcoming_appointments}`);
 							return (
 								<FormContainer>
 									<h3>User Settings</h3>
-									<UpcomingAppointments userState={value.queryResults} />
+									<UpcomingAppointments userState={value.upcoming_appointments} />
+									{/*{value.upcoming_appointments.map((app) => <Appointment service={app.service} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>)}*/}
+
 									<PastAppointments userState={value} />
 									<ContactForm userState={value} />
 									<UserChangePassword />
