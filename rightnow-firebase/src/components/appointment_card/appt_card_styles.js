@@ -82,6 +82,30 @@ export const Appointment = glamorous.div({
 	}
 });
 
+export const MoreAppointments = glamorous.div({
+	boxSizing: 'border-box',
+	fontFamily: 'Raleway, sans-serif',
+	fontWeight: 400,
+
+	display: 'grid',
+	gridTemplateColumns: '33% 34% 33%',
+	border: '1px solid #b8bcd1',
+	borderRadius: '5px',
+	margin: '0 0 3%',
+	padding: '3%',
+
+	':hover': {
+		border: '1px solid #353A50',
+		fontWeight: 600,
+		cursor: 'pointer'
+	},
+	'::active': {
+		background: '#ada3a2',
+		color: '#ada3a2',
+		fontSize: '0.9rem'
+	}
+})
+
 export const Type = glamorous.div({
 	textAlign: 'start'
 });
