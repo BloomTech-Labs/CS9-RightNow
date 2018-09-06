@@ -6209,7 +6209,7 @@ react-star-ratings@^2.3.0:
     prop-types "^15.6.0"
     react "^16.1.0"
 
-react-time-picker@^2.7.0:
+react-time-picker@^2.6.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/react-time-picker/-/react-time-picker-2.7.0.tgz#708aa7340731fa425e0eeb102381a0315fb242f4"
   dependencies:
