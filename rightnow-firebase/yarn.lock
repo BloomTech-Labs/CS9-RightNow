@@ -6001,8 +6001,8 @@ react-big-calendar@^0.19.2:
     warning "^2.0.0"
 
 react-calendar@^2.17.0:
-  version "2.17.2"
-  resolved "https://registry.yarnpkg.com/react-calendar/-/react-calendar-2.17.2.tgz#340f152fd8a8c44f40e9869bddad2b25dc0f32f1"
+  version "2.17.1"
+  resolved "https://registry.yarnpkg.com/react-calendar/-/react-calendar-2.17.1.tgz#57fdffe188ac8128d3616e14d5d1b1fa3b0d06c1"
   dependencies:
     get-user-locale "^1.1.0"
     merge-class-names "^1.1.1"
@@ -6037,8 +6037,8 @@ react-datepicker@^1.6.0:
     react-popper "^0.9.1"
 
 react-datetime-picker@^1.5.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/react-datetime-picker/-/react-datetime-picker-1.6.0.tgz#a37c36212f2f3517fab3f12831b28cdb16627402"
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/react-datetime-picker/-/react-datetime-picker-1.5.0.tgz#cbb42c7590daf1dc99678b907b802c1ba0394b0f"
   dependencies:
     detect-element-overflow "^1.1.1"
     get-user-locale "1.1.0"
@@ -6048,7 +6048,7 @@ react-datetime-picker@^1.5.0:
     react-clock "^2.3.0"
     react-date-picker "^6.12.0"
     react-lifecycles-compat "^3.0.4"
-    react-time-picker "^2.7.0"
+    react-time-picker "^2.6.0"
 
 react-dev-utils@^5.0.1:
   version "5.0.1"
