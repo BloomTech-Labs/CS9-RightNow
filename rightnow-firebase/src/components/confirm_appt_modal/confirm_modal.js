@@ -41,7 +41,7 @@ export default class ConfirmModal extends Component {
 			<UserContext.Consumer>
 				{(value) => (
 					<Container>
-						{console.log('sanity check:', value.init_appointment)}
+						{console.log('sanity check:', value)}
 						<ModalWrapper>
 							<ElementConainer>
 								<Greeting>{value.name}</Greeting>

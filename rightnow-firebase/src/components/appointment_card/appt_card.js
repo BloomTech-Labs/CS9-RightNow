@@ -56,8 +56,6 @@ export default class AppointmentCard extends Component {
 
 		const { name, street_number, street_name, city, state, zip, rating, photos, phone } = businessDetails;
 
-		const restOfAppt = null;
-
 		return (
 			<div>
 				<UserContext.Consumer>
