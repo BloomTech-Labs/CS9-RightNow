@@ -22,7 +22,7 @@ export default class UserProvider extends Component {
     query: "",
     queryResults: [],
     finished: false,
-    full_query: [],
+    full_query: null,
 
     userSignedIn: false,
     clientZip: null,
@@ -41,7 +41,7 @@ export default class UserProvider extends Component {
         .collection("_appointment_")
         .where("is_available", "==", true)
         .get()
-        .then(res => res.docs.map(doc => doc.data()))
+        .then(res => res.docs.map(doc => ({...doc.data(), id: doc.id }))) // FIXED BUG
         .catch(err => console.log("err", err));
 
       this.setState({ queryResults: x, finished: true });
@@ -88,6 +88,7 @@ export default class UserProvider extends Component {
 
     confirmAppointment: () => {
       if (!this.state.confirm || !this.state.uid) return;
+      console.log(this.state.init_appointment);
 
       firebase
         .firestore()
@@ -109,16 +110,19 @@ export default class UserProvider extends Component {
     // },
 
     listenToResults: () => {
-      this.unsubscribe = firebase
-        .firestore()
-        .collection("_appointment_")
-        .where("service", "==", this.state.query)
+      // THERE IS NO QUERY WHEN WE AUTO POPULATE DEFAULT APPOINTMENTS
+      const query = this.state.query === "" ? 
+        firebase.firestore().collection("_appointment_") :
+        firebase.firestore().collection("_appointment_").where("service", "==", this.state.query);
+
+      this.unsubscribe = query
         .onSnapshot(snapshot => {
           snapshot.docChanges().forEach(change => {
             const id = change.doc.id;
             const doc = change.doc.data();
             const busn_ref = doc.business_ref;
 
+            console.log(change.type)
             if (change.type === "modified" || change.type === "removed") {
               const copy = { ...this.state.full_query };
               const busn_appts = copy[busn_ref].appointments;
@@ -126,7 +130,7 @@ export default class UserProvider extends Component {
               copy[busn_ref].appointments = busn_appts.filter(
                 appt => appt.id !== id
               );
-
+              console.log(copy)
               this.setState({ full_query: copy });
             }
           });
