@@ -7,14 +7,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 
 const Container = glamorous.div({
-<<<<<<< HEAD
-  width: "85%",
-  height: "50%",
-=======
   width: "100%",
   height: "45%",
   alignSelf: "start",
->>>>>>> 5ebe0e4861b7622046e050210ae855c339e1cafb
   border: "1px solid black",
   display: "flex",
   flexDirection: "column",

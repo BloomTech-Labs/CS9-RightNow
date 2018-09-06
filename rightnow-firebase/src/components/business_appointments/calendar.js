@@ -40,20 +40,9 @@ const propGetter = (event, start, end, isSelected) => {
 
 export default class BusnCalendar extends Component {
   apptSelect = data => {
-<<<<<<< HEAD
-    const { start, end, service, cost, description, id } = data;
-    console.log(moment(start).format("LLL"), " --- ", moment(end).format("LLL"))
-    console.log("service", service)
-    this.props.busnContext.updateState({
-      selectedItem: data
-    })
-    console.log("cost", cost)
-    console.log("description", description)
-=======
     this.props.busnContext.updateState({ selected_appointment: data })
     const { start, end } = data;
     console.log(moment(start).format("LLL"), " --- ", moment(end).format("LLL"))
->>>>>>> 5ebe0e4861b7622046e050210ae855c339e1cafb
     console.log("\n\n", data);
 
   }

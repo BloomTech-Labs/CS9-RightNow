@@ -9,14 +9,10 @@ import PostAppointment from "./post_availability";
 import Calendar from "./calendar";
 import BusnNav from "./busn_nav";
 import { Redirect, withRouter } from "react-router-dom";
-<<<<<<< HEAD
-import BusinessContext from "../../context/businessContext";
-import AppointmentDetails from "./appointmentDetails/appointmentDetailsCustomerView"
-=======
 import { BusinessContext } from "../../context/businessContext";
 import AppointmentDetails from "../appointmentDetails/appointmentDetailsCustomerView";
 import DeleteModal from "./delete_modal";
->>>>>>> 5ebe0e4861b7622046e050210ae855c339e1cafb
+import PaymentForm from "../_Payment-Form/PaymentForm";
 
 
 class BusnApptsView extends Component {
@@ -27,20 +23,6 @@ class BusnApptsView extends Component {
 
   render() {  
     return (
-<<<<<<< HEAD
-      <PrimaryWrapper>
-        <BusnNav logout={() => this.props.value.business_logout()} />
-        <Container>
-          <CalendarWrapper>
-            <Calendar busnContext={this.props.value} />
-          </CalendarWrapper>
-          <ApptsWrapper>
-            <PostAppointment busnContext={this.props.value} />
-            <AppointmentDetails busnContext={this.props.value} />
-          </ApptsWrapper>
-        </Container> 
-      </PrimaryWrapper>
-=======
       <BusinessContext.Consumer>
         {value => {
 
@@ -52,8 +34,8 @@ class BusnApptsView extends Component {
           return (
             <PrimaryWrapper>
       
-              <BusnNav logout={() => value.business_logout()} />
-      
+              <BusnNav logout={() => value.business_logout()} updateState={data => value.updateState(data)} />
+            
               <Container>
                 <CalendarWrapper>
                   <Calendar busnContext={value} />
@@ -65,12 +47,12 @@ class BusnApptsView extends Component {
               </Container>
       
               {value.display_delete_modal ? <DeleteModal busnContext={value} /> : null}
+              {value.display_payment_modal ? <PaymentForm busnContext={value} /> : null}
       
             </PrimaryWrapper>
           )
         }}
       </BusinessContext.Consumer>
->>>>>>> 5ebe0e4861b7622046e050210ae855c339e1cafb
     )
   }
 }

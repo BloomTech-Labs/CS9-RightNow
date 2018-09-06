@@ -12,6 +12,7 @@ export default class BusinessProvider extends Component {
     uid: null,
     userSignedIn: false,
     display_delete_modal: false,
+    display_payment_modal: true,
 
     personal: {
       full_name: "",
@@ -45,11 +46,7 @@ export default class BusinessProvider extends Component {
 
     updateBusiness: data => this.setState({ business: data }), // PLACES API USES THIS
 
-<<<<<<< HEAD
-    updateState: async data => await this.setState(data),
-=======
     updateState: async data => await this.setState( data ),
->>>>>>> 5ebe0e4861b7622046e050210ae855c339e1cafb
 
     business_logout: () => {
       firebase.auth().signOut();
