@@ -1,43 +1,7 @@
 import React, { Component } from "react";
 import { injectStripe, CardElement } from "react-stripe-elements";
 import glamorous from "glamorous";
-
-
-/*
-
-    input,
-    .StripeElement {
-      display: block;
-      margin: 10px 0 20px 0;
-      max-width: 500px;
-      padding: 10px 14px;
-      font-size: 1em;
-      font-family: 'Source Code Pro', monospace;
-      box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
-      border: 0;
-      outline: 0;
-      border-radius: 4px;
-      background: white;
-    }
-
-    input::placeholder {
-      color: #aab7c4;
-    }
-
-    input:focus,
-    .StripeElement--focus {
-      box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px, rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
-      -webkit-transition: all 150ms ease;
-      transition: all 150ms ease;
-    }
-
-    .StripeElement.IdealBankElement,
-    .StripeElement.PaymentRequestButton {
-      padding: 0;
-    }
-
-
-*/
+import axios from "axios";
 
 const Label = glamorous.label({
   color: "#6b7c93",
@@ -123,50 +87,24 @@ class StripeForm extends Component {
     });
   }
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
 
-    this.props.stripe.createToken({ name: 'Jenny Rosen' })
-      .then(({token}) => console.log('Received Stripe token:', token))
+    const token = await this.props.stripe.createToken()
+      .then(({token}) => token) // { stripeToken: token }
       .catch(err => console.log("error with stripe token\n", err));
+
+    console.log("here's a token", token);
+    axios
+      .post("http://localhost:5000/cs9-rightnow/us-central1/haveAsesh/stripe", { stripeToken: token })
+      .then(res => console.log(res))
+      .catch(err => console.log("error", err));
   }
 
   render() {
+    console.log(this.props)
     return (
-      <Form>
-        <script>
-          {`
-            .StripeElement {
-              display: block;
-              margin: 10px 0 20px 0;
-              max-width: 500px;
-              padding: 10px 14px;
-              font-size: 1em;
-              font-family: 'Source Code Pro', monospace;
-              box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
-              border: 0;
-              outline: 0;
-              border-radius: 4px;
-              background: white;
-            }
-        
-            // input::placeholder {
-            //   color: #aab7c4;
-            // }
-        
-            // input:focus,
-            .StripeElement--focus {
-              box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px, rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
-              -webkit-transition: all 150ms ease;
-              transition: all 150ms ease;
-            }
-        
-            .StripeElement.IdealBankElement,
-            .StripeElement.PaymentRequestButton {
-              padding: 0;
-            }
-          `}
-        </script>
+      <Form onSubmit={e => this.handleSubmit(e)}>
         <Label>Card details
           <CardElement {...createOptions(this.state.elementFontSize)} />
         </Label>
