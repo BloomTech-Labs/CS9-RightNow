@@ -13,6 +13,7 @@ export default class UserProvider extends Component {
     photo: "",
     location: "",
     appointments: [],
+    payload: "",
 
     init_appointment: {},
     displayConfirm: false,
@@ -100,6 +101,12 @@ export default class UserProvider extends Component {
       // appointment does not get added to customer's appoinment collection
       this.setState({ displayConfirm: false });
     },
+
+    // saveCustomerInfo(uid, payload) {
+    //   axios
+    //     .put(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/customer/${uid}`)
+    //     .then(res => console.log(res));
+    // },
 
     listenToResults: () => {
       this.unsubscribe = firebase

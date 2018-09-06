@@ -16,7 +16,7 @@ import {
 class AppointmentDetails extends Component {
 
     render() {
-
+        console.log('busnContxt:', this.props.busnContext)
         if (this.props.busnContext.selected_appointment) {
 
             const { start, end, service, cost, description, customer_ref, is_available } = this.props.busnContext.selected_appointment;

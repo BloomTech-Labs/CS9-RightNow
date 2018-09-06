@@ -1,8 +1,6 @@
-import React from 'react';
 import glamorous from 'glamorous';
-import AppointmentDetails from './appointmentDetails/appointmentDetailsCustomerView';
 
-const Appointment = glamorous.div({
+export const Appointment = glamorous.div({
 	// width: '50%',
 	// border: '1px solid blue',
 	// boxSizing: 'border-box',
@@ -13,13 +11,13 @@ const Appointment = glamorous.div({
 	border: '3px solid white',
 	color: 'black',
 	backgroundColor: '#fff',
-	boxShadow: '0 10px 6px -6px #777',
+	//boxShadow: '0 10px 6px -6px #777',
 	borderRadius: '5px',
 	textAlign: 'center',
 
 });
 
-const AppointmentList = glamorous.div({
+export const AppointmentList = glamorous.div({
     display: 'flex',
     // flexShrink: "0"
 	flexDirection: 'row',
@@ -28,30 +26,10 @@ const AppointmentList = glamorous.div({
 });
 
 
-const Upcoming = glamorous.h3({
+export const Upcoming = glamorous.h3({
 	width: '100%',
 	display: 'flex',
 	justifyContent: 'center',
 	textAlign: 'center',
 	margin: 'auto'
 });
-
-const UpcomingAppointment = (props) => {
-	console.log('props', props);
-	return (
-		<Appointment>
-			<Upcoming>Upcoming Appointments</Upcoming>
-			<hr />
-			<AppointmentList>
-
-                    <AppointmentDetails service={"Hair Cut"} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>
-
-                    <AppointmentDetails service={"Hair Cut"} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>
-                    <AppointmentDetails service={"Hair Cut"} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>
-
-			</AppointmentList>
-		</Appointment>
-	);
-};
-
-export default UpcomingAppointment;
