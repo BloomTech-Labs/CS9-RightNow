@@ -26,7 +26,7 @@ INFORMATION REQUIRED FOR THIS COMPONENT:
 
 export default class AppointmentCard extends Component {
 	constructor(props) {
-		super(props);
+		super(props); 
 		this.state = {};
 	}
 

@@ -1,20 +1,19 @@
-import React, { Component } from 'react';
-import firebase from '../firebase/firebase';
-import axios from 'axios';
+import React, { Component } from "react";
+import firebase from "../firebase/firebase";
+import axios from "axios";
 
 export const UserContext = React.createContext();
 
 export default class UserProvider extends Component {
-
   state = {
     uid: "",
     name: "",
     email: "",
-    phone: "", 
+    phone: "",
     photo: "",
     location: "",
     appointments: [],
-    
+
     init_appointment: {},
     displayConfirm: false,
     confirm: false,
@@ -26,6 +25,7 @@ export default class UserProvider extends Component {
 
     userSignedIn: false,
     clientZip: null,
+    ifOAuth: "",
 
     updateState: async data => await this.setState(data),
 
@@ -34,35 +34,64 @@ export default class UserProvider extends Component {
       this.unsubscribe();
     },
 
+    searchAll: async () => {
+      const x = await firebase
+        .firestore()
+        .collection("_appointment_")
+        .where("is_available", "==", true)
+        .get()
+        .then(res => res.docs.map(doc => doc.data()))
+        .catch(err => console.log("err", err));
+
+      this.setState({ queryResults: x, finished: true });
+    },
+
     handleSearch: async () => {
       await axios
-        .get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment?term=${this.state.query}`)
+        .get(
+          `https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment?term=${
+            this.state.query
+          }`
+        )
         .then(res => this.setState({ queryResults: res.data, finished: true }))
-        .catch(err => console.log("error", err));      
+        .catch(err => console.log("error", err));
     },
 
     clientLocation: () => {
-      axios.get("http://ip-api.com/json")
-        .then(res => this.setState({ 
-          query: `${res.data.city}, ${res.data.region}`, 
-          clientZip: res.data.zip 
-        })).catch(err => console.log("error", err));
+      axios
+        .get("http://ip-api.com/json")
+        .then(res =>
+          this.setState({
+            query: `${res.data.city}, ${res.data.region}`,
+            clientZip: res.data.zip
+          })
+        )
+        .catch(err => console.log("error", err));
     },
 
     initializeAppointment: async appt => {
-      const business_details = 
-        await axios
-          .get(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/${appt.business_ref}`)
-          .then(res => res.data).catch(err => console.log("error", err));
+      const business_details = await axios
+        .get(
+          `https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/${
+            appt.business_ref
+          }`
+        )
+        .then(res => res.data)
+        .catch(err => console.log("error", err));
       const full_appointment = { ...appt, business_details };
-      this.setState({ init_appointment: full_appointment, displayConfirm: true });
+      this.setState({
+        init_appointment: full_appointment,
+        displayConfirm: true
+      });
     },
 
     confirmAppointment: () => {
       if (!this.state.confirm || !this.state.uid) return;
 
-      firebase.firestore()
-        .collection("_appointment_").doc(this.state.init_appointment.id)
+      firebase
+        .firestore()
+        .collection("_appointment_")
+        .doc(this.state.init_appointment.id)
         .update({ is_available: false, customer_ref: this.state.uid })
         .then(() => console.log("successful update"))
         .catch(err => console.log("error updating appointment", err));
@@ -74,30 +103,33 @@ export default class UserProvider extends Component {
 
     listenToResults: () => {
       this.unsubscribe = firebase
-        .firestore().collection("_appointment_")
+        .firestore()
+        .collection("_appointment_")
         .where("service", "==", this.state.query)
         .onSnapshot(snapshot => {
           snapshot.docChanges().forEach(change => {
             const id = change.doc.id;
             const doc = change.doc.data();
-            const busn_ref = doc.business_ref;            
-            
+            const busn_ref = doc.business_ref;
+
             if (change.type === "modified" || change.type === "removed") {
               const copy = { ...this.state.full_query };
               const busn_appts = copy[busn_ref].appointments;
 
-              copy[busn_ref].appointments = busn_appts.filter(appt => appt.id !== id);
+              copy[busn_ref].appointments = busn_appts.filter(
+                appt => appt.id !== id
+              );
 
               this.setState({ full_query: copy });
-            } 
-          })
-        })
+            }
+          });
+        });
     }
-
-  }
+  };
 
   componentDidMount() {
     // this.state.clientLocation(); // set initial query input to client location
+    this.state.searchAll(); // searching for all appts: TEMPORARY
 
     firebase.auth().onAuthStateChanged(user => {
       console.log(user);
@@ -105,7 +137,7 @@ export default class UserProvider extends Component {
       if (user && !this.state.userSignedIn) {
         user
           .getIdTokenResult()
-          .then(token => token.claims.business ? true : false)
+          .then(token => (token.claims.business ? true : false))
           .then(isBusiness => {
             if (isBusiness) return;
             else {
@@ -115,55 +147,45 @@ export default class UserProvider extends Component {
                 name: user.displayName,
                 email: user.email,
                 phone: user.phoneNumber,
-                photo: user.photoURL
+                photo: user.photoURL,
+                ifOAuth: user.providerData[0].providerId
               });
               return;
             }
-          }).catch(err => console.log("error", err));
-      }
-      
-      else if (!user && this.state.userSignedIn) {
+          })
+          .catch(err => console.log("error", err));
+      } else if (!user && this.state.userSignedIn) {
         this.setState({
           userSignedIn: false,
           uid: null,
           name: null,
           email: null,
           phone: null,
-          photo: null
+          photo: null,
+          ifOAuth: ""
         });
-      }
-
-      else return;
+      } else return;
     });
   }
-
 
   render() {
     return (
       <UserContext.Provider value={this.state}>
         {this.props.children}
       </UserContext.Provider>
-    )
+    );
   }
 }
 
 /*
-
-
 DIRECTIONS TO USE CONTEXT:
-
   0. open the component file that you're working on
-
   1. import { UserContext } from "../some_path/context/userContext";
-
   2. inside of your render/return ...
-
     <UserContext.Consumer>
       {value => {
-
         // you can update state via value.updateState({ key: value })
         // you can access name, email, phone, etc. via value.data
-
         return (
           // whatever you want the component to display
           // see login_modal.js lines 43-56 for example
@@ -171,5 +193,4 @@ DIRECTIONS TO USE CONTEXT:
         
       }}
     </UserContext.Consumer>
-
 */
