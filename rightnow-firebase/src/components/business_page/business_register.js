@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import PlacesAPI from '../placesAPI/search_autocomplete';
 import { withRouter, Redirect } from 'react-router-dom';

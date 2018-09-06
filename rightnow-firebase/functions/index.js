@@ -22,6 +22,7 @@ const db = admin.firestore();
 // include timestamps in document requests
 db.settings({timestampsInSnapshots: true});
 
+<<<<<<< HEAD
 // Stripe Configuration
 const stripe = require('stripe')(functions.config().stripe.token);
 const currency = functions.config().stripe.currency || "USD";
@@ -152,6 +153,12 @@ exports.cleanupUser = functions.auth.user().onDelete((user) => {
 	return error.type ? error.message : 'An error occurred, developers have been alerted';
   }
 
+=======
+// Stripe stuff
+const logging = require('@google-cloud/logging')();
+const stripe = require('stripe')(functions.config().stripe.token);
+const currency = functions.config().stripe.currency || 'USD';
+>>>>>>> 5ebe0e4861b7622046e050210ae855c339e1cafb
 
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~/
 / ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ FIRESTORE CRUD FUNCTIONS ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  /

@@ -11,6 +11,7 @@ export default class BusinessProvider extends Component {
   state = {
     uid: null,
     userSignedIn: false,
+    display_delete_modal: false,
 
     personal: {
       full_name: "",
@@ -36,6 +37,7 @@ export default class BusinessProvider extends Component {
     selectedItem: "",
 
     appointments: [],
+    selected_appointment: null,
 
     future_appointments: [],
     available_appointments: [],
@@ -43,15 +45,36 @@ export default class BusinessProvider extends Component {
 
     updateBusiness: data => this.setState({ business: data }), // PLACES API USES THIS
 
+<<<<<<< HEAD
     updateState: async data => await this.setState(data),
+=======
+    updateState: async data => await this.setState( data ),
+>>>>>>> 5ebe0e4861b7622046e050210ae855c339e1cafb
 
     business_logout: () => {
       firebase.auth().signOut();
       this.unsubscribe();
+    },
+
+    delete_appointment: () => {
+      if (!this.state.selected_appointment.is_available) return false;
+
+      const appt_id = this.state.selected_appointment.id;
+
+      firebase.firestore().collection("_appointment_").doc(appt_id).delete()
+        .then(res => console.log("success", res)).catch(err => console.log("error", err));
+
+      firebase.firestore().collection("_business_").doc(this.state.uid)
+        .collection("future_appointments").doc(appt_id).delete()
+        .then(res => console.log("success", res)).catch(err => console.log("error", err));
+
+      this.setState({ display_delete_modal: false, selected_appointment: null });
+
+      return true;
     }
   }
 
-  componentDidMount() {
+  componentDidMount() {    
     firebase.auth().onAuthStateChanged(user => {
       console.log(`current user: ${user}`);
 
