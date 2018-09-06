@@ -5,11 +5,15 @@ import moment from "moment";
 
 
 const Container = glamorous.div({
+  position: "relative",
   width: "85vw",
   height: "15vh",
   margin: "auto",
   display: "grid",
   grid: "100% / 80% 20%",
+  backgroundColor: "rgba(255, 255, 255, 0.97)",
+  zIndex: 5,
+  transition: "all 2s",
 });
 
 
@@ -157,6 +161,7 @@ export default class QuickSearch extends Component {
       e.target.id = "active_time";
       this.setState({ active_time: document.querySelector("#active_time") });
       this.setState({ time_actual: this.state.active_time.innerHTML });
+      // this.props.updateResults({ time_actual: this.state.active_time.innerHTML })
     } 
     
     else {
@@ -175,7 +180,7 @@ export default class QuickSearch extends Component {
 
   render() {
         return (
-          <Container>
+          <Container id="selection_container">
 
 
               <SelectionWrapper>
