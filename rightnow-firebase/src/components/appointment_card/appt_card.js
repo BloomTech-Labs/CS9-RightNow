@@ -17,10 +17,7 @@ import ViewMoreModal from './view_moreModal';
 
 import StarRatings from 'react-star-ratings';
 import { UserContext } from '../../context/userContext';
-import moment from 'moment';
-
-// import 'simplebar';
-// import 'simplebar/dist/simplebar.css';
+import moment from "moment";
 
 /*
 INFORMATION REQUIRED FOR THIS COMPONENT:
@@ -52,10 +49,12 @@ export default class AppointmentCard extends Component {
 	};
 
 	render() {
+		
 		const { appointments, businessDetails } = this.props;
 
 		const { name, street_number, street_name, city, state, zip, rating, photos, phone } = businessDetails;
 
+		
 		return (
 			<div>
 				<UserContext.Consumer>
@@ -69,9 +68,9 @@ export default class AppointmentCard extends Component {
 									<StarRatings
 										rating={rating}
 										numberOfStars={5}
-										starRatedColor="red"
+										starRatedColor="gold"
 										starEmptyColor="grey"
-										starDimension="19px"
+										starDimension="35px"
 									/>
 									<Address>
 										<div>{`${street_number} ${street_name}`}</div>
@@ -79,6 +78,7 @@ export default class AppointmentCard extends Component {
 									</Address>
 								</BusinessInfo>
 
+<<<<<<< HEAD
 								{appointments !== null ? (
 									<div
 										data-simplebar
@@ -113,6 +113,20 @@ export default class AppointmentCard extends Component {
 										closeViewMore={() => this.closeViewMore()}
 									/>
 								) : null}
+=======
+								<AvailableAppts>
+									{appointments.map((appt, index) => (
+										<Appointment
+											key={index}
+											onClick={() => value.initializeAppointment(appt)}
+										>
+											<Type>{appt.service}</Type>
+											<Time>{`${moment(appt.start).format("h:mm")} - ${moment(appt.end).format("h:mm")}`}</Time>
+											<Cost>{appt.cost}</Cost>
+										</Appointment>
+									))}
+								</AvailableAppts>
+>>>>>>> a390b41619e8840daf27fb8c2ba7e54ce4f2f778
 							</Container>
 						);
 					}}
