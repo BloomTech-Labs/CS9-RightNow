@@ -78,42 +78,6 @@ export default class AppointmentCard extends Component {
 									</Address>
 								</BusinessInfo>
 
-<<<<<<< HEAD
-								{appointments !== null ? (
-									<div
-										data-simplebar
-										id="apptScroll"
-										style={{
-											maxHeight: '21.5vh'
-										}}
-									>
-										<AvailableAppts>
-											{/* {console.log('appointments', appointments)} */}
-											{appointments.slice(0, 3).map((appt, index) => (
-												<Appointment
-													key={index}
-													onClick={() => value.initializeAppointment(appt)}
-												>
-													<Type>{appt.service}</Type>
-													<Time>{`${moment(appt.start).format('h:mm')} - ${moment(
-														appt.end
-													).format('h:mm')}`}</Time>
-													<Cost>{appt.cost}</Cost>
-												</Appointment>
-											))}
-											<MoreAppointments onClick={() => this.openViewMore()}>
-												View More
-											</MoreAppointments>
-										</AvailableAppts>
-									</div>
-								) : null}
-								{this.state.displayViewMore ? (
-									<ViewMoreModal
-										appointments={appointments}
-										closeViewMore={() => this.closeViewMore()}
-									/>
-								) : null}
-=======
 								<AvailableAppts>
 									{appointments.map((appt, index) => (
 										<Appointment
@@ -126,7 +90,6 @@ export default class AppointmentCard extends Component {
 										</Appointment>
 									))}
 								</AvailableAppts>
->>>>>>> a390b41619e8840daf27fb8c2ba7e54ce4f2f778
 							</Container>
 						);
 					}}
