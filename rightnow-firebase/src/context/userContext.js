@@ -58,6 +58,24 @@ export default class UserProvider extends Component {
         .catch(err => console.log("error", err));
     },
 
+    saveCustomerInfo: (payload) => {
+			const user = firebase.auth().currentUser;
+			const newPassword = payload.newPasswordAgain;
+
+			user
+				.updatePassword(newPassword)
+				.then((res) => console.log('update successful', res))
+				.catch((err) => console.log('error:', err));
+
+			// axios
+			// 	.put(
+			// 		`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/customer/${this.state.uid}`,
+			// 		payload
+			// 	)
+			// 	.then((res) => console.log(res));
+		},
+
+
     clientLocation: () => {
       axios
         .get("http://ip-api.com/json")

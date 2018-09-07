@@ -1,10 +1,23 @@
 // import React, { Component } from 'react';
-// // import EmailPhone from '../share_settings/email_phone'
-// import UserNotification from '../share_settings/user_notification';
-// import UserChangePassword from '../share_settings/user_change_password';
-// import UpcomingAppointments from '../share_settings/upcoming_appointments';
-// import PastAppointments from '../share_settings/past_appointments';
-// import CompanyContactForm from './company_contact_form';
+
+// import { CheckBoxContainer,
+// CheckBox,
+//     CheckBoxes} from '../share_settings/user_notification';
+// import { Wrapper,
+// PwLabel,
+//     ChangePasswordInput} from '../share_settings/user_change_password';
+// import {
+//     Appointment,
+// AppointmentList,
+//     Upcoming} from '../share_settings/upcoming_appointments';
+// import { PastAppointment, Past} from '../share_settings/past_appointments';
+// import {
+//     Container,
+//     Label,
+//     InputField,
+//     LeftSide,
+//     ContactTitle
+// } from './company_contact_form';
 // import BusinessProvider, { BusinessContext } from '../../context/businessContext';
 
 // import glamorous from 'glamorous';
@@ -47,23 +60,72 @@
 //             <BusinessProvider>
 //                 <BusinessContext.Consumer>
 //                     {(value) => {
-//                         // value.getCustomerAppt(); // Get all appointments booked by the customer/user
-//                         // if (value.finished) {
-//                         // if axios request is finished
-//                         // if (value.queryResults.length !== 0) {
-//                         // check if the array is empty or not
-//                         // console.log('get appts', value.getCustomerAppt());
+//                         value.getCustomerAppt(); // Get all appointments booked by the customer/user
+//                         if (value.finished) {
+//                         if axios request is finished
+//                         if (value.queryResults.length !== 0) {
+//                         check if the array is empty or not
+//                         console.log('get appts', value.getCustomerAppt());
 //                         console.log('test',value);
 //                         return (
 //                             <FormContainer>
-//                                 <Title>Business Settings</Title>
-//                                 {/*<UpcomingAppointments userState={value.queryResults} />*/}
+//                                  <Title>Business Settings</Title>
+//                           {/*<UpcomingAppointments userState={value.queryResults} />*/}
+//                                 <Appointment>
+//                                 <Upcoming>Upcoming Appointments</Upcoming>
+//                                 <hr />
+//                                 <AppointmentList>
+//                                     <AppointmentDetails
+//                                         service={"Hair Cut"}
+//                                         time={"12:00 PM"}
+//                                         day={"9-20-2018"}
+//                                         company={"ProCuts"}
+//                                         money={"45.00"}
+//                                     />
 
-//                                 <PastAppointments userState={value} />
-//                                 <CompanyContactForm userState={value} />
-//                                 <UserChangePassword />
-//                                 {/* <UserNotification /> */}
-//                                 <Button onClick={() => this.props.UserProvider}>Save</Button>
+//                                     <AppointmentDetails
+//                                         service={"Hair Cut"}
+//                                         time={"12:00 PM"}
+//                                         day={"9-20-2018"}
+//                                         company={"ProCuts"}
+//                                         money={"45.00"}
+//                                     />
+//                                     <AppointmentDetails
+//                                         service={"Hair Cut"}
+//                                         time={"12:00 PM"}
+//                                         day={"9-20-2018"}
+//                                         company={"ProCuts"}
+//                                         money={"45.00"}
+//                                     />
+//                                 </AppointmentList>
+//                                 </Appointment>
+//                                 {/*<PastAppointments userState={value} />*/}
+//                                 <PastAppointment>
+//                                     <Past>Past Appointments</Past>
+//                                 </PastAppointment>
+//                                 {/*<CompanyContactForm userState={value} />*/}
+//                         {/* component is in company_info*/}
+//                                 {/*<UserChangePassword />*/}
+//                                 <h3>Password</h3>
+//                                 <Label>Password</Label>
+
+//                                 <ChangePasswordInput
+//                                     type="password"
+//                                     placeholder="password"
+//                                     id="MyInput"
+//                                 />
+//                                 <PwLabel>Re-Enter Password</PwLabel>
+//                                 <ChangePasswordInput
+//                                     type="password"
+//                                     placeholder="enter password"
+//                                     id="MyInput2"
+//                                 />
+//                                 <PwLabel>Show Password</PwLabel>
+//                                 <ChangePasswordInput
+//                                     type="checkbox"
+//                                     onClick={showPassword}
+//                         {/* <UserNotification /> */}
+//                      <Button onClick={() => this.props.UserProvider}>Save</Button>
 //                             </FormContainer>
 //                         );
 //                         // }
