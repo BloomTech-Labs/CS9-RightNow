@@ -133,7 +133,7 @@ export default class UserProvider extends Component {
 
   componentDidMount() {
     // this.state.clientLocation(); // set initial query input to client location
-    this.state.searchAll(); // searching for all appts: TEMPORARY
+    // this.state.searchAll(); // searching for all appts: TEMPORARY
 
     firebase.auth().onAuthStateChanged(user => {
       console.log(user);
