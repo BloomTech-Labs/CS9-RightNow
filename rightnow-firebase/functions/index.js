@@ -145,7 +145,7 @@ app.post('/customer', async (req, res) => {
 		.auth()
 		.createUser({
 			email: email,
-			displayName: `${first_name}  ${last_name}`,
+			displayName: `${first_name} ${last_name}`,
 			password: password,
 			phoneNumber: phone
 		})
