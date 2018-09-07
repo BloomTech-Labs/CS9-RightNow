@@ -37,17 +37,24 @@ const Upcoming = glamorous.h3({
 });
 
 const UpcomingAppointment = (props) => {
-	console.log('props', props);
+	// console.log('props', props);
+	console.log('appts from upcoming:', props.userState);
+
 	return (
 		<Appointment>
 			<Upcoming>Upcoming Appointments</Upcoming>
 			<hr />
 			<AppointmentList>
 
-                    <AppointmentDetails service={"Hair Cut"} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>
+                    {/*<AppointmentDetails service={"Hair Cut"} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>*/}
 
-                    <AppointmentDetails service={"Hair Cut"} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>
-                    <AppointmentDetails service={"Hair Cut"} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>
+                    {/*<AppointmentDetails service={"Hair Cut"} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>*/}
+                    {/*<AppointmentDetails service={"Hair Cut"} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>*/}
+				{props.userState.map((appt) =>{
+					return (
+					<AppointmentDetails service={appt['service']} time={appt['start']} day={appt['start']} company={appt['business_ref']} money={appt['cost']}/>
+					)
+				})}
 
 			</AppointmentList>
 		</Appointment>

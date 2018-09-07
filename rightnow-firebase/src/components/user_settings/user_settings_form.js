@@ -46,7 +46,7 @@ class UserSettings extends Component {
             return (
               <FormContainer>
                 <h3>User Settings</h3>
-                <UpcomingAppointments userState={value.queryResults} />
+                <UpcomingAppointments userState={value.upcoming_appointments} />
                 <PastAppointments userState={value} />
                 <ContactForm userState={value} />
                 {value.ifOAuth.includes("google") ||
