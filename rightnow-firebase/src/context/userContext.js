@@ -13,8 +13,7 @@ export default class UserProvider extends Component {
     photo: "",
     location: "",
     appointments: [],
-    payload: "",
-
+    
     init_appointment: {},
     displayConfirm: false,
     confirm: false,
@@ -103,11 +102,11 @@ export default class UserProvider extends Component {
       this.setState({ displayConfirm: false });
     },
 
-    // saveCustomerInfo(uid, payload) {
-    //   axios
-    //     .put(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/customer/${uid}`)
-    //     .then(res => console.log(res));
-    // },
+    saveCustomerInfo: (payload) => {
+      axios
+        .put(`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/customer/${this.state.uid}`, payload)
+        .then(res => console.log(res));
+    },
 
     listenToResults: () => {
       // THERE IS NO QUERY WHEN WE AUTO POPULATE DEFAULT APPOINTMENTS
