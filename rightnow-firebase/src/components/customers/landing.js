@@ -68,7 +68,7 @@ const Wrapper = glamorous.div({
   width: "100vw"
 });
 
-const Search = glamorous.input({
+const searchStyle = {
   // height: "auto",
   width: "15%",
   padding: "0.8%",
@@ -83,7 +83,7 @@ const Search = glamorous.input({
   "@media(max-width: 1050px)": {
     width: "25%"
   }
-});
+};
 
 const Button = glamorous.div({
   backgroundColor: "#EF5B5B",
@@ -92,7 +92,7 @@ const Button = glamorous.div({
   fontWeight: 600,
   padding: "0.8%",
   borderRadius: "5px",
-  marginLeft: "15px",
+  marginLeft: "2%",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -144,12 +144,13 @@ const particleOptions = {
 
 
 export default class Landing extends Component {
-  // componentDidMount() {
-    // document.querySelector("#principal_pc").firstChild.style.height = "100%";
-    // document.querySelector("#primary_input").addEventListener("keyup", e => {
-      // e.keyCode === 13 ? document.querySelector("#primary_button").click() : null;
-    // });
-  // }
+  componentDidMount() {
+    document.querySelector("#principal_pc").firstChild.style.height = "100%";
+    document.querySelector("#primary_input").addEventListener("keyup", e => {
+      e.keyCode === 13 ? document.querySelector("#primary_button").click() : null;
+    });
+  }
+
   render() {
     return (
       <Container>
@@ -161,25 +162,24 @@ export default class Landing extends Component {
             <UserContext.Consumer>
               {value => (
                 <Wrapper id="primary_input">
-                  <Search 
+                  <AlgoliaSearch />
+                  {/* <Search 
                     id="primary_search"
                     placeholder="City or Zip" 
                     name="query"
                     value={value.query}
                     onChange={e => value.updateState({ [e.target.name]: e.target.value })}
-                    />
+                    /> */}
                   <Button id="primary_button" onClick={() => value.handleSearch()}>Find Appointments</Button>
                 </Wrapper>
               )}
             </UserContext.Consumer>
-
-            <AlgoliaSearch />
           
         </Main>
 
-        {/* <ParticleContainment id="principal_pc">
+        <ParticleContainment id="principal_pc">
           <Particles width="100%" height="100%" params={particleOptions} />
-        </ParticleContainment> */}
+        </ParticleContainment>
 
       </Container>
     )

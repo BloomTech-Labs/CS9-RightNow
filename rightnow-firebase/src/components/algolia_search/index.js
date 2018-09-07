@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { InstantSearch, Configure, Index, Highlight } from 'react-instantsearch/dom';
 import { connectAutoComplete } from 'react-instantsearch/connectors';
 import Autosuggest from 'react-autosuggest';
+import "./styles.css";
 
 
 
@@ -51,11 +52,11 @@ class PrimaryInput extends Component {
       onChange: this.onChange,
       value: this.state.value,
       style: {
-        width: "15%",
-        padding: "0.8%",
-        fontSize: "1.5em",
-        borderRadius: "5px",
-        border: "none",
+        // width: "100%",
+        // padding: "2.8%",
+        // fontSize: "1.5em",
+        // borderRadius: "5px",
+        // border: "none",
       }
     };
 
