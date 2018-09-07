@@ -28,3 +28,4 @@ yarn-error.log*
 /functions/yarn-error.log
 /functions/yarn.lock
 
+.env

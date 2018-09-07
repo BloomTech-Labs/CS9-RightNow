@@ -6,6 +6,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { StripeProvider } from 'react-stripe-elements';
 import registerServiceWorker from './registerServiceWorker';
 
+require("dotenv").config();
+
 ReactDOM.render(
 	<StripeProvider apiKey="pk_test_Yf6hb34cfn9IIpM05jOCNSwk">
 		<Router>
