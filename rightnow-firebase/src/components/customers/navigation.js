@@ -10,8 +10,9 @@ import firebase, { auth } from '../../firebase/firebase';
 import axios from 'axios';
 
 // sweetAlert 2 with custom css
-import swal from 'sweetalert2/dist/sweetalert2.js';
-import 'sweetalert2/src/sweetalert2.scss';
+import swal from 'sweetalert2';
+// import swal from 'sweetalert2/dist/sweetalert2.js';
+// import 'sweetalert2/src/sweetalert2.scss';
 import withReactContent from 'sweetalert2-react-content';
 
 const Container = glamorous.div({
@@ -137,27 +138,35 @@ export default class Navigation extends Component {
 					.then((result) => console.log(result))
 					.catch((err) => console.log(err));
 			})
-			.then((x) => this.closeModal())
+			.then((x) => console.log('this handler is working'))
+			// .then((x) => (console.log('this handler is working'), this.closeModal()))
 			.catch((err) => console.log(err));
 	};
 
-	triggerSweetAlert = () => {
-		const MySwal = withReactContent(swal);
-
-		MySwal.fire({
-			title: <p>Hello World</p>,
-			footer: 'Copyright 2018',
-			onOpen: () => {
-				// `MySwal` is a subclass of `Swal`
-				//   with all the same instance & static methods
-				MySwal.clickConfirm();
-			}
-		}).then(() => {
-			return MySwal.fire(<p>Shorthand works too</p>);
+	fireSweetAlert = () => {
+		swal({
+			type: 'error',
+			title: 'Oops...',
+			text: 'Something went wrong!',
+			footer: '<a href>Why do I have this issue?</a>'
 		});
 	};
 
 	render() {
+		// const MySwal = withReactContent(swal);
+
+		// MySwal.fire({
+		// 	title: <p>Hello World</p>,
+		// 	footer: 'Copyright 2018',
+		// 	// onOpen: () => {
+		// 	// 	// `MySwal` is a subclass of `Swal`
+		// 	// 	//   with all the same instance & static methods
+		// 	// 	MySwal.clickConfirm();
+		// 	// }
+		// }).then(() => {
+		// 	return MySwal.fire(<p>Shorthand works too</p>);
+		// });
+
 		return (
 			<Container>
 				<Link to="/" style={{ textDecoration: 'none', padding: '1%' }}>
@@ -188,7 +197,7 @@ export default class Navigation extends Component {
 						} else
 							return (
 								<ButtonContainer>
-									<Option onClick={() => this.triggerSweetAlert()}>SweetAlert!</Option>
+									<Option onClick={() => this.fireSweetAlert()}>SweetAlert!</Option>
 									<Option>
 										<Link to="/biz-account" style={{ textDecoration: 'none', color: '#EBEBEB' }}>
 											Business Owner?
