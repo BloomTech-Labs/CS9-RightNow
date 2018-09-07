@@ -107,7 +107,11 @@ export default class Navigation extends Component {
 	};
 
 	handleEmailSignIn = (email, password) => {
-		firebase.auth().signInWithEmailAndPassword(email, password);
+		firebase
+			.auth()
+			.signInWithEmailAndPassword(email, password)
+			.then(this.closeModal())
+			.catch((err) => console.log(err));
 		this.closeModal();
 	};
 
@@ -138,8 +142,7 @@ export default class Navigation extends Component {
 					.then((result) => console.log(result))
 					.catch((err) => console.log(err));
 			})
-			.then((x) => console.log('this handler is working'))
-			// .then((x) => (console.log('this handler is working'), this.closeModal()))
+			.then((x) => this.closeModal())
 			.catch((err) => console.log(err));
 	};
 
