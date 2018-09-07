@@ -43,7 +43,7 @@ export default class AppointmentCard extends Component {
 	componentDidMount() {
 		if (this.props.appointments.length > 3) this.setState({ view_more: true });
 	}
-	
+
 	openViewMore = () => {
 		this.setState({ display_more_appts: true });
 		document.body.style.overflowY = 'hidden';
@@ -60,7 +60,7 @@ export default class AppointmentCard extends Component {
 		const { appointments, businessDetails } = this.props;
 
 		const { name, street_number, street_name, city, state, zip, rating, photos, phone } = businessDetails;
-				
+
 		return (
 			<div>
 				<UserContext.Consumer>
@@ -71,13 +71,18 @@ export default class AppointmentCard extends Component {
 
 								<BusinessInfo>
 									<BusinessName>{name}</BusinessName>
-									<StarRatings
-										rating={rating || 0}
-										numberOfStars={5}
-										starRatedColor="red"
-										starEmptyColor="grey"
-										starDimension="19px"
-									/>
+									{rating !== undefined ? (
+										<StarRatings
+											rating={rating}
+											numberOfStars={5}
+											starRatedColor="red"
+											starEmptyColor="grey"
+											starDimension="19px"
+										/>
+									) : (
+										<div>Rating not available</div>
+									)}
+
 									<Address>
 										<div style={{ fontSize: '1.3em', fontWeight: 500 }}>{`${city}`}</div>
 										<div>{`${state}, ${zip}`}</div>
@@ -86,24 +91,30 @@ export default class AppointmentCard extends Component {
 								</BusinessInfo>
 
 								{appointments !== null ? (
-										<AvailableAppts>
-											{appointments.slice(0, 3).map((appt, index) => (
-												<Appointment key={index} onClick={() => value.initializeAppointment(appt)} >
-													<Type>{appt.service}</Type>
-													<Time>{`${moment(appt.start).format('h:mm')} - ${moment(appt.end).format('h:mm')}`}</Time>
-													<Cost>{appt.cost}</Cost>
-												</Appointment>
-											))}
-											{this.state.view_more ? (
-												<MoreAppointments onClick={() => this.openViewMore()}>View More</MoreAppointments>
-											) : null}
-										</AvailableAppts>
+									<AvailableAppts>
+										{appointments.slice(0, 3).map((appt, index) => (
+											<Appointment key={index} onClick={() => value.initializeAppointment(appt)}>
+												<Type>{appt.service}</Type>
+												<Time>{`${moment(appt.start).format('h:mm')} - ${moment(
+													appt.end
+												).format('h:mm')}`}</Time>
+												<Cost>{appt.cost}</Cost>
+											</Appointment>
+										))}
+										{this.state.view_more ? (
+											<MoreAppointments onClick={() => this.openViewMore()}>
+												View More
+											</MoreAppointments>
+										) : null}
+									</AvailableAppts>
 								) : null}
 
 								{this.state.display_more_appts ? (
-									<ViewMoreModal appointments={appointments} closeViewMore={() => this.closeViewMore()} />
+									<ViewMoreModal
+										appointments={appointments}
+										closeViewMore={() => this.closeViewMore()}
+									/>
 								) : null}
-
 							</Container>
 						);
 					}}
