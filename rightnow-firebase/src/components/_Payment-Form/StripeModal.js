@@ -214,10 +214,9 @@ class StripeForm extends Component {
           stripeToken: token 
         })
       .then(res => console.log(res))
-      .then(() => this.props.busnContext.updateState({ display_payment_modal: false }))
       .catch(err => console.log("error", err));
 
-      
+      this.props.busnContext.updateState({ display_payment_modal: false })
   };
 
   render() {
