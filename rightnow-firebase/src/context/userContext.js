@@ -5,6 +5,7 @@ import axios from 'axios';
 export const UserContext = React.createContext();
 
 export default class UserProvider extends Component {
+<<<<<<< HEAD
 	state = {
 		uid: '',
 		name: '',
@@ -184,6 +185,209 @@ export default class UserProvider extends Component {
 	render() {
 		return <UserContext.Provider value={this.state}>{this.props.children}</UserContext.Provider>;
 	}
+=======
+  state = {
+    uid: "",
+    name: "",
+    email: "",
+    phone: "",
+    photo: "",
+    location: "",
+    appointments: [],
+    featured_appointments: null,
+
+    init_appointment: {},
+    displayConfirm: false,
+    confirm: false,
+
+    query: "",
+    queryResults: [],
+    finished: false,
+    full_query: null,
+
+    userSignedIn: false,
+    clientZip: null,
+    ifOAuth: "",
+
+    updateState: async data => await this.setState(data),
+
+    customerLogout: () => {
+      firebase.auth().signOut();
+      this.unsubscribe();
+    },
+
+    searchAll: async () => {
+      const x = await firebase
+        .firestore()
+        .collection("_appointment_")
+        .where("is_available", "==", true)
+        .get()
+        .then(res => res.docs.map(doc => ({...doc.data(), id: doc.id }))) // FIXED BUG
+        .catch(err => console.log("err", err));
+
+      this.setState({ queryResults: x, finished: true });
+    },
+
+    handleSearch: async () => {
+      await axios
+        .get(
+          `https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment?term=${
+            this.state.query
+          }`
+        )
+        .then(res => this.setState({ queryResults: res.data, finished: true }))
+        .catch(err => console.log("error", err));
+    },
+
+    clientLocation: () => {
+      axios
+        .get("http://ip-api.com/json")
+        .then(res =>
+          this.setState({
+            query: `${res.data.city}, ${res.data.region}`,
+            clientZip: res.data.zip
+          })
+        )
+        .catch(err => console.log("error", err));
+    },
+
+    initializeAppointment: async appt => {
+      const business_details = await axios
+        .get(
+          `https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/${
+            appt.business_ref
+          }`
+        )
+        .then(res => res.data)
+        .catch(err => console.log("error", err));
+      const full_appointment = { ...appt, business_details };
+      this.setState({
+        init_appointment: full_appointment,
+        displayConfirm: true
+      });
+    },
+
+    confirmAppointment: () => {
+      if (!this.state.confirm || !this.state.uid) return;
+      console.log(this.state.init_appointment);
+
+      firebase
+        .firestore()
+        .collection("_appointment_")
+        .doc(this.state.init_appointment.id)
+        .update({ is_available: false, customer_ref: this.state.uid })
+        .then(() => console.log("successful update"))
+        .catch(err => console.log("error updating appointment", err));
+
+      // NEED FIREBASE FUNCTION FOR APPOINTMENT ON-UPDATE
+      // appointment does not get added to customer's appoinment collection
+      this.setState({ displayConfirm: false });
+    },
+
+    listenToResults: () => {
+      // THERE IS NO QUERY WHEN WE AUTO POPULATE DEFAULT APPOINTMENTS
+      const query = this.state.query === "" ? 
+        firebase.firestore().collection("_appointment_") :
+        firebase.firestore().collection("_appointment_").where("service", "==", this.state.query);
+
+      this.unsubscribe = query
+        .onSnapshot(snapshot => {
+          snapshot.docChanges().forEach(change => {
+            const id = change.doc.id;
+            const doc = change.doc.data();
+            const busn_ref = doc.business_ref;
+
+            console.log(change.type)
+            if (change.type === "modified" || change.type === "removed") {
+              const copy = { ...this.state.full_query };
+
+              if (!copy[busn_ref].appointments) return;
+
+              const busn_appts = copy[busn_ref].appointments;
+              
+
+              copy[busn_ref].appointments = busn_appts.filter(
+                appt => appt.id !== id
+              );
+              console.log(copy)
+              this.setState({ full_query: copy });
+            }
+          });
+        });
+    },
+
+    retrieveFeaturedAppointments: async () => {
+      // returns an array of arrays
+      // each sub array is structured as [business_id, rating]
+      const eachRating = Object.keys(this.state.full_query).map(busn_id => {
+        const rating = this.state.full_query[busn_id].business_details.rating;
+        if (rating !== undefined) return [busn_id, rating];
+        else return [busn_id, 0];
+      });
+
+      // SORT IN DECENDING ORDER -- TAKE THE TOP THREE
+      const top3 = eachRating.sort((x, y) => y[1] - x[1]).slice(0, 3);
+
+      // RETRIEVE ALL BUSINESS DETAILS AND THEIR APPOINTMENTS
+      const top3_withAllDetails = top3.reduce((acc, cur) => {
+        const busn_id = cur[0];
+        acc[busn_id] = this.state.full_query[busn_id];
+        return acc;
+      }, {});
+
+      this.setState({ featured_appointments: top3_withAllDetails });
+    }
+  };
+
+  componentDidMount() {
+    // this.state.clientLocation(); // set initial query input to client location
+    this.state.searchAll(); // searching for all appts: TEMPORARY
+
+    firebase.auth().onAuthStateChanged(user => {
+      console.log(user);
+
+      if (user && !this.state.userSignedIn) {
+        user
+          .getIdTokenResult()
+          .then(token => (token.claims.business ? true : false))
+          .then(isBusiness => {
+            if (isBusiness) return;
+            else {
+              this.setState({
+                userSignedIn: true,
+                uid: user.uid,
+                name: user.displayName,
+                email: user.email,
+                phone: user.phoneNumber,
+                photo: user.photoURL,
+                ifOAuth: user.providerData[0].providerId
+              });
+              return;
+            }
+          })
+          .catch(err => console.log("error", err));
+      } else if (!user && this.state.userSignedIn) {
+        this.setState({
+          userSignedIn: false,
+          uid: null,
+          name: null,
+          email: null,
+          phone: null,
+          photo: null,
+          ifOAuth: ""
+        });
+      } else return;
+    });
+  }
+
+  render() {
+    return (
+      <UserContext.Provider value={this.state}>
+        {this.props.children}
+      </UserContext.Provider>
+    );
+  }
+>>>>>>> 1fc55e585b86273fc73319a8bef7af8a62716df0
 }
 
 /*
