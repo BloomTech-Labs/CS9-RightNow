@@ -87,22 +87,33 @@ export default class UserProvider extends Component {
         .catch(err => console.log("error", err));
     },
 
+    saveCustomerContactInfo: (payload) => {
+      const { name, phone, email, location } = this.state.payload
+    },
+
     saveCustomerInfo: (payload) => {
 			const user = firebase.auth().currentUser;
 			const newPassword = payload.newPasswordAgain;
 
-			user
-				.updatePassword(newPassword)
-				.then((res) => console.log('update successful', res))
-				.catch((err) => console.log('error:', err));
+      
+      if (newPassword !== '') {
+        user
+          .updatePassword(newPassword)
+          .then((res) => console.log('update successful', res))
+          .catch((err) => console.log('error:', err)); 
+      }
+
+      const update = firebase.firestore().collection('_customer_').doc(this.state.uid)
 
 			// axios
 			// 	.put(
 			// 		`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/customer/${this.state.uid}`,
 			// 		payload
 			// 	)
-			// 	.then((res) => console.log(res));
-		},
+      // 	.then((res) => console.log(res));
+      
+    },
+    
 
 
     clientLocation: () => {
