@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import glamorous from "glamorous";
 import moment from "moment";
 import axios from "axios";
+import { Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import {
   CardElement,
   CardNumberElement,
@@ -32,14 +34,14 @@ export const Darkness = glamorous.div({
 const Modal = glamorous.div({
   height: "30vh",
   width: "30vw",
-  zIndex: 6,
+  zIndex: 0,
   borderRadius: "5px",
-  background: "#EBEBEB",
+  background: "#353A50",
   display: "flex",
   flexDirection: "column",
-
+  position: "relative",
   "@media(max-width: 1550px)": {
-    height: "40vh",
+    height: "60vh",
     width: "40vw"
   }
 });
@@ -65,16 +67,6 @@ const createOptions = (fontSize, padding) => {
       },
     };
    };
-
-const Label = glamorous.label({
-    color: "#6b7c93",
-    fontWeight: 300,
-    letterSpacing: "0.025em",
-    display: "flex",
-    justifyContent: "space-around",
-    
-
-  });
   
   const Button = glamorous.button({
     whiteSpace: "nowrap",
@@ -83,14 +75,13 @@ const Label = glamorous.label({
     display: "inline-block",
     boxShadow: "0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08)",
     color: "#fff",
+    background: "#717584",
     borderRadius: "4px",
     fontSize: "15px",
     fontWeight: 600,
     textTransform: "uppercase",
     letterSpacing: "0.025em",
-    backgroundColor: "#6772e5",
     textDecoration: "none",
-    // -webkit-transition: all 150ms ease,
     transition: "all 150ms ease",
     width: "50%",
     padding: "2% 0",
@@ -100,29 +91,86 @@ const Label = glamorous.label({
     ":hover": {
         color: "#fff",
         cursor: "pointer",
-        backgroundColor: "#7795f8",
+        backgroundColor: "rgb(97, 218, 251)",
         transform: "translateY(-1px)",
         boxShadow: "0 7px 14px rgba(50, 50, 93, .10), 0 3px 6px rgba(0, 0, 0, .08)",
     }
   });
   
   const StripeStyles = glamorous.div({
-     width: "65%",
+     width: "100%",
      background: "white",
      boxShadow: "rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px",
-     margin: "auto",
-
+     padding: "7% 5%",
+     borderRadius: "3px",
+     marginTop: "3%",
   });
 
-  const Form = glamorous.form({
-      height: "100%",
-      width: "100%",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-around",
-      margin: "3%",
-      position: "relative"
+  const StripeStylesCard = glamorous.div({
+     width: "94%",
+     background: "white",
+     boxShadow: "rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px",
+     padding: "3% 0% 3% 3%",
+     borderRadius: "3px",
+     marginTop: "1.5%",
   });
+
+  const AForm = glamorous.form({
+    height: "100%",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-around",
+  })
+
+  const ALabel = glamorous.label({
+    color: "white",
+    width: "90%",
+    margin: "0 auto",
+  })
+  
+  const ALabel2 = glamorous.label({
+    color: "white",
+    width: "33%",
+    marginRight: "5%",
+  })
+
+  const CvcExpZip = glamorous.div({
+    display: "flex",
+    width: "90%",
+    margin: "0 auto",
+  })
+
+  const Close = glamorous.div({
+    color: "red",
+    marginLeft: "95%",
+    marginTop: "2%",
+  })
+
+  const PremiumBox = glamorous.div({
+    margin: "0% auto",
+
+  })
+  
+  const PremiumHeader = glamorous.div({
+    color: "white",
+    fontSize: "2rem",
+    marginBottom: "3%",
+    textAlign: "center",
+  })
+
+  const Premium = glamorous.div({
+    color: "white",
+    margin: "0% auto",
+    marginBottom: "3%"
+  })
+
+  const Disclosure = glamorous.div({
+    color: "white",
+    margin: "0% auto",
+    fontStyle: "italic",
+
+  })
 
 class StripeForm extends Component {
   constructor() {
@@ -153,13 +201,11 @@ class StripeForm extends Component {
 
     console.log("here's a token", token);
     axios
-      .post("http://localhost:5000/cs9-rightnow/us-central1/haveAsesh/stripe", {
+      .post("https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/stripe", {
         stripeToken: token
       })
       .then(res => console.log(res))
       .catch(err => console.log("error", err));
-
-    this.props.busnContext.updateState({ display_payment_modal: false })
   };
 
   render() {
@@ -167,13 +213,20 @@ class StripeForm extends Component {
     return (
       <Darkness>
         <Modal>
-            <Form onSubmit={() => this.handleSubmit()}>
-                <Label>Card number<StripeStyles><CardNumberElement {...createOptions(this.state.elementFontSize)}/></StripeStyles></Label>
-                <Label>Expiration date<StripeStyles><CardExpiryElement {...createOptions(this.state.elementFontSize)} /></StripeStyles></Label>
-                <Label>CVC<StripeStyles><CardCVCElement {...createOptions(this.state.elementFontSize)} /></StripeStyles></Label>
-                <Label>Postal code<StripeStyles><PostalCodeElement {...createOptions(this.state.elementFontSize)}/></StripeStyles></Label>
-                <Button>Pay</Button>
-            </Form>
+            <Close onClick={() => this.props.busnContext.updateState({ display_payment_modal: false })} className="close"><i className="fas fa-times-circle"></i></Close>
+            <PremiumBox>
+                <PremiumHeader><span style={{color: "rgb(97, 218, 251)"}}>Sesho Premium</span></PremiumHeader>
+                <Premium>Upgrade to <span style={{color: "rgb(97, 218, 251)"}}>Sesho Premium</span> for unlimited appointments!</Premium>
+                <Premium>Subscribe now for only $10 per month.</Premium>
+                <Disclosure>Sesho free is limited to 10 appointment postings per month.</Disclosure>
+            </PremiumBox>
+            <AForm onSubmit={() => this.handleSubmit()}>
+                <ALabel>Card number<StripeStylesCard><CardNumberElement {...createOptions(this.state.elementFontSize)}/></StripeStylesCard></ALabel>
+                <CvcExpZip><ALabel2>Expiration date<StripeStyles><CardExpiryElement {...createOptions(this.state.elementFontSize)} /></StripeStyles></ALabel2>
+                <ALabel2>CVC<StripeStyles><CardCVCElement {...createOptions(this.state.elementFontSize)} /></StripeStyles></ALabel2>
+                <ALabel2>Postal code<StripeStyles><PostalCodeElement {...createOptions(this.state.elementFontSize)}/></StripeStyles></ALabel2></CvcExpZip>
+                <Button onClick={() => this.props.busnContext.updateState({ display_payment_modal: false })}>Pay</Button>
+            </AForm>
         </Modal>
       </Darkness>
     );
