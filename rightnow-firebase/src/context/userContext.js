@@ -107,7 +107,10 @@ export default class UserProvider extends Component {
       const query = this.state.query === "" ? 
         firebase.firestore().collection("_appointment_") :
         firebase.firestore().collection("_appointment_").where("service", "==", this.state.query);
-
+      // this.unsubscribe = firebase
+      //   .firestore()
+      //   .collection("_appointment_")
+        // .where("service", "==", this.state.query) 
       this.unsubscribe = query
         .onSnapshot(snapshot => {
           snapshot.docChanges().forEach(change => {

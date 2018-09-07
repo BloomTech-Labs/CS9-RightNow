@@ -48,7 +48,7 @@ export default class AppointmentCard extends Component {
 								<BusinessInfo>
 									<BusinessName>{name}</BusinessName>
 									<StarRatings
-										rating={rating}
+										rating={rating || 0}
 										numberOfStars={5}
 										starRatedColor="gold"
 										starEmptyColor="grey"
