@@ -16,6 +16,10 @@ class AppointmentDetails extends Component {
 				customer_ref,
 				is_available
 			} = this.props.busnContext.selected_appointment;
+			{
+				(' ');
+			}
+
 			return (
 				<Container>
 					<Header>
@@ -24,6 +28,7 @@ class AppointmentDetails extends Component {
 							<i className="far delete fa-trash-alt" />
 						</TrashCan>
 					</Header>
+
 					<Content>
 						<div style={{ display: 'flex', alignItems: 'center' }}>
 							<i
