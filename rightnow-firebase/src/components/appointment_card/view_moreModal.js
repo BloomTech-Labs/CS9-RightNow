@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import moment from "moment";
+import moment from 'moment';
 import {
 	Container,
 	ModalWrapper,
@@ -16,11 +16,41 @@ import {
 	Agreement,
 	FinePrint,
 	ButtonContainer,
-	Button,
-	CloseX
-} from './confirm_modal_styles';
+	Button
+} from './view_moreModal_styles';
+import glamorous from "glamorous";
 
 import { UserContext } from '../../context/userContext';
+
+
+const Darkness = glamorous.div({
+  height: "100vh",
+  width: "100vw",
+  position: "fixed",
+  background: "rgba(0, 0, 0, 0.65)",
+  zIndex: 5,
+  top: 0,
+  left: 0,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center"
+});
+
+const Modal = glamorous.div({
+  height: "30vh",
+  width: "30vw",
+  zIndex: 6,
+	borderRadius: "5px",
+	border: "1px solid #EBEBEB",
+  background: "#EBEBEB",
+  display: "flex",
+  flexDirection: "column",
+
+  "@media(max-width: 1550px)": {
+    height: "40vh",
+    width: "40vw"
+  }
+});
 
 export default class ConfirmModal extends Component {
 	constructor(props) {
@@ -37,15 +67,18 @@ export default class ConfirmModal extends Component {
 	}
 
 	render() {
+    console.log('appointments in View More', this.props.appointments)
+    console.log('Close function in View More', this.props.closeViewMore)
 		return (
 			<UserContext.Consumer>
 				{(value) => (
-					<Container>
-						{console.log('sanity check:', value)}
-						<ModalWrapper>
+					<Darkness>
+						<Modal>
 							<ElementConainer>
-								<Greeting>{value.name}</Greeting>
-								<YourSesh>Your Sesh-o is:</YourSesh>
+								<div>Something is working here :)</div>
+
+								{/* <Greeting>{value.name}</Greeting>
+								<YourSesh>Avaialbe Seshos:</YourSesh>
 								<DetailContainer>
 									<Activity>
 										<Spanner>{value.init_appointment.service}</Spanner> at{' '}
@@ -81,10 +114,10 @@ export default class ConfirmModal extends Component {
 											Go back
 										</Button>
 									</ButtonContainer>
-								</DetailContainer>
+								</DetailContainer> */}
 							</ElementConainer>
-						</ModalWrapper>
-					</Container>
+						</Modal>
+					</Darkness>
 				)}
 			</UserContext.Consumer>
 		);
