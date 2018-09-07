@@ -1,7 +1,7 @@
 import React from 'react';
 import glamorous from 'glamorous';
 import AppointmentDetails from './appointmentDetails/appointmentDetailsCustomerView';
-
+import moment from "moment"
 const Appointment = glamorous.div({
 	// width: '50%',
 	// border: '1px solid blue',
@@ -52,7 +52,11 @@ const UpcomingAppointment = (props) => {
                     {/*<AppointmentDetails service={"Hair Cut"} time={"12:00 PM"} day={"9-20-2018"} company={"ProCuts"} money={"45.00"}/>*/}
 				{props.userState.map((appt) =>{
 					return (
-					<AppointmentDetails service={appt['service']} time={appt['start']} day={appt['start']} company={appt['business_ref']} money={appt['cost']}/>
+					<AppointmentDetails service={appt['service']}
+															time={`${moment(appt['start']).format('h:mm A')} - ${moment(appt['end']).format('h:mm A')}`}
+															day={`${moment(appt['start']).format('MMM D YYYY')}`}
+															company={appt['business_ref']}
+															money={appt['cost']}/>
 					)
 				})}
 
