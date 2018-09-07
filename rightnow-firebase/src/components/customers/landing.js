@@ -3,6 +3,7 @@ import glamorous from "glamorous";
 import Particles from "react-particles-js";
 import Navigation from "./navigation";
 import { UserContext } from '../../context/userContext';
+import {AlgoliaSearch} from "../algolia_search";
 // import axios from "axios";
 
 
@@ -143,12 +144,12 @@ const particleOptions = {
 
 
 export default class Landing extends Component {
-  componentDidMount() {
-    document.querySelector("#principal_pc").firstChild.style.height = "100%";
-    document.querySelector("#primary_input").addEventListener("keyup", e => {
-      e.keyCode === 13 ? document.querySelector("#primary_button").click() : null;
-    });
-  }
+  // componentDidMount() {
+    // document.querySelector("#principal_pc").firstChild.style.height = "100%";
+    // document.querySelector("#primary_input").addEventListener("keyup", e => {
+      // e.keyCode === 13 ? document.querySelector("#primary_button").click() : null;
+    // });
+  // }
   render() {
     return (
       <Container>
@@ -172,12 +173,13 @@ export default class Landing extends Component {
               )}
             </UserContext.Consumer>
 
+            <AlgoliaSearch />
           
         </Main>
 
-        <ParticleContainment id="principal_pc">
+        {/* <ParticleContainment id="principal_pc">
           <Particles width="100%" height="100%" params={particleOptions} />
-        </ParticleContainment>
+        </ParticleContainment> */}
 
       </Container>
     )
