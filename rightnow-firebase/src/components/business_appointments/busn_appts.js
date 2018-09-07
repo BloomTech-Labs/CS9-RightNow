@@ -12,6 +12,7 @@ import { Redirect, withRouter } from "react-router-dom";
 import { BusinessContext } from "../../context/businessContext";
 import AppointmentDetails from "../appointmentDetails/appointmentDetailsCustomerView";
 import DeleteModal from "./delete_modal";
+import PaymentForm from "../_Payment-Form/PaymentForm";
 
 
 class BusnApptsView extends Component {
@@ -33,8 +34,8 @@ class BusnApptsView extends Component {
           return (
             <PrimaryWrapper>
       
-              <BusnNav logout={() => value.business_logout()} />
-      
+              <BusnNav logout={() => value.business_logout()} updateState={data => value.updateState(data)} />
+            
               <Container>
                 <CalendarWrapper>
                   <Calendar busnContext={value} />
@@ -46,6 +47,7 @@ class BusnApptsView extends Component {
               </Container>
       
               {value.display_delete_modal ? <DeleteModal busnContext={value} /> : null}
+              {value.display_payment_modal ? <PaymentForm busnContext={value} /> : null}
       
             </PrimaryWrapper>
           )

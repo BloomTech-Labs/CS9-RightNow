@@ -44,11 +44,14 @@ export default class BusnCalendar extends Component {
     const { start, end } = data;
     console.log(moment(start).format("LLL"), " --- ", moment(end).format("LLL"))
     console.log("\n\n", data);
-  }
 
+  }
+  
+  
   render() {
     return (
       <div>
+        {console.log(this.props.busnContext, "Hi Henry")}
 
         <Calendar 
           id="calendar"
@@ -63,7 +66,7 @@ export default class BusnCalendar extends Component {
           max={maxTime}
           style={{ height: "100vh" }}
           eventPropGetter={propGetter}
-        />
+          />
 
       </div>
     )
