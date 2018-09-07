@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import firebase from '../../firebase/firebase';
-import axios from 'axios';
+import firebase from "../../firebase/firebase";
+import axios from "axios";
 import {
 	FormContainer,
 	Form,
@@ -25,41 +25,50 @@ export default class RegisterModal extends Component {
 			password: '',
 			phone: '',
 			location: '',
-			first_name: '',
-			last_name: ''
+			first_name: "",
+			last_name: ""
 		};
 	}
 
 	onInputChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-	createUser = async () => {
-		// await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
+	handlePhoneInput = (e) => {
+		if (e.target.value.length === 3) {
+			this.setState({ phone: `(${e.target.value})-` });
+		} else if (e.target.value.length === 9) {
+			this.setState({ phone: `${e.target.value}-` });
+		} else this.setState({ [e.target.name]: e.target.value });
+	};
 
-		// const user = firebase.auth().currentUser;
+	submitForm = async () => {
+		// regex only digits from phone number
+		const formattedPhoneNumber = this.state.phone.replace(/\D/g, '');
 
 		const data = {
 			first_name: this.state.first_name,
 			last_name: this.state.last_name,
 			email: this.state.email,
+			phone: `+1${formattedPhoneNumber}`, // MUST BE 10 DIGIT NUMBER
 			password: this.state.password,
-			phone: `+1${this.state.phone}`,
-			location: this.state.location,
+			location: this.state.location
 		};
 
-		axios
-			.post('https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/customer', this.state)
-			.then((res) => console.log('success', res))
-			.catch((err) => console.log('error', err));
+		await axios
+			.post('https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/customer', data)
+			.then((res) => console.log(`\nsuccessfuly created new customer\n${res}`))
+			.then(() => this.handleEmailSignIn(this.state.email, this.state.password))
+			.then(() => this.setState({ first_name: '', last_name: '', email: '', phone: '', password: '', location: '' }))
+			.catch((err) => console.log(`\nerror creating new customer\n${err}`));
+	};
 
-		this.setState({
-			email: '',
-			password: '',
-			phone: '',
-			location: '',
-			first_name: '',
-			last_name: ''
-		});
-		this.props.closeModal();
+	handleEmailSignIn = async (email, password) => {
+		const confirm_account = await firebase
+			.auth().signInWithEmailAndPassword(email, password)
+			.then(() => this.props.closeModal())
+			.then(res => console.log("fresh user on deck", res))
+			.catch(err => console.log("oh dear...", err));
+
+		return confirm_account;
 	};
 
 	render() {
@@ -68,39 +77,46 @@ export default class RegisterModal extends Component {
 				<Form>
 					<NameContainer>
 						<div>
-							<NamePlace
-								type="text"
-								placeholder="First Name"
-								onChange={this.onInputChange}
-								name="first_name"
-								value={this.state.first_name}
-							/>
+							<NamePlace 
+								type="text" 
+								placeholder="First Name" 
+								onChange={this.onInputChange} 
+								name="first_name" 
+								value={this.state.first_name} />
 						</div>
 						<div>
-							<NamePlace2
-								type="text"
-								placeholder="Last Name"
-								onChange={this.onInputChange}
-								name="last_name"
-								value={this.state.last_name}
-							/>
+							<NamePlace2 
+								type="text" 
+								placeholder="Last Name" 
+								onChange={this.onInputChange} 
+								name="last_name" 
+								value={this.state.last_name} />
 						</div>
 					</NameContainer>
-					<Email type="text" placeholder="Your Email Address" name="email" onChange={this.onInputChange} />
-					<PW type="password" placeholder="Password" name="password" onChange={this.onInputChange} />
-					<PhoneNumber
-						name="phone"
-						type="tel"
-						placeholder="Phone number"
-						pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-						onChange={this.onInputChange}
-					/>
-					<Location
-						name="location"
+					<Email 
+						type="text" 
+						placeholder="Your Email Address" 
+						name="email" 
+						value={this.state.email}
+						onChange={this.onInputChange}/>
+					<PW 
+						type="password" 
+						placeholder="Password" 
+						name="password" 
+						value={this.state.password}
+						onChange={this.onInputChange}/>
+					<PhoneNumber 
+						name="phone" 
+						value={this.state.phone}
+						type="tel" 
+						placeholder="Phone number" 
+						onChange={(e) => this.handlePhoneInput(e)} />
+					<Location 
+						name="location" 
+						value={this.state.location}
 						type="text"
-						placeholder="Preferred location"
-						onChange={this.onInputChange}
-					/>
+						placeholder="Preferred location" 
+						onChange={this.onInputChange} />
 				</Form>
 
 				<CheckBoxWrapper>
@@ -126,7 +142,8 @@ export default class RegisterModal extends Component {
 					</CheckBoxContainer>
 				</CheckBoxWrapper>
 
-				<RegisterButton onClick={() => this.createUser()}>Let's Go!</RegisterButton>
+				<RegisterButton onClick={() => this.submitForm()}>Let's Go!</RegisterButton>
+
 			</FormContainer>
 		);
 	}
