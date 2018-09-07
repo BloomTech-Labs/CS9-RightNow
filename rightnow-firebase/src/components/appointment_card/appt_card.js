@@ -35,7 +35,6 @@ export default class AppointmentCard extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			displayViewMore: false,
 			view_more: false,
 			display_more_appts: false
 		};
