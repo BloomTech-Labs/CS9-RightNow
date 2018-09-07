@@ -104,7 +104,6 @@ export default class UserProvider extends Component {
 			// 	.then((res) => console.log(res));
 		},
 
-
     clientLocation: () => {
       axios
         .get("http://ip-api.com/json")
