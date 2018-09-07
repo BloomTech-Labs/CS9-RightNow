@@ -1,0 +1,53 @@
+.QuickSearch {
+    margin: 2% 0%;
+    display: block;
+    z-index: 2;
+    align-content: center;
+}
+
+.quickSearchLabels {
+    margin: 2% 2%;
+    display: flex;
+    width: 100%;
+    z-index: 2;
+}
+.qslabel {
+    margin-left: 2%;
+    background: rgb(241, 242, 244);
+    border-radius: 20px;
+    padding: 1%;
+    z-index: 2;
+}
+
+
+.qslabel:hover {
+    z-index: 2;
+    cursor: pointer;
+    background: #353A50;
+    color: white;
+}
+
+.qs {
+    background: none;
+    color: #353A50;
+}
+
+.qs:hover {
+    background: none;
+    color: #353A50;
+}
+
+.ps {
+    padding-left: 2.65%;
+}
+
+.activeLabel {
+    background: #353A50;
+    color: white;
+}
+
+.time {
+    margin-left: 7%;
+    padding-top: 1%;
+}
+

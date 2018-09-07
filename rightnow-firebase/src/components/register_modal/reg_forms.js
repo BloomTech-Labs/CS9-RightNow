@@ -57,17 +57,19 @@ export default class RegisterModal extends Component {
 			.post('https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/customer', data)
 			.then((res) => console.log(`\nsuccessfuly created new customer\n${res}`))
 			.then(() => this.handleEmailSignIn(this.state.email, this.state.password))
+			.then(() => console.log("HERE'S THE STATE", this.state))
 			.then(() => this.setState({ first_name: '', last_name: '', email: '', phone: '', password: '', location: '' }))
 			.catch((err) => console.log(`\nerror creating new customer\n${err}`));
 	};
 
 	handleEmailSignIn = async (email, password) => {
+		console.log(this.state);
 		const confirm_account = await firebase
 			.auth().signInWithEmailAndPassword(email, password)
-			.then(() => this.props.closeModal())
 			.then(res => console.log("fresh user on deck", res))
+			.then(() => this.props.closeModal())
 			.catch(err => console.log("oh dear...", err));
-
+		
 		return confirm_account;
 	};
 

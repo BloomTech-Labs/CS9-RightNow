@@ -51,6 +51,11 @@ const Option = glamorous.div({
 
 
 export default class BusnNav extends Component {
+
+  premiumSignUp = () => {
+    this.props.updateState({ display_payment_modal: true}) 
+  }
+
   render() {
     return (
       <Container>
@@ -59,6 +64,7 @@ export default class BusnNav extends Component {
         </Link>
 
         <ButtonContainer>
+          <Option onClick={() => this.premiumSignUp()} style={{color: "rgb(97, 218, 251)", fontWeight: "800"}}>Premium</Option>
           <Option>Settings</Option>
           <Option onClick={() => this.props.logout()}>Sign Out</Option>
         </ButtonContainer>
