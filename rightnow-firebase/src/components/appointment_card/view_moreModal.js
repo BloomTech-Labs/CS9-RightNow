@@ -18,8 +18,39 @@ import {
 	ButtonContainer,
 	Button
 } from './view_moreModal_styles';
+import glamorous from "glamorous";
 
 import { UserContext } from '../../context/userContext';
+
+
+const Darkness = glamorous.div({
+  height: "100vh",
+  width: "100vw",
+  position: "fixed",
+  background: "rgba(0, 0, 0, 0.65)",
+  zIndex: 5,
+  top: 0,
+  left: 0,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center"
+});
+
+const Modal = glamorous.div({
+  height: "30vh",
+  width: "30vw",
+  zIndex: 6,
+	borderRadius: "5px",
+	border: "1px solid #EBEBEB",
+  background: "#EBEBEB",
+  display: "flex",
+  flexDirection: "column",
+
+  "@media(max-width: 1550px)": {
+    height: "40vh",
+    width: "40vw"
+  }
+});
 
 export default class ConfirmModal extends Component {
 	constructor(props) {
@@ -41,8 +72,8 @@ export default class ConfirmModal extends Component {
 		return (
 			<UserContext.Consumer>
 				{(value) => (
-					<Container>
-						<ModalWrapper>
+					<Darkness>
+						<Modal>
 							<ElementConainer>
 								<div>Something is working here :)</div>
 
@@ -85,8 +116,8 @@ export default class ConfirmModal extends Component {
 									</ButtonContainer>
 								</DetailContainer> */}
 							</ElementConainer>
-						</ModalWrapper>
-					</Container>
+						</Modal>
+					</Darkness>
 				)}
 			</UserContext.Consumer>
 		);
