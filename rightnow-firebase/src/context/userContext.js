@@ -85,21 +85,24 @@ export default class UserProvider extends Component {
 				.then((res) => this.setState({ queryResults: res.data, finished: true }))
 				.catch((err) => console.log('error', err));
 		},
-
-		saveCustomerContactInfo: (payload) => {
+		// Update user info from user-setting page
+		updateUserBasicInfo: (payload) => {
 			const db = firebase.firestore();
 			const updateInfo = db.collection('_customer_').doc(this.state.uid);
 
-			return updateInfo.update({
-				first_name: payload.firstName,
-				last_name: payload.lastName,
-				email: payload.email,
-				location: payload.location,
-				phone: payload.phone
-			});
+			return updateInfo
+				.update({
+					first_name: payload.firstName,
+					last_name: payload.lastName,
+					email: payload.email,
+					location: payload.location,
+					phone: payload.phone
+				})
+				.then((res) => console.log('User info succesffully updated:', res))
+				.catch((err) => console.log('something went wrong', err));
 		},
-
-		saveCustomerInfo: (payload) => {
+		// Update user info from user-setting page
+		updateUserPassword: (payload) => {
 			const user = firebase.auth().currentUser;
 			const newPassword = payload.newPasswordAgain;
 
