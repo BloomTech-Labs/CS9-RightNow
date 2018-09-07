@@ -41,7 +41,7 @@ const Modal = glamorous.div({
   flexDirection: "column",
   position: "relative",
   "@media(max-width: 1550px)": {
-    height: "60vh",
+    height: "70vh",
     width: "40vw"
   }
 });
@@ -75,10 +75,9 @@ const createOptions = (fontSize, padding) => {
     display: "inline-block",
     boxShadow: "0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08)",
     color: "#fff",
-    background: "#717584",
+    background: "rgb(97, 218, 251)",
     borderRadius: "4px",
-    fontSize: "15px",
-    fontWeight: 600,
+    fontSize: "1.3em",
     textTransform: "uppercase",
     letterSpacing: "0.025em",
     textDecoration: "none",
@@ -87,7 +86,11 @@ const createOptions = (fontSize, padding) => {
     padding: "2% 0",
     alignSelf: "flex-end",
     marginRight: "25%",
-
+    marginBottom: "4%",
+    marginTop: "4%",
+    fontWeight: "800",
+    letterSpacing: "3px",
+    textShadow: "1px 1px 1px #353A50",
     ":hover": {
         color: "#fff",
         cursor: "pointer",
@@ -107,12 +110,13 @@ const createOptions = (fontSize, padding) => {
   });
 
   const StripeStylesCard = glamorous.div({
-     width: "94%",
+     width: "96%",
      background: "white",
      boxShadow: "rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px",
-     padding: "3% 0% 3% 3%",
+     padding: "2% 0% 2% 2%",
      borderRadius: "3px",
      marginTop: "1.5%",
+     marginBottom: "5%",
   });
 
   const AForm = glamorous.form({
@@ -124,15 +128,17 @@ const createOptions = (fontSize, padding) => {
   })
 
   const ALabel = glamorous.label({
-    color: "white",
+    color: "#ebebeb",
     width: "90%",
     margin: "0 auto",
+    fontWeight: 300,
   })
   
   const ALabel2 = glamorous.label({
-    color: "white",
+    color: "#ebebeb",
     width: "33%",
     marginRight: "5%",
+    fontWeight: 300,
   })
 
   const CvcExpZip = glamorous.div({
@@ -149,27 +155,30 @@ const createOptions = (fontSize, padding) => {
 
   const PremiumBox = glamorous.div({
     margin: "0% auto",
-
+    textAlign: "center",
   })
   
   const PremiumHeader = glamorous.div({
     color: "white",
     fontSize: "2rem",
-    marginBottom: "3%",
+    marginBottom: "7%",
     textAlign: "center",
   })
 
   const Premium = glamorous.div({
     color: "white",
     margin: "0% auto",
-    marginBottom: "3%"
+    marginBottom: "3%",
+    fontWeight: 500,
+    fontSize: "1.2em",
   })
 
   const Disclosure = glamorous.div({
     color: "white",
     margin: "0% auto",
     fontStyle: "italic",
-
+    marginBottom: "7%",
+    fontSize: "0.8em",
   })
 
 class StripeForm extends Component {
@@ -196,16 +205,19 @@ class StripeForm extends Component {
     
     const token = await this.props.stripe
       .createToken()
-      .then(({ token }) => token) // { stripeToken: token }
+      .then(({ token}) => token) // { stripeToken: token }
       .catch(err => console.log("error with stripe token\n", err));
 
     console.log("here's a token", token);
     axios
-      .post("https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/business/stripe", {
-        stripeToken: token
-      })
+      .post("https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/stripe", { 
+          stripeToken: token 
+        })
       .then(res => console.log(res))
+      .then(() => this.props.busnContext.updateState({ display_payment_modal: false }))
       .catch(err => console.log("error", err));
+
+      
   };
 
   render() {
@@ -220,12 +232,12 @@ class StripeForm extends Component {
                 <Premium>Subscribe now for only $10 per month.</Premium>
                 <Disclosure>Sesho free is limited to 10 appointment postings per month.</Disclosure>
             </PremiumBox>
-            <AForm onSubmit={() => this.handleSubmit()}>
+            <AForm>
                 <ALabel>Card number<StripeStylesCard><CardNumberElement {...createOptions(this.state.elementFontSize)}/></StripeStylesCard></ALabel>
                 <CvcExpZip><ALabel2>Expiration date<StripeStyles><CardExpiryElement {...createOptions(this.state.elementFontSize)} /></StripeStyles></ALabel2>
                 <ALabel2>CVC<StripeStyles><CardCVCElement {...createOptions(this.state.elementFontSize)} /></StripeStyles></ALabel2>
                 <ALabel2>Postal code<StripeStyles><PostalCodeElement {...createOptions(this.state.elementFontSize)}/></StripeStyles></ALabel2></CvcExpZip>
-                <Button onClick={() => this.props.busnContext.updateState({ display_payment_modal: false })}>Pay</Button>
+                <Button onClick={e => this.handleSubmit(e)}>Pay</Button>
             </AForm>
         </Modal>
       </Darkness>
