@@ -5,12 +5,12 @@ export const Container = glamorous.div({
 	height: '100vh',
 	position: 'fixed',
 	background: 'rgba(0, 0, 0, 0.5)',
-	zIndex: 10,
 	top: 0,
 	left: 0,
 	display: 'flex',
 	justifyContent: 'center',
-	alignItems: 'center'
+	alignItems: 'center',
+	zIndex: 10,
 	// overflow: 'hidden'
 	// add filter: blur() later; should affect App.js when modal is active.
 });

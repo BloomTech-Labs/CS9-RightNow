@@ -21,6 +21,7 @@ const Darkness = glamorous.div({
 });
 
 const Modal = glamorous.div({
+	position: 'relative',
 	height: '30vh',
 	width: '30vw',
 	zIndex: 6,
@@ -38,7 +39,7 @@ const Modal = glamorous.div({
 
 export const ButtonContainer = glamorous.div({
 	padding: '0 3%',
-	width: '100%',
+	width: '100%'
 });
 
 export const Button = glamorous.div({
