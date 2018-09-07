@@ -13,6 +13,7 @@ export default class UserProvider extends Component {
     photo: "",
     location: "",
     appointments: [],
+    featured_appointments: null,
 
     init_appointment: {},
     displayConfirm: false,
@@ -21,7 +22,7 @@ export default class UserProvider extends Component {
     query: "",
     queryResults: [],
     finished: false,
-    full_query: [],
+    full_query: null,
 
     userSignedIn: false,
     clientZip: null,
@@ -40,7 +41,7 @@ export default class UserProvider extends Component {
         .collection("_appointment_")
         .where("is_available", "==", true)
         .get()
-        .then(res => res.docs.map(doc => doc.data()))
+        .then(res => res.docs.map(doc => ({...doc.data(), id: doc.id }))) // FIXED BUG
         .catch(err => console.log("err", err));
 
       this.setState({ queryResults: x, finished: true });
@@ -87,6 +88,7 @@ export default class UserProvider extends Component {
 
     confirmAppointment: () => {
       if (!this.state.confirm || !this.state.uid) return;
+      console.log(this.state.init_appointment);
 
       firebase
         .firestore()
@@ -102,28 +104,57 @@ export default class UserProvider extends Component {
     },
 
     listenToResults: () => {
-      this.unsubscribe = firebase
-        .firestore()
-        .collection("_appointment_")
-        .where("service", "==", this.state.query)
+      // THERE IS NO QUERY WHEN WE AUTO POPULATE DEFAULT APPOINTMENTS
+      const query = this.state.query === "" ? 
+        firebase.firestore().collection("_appointment_") :
+        firebase.firestore().collection("_appointment_").where("service", "==", this.state.query);
+
+      this.unsubscribe = query
         .onSnapshot(snapshot => {
           snapshot.docChanges().forEach(change => {
             const id = change.doc.id;
             const doc = change.doc.data();
             const busn_ref = doc.business_ref;
 
+            console.log(change.type)
             if (change.type === "modified" || change.type === "removed") {
               const copy = { ...this.state.full_query };
+
+              if (!copy[busn_ref].appointments) return;
+
               const busn_appts = copy[busn_ref].appointments;
+              
 
               copy[busn_ref].appointments = busn_appts.filter(
                 appt => appt.id !== id
               );
-
+              console.log(copy)
               this.setState({ full_query: copy });
             }
           });
         });
+    },
+
+    retrieveFeaturedAppointments: async () => {
+      // returns an array of arrays
+      // each sub array is structured as [business_id, rating]
+      const eachRating = Object.keys(this.state.full_query).map(busn_id => {
+        const rating = this.state.full_query[busn_id].business_details.rating;
+        if (rating !== undefined) return [busn_id, rating];
+        else return [busn_id, 0];
+      });
+
+      // SORT IN DECENDING ORDER -- TAKE THE TOP THREE
+      const top3 = eachRating.sort((x, y) => y[1] - x[1]).slice(0, 3);
+
+      // RETRIEVE ALL BUSINESS DETAILS AND THEIR APPOINTMENTS
+      const top3_withAllDetails = top3.reduce((acc, cur) => {
+        const busn_id = cur[0];
+        acc[busn_id] = this.state.full_query[busn_id];
+        return acc;
+      }, {});
+
+      this.setState({ featured_appointments: top3_withAllDetails });
     }
   };
 
