@@ -117,6 +117,7 @@ export default class Results extends Component {
 									}, {});
 								})
 								.then((final) => value.updateState({ full_query: final, finished: false }))
+								.then(() => !value.featured_appointments ? value.retrieveFeaturedAppointments() : null)
 								.then(() => value.listenToResults())
 								.catch((err) => console.log('oh no', err));
 						};
