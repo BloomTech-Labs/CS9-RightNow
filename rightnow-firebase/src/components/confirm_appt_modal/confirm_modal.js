@@ -40,7 +40,7 @@ export default class ConfirmModal extends Component {
 		return (
 			<UserContext.Consumer>
 				{(value) => (
-					<Container>
+					<Container id='confirmModal'>
 						{console.log('sanity check:', value)}
 						{/* <ModalWrapper> */}
 							<ElementConainer>

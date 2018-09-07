@@ -10,7 +10,7 @@ export const Container = glamorous.div({
 	display: 'flex',
 	justifyContent: 'center',
 	alignItems: 'center',
-	zIndex: 10,
+	zIndex: 2,
 	// overflow: 'hidden'
 	// add filter: blur() later; should affect App.js when modal is active.
 });
@@ -19,7 +19,6 @@ export const ModalWrapper = glamorous.div({
 	width: '80%',
 	padding: '0 15%',
 	paddingTop: '20vh',
-	zIndex: 11,
 	position: 'relative',
 	display: 'flex',
 	justifyContent: 'center',
@@ -36,7 +35,6 @@ export const ElementConainer = glamorous.div({
 	background: '#fffaf4',
 	width: '40%',
 	padding: '2%',
-	zIndex: 11
 });
 
 export const DetailContainer = glamorous.div({

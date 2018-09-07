@@ -73,7 +73,7 @@ export default class AppointmentCard extends Component {
 									<BusinessName>{name}</BusinessName>
 									{rating !== undefined ? (
 										<StarRatings
-											rating={rating}
+											rating={rating || 0}
 											numberOfStars={5}
 											starRatedColor="red"
 											starEmptyColor="grey"
@@ -110,7 +110,7 @@ export default class AppointmentCard extends Component {
 								) : null}
 
 								{this.state.display_more_appts ? (
-									<ViewMoreModal
+									<ViewMoreModal id='viewMOAR'
 										appointments={appointments}
 										closeViewMore={() => this.closeViewMore()}
 									/>

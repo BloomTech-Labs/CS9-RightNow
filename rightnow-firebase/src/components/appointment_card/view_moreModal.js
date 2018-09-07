@@ -24,7 +24,6 @@ const Modal = glamorous.div({
 	position: 'relative',
 	height: '30vh',
 	width: '30vw',
-	zIndex: 2,
 	borderRadius: '5px',
 	border: '1px solid #EBEBEB',
 	background: '#EBEBEB',
@@ -62,7 +61,7 @@ export const Button = glamorous.div({
 	':hover': { backgroundColor: 'rgba(225, 225, 225, 0.6)', cursor: 'pointer' }
 });
 
-export default class ConfirmModal extends Component {
+export default class ViewMoreModal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
