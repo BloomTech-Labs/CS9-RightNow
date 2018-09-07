@@ -20,6 +20,8 @@
     "react-scripts": "1.1.4",
     "react-star-ratings": "^2.3.0",
     "react-stripe-elements": "^2.0.1",
+    "sweetalert2": "^7.26.28",
+    "sweetalert2-react-content": "^1.0.1",
     "yarn": "^1.9.4"
   },
   "scripts": {
