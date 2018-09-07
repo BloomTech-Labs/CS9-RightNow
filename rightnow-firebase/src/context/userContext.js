@@ -15,6 +15,7 @@ export default class UserProvider extends Component {
     appointments: [],
     featured_appointments: null,
     upcoming_appointments: [],
+    payload: {},
 
     init_appointment: {},
     displayConfirm: false,
@@ -88,13 +89,14 @@ export default class UserProvider extends Component {
     },
 
     saveCustomerContactInfo: (payload) => {
-      const { name, phone, email, location } = this.state.payload
+      const { name, phone, email, location } = payload
+      const update = firebase.firestore().collection('_customer_').doc(this.state.uid)
     },
 
     saveCustomerInfo: (payload) => {
-			const user = firebase.auth().currentUser;
+      const user = firebase.auth().currentUser;
 			const newPassword = payload.newPasswordAgain;
-
+      
       
       if (newPassword !== '') {
         user
@@ -103,7 +105,6 @@ export default class UserProvider extends Component {
           .catch((err) => console.log('error:', err)); 
       }
 
-      const update = firebase.firestore().collection('_customer_').doc(this.state.uid)
 
 			// axios
 			// 	.put(
