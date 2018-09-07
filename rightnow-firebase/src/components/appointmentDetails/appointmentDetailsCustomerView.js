@@ -16,46 +16,6 @@ class AppointmentDetails extends Component {
 				customer_ref,
 				is_available
 			} = this.props.busnContext.selected_appointment;
-
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-    render() {
-        console.log('busnContxt:', this.props.busnContext)
-        if (this.props.busnContext.selected_appointment) {
-
-            const { start, end, service, cost, description, customer_ref, is_available } = this.props.busnContext.selected_appointment;
-
-            return (
-            
-                <Container>
-
-                        <Header>
-                            <Title>Sesh Details</Title>
-                            <TrashCan onClick={() => this.props.busnContext.updateState({ display_delete_modal: true })}><i className="far delete fa-trash-alt"></i></TrashCan>
-                        </Header>
-
-                        <Content>
-                            <div style={{display: "flex", alignItems: "center"}}>
-                                <i style={{ marginRight: "2%", marginTop: 0, color: "#353A50" }} className="fas fa-briefcase"></i><Detail>{service}</Detail>
-                            </div>
-                            <div style={{display: "flex", alignItems: "center"}}>
-                                <i style={{ marginRight: "2%", marginTop: 0, color: "#353A50" }} className="far icon fa-clock"></i><Detail>{`${moment(start).format("LLL")} - ${moment(end).format("h:mm A")}`}</Detail>
-                            </div>
-                            <div style={{display: "flex", alignItems: "center"}}>
-                                <i style={{ marginRight: "2%", marginTop: 0, color: "#353A50" }} className={is_available ? "fas fa-user-times" : "fas icon fa-user-check"}></i><Detail>{!is_available && customer_ref ? customer_ref : "this appointment is still available"}</Detail> {/* user-times */}
-                            </div>
-                            <div style={{display: "flex", alignItems: "center"}}>
-                                <i style={{ marginRight: "2%", marginTop: 0, color: "#353A50" }} className="far icon fa-money-bill-alt"></i><Detail>{cost}</Detail>
-                            </div>
-                            <div style={{display: "flex", alignItems: "center"}}>
-                                <i style={{ marginRight: "2%", marginTop: 0, color: "#353A50" }} className="far fa-sticky-note"></i><Detail>{description}</Detail>
-                            </div>
-                        </Content>
-
-                </Container>
-=======
->>>>>>> 4ca4e24ed3580d2945a9f6d20f48d0e5fa994651
 			return (
 				<Container>
 					<Header>
@@ -64,11 +24,6 @@ class AppointmentDetails extends Component {
 							<i className="far delete fa-trash-alt" />
 						</TrashCan>
 					</Header>
-<<<<<<< HEAD
-=======
->>>>>>> 1fc55e585b86273fc73319a8bef7af8a62716df0
->>>>>>> 4ca4e24ed3580d2945a9f6d20f48d0e5fa994651
-
 					<Content>
 						<div style={{ display: 'flex', alignItems: 'center' }}>
 							<i
