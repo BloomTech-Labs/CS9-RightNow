@@ -4,8 +4,6 @@ import glamorous from "glamorous";
 export const PrimaryWrapper = glamorous.div({
   width: "100vw",
   height: "100vh",
-  display: "flex",
-  flexDirection: "column"
 });
 
 
@@ -14,6 +12,7 @@ export const Container = glamorous.div({
   // height: "100vh",
   display: "flex",
   overflowY: "hidden"
+
 });
 
 

@@ -12,6 +12,7 @@ export default class BusinessProvider extends Component {
     uid: null,
     userSignedIn: false,
     display_delete_modal: false,
+    display_payment_modal: true,
 
     personal: {
       full_name: "",
@@ -33,6 +34,8 @@ export default class BusinessProvider extends Component {
       rating: "",
       photos: []
     },
+
+    selectedItem: "",
 
     appointments: [],
     selected_appointment: null,

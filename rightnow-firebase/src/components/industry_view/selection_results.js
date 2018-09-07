@@ -5,13 +5,13 @@ import { UserContext } from '../../context/userContext';
 import firebase from '../../firebase/firebase';
 import groupBy from 'lodash.groupby';
 
-class Clock extends Component {
+export class Clock extends Component {
 	state = {
 		time: new Date().toLocaleTimeString()
 	};
 
 	componentDidMount() {
-		this.intervalID = setInterval(() => this.tick(), 1000);
+		this.ßintervalID = setInterval(() => this.tick(), 1000);
 	}
 
 	componentWillUnmount() {
@@ -19,23 +19,23 @@ class Clock extends Component {
 	}
 
 	tick = () => {
-		this.setState({ time: new Date().toLocaleTimeString() });
+		this.setState({ time: new Date().toLocaleTimeString({hour: "2-digit", minute: "2-digit"}) });
 	};
 
 	render() {
 		return (
 			<Sorting>
-				<h2>Current time:</h2>
+				{/* <h2>Current time:</h2> */}
 				<Time>{this.state.time}</Time>
-				<SortBy>
-					<option disabled defaultValue hidden>
+				{/* <SortBy> */}
+					{/* <option disabled defaultValue hidden>
 						Sort By
 					</option>
 					<option value="2">2 hours</option>
 					<option value="3">3 hours</option>
 					<option value="4">4 hours</option>
 					<option value="5">5+ hours</option>
-				</SortBy>
+				</SortBy> */}
 			</Sorting>
 		);
 	}

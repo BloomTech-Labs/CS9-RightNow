@@ -9,6 +9,7 @@ import CompanySettings from './components/company_settings/company_settings';
 import BusnApptsView from "./components/business_appointments/busn_appts";
 import Stripey from "./components/stripe";
 
+
 class App extends Component {
 	render() {
 		return (
