@@ -65,8 +65,8 @@ export default class Navigation extends Component {
 		displayRegForm: false,
 		displayConfirm: false,
 
-		regComplete: false,
-		Logincomplete: false
+		waitForReg: false,
+		waitForLogin: false
 	};
 
 	openReg = () => {
@@ -107,12 +107,16 @@ export default class Navigation extends Component {
 	};
 
 	handleEmailSignIn = (email, password) => {
+		// waitforlogin triggers
+		this.setState({ waitForLogin: true });
 		firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)
-			.then(this.closeModal())
-			.catch((err) => console.log(err));
-		this.closeModal();
+			// if login is successful
+			.then((res) => this.setState({ waitForLogin: false }))
+			.then((res) => this.closeModal())
+			// if it fails
+			.catch((err) => console.log('error loging in', err));
 	};
 
 	handleProviderLogin = (type) => {

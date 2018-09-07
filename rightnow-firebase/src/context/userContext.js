@@ -162,7 +162,7 @@ export default class UserProvider extends Component {
             const doc = change.doc.data();
             const busn_ref = doc.business_ref;
 
-            console.log(change.type)
+            // console.log(change.type)
             if (change.type === "modified" || change.type === "removed") {
               const copy = { ...this.state.full_query };
 
