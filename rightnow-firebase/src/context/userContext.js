@@ -13,6 +13,7 @@ export default class UserProvider extends Component {
     photo: "",
     location: "",
     appointments: [],
+    featured_appointments: null,
 
     init_appointment: {},
     displayConfirm: false,
@@ -121,7 +122,11 @@ export default class UserProvider extends Component {
             console.log(change.type)
             if (change.type === "modified" || change.type === "removed") {
               const copy = { ...this.state.full_query };
+
+              if (!copy[busn_ref].appointments) return;
+
               const busn_appts = copy[busn_ref].appointments;
+              
 
               copy[busn_ref].appointments = busn_appts.filter(
                 appt => appt.id !== id
@@ -131,6 +136,28 @@ export default class UserProvider extends Component {
             }
           });
         });
+    },
+
+    retrieveFeaturedAppointments: async () => {
+      // returns an array of arrays
+      // each sub array is structured as [business_id, rating]
+      const eachRating = Object.keys(this.state.full_query).map(busn_id => {
+        const rating = this.state.full_query[busn_id].business_details.rating;
+        if (rating !== undefined) return [busn_id, rating];
+        else return [busn_id, 0];
+      });
+
+      // SORT IN DECENDING ORDER -- TAKE THE TOP THREE
+      const top3 = eachRating.sort((x, y) => y[1] - x[1]).slice(0, 3);
+
+      // RETRIEVE ALL BUSINESS DETAILS AND THEIR APPOINTMENTS
+      const top3_withAllDetails = top3.reduce((acc, cur) => {
+        const busn_id = cur[0];
+        acc[busn_id] = this.state.full_query[busn_id];
+        return acc;
+      }, {});
+
+      this.setState({ featured_appointments: top3_withAllDetails });
     }
   };
 
