@@ -14,6 +14,7 @@ export default class UserProvider extends Component {
     location: "",
     appointments: [],
     featured_appointments: null,
+    upcoming_appointments: [],
 
     init_appointment: {},
     displayConfirm: false,
@@ -34,6 +35,34 @@ export default class UserProvider extends Component {
       firebase.auth().signOut();
       this.unsubscribe();
     },
+
+		upcomingAppointment: async () => {
+			// console.log("Starting!");
+			// console.log('uid', this.state);
+			const db = firebase.firestore();
+
+			const appointmentRef = await db
+				.collection('_customer_')
+				.doc(this.state.uid)
+				.collection('future_appointments')
+				.get();
+			// console.log('ApptRef', appointmentRef);
+      const apptIds = await appointmentRef.docs.map( doc => doc.data())
+
+      ///////////////////////////////////////////////////////////////////////
+      const future_appointments = await Promise.all(apptIds.map( async (appt) => {
+
+        const currentRef = await db.collection('_appointment_').doc(appt['appointment_id']).get();
+				// console.log(currentRef.data());
+				const appointment = await currentRef.data();
+				console.log(appointment);
+				return appointment;
+
+      }));
+
+      // console.log('appts', future_appointments);
+      this.setState({upcoming_appointments: future_appointments});
+		},
 
     searchAll: async () => {
       const x = await firebase
@@ -190,16 +219,19 @@ export default class UserProvider extends Component {
           .then(isBusiness => {
             if (isBusiness) return;
             else {
-              this.setState({
-                userSignedIn: true,
-                uid: user.uid,
-                name: user.displayName,
-                email: user.email,
-                phone: user.phoneNumber,
-                photo: user.photoURL,
-                ifOAuth: user.providerData[0].providerId
-              });
-              return;
+
+							this.setState({
+								userSignedIn: true,
+								uid: user.uid,
+								name: user.displayName,
+								email: user.email,
+								phone: user.phoneNumber,
+								photo: user.photoURL,
+								ifOAuth: user.providerData[0].providerId
+							}, () => {
+								this.state.upcomingAppointment();
+							});
+							return;
             }
           })
           .catch(err => console.log("error", err));
