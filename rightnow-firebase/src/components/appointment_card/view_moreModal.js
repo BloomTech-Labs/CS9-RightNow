@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import moment from "moment";
+import moment from 'moment';
 import {
 	Container,
 	ModalWrapper,
@@ -16,9 +16,8 @@ import {
 	Agreement,
 	FinePrint,
 	ButtonContainer,
-	Button,
-	CloseX
-} from './confirm_modal_styles';
+	Button
+} from './view_moreModal_styles';
 
 import { UserContext } from '../../context/userContext';
 
@@ -37,15 +36,18 @@ export default class ConfirmModal extends Component {
 	}
 
 	render() {
+    console.log('appointments in View More', this.props.appointments)
+    console.log('Close function in View More', this.props.closeViewMore)
 		return (
 			<UserContext.Consumer>
 				{(value) => (
 					<Container>
-						{console.log('sanity check:', value)}
 						<ModalWrapper>
 							<ElementConainer>
-								<Greeting>{value.name}</Greeting>
-								<YourSesh>Your Sesh-o is:</YourSesh>
+								<div>Something is working here :)</div>
+
+								{/* <Greeting>{value.name}</Greeting>
+								<YourSesh>Avaialbe Seshos:</YourSesh>
 								<DetailContainer>
 									<Activity>
 										<Spanner>{value.init_appointment.service}</Spanner> at{' '}
@@ -81,7 +83,7 @@ export default class ConfirmModal extends Component {
 											Go back
 										</Button>
 									</ButtonContainer>
-								</DetailContainer>
+								</DetailContainer> */}
 							</ElementConainer>
 						</ModalWrapper>
 					</Container>

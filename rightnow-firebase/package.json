@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@wojtekmaj/react-datetimerange-picker": "^1.1.0",
     "axios": "^0.18.0",
     "firebase": "^5.3.1",
     "glamor": "^2.20.40",
@@ -18,6 +19,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
     "react-star-ratings": "^2.3.0",
+    "react-stripe-elements": "^2.0.1",
     "yarn": "^1.9.4"
   },
   "scripts": {

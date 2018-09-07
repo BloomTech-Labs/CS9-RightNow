@@ -33,9 +33,9 @@ export const BusinessName = glamorous.div({
 	// marginTop: '2%',
 	marginBottom: '3%',
 	fontFamily: 'Raleway, sans-serif',
-	fontWeight: 400,
+	fontWeight: 600,
 	textAlign: 'center',
-	fontSize: '1.3em'
+	fontSize: '1.2em'
 	// fontWeight: 600
 });
 
@@ -46,7 +46,7 @@ export const Address = glamorous.div({
 	justifyContent: 'center',
 	alignItems: 'center',
 	fontSize: '1em',
-	fontWeight: 500
+	// fontWeight: 500
 });
 
 export const AvailableAppts = glamorous.div({
@@ -65,6 +65,28 @@ export const Appointment = glamorous.div({
 
 	display: 'grid',
 	gridTemplateColumns: '33% 34% 33%',
+	border: '1px solid #b8bcd1',
+	borderRadius: '5px',
+	margin: '0 0 3%',
+	padding: '3%',
+
+	':hover': {
+		border: '1px solid #353A50',
+		fontWeight: 600,
+		cursor: 'pointer'
+	},
+	'::active': {
+		background: '#ada3a2',
+		color: '#ada3a2',
+		fontSize: '0.9rem'
+	}
+});
+
+export const MoreAppointments = glamorous.div({
+	textAlign: 'center',
+	boxSizing: 'border-box',
+	fontFamily: 'Raleway, sans-serif',
+	fontWeight: 400,
 	border: '1px solid #b8bcd1',
 	borderRadius: '5px',
 	margin: '0 0 3%',

@@ -7,15 +7,16 @@ import Customer from './components/customers/customers';
 import UserSettings from './components/user_settings/user_settings_form';
 import CompanySettings from './components/company_settings/company_settings';
 import BusnApptsView from "./components/business_appointments/busn_appts";
+import Stripey from "./components/stripe";
 
 class App extends Component {
-	
 	render() {
 		return (
 			<div className="App">
 
 				<Route exact path="/" render={() => <Customer />} />
 				<Route exact path="/user-settings" render={() => <UserSettings />} />
+				<Route path="/stripe" component={Stripey} />
 
 				<BusinessProvider>
 					<BusinessContext.Consumer>

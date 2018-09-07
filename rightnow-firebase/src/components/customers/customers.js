@@ -17,22 +17,6 @@ const HomeContainer = glamorous.div({
 
 
 export default class Customers extends Component {
-
-    componentDidMount() {
-        const selectionContainer = document.getElementById("selection_container");
-
-        let sticky = selectionContainer.offsetTop + 566;
-
-        window.onscroll = () => {
-            if (window.pageYOffset > sticky) {
-                selectionContainer.style.position = "fixed";
-                selectionContainer.style.top = 0;
-            } else {
-                selectionContainer.style.position = "static";
-            }
-        }
-    }
-    
     render() {
         return (
             <HomeContainer>

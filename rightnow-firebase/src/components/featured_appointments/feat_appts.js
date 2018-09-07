@@ -55,10 +55,8 @@ export default class FeaturedAppointments extends Component {
 /**
  * 
  * 
-
  {value.full_query ? Object.keys(value.full_query).map(busnRef => {
    
-
       const { business_details, appointments } = value.full_query[busnRef]
       
       return <AppointmentCard businessDetails={business_details} appointments={appointments} key={busnRef} />

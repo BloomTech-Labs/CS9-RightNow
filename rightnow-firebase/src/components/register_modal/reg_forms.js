@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import firebase from "../../firebase/firebase";
-import axios from "axios";
+import firebase from '../../firebase/firebase';
+import axios from 'axios';
 import {
 	FormContainer,
 	Form,
@@ -24,25 +24,41 @@ export default class RegisterModal extends Component {
 			email: '',
 			password: '',
 			phone: '',
-			location: ''
+			location: '',
+			first_name: '',
+			last_name: ''
 		};
 	}
 
 	onInputChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
 	createUser = async () => {
-		await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
+		// await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
 
-		const user = firebase.auth().currentUser;
+		// const user = firebase.auth().currentUser;
 
-		const data = { ...this.state, uid: user.uid };
+		const data = {
+			first_name: this.state.first_name,
+			last_name: this.state.last_name,
+			email: this.state.email,
+			password: this.state.password,
+			phone: `+1${this.state.phone}`,
+			location: this.state.location,
+		};
 
 		axios
-			.post("https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/customer", data)
-			.then(res => console.log("success", res))
-			.catch(err => console.log("error", err));
+			.post('https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/customer', this.state)
+			.then((res) => console.log('success', res))
+			.catch((err) => console.log('error', err));
 
-		this.setState({ email: "", password: "", phone: "", location: "" });
+		this.setState({
+			email: '',
+			password: '',
+			phone: '',
+			location: '',
+			first_name: '',
+			last_name: ''
+		});
 		this.props.closeModal();
 	};
 
@@ -52,16 +68,39 @@ export default class RegisterModal extends Component {
 				<Form>
 					<NameContainer>
 						<div>
-							<NamePlace type="text" placeholder="First Name" />
+							<NamePlace
+								type="text"
+								placeholder="First Name"
+								onChange={this.onInputChange}
+								name="first_name"
+								value={this.state.first_name}
+							/>
 						</div>
 						<div>
-							<NamePlace2 type="text" placeholder="Last Name" />
+							<NamePlace2
+								type="text"
+								placeholder="Last Name"
+								onChange={this.onInputChange}
+								name="last_name"
+								value={this.state.last_name}
+							/>
 						</div>
 					</NameContainer>
-					<Email type="text" placeholder="Your Email Address" name="email" onChange={this.onInputChange}/>
-					<PW type="password" placeholder="Password" name="password" onChange={this.onInputChange}/>
-					<PhoneNumber name="phone" type="tel" placeholder="Phone number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" onChange={this.onInputChange} />
-					<Location name="location" type="text" placeholder="Preferred location" onChange={this.onInputChange} />
+					<Email type="text" placeholder="Your Email Address" name="email" onChange={this.onInputChange} />
+					<PW type="password" placeholder="Password" name="password" onChange={this.onInputChange} />
+					<PhoneNumber
+						name="phone"
+						type="tel"
+						placeholder="Phone number"
+						pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+						onChange={this.onInputChange}
+					/>
+					<Location
+						name="location"
+						type="text"
+						placeholder="Preferred location"
+						onChange={this.onInputChange}
+					/>
 				</Form>
 
 				<CheckBoxWrapper>
@@ -88,7 +127,6 @@ export default class RegisterModal extends Component {
 				</CheckBoxWrapper>
 
 				<RegisterButton onClick={() => this.createUser()}>Let's Go!</RegisterButton>
-
 			</FormContainer>
 		);
 	}
