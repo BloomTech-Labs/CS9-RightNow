@@ -30,7 +30,12 @@ class CityInput extends Component {
     selection: null
   };
 
-  onChange = (event, { newValue }) => this.setState({ value: newValue });
+  onChange = (event, { newValue }, context) => {
+    if (newValue === "") {
+      context.updateState({ city_query: null });
+    }
+    this.setState({ value: newValue });
+  }
 
   onSuggestionsFetchRequested = ({ value }) => this.props.refine(value);
 
@@ -53,16 +58,16 @@ class CityInput extends Component {
   }
 
   render() {
-
-    const inputProps = {
-      placeholder: 'Search by city',
-      onChange: this.onChange,
-      value: this.state.value,
-    };
-
     return (
       <UserContext.Consumer>
         {value => {
+
+          const inputProps = {
+            placeholder: 'Search by city',
+            onChange: (event, data) => this.onChange(event, data, value),
+            value: this.state.value,
+          };
+
           return (
             <Autosuggest
               suggestions={this.props.hits}
@@ -72,7 +77,6 @@ class CityInput extends Component {
               renderSuggestion={this.renderSuggestion}
               inputProps={inputProps}
               getSectionSuggestions={this.getSectionSuggestions}
-              debugger={true}
             />
           )
         }}

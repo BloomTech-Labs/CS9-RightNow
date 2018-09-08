@@ -90,6 +90,8 @@ export default class UserProvider extends Component {
 					this.setState({ queryResults: data, finished: true });
 				}).catch(err => console.log("error", err));
 
+			this.setState({ city_query: null, query: null });
+
 			return appointments;
 		},
 

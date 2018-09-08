@@ -26,7 +26,12 @@ class ServiceInput extends Component {
     value: this.props.currentRefinement,
   };
 
-  onChange = (event, { newValue }) => this.setState({ value: newValue });
+  onChange = (event, { newValue }, context) => {
+    if (newValue === "") {
+      context.updateState({ query: null });
+    }
+    this.setState({ value: newValue });
+  }
 
   onSuggestionsFetchRequested = ({ value }) => this.props.refine(value);
 
@@ -42,16 +47,16 @@ class ServiceInput extends Component {
   getSectionSuggestions = section => section.hits;
 
   render() {
-
-    const inputProps = {
-      placeholder: 'Search for services',
-      onChange: this.onChange,
-      value: this.state.value,
-    };
-
     return (
       <UserContext.Consumer>
         {value => {
+
+          const inputProps = {
+            placeholder: 'Search for services',
+            onChange: (event, data) => this.onChange(event, data, value),
+            value: this.state.value,
+          };
+
           return (
             <Autosuggest
               suggestions={this.props.hits}
@@ -61,7 +66,6 @@ class ServiceInput extends Component {
               renderSuggestion={this.renderSuggestion}
               inputProps={inputProps}
               getSectionSuggestions={this.getSectionSuggestions}
-              debugger={true}
             />
           )
         }}
