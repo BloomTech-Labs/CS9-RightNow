@@ -10,13 +10,9 @@ import { UserContext } from "../../context/userContext";
 
 
 export const AlgoliaSearch = () => (
-  <InstantSearch
-    appId={configs.ALGOLIA_APP_ID}
-    apiKey={configs.ALGOLIA_API_KEY}
-    indexName={configs.ALGOLIA_INDEX_NAME}
-  >
+  <InstantSearch appId={configs.ALGOLIA_APP_ID} apiKey={configs.ALGOLIA_API_KEY} indexName={configs.ALGOLIA_INDEX_NAME}>
     <AutoComplete />
-    {/* <Configure hitsPerPage={1} /> */}
+    <Configure hitsPerPage={1} />
   </InstantSearch>
 );
 
@@ -41,20 +37,25 @@ class PrimaryInput extends Component {
   onSuggestionsClearRequested = () => this.props.refine();
 
   getSuggestionValue = (hit, value) => {
-    value.updateState({ query: hit.service });
-    return hit.service;
+    value.updateState({ query: hit.business_address });
+    return hit.business_address;
   }
 
-  renderSuggestion = hit => (<Highlight attribute="service" hit={hit} tagName="mark" />);
+  renderSuggestion = hit => {
+    return (
+      <Highlight attribute="business_address" hit={hit} tagName="mark" />
+    );
+  }
 
-  renderSectionTitle = section => section.index;
-
-  getSectionSuggestions = section => section.hits;
+  getSectionSuggestions = section => {
+    console.log(section)
+    return section.hits;
+  }
 
   render() {
 
     const inputProps = {
-      placeholder: 'Search for services...',
+      placeholder: 'Preferred city...',
       onChange: this.onChange,
       value: this.state.value,
     };
@@ -70,7 +71,7 @@ class PrimaryInput extends Component {
               getSuggestionValue={(hit) => this.getSuggestionValue(hit, value)}
               renderSuggestion={this.renderSuggestion}
               inputProps={inputProps}
-              renderSectionTitle={this.renderSectionTitle}
+              // renderSectionTitle={this.renderSectionTitle}
               getSectionSuggestions={this.getSectionSuggestions}
               debugger={true}
             />

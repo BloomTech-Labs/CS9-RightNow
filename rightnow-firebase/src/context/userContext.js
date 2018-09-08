@@ -78,12 +78,22 @@ export default class UserProvider extends Component {
 		},
 
 		handleSearch: async () => {
-			await axios
-				.get(
-					`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment?term=${this.state.query}`
-				)
-				.then((res) => this.setState({ queryResults: res.data, finished: true }))
-				.catch((err) => console.log('error', err));
+			const appointments = await firebase.firestore()
+				.collection("_appointment_")
+				.where("business_address", "==", this.state.query)
+				.get().then(res => {
+					const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+					console.log(data);
+					this.setState({ queryResults: data, finished: true });
+				}).catch(err => console.log("error", err));
+
+			return appointments;
+			// await axios
+			// 	.get(
+			// 		`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment?term=${this.state.query}`
+			// 	)
+			// 	.then((res) => this.setState({ queryResults: res.data, finished: true }))
+			// 	.catch((err) => console.log('error', err));
 		},
 		// Update user info from user-setting page
 		updateUserBasicInfo: (payload) => {

@@ -37,17 +37,18 @@ const Option = glamorous.div({
   textAlign: "center",
   width: "8%",
   color: "#EBEBEB",
+  textShadow: "1px 1px 1px #ef5b5b",
   fontSize: "1.3em",
   fontWeight: 600,
   marginRight: "2%",
   border: "1px solid transparent",
-  padding: "1.5%",
+  padding: "1%",
   ":first-child": {
-    width: "15%"
+    width: "17%",
   },
   ":hover": {
     cursor: "pointer",
-    border: "1px solid white",
+    border: "1px solid #ebebeb",
     borderRadius: "5px"
   }
 });
@@ -140,7 +141,7 @@ export default class Navigation extends Component {
   render() {
     return (
       <Container>
-        <Link to="/" style={{ textDecoration: "none", padding: "1%" }}>
+        <Link to="/" style={{ textDecoration: "none", padding: "1%", textShadow: "1px 1px 1px #ef5b5b", }}>
           <Logo>Sesho</Logo>
         </Link>
 
@@ -155,6 +156,7 @@ export default class Navigation extends Component {
                       style={{
                         textDecoration: "none",
                         color: "#EBEBEB",
+                        textShadow: "1px 1px 1px #ef5b5b",
                         width: "100%",
                         "&hover": { color: "#353A50 !important" }
                       }}
@@ -185,7 +187,7 @@ export default class Navigation extends Component {
                   <Option>
                     <Link
                       to="/biz-account"
-                      style={{ textDecoration: "none", color: "#EBEBEB" }}
+                      style={{ textDecoration: "none", color: "#ebebeb", textShadow: "1px 1px 1px #ef5b5b", }}
                     >
                       Business Owner?
                     </Link>

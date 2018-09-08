@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import glamorous from "glamorous";
 import axios from "axios";
+import firebase from "../../firebase/firebase";
 import moment from "moment";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
@@ -122,7 +123,7 @@ export default class PostAppointment extends Component {
     business_ref: this.props.busnContext.uid
   }
 
-  handleSubmit = () => {
+  handleSubmit = async () => {
     this.state.start_time.set({
       "year": this.state.today.year(),
       "month": this.state.today.month(),
@@ -135,6 +136,17 @@ export default class PostAppointment extends Component {
       "day": this.state.today.day()
     });
 
+    const business_address = await firebase.firestore()
+      .collection("_business_")
+      .doc(this.state.business_ref)
+      .get().then(busn => {
+        console.log(busn.data());
+        return `${busn.data().business_information.city}`; 
+      }).catch(err => {
+        console.log(err)
+        return null;
+      });
+
     const appointment_details = {
       start: this.state.start_time,
       end: this.state.end_time,
@@ -142,6 +154,7 @@ export default class PostAppointment extends Component {
       cost: this.state.cost,
       description: this.state.description,
       business_ref: this.state.business_ref,
+      business_address: business_address,
       is_available: true
     };
 
@@ -150,7 +163,14 @@ export default class PostAppointment extends Component {
       .then(res => console.log("success\n", res))
       .catch(err => console.log("error\n", err));
     
-    this.setState({ today: "", start_time: "", end_time: "", service: "", cost: "", description: "" });
+    this.setState({ 
+      today: "", 
+      start_time: "", 
+      end_time: "", 
+      service: "", 
+      cost: "", 
+      description: "" 
+    });
   }
 
 

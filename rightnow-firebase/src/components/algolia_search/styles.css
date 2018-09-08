@@ -7,6 +7,16 @@
   display: flex;
   justify-content: space-between;
   border: 1px solid red;
+  /* width: 100%; */
+}
+
+.ais-InstantSearch__root {
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 3%;
+  text-align: center;
+  font-family: Raleway, sans-serif;
+  font-weight: 800;
 }
 
 .content{
@@ -29,11 +39,6 @@
   display: none;
 }
 
-.ais-InstantSearch__root{
-  /* width: 80%; */
-  margin-right: 2%;
-}
-
 .title div{
   /* width: 100%; */
   /* padding: 5px 10px; */
@@ -44,14 +49,15 @@
 }
 
 .react-autosuggest__input {
-  width: 100%;
+  width: 90%;
   height: 100%;
-  padding: 5% 0 5% 5%;
-  font-family: Raleway, sans-serif;
-  font-weight: 300;
-  font-size: 1.2em;
+  padding: 1.5% 0;
+  /* font-family: Raleway, sans-serif;
+  font-weight: 800; */
+  font-size: 1.5em;
   border: 1px solid #ebebeb;
   border-radius: 4px;
+  text-align: center;
   /* margin-right: 3%; */
 }
 
@@ -100,17 +106,24 @@
   /* padding: 10px 20px; */
 }
 
+.react-autosuggest__suggestion--highlighted {
+  background-color: skyblue;
+}
+
+.react-autosuggest__section-container {
+  border-top: 1px dashed black;
+}
+
+.react-autosuggest__section-container--first {
+  border-top: 0;
+}
+
 .react-autosuggest__suggestion--focused {
   background-color: #ebebeb;
 }
 
 .react-autosuggest__section-title {
-  /* padding: 10px 0 0 10px; */
-  font-size: 1em;
-  color: #ebebeb;
-  /* border-top: 1px dashed #ccc; */
-}
-
-.react-autosuggest__section-container:first-child .react-autosuggest__section-title {
-  /* border-top: 0; */
+  padding: 10px 0 0 10px;
+  font-size: 12px;
+  color: #777;
 }
