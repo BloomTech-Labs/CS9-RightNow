@@ -145,7 +145,7 @@ export default class Navigation extends Component {
 					.then((result) => console.log(result))
 					.catch((err) => console.log(err));
 			})
-			.then((res) => this.fireSweetAlert_success())
+			.then((res) => this.fireSweetAlert_success('login'))
 			.then((x) => this.closeModal())
 			.catch((err) => {
 				setTimeout(this.fireSweetAlert_error, 600);

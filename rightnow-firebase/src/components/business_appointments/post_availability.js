@@ -116,7 +116,7 @@ export default class PostAppointment extends Component {
 		start_time: '', // moment(),
 		end_time: '', // moment().add(30, "m"),
 		service: '',
-		cost: '',
+		cost: '$',
 		description: '',
 		business_ref: this.props.busnContext.uid
 	};
