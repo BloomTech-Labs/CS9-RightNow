@@ -165,17 +165,11 @@ export default class Navigation extends Component {
 			showConfirmButton: false,
 			timer: 3000
 		});
-		if (type === 'login') {
-			toast({
-				type: 'success',
-				title: 'Signed in successfully'
-			});
-		} else if (type === 'register') {
-      toast({
-				type: 'success',
-				title: 'Registered successfully'
-			});
-    }
+
+		toast({
+			type: 'success',
+			title: 'Signed in successfully'
+		});
 	};
 	fireSweetAlert_error = () => {
 		const toast = swal.mixin({
