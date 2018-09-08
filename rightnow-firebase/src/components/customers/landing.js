@@ -3,7 +3,7 @@ import glamorous from "glamorous";
 import Particles from "react-particles-js";
 import Navigation from "./navigation";
 import { UserContext } from '../../context/userContext';
-import {AlgoliaSearch} from "../algolia_search";
+import {AlgoliaCitySearch, AlgoliaServiceSearch} from "../algolia_search";
 // import axios from "axios";
 
 
@@ -215,17 +215,18 @@ export default class Landing extends Component {
             <UserContext.Consumer>
               {value => (
                 <Wrapper id="primary_input">
-                  <AlgoliaSearch />
+                  <AlgoliaCitySearch />
                   <Or>
                     <span style={{ backgroundColor: '#353A50', padding: '0 3%', margin: "auto" }}>or</span>
                   </Or>
-                  <Search 
+                  <AlgoliaServiceSearch />
+                  {/* <Search 
                     id="primary_search"
                     placeholder="Search for services" 
                     name="query"
                     value={value.query}
                     onChange={e => value.updateState({ [e.target.name]: e.target.value })}
-                    />
+                    /> */}
                   <Button id="primary_button" onClick={() => value.handleSearch()}>Find Appointments</Button>
                 </Wrapper>
               )}

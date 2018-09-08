@@ -21,7 +21,8 @@ export default class UserProvider extends Component {
 		displayConfirm: false,
 		confirm: false,
 
-		query: '',
+		query: null,
+		city_query: null,
 		queryResults: [],
 		finished: false,
 		full_query: null,
@@ -78,9 +79,11 @@ export default class UserProvider extends Component {
 		},
 
 		handleSearch: async () => {
-			const appointments = await firebase.firestore()
-				.collection("_appointment_")
-				.where("business_address", "==", this.state.query)
+			const query = await this.state.city_query ?
+				firebase.firestore().collection("_appointment_").where("business_address", "==", this.state.city_query) :
+				firebase.firestore().collection("_appointment_").where("service", "==", this.state.query);
+
+			const appointments = await query
 				.get().then(res => {
 					const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 					console.log(data);
@@ -88,13 +91,8 @@ export default class UserProvider extends Component {
 				}).catch(err => console.log("error", err));
 
 			return appointments;
-			// await axios
-			// 	.get(
-			// 		`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment?term=${this.state.query}`
-			// 	)
-			// 	.then((res) => this.setState({ queryResults: res.data, finished: true }))
-			// 	.catch((err) => console.log('error', err));
 		},
+
 		// Update user info from user-setting page
 		updateUserBasicInfo: (payload) => {
 			const db = firebase.firestore();
@@ -111,6 +109,7 @@ export default class UserProvider extends Component {
 				.then((res) => console.log('User info succesffully updated:', res))
 				.catch((err) => console.log('something went wrong', err));
 		},
+
 		// Update user info from user-setting page
 		updateUserPassword: (payload) => {
 			const user = firebase.auth().currentUser;
@@ -122,13 +121,6 @@ export default class UserProvider extends Component {
 					.then((res) => console.log('update successful', res))
 					.catch((err) => console.log('error:', err));
 			}
-
-			// axios
-			// 	.put(
-			// 		`https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/customer/${this.state.uid}`,
-			// 		payload
-			// 	)
-			// 	.then((res) => console.log(res));
 		},
 
 		clientLocation: () => {
