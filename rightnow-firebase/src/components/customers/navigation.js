@@ -10,10 +10,10 @@ import firebase, { auth } from '../../firebase/firebase';
 import axios from 'axios';
 
 // sweetAlert 2 with custom css
-import swal from 'sweetalert2';
-// import swal from 'sweetalert2/dist/sweetalert2.js';
-// import 'sweetalert2/src/sweetalert2.scss';
-import withReactContent from 'sweetalert2-react-content';
+// import swal from 'sweetalert2';
+import swal from 'sweetalert2/dist/sweetalert2.js';
+import 'sweetalert2/src/sweetalert2.css';
+// import withReactContent from 'sweetalert2-react-content';
 
 const Container = glamorous.div({
 	width: '100%',
@@ -116,7 +116,10 @@ export default class Navigation extends Component {
 			.then((res) => this.setState({ waitForLogin: false }))
 			.then((res) => this.closeModal())
 			// if it fails
-			.catch((err) => this.fireSweetAlert());
+			.catch((err) => {
+				console.log(err);
+				this.fireSweetAlert_logError(err);
+			});
 	};
 
 	handleProviderLogin = (type) => {
@@ -150,13 +153,22 @@ export default class Navigation extends Component {
 			.catch((err) => console.log(err));
 	};
 
-	fireSweetAlert = () => {
-		swal({
-			type: 'error',
-			title: 'Oops...',
-			text: 'Something went wrong!',
-			footer: '<a href>Why do I have this issue?</a>'
-		});
+	fireSweetAlert_logError = (err) => {
+		if (err.code === 'auth/invalid-email') {
+			swal({
+				type: 'error',
+				title: 'Invalid Login!',
+				text: 'You entered wrong email/password'
+				// footer: '<a href>Why do I have this issue?</a>'
+			});
+		} else if (err) {
+			swal({
+				type: 'error',
+				title: 'Uh Oh!',
+				text: 'Something went wrong!',
+				footer: `<div>${err.message}</div>`
+			});
+		}
 	};
 
 	render() {
@@ -236,7 +248,7 @@ export default class Navigation extends Component {
 				) : null}
 
 				{this.state.displayRegForm ? <RegisterForm closeModal={() => this.closeModal()} /> : null}
-
+				{/* {this.state.waitForLogin ? () => } */}
 				<UserContext.Consumer>
 					{(value) => (value.displayConfirm ? <ConfirmModal closeModal={() => this.closeModal()} /> : null)}
 				</UserContext.Consumer>
