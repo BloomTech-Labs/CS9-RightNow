@@ -65,6 +65,16 @@ export default class UserProvider extends Component {
 			this.setState({ upcoming_appointments: future_appointments });
 		},
 
+		getCompanyName: async (business_ref) => {
+
+			const db = firebase.firestore();
+
+			const businessRef = await db.collection('_business').doc(business_ref).get();
+			const business = await businessRef.data();
+			console.log(business['business_information'].name);
+			return business['business_information'].name;
+		},
+
 		searchAll: async () => {
 			const x = await firebase
 				.firestore()
