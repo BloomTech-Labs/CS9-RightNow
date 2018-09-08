@@ -25,18 +25,6 @@ class CityInput extends Component {
     refine: PropTypes.func.isRequired,
   };
 
-  state = {
-    value: this.props.currentRefinement,
-    selection: null
-  };
-
-  onChange = (event, { newValue }, context) => {
-    if (newValue === "") {
-      context.updateState({ city_query: null });
-    }
-    this.setState({ value: newValue });
-  }
-
   onSuggestionsFetchRequested = ({ value }) => this.props.refine(value);
 
   onSuggestionsClearRequested = () => this.props.refine();
@@ -46,16 +34,9 @@ class CityInput extends Component {
     return hit.business_address;
   }
 
-  renderSuggestion = hit => {
-    return (
-      <Highlight attribute="business_address" hit={hit} tagName="mark" />
-    );
-  }
+  renderSuggestion = hit => <Highlight attribute="business_address" hit={hit} tagName="mark" />;
 
-  getSectionSuggestions = section => {
-    console.log(section)
-    return section.hits;
-  }
+  getSectionSuggestions = section => section.hits;
 
   render() {
     return (
@@ -64,12 +45,18 @@ class CityInput extends Component {
 
           const inputProps = {
             placeholder: 'Search by city',
-            onChange: (event, data) => this.onChange(event, data, value),
-            value: this.state.value,
+            onChange: (event, { newValue, method }) => {
+              if (method === "click" && value.service_query !== "") {
+                value.updateState({ service_query: "" });
+              }
+              value.updateState({ city_query: newValue })
+            }, // this.onChange(event, data, value),
+            value: value.city_query // this.state.value,
           };
 
           return (
             <Autosuggest
+            id="city_boi"
               suggestions={this.props.hits}
               onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
               onSuggestionsClearRequested={this.onSuggestionsClearRequested}

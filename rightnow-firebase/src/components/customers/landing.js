@@ -220,13 +220,6 @@ export default class Landing extends Component {
                     <span style={{ backgroundColor: '#353A50', padding: '0 3%', margin: "auto" }}>or</span>
                   </Or>
                   <AlgoliaServiceSearch />
-                  {/* <Search 
-                    id="primary_search"
-                    placeholder="Search for services" 
-                    name="query"
-                    value={value.query}
-                    onChange={e => value.updateState({ [e.target.name]: e.target.value })}
-                    /> */}
                   <Button id="primary_button" onClick={() => value.handleSearch()}>Find Appointments</Button>
                 </Wrapper>
               )}

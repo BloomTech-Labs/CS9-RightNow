@@ -22,17 +22,6 @@ class ServiceInput extends Component {
     refine: PropTypes.func.isRequired,
   };
 
-  state = {
-    value: this.props.currentRefinement,
-  };
-
-  onChange = (event, { newValue }, context) => {
-    if (newValue === "") {
-      context.updateState({ query: null });
-    }
-    this.setState({ value: newValue });
-  }
-
   onSuggestionsFetchRequested = ({ value }) => this.props.refine(value);
 
   onSuggestionsClearRequested = () => this.props.refine();
@@ -42,7 +31,7 @@ class ServiceInput extends Component {
     return hit.service;
   }
 
-  renderSuggestion = hit => (<Highlight attribute="service" hit={hit} tagName="mark" />);
+  renderSuggestion = hit => <Highlight attribute="service" hit={hit} tagName="mark" />;
 
   getSectionSuggestions = section => section.hits;
 
@@ -53,8 +42,13 @@ class ServiceInput extends Component {
 
           const inputProps = {
             placeholder: 'Search for services',
-            onChange: (event, data) => this.onChange(event, data, value),
-            value: this.state.value,
+            onChange: (event, { newValue, method }) => {
+              if (method === "click" && value.city_query !== "") {
+                value.updateState({ city_query: "" });
+              }
+              value.updateState({ service_query: newValue })
+            },
+            value: value.service_query,
           };
 
           return (

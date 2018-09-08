@@ -21,8 +21,8 @@ export default class UserProvider extends Component {
 		displayConfirm: false,
 		confirm: false,
 
-		query: null,
-		city_query: null,
+		service_query: "",
+		city_query: "Manhattan, NY",
 		queryResults: [],
 		finished: false,
 		full_query: null,
@@ -79,20 +79,15 @@ export default class UserProvider extends Component {
 		},
 
 		handleSearch: async () => {
-			const query = await this.state.city_query ?
+			const query = await this.state.city_query === "" ?
 				firebase.firestore().collection("_appointment_").where("business_address", "==", this.state.city_query) :
 				firebase.firestore().collection("_appointment_").where("service", "==", this.state.query);
 
-			const appointments = await query
-				.get().then(res => {
-					const data = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-					console.log(data);
-					this.setState({ queryResults: data, finished: true });
-				}).catch(err => console.log("error", err));
+			const appointments = await query.get()
+				.then(res => res.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+				.catch(err => console.log("error", err));
 
-			this.setState({ city_query: null, query: null });
-
-			return appointments;
+			this.setState({ queryResults: appointments, finished: true, city_query: "", service_query: "" });
 		},
 
 		// Update user info from user-setting page
