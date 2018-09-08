@@ -14,7 +14,7 @@ export const AlgoliaSearch = () => (
     indexName="appointments"
   >
     <AutoComplete />
-    <Configure hitsPerPage={1} />
+    {/* <Configure hitsPerPage={1} /> */}
   </InstantSearch>
 );
 
@@ -29,6 +29,7 @@ class PrimaryInput extends Component {
 
   state = {
     value: this.props.currentRefinement,
+    selection: null
   };
 
   onChange = (event, { newValue }) => this.setState({ value: newValue });
@@ -37,13 +38,21 @@ class PrimaryInput extends Component {
 
   onSuggestionsClearRequested = () => this.props.refine();
 
-  getSuggestionValue = hit => hit.name;
+  getSuggestionValue = hit => {
+    console.log(hit)
+    this.setState({ selection: hit });
+    return hit.service;
+  }
 
   renderSuggestion = hit => (<Highlight attribute="service" hit={hit} tagName="mark" />);
 
   renderSectionTitle = section => section.index;
 
   getSectionSuggestions = section => section.hits;
+
+  // handleSelection = val => {
+  //   console.log(val);
+  // }
 
   render() {
 
@@ -70,6 +79,7 @@ class PrimaryInput extends Component {
         inputProps={inputProps}
         renderSectionTitle={this.renderSectionTitle}
         getSectionSuggestions={this.getSectionSuggestions}
+        // onSelect={this.handleSelection}
       />
     );
   }
