@@ -110,7 +110,7 @@ export default class Navigation extends Component {
 		firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)
-			.then((res) => this.fireSweetAlert_success('login'))
+			.then((res) => this.fireSweetAlert_success())
 			.then((res) => this.closeModal())
 			// if it fails
 			.catch((err) => {
@@ -145,7 +145,11 @@ export default class Navigation extends Component {
 					.then((result) => console.log(result))
 					.catch((err) => console.log(err));
 			})
+			.then((res) => this.fireSweetAlert_success())
 			.then((x) => this.closeModal())
+			.catch((err) => {
+				setTimeout(this.fireSweetAlert_error, 600);
+			})
 			.catch((err) => console.log(err));
 	};
 
@@ -165,7 +169,6 @@ export default class Navigation extends Component {
 			showConfirmButton: false,
 			timer: 3000
 		});
-
 		toast({
 			type: 'success',
 			title: 'Signed in successfully'
@@ -178,7 +181,6 @@ export default class Navigation extends Component {
 			showConfirmButton: false,
 			timer: 3000
 		});
-
 		toast({
 			type: 'error',
 			title: 'Wrong email / password'
