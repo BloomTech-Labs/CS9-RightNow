@@ -4,14 +4,15 @@ import { InstantSearch, Configure, Index, Highlight } from 'react-instantsearch/
 import { connectAutoComplete } from 'react-instantsearch/connectors';
 import Autosuggest from 'react-autosuggest';
 import "./styles.css";
+import { configs } from "../../environment";
 
 
 
 export const AlgoliaSearch = () => (
   <InstantSearch
-    appId="6B2HFL051A"
-    apiKey="46f5454eead67b5f8fbb66e85f13b80e"
-    indexName="appointments"
+    appId={configs.ALGOLIA_APP_ID}
+    apiKey={configs.ALGOLIA_API_KEY}
+    indexName={configs.ALGOLIA_INDEX_NAME}
   >
     <AutoComplete />
     {/* <Configure hitsPerPage={1} /> */}

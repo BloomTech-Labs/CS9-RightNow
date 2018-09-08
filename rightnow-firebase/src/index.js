@@ -5,11 +5,11 @@ import App from './App';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { StripeProvider } from 'react-stripe-elements';
 import registerServiceWorker from './registerServiceWorker';
+import { configs } from "./environment";
 
-require("dotenv").config();
 
 ReactDOM.render(
-	<StripeProvider apiKey="pk_test_Yf6hb34cfn9IIpM05jOCNSwk">
+	<StripeProvider apiKey={configs.STRIPE_API_KEY}>
 		<Router>
 			<App />
 		</Router>
