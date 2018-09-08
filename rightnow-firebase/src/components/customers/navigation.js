@@ -116,7 +116,7 @@ export default class Navigation extends Component {
 			.then((res) => this.setState({ waitForLogin: false }))
 			.then((res) => this.closeModal())
 			// if it fails
-			.catch((err) => console.log('error loging in', err));
+			.catch((err) => this.fireSweetAlert());
 	};
 
 	handleProviderLogin = (type) => {
