@@ -20,7 +20,6 @@ class BusnApptsView extends Component {
     delete_modal: false
   }
 
-
   render() {  
     return (
       <BusinessContext.Consumer>
