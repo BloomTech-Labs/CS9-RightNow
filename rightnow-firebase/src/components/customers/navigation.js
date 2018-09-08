@@ -9,7 +9,7 @@ import { UserContext } from '../../context/userContext';
 import firebase, { auth } from '../../firebase/firebase';
 import axios from 'axios';
 
-// // sweetAlert 2 with custom css
+// sweetAlert 2 with custom css
 import swal from 'sweetalert2/dist/sweetalert2.js';
 import '../../z_sweetAlert/sweetalert2.css';
 
@@ -106,18 +106,15 @@ export default class Navigation extends Component {
 
 	handleEmailSignIn = (email, password) => {
 		// waitforlogin triggers
-		this.setState({ waitForLogin: true });
+		this.fireSweetAlert_waiting();
 		firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)
-			// if login is successful
-			.then((res) => this.setState({ waitForLogin: false }))
+			.then((res) => this.fireSweetAlert_success('login'))
 			.then((res) => this.closeModal())
 			// if it fails
 			.catch((err) => {
-				console.log(err);
-				// SweetAlert.SweetAlert;
-				this.fireSweetAlert_logError(err);
+				setTimeout(this.fireSweetAlert_error, 600);
 			});
 	};
 
@@ -152,31 +149,49 @@ export default class Navigation extends Component {
 			.catch((err) => console.log(err));
 	};
 
-	fireSweetAlert_logError = (err) => {
-		if (err.code === 'auth/invalid-email') {
-			const error = swal({
-				type: 'error',
-				title: 'Invalid Login!',
-        text: 'You entered wrong email/password'
-			}).then(console.log('working success!!!!'));
-		}
+	// SweetAlert Stuff
+	fireSweetAlert_waiting = () => {
+		swal({
+			title: 'Logging you in now...',
+			onOpen: () => {
+				swal.showLoading();
+			}
+		});
+	};
+	fireSweetAlert_success = (type) => {
+		const toast = swal.mixin({
+			toast: true,
+			position: 'top-end',
+			showConfirmButton: false,
+			timer: 3000
+		});
+		if (type === 'login') {
+			toast({
+				type: 'success',
+				title: 'Signed in successfully'
+			});
+		} else if (type === 'register') {
+      toast({
+				type: 'success',
+				title: 'Registered successfully'
+			});
+    }
+	};
+	fireSweetAlert_error = () => {
+		const toast = swal.mixin({
+			toast: true,
+			position: 'top-end',
+			showConfirmButton: false,
+			timer: 3000
+		});
+
+		toast({
+			type: 'error',
+			title: 'Wrong email / password'
+		});
 	};
 
 	render() {
-		// const MySwal = withReactContent(swal);
-
-		// MySwal.fire({
-		// 	title: <p>Hello World</p>,
-		// 	footer: 'Copyright 2018',
-		// 	// onOpen: () => {
-		// 	// 	// `MySwal` is a subclass of `Swal`
-		// 	// 	//   with all the same instance & static methods
-		// 	// 	MySwal.clickConfirm();
-		// 	// }
-		// }).then(() => {
-		// 	return MySwal.fire(<p>Shorthand works too</p>);
-		// });
-
 		return (
 			<Container>
 				<Link to="/" style={{ textDecoration: 'none', padding: '1%' }}>
@@ -207,7 +222,7 @@ export default class Navigation extends Component {
 						} else
 							return (
 								<ButtonContainer>
-									<Option onClick={() => this.fireSweetAlert()}>SweetAlert!</Option>
+									<Option onClick={() => this.fireSweetAlert_waiting()}>SweetAlert!</Option>
 									<Option>
 										<Link to="/biz-account" style={{ textDecoration: 'none', color: '#EBEBEB' }}>
 											Business Owner?
