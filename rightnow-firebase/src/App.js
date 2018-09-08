@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import BusinessProvider, { BusinessContext } from "./context/businessContext";
 import { Route } from 'react-router-dom';
-import BusinessLanding from './components/business_page/business_landing';
 import BusinessAccount from './components/business_page/business_register';
 import Customer from './components/customers/customers';
 import UserSettings from './components/user_settings/user_settings_form';

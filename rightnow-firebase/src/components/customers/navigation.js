@@ -194,6 +194,17 @@ export default class Navigation extends Component {
 		});
 	};
 
+	// fireSweetAlert_viewMore = () => {
+	// 	console.log('this is working');
+	// 	swal({
+	// 		title: 'Test modal',
+	// 		html: true,
+	// 		onOpen: () => {
+	// 			<ConfirmModal closeModal={() => this.closeModal()} />;
+	// 		}
+	// 	});
+	// };
+
 	render() {
 		return (
 			<Container>
