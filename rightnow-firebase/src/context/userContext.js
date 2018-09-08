@@ -80,14 +80,15 @@ export default class UserProvider extends Component {
 
 		handleSearch: async () => {
 			const query = await this.state.city_query === "" ?
-				firebase.firestore().collection("_appointment_").where("business_address", "==", this.state.city_query) :
-				firebase.firestore().collection("_appointment_").where("service", "==", this.state.query);
+				firebase.firestore().collection("_appointment_").where("service", "==", this.state.service_query) :
+				firebase.firestore().collection("_appointment_").where("business_address", "==", this.state.city_query);
 
 			const appointments = await query.get()
 				.then(res => res.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+				.then(data => this.setState({ queryResults: data, finished: true, city_query: "", service_query: "" }))
 				.catch(err => console.log("error", err));
 
-			this.setState({ queryResults: appointments, finished: true, city_query: "", service_query: "" });
+			return appointments;
 		},
 
 		// Update user info from user-setting page
@@ -174,7 +175,6 @@ export default class UserProvider extends Component {
 					const doc = change.doc.data();
 					const busn_ref = doc.business_ref;
 
-					console.log(change.type);
 					if (change.type === 'modified' || change.type === 'removed') {
 						const copy = { ...this.state.full_query };
 
