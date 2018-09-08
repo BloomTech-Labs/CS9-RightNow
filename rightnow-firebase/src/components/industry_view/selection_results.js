@@ -25,17 +25,9 @@ export class Clock extends Component {
 	render() {
 		return (
 			<Sorting>
-				{/* <h2>Current time:</h2> */}
+
 				<Time>{this.state.time}</Time>
-				{/* <SortBy> */}
-					{/* <option disabled defaultValue hidden>
-						Sort By
-					</option>
-					<option value="2">2 hours</option>
-					<option value="3">3 hours</option>
-					<option value="4">4 hours</option>
-					<option value="5">5+ hours</option>
-				</SortBy> */}
+
 			</Sorting>
 		);
 	}
