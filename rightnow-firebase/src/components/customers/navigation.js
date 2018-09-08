@@ -151,6 +151,20 @@ export default class Navigation extends Component {
                 <ButtonContainer>
                   <Option>
                     <Link
+                      to="/user-settings"
+                      style={{
+                        textDecoration: "none",
+                        color: "#EBEBEB",
+                        width: "100%",
+                        "&hover": { color: "#353A50 !important" }
+                      }}
+                    >
+                      User Settings
+                    </Link>
+                  </Option>
+                  
+                  <Option>
+                    <Link
                       to="/biz-account"
                       style={{
                         textDecoration: "none",
