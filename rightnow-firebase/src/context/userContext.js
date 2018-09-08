@@ -15,6 +15,7 @@ export default class UserProvider extends Component {
 		appointments: [],
 		featured_appointments: null,
 		upcoming_appointments: [],
+		companyNames: [],
 		payload: {},
 
 		init_appointment: {},
@@ -56,23 +57,43 @@ export default class UserProvider extends Component {
 					const currentRef = await db.collection('_appointment_').doc(appt['appointment_id']).get();
 					// console.log(currentRef.data());
 					const appointment = await currentRef.data();
-					console.log(appointment);
+					// console.log(appointment);
 					return appointment;
 				})
 			);
 
 			// console.log('appts', future_appointments);
 			this.setState({ upcoming_appointments: future_appointments });
+
+			console.log('Hello', this.state.upcoming_appointments.length);
+
+			const names = await Promise.all(this.state.upcoming_appointments.map(async (appt) => {
+				const businessRef = await db.collection('_business_').doc(appt['business_ref']).get();
+				console.log('buss Ref', businessRef);
+				const business = await businessRef.data();
+				console.log(business['business_information'].name);
+				return business['business_information'].name;
+			}));
+
+			this.setState({companyNames: names})
 		},
 
-		getCompanyName: async (business_ref) => {
+		getCompanyName: async () => {
 
-			const db = firebase.firestore();
+			// const db = firebase.firestore();
 
-			const businessRef = await db.collection('_business').doc(business_ref).get();
-			const business = await businessRef.data();
-			console.log(business['business_information'].name);
-			return business['business_information'].name;
+			// console.log('Hello', this.state.upcoming_appointments.length);
+			//
+			// const names = await Promise.all(this.state.upcoming_appointments.map(async (appt) => {
+			// 	const businessRef = await db.collection('_business_').doc(appt['business_ref']).get();
+			// 	console.log('buss Ref', businessRef);
+			// 	const business = await businessRef.data();
+			// 	console.log(business['business_information'].name);
+			// 	return business['business_information'].name;
+			// }));
+			//
+			// this.setState({companyNames: names})
+
 		},
 
 		searchAll: async () => {
@@ -250,6 +271,7 @@ export default class UserProvider extends Component {
 								},
 								() => {
 									this.state.upcomingAppointment();
+									// this.state.getCompanyName();
 								}
 							);
 							return;
