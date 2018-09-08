@@ -3,6 +3,9 @@ import firebase from '../firebase/firebase';
 import axios from 'axios';
 import moment from 'moment';
 
+import swal from 'sweetalert2/dist/sweetalert2.js';
+import '../z_sweetAlert/sweetalert2.css';
+
 export const BusinessContext = React.createContext();
 
 export default class BusinessProvider extends Component {
