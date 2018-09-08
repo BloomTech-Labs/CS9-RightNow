@@ -46,7 +46,8 @@ class CompanyInfo extends Component {
           <InputField
             name="email"
             type="text"
-            value={this.state.email}
+                    value={this.state.email}
+                    
             onChange={this.onInputChange}
             placeholder="enter here"
           />
