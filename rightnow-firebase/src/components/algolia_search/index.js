@@ -5,6 +5,7 @@ import { connectAutoComplete } from 'react-instantsearch/connectors';
 import Autosuggest from 'react-autosuggest';
 import "./styles.css";
 import { configs } from "../../environment";
+import { UserContext } from "../../context/userContext";
 
 
 
@@ -39,9 +40,8 @@ class PrimaryInput extends Component {
 
   onSuggestionsClearRequested = () => this.props.refine();
 
-  getSuggestionValue = hit => {
-    console.log(hit)
-    this.setState({ selection: hit });
+  getSuggestionValue = (hit, value) => {
+    value.updateState({ query: hit.service });
     return hit.service;
   }
 
@@ -51,37 +51,32 @@ class PrimaryInput extends Component {
 
   getSectionSuggestions = section => section.hits;
 
-  // handleSelection = val => {
-  //   console.log(val);
-  // }
-
   render() {
 
     const inputProps = {
       placeholder: 'Search for services...',
       onChange: this.onChange,
       value: this.state.value,
-      style: {
-        // width: "100%",
-        // padding: "2.8%",
-        // fontSize: "1.5em",
-        // borderRadius: "5px",
-        // border: "none",
-      }
     };
 
     return (
-      <Autosuggest
-        suggestions={this.props.hits}
-        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-        getSuggestionValue={this.getSuggestionValue}
-        renderSuggestion={this.renderSuggestion}
-        inputProps={inputProps}
-        renderSectionTitle={this.renderSectionTitle}
-        getSectionSuggestions={this.getSectionSuggestions}
-        // onSelect={this.handleSelection}
-      />
+      <UserContext.Consumer>
+        {value => {
+          return (
+            <Autosuggest
+              suggestions={this.props.hits}
+              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+              getSuggestionValue={(hit) => this.getSuggestionValue(hit, value)}
+              renderSuggestion={this.renderSuggestion}
+              inputProps={inputProps}
+              renderSectionTitle={this.renderSectionTitle}
+              getSectionSuggestions={this.getSectionSuggestions}
+              debugger={true}
+            />
+          )
+        }}
+      </UserContext.Consumer>
     );
   }
 }

@@ -14,7 +14,7 @@ export default class UserProvider extends Component {
 		location: '',
 		appointments: [],
 		featured_appointments: null,
-		upcoming_appointments: [],
+		upcoming_appointments: null,
 		payload: {},
 
 		init_appointment: {},
