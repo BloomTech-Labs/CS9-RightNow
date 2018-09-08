@@ -1,7 +1,6 @@
-import React from "react";
 import glamorous from "glamorous";
 
-const Appointment = glamorous.div({
+export const PastAppointment = glamorous.div({
   // width: '50%',
   // border: '1px solid blue',
   // boxSizing: 'border-box',
@@ -20,12 +19,12 @@ const Appointment = glamorous.div({
   border: "3px solid white",
   color: "black",
   backgroundColor: "#fff",
-  boxShadow: "0 10px 6px -6px #777",
+  //boxShadow: "0 10px 6px -6px #777",
   borderRadius: "5px",
   textAlign: "center",
 });
 
-const Past = glamorous.h3({
+export const Past = glamorous.h3({
   width: "100%",
   display: "flex",
   justifyContent: "center",
@@ -33,12 +32,3 @@ const Past = glamorous.h3({
   margin: "auto"
 });
 
-const PastAppointments = () => {
-  return (
-    <Appointment>
-      <Past>Past Appointments</Past>
-    </Appointment>
-  );
-};
-
-export default PastAppointments;

@@ -1,7 +1,7 @@
 import React from "react";
 import glamorous from "glamorous";
 
-const Container = glamorous.div({
+export const Container = glamorous.div({
   // backgroundColor: "#fff",
   // color: "black",
   //padding: "70px",
@@ -10,12 +10,12 @@ const Container = glamorous.div({
   border: "3px solid white",
   color: "black",
   backgroundColor: "#fff",
-  boxShadow: "0 10px 6px -6px #777",
+  //boxShadow: "0 10px 6px -6px #777",
   borderRadius: "5px",
   textAlign: "center",
 });
 
-const Label = glamorous.label({
+export const Label = glamorous.label({
   display: "block",
   textAlign: "left",
   color: "lightgrey",
@@ -23,14 +23,14 @@ const Label = glamorous.label({
   //float: 'left'
 });
 
-const InputField = glamorous.input({
+export const InputField = glamorous.input({
   width: "100%",
   height: "25px",
   fontSize: "18px",
   borderRadius: '3px'
 });
 
-const LeftSide = glamorous.div({
+export const LeftSide = glamorous.div({
     width: "50%",
     padding: '20px 25%',
 
@@ -46,29 +46,13 @@ const LeftSide = glamorous.div({
 //   flexDirection: "column"
 // });
 
-const ContactTitle = glamorous.h3({
+export const ContactTitle = glamorous.h3({
   display: "flex",
   justifyContent: "center",
   textAlign: "center"
 });
 
-const ContactForm = (props) => {
-  return <Container>
-      <ContactTitle>Profile Information</ContactTitle>
+// const ContactForm = (props) => {
 
-      <LeftSide>
-        <Label for="test">First Name</Label>
-        <InputField type="text" placeholder={props.userState.name.split(' ')[0]} />
-        <Label>Last Name</Label>
-        <InputField type="text" placeholder={props.userState.name.split(' ')[1]} />
-        <Label>Phone Number</Label>
-      <InputField type="text" placeholder={props.userState.phone} />
-        <Label>Email</Label>
-      <InputField type="text" placeholder={props.userState.email} />
-        <Label>Location</Label>
-      <InputField type="text" placeholder={props.userState.location} />
-      </LeftSide>
-    </Container>;
-};
 
-export default ContactForm;
+
