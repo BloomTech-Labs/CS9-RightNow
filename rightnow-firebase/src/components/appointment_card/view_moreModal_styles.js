@@ -4,7 +4,6 @@ export const Container = glamorous.div({
 	width: '100vw',
 	height: '100vh',
 	position: 'fixed',
-	zIndex: 1,
 	background: 'rgba(0, 0, 0, 0.5)',
 	overflow: 'hidden'
 	// add filter: blur() later; should affect App.js when modal is active.
@@ -19,7 +18,6 @@ export const ModalWrapper = glamorous.div({
 	width: '80%',
 	padding: '0 15%',
 	paddingTop: '20vh',
-	zIndex: 2,
 	position: 'relative',
 	display: 'flex',
 	justifyContent: 'center',

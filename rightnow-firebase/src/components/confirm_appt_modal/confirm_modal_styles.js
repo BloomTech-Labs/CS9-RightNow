@@ -4,22 +4,21 @@ export const Container = glamorous.div({
 	width: '100vw',
 	height: '100vh',
 	position: 'fixed',
-	zIndex: 1,
 	background: 'rgba(0, 0, 0, 0.5)',
-	overflow: 'hidden'
+	top: 0,
+	left: 0,
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+	zIndex: 2,
+	// overflow: 'hidden'
 	// add filter: blur() later; should affect App.js when modal is active.
 });
 
 export const ModalWrapper = glamorous.div({
-	// position: 'absolute',
-	// left: '50%',
-	// top: '50%',
-	// transform: 'translate(-50%, -50%)',
-	filter: 0,
 	width: '80%',
 	padding: '0 15%',
 	paddingTop: '20vh',
-	zIndex: 2,
 	position: 'relative',
 	display: 'flex',
 	justifyContent: 'center',
@@ -36,7 +35,6 @@ export const ElementConainer = glamorous.div({
 	background: '#fffaf4',
 	width: '40%',
 	padding: '2%',
-	zIndex: 2
 });
 
 export const DetailContainer = glamorous.div({
@@ -89,8 +87,6 @@ export const Cost = glamorous.div({
 	fontSize: '1.5em',
 	fontWeight: 500
 });
-
-
 
 export const Agreement = glamorous.div({
 	marginTop: '3%',
