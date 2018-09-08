@@ -110,7 +110,7 @@ export default class Navigation extends Component {
 		firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)
-			.then((res) => this.fireSweetAlert_success())
+			.then((res) => this.fireSweetAlert_success('login'))
 			.then((res) => this.closeModal())
 			// if it fails
 			.catch((err) => {
@@ -169,10 +169,17 @@ export default class Navigation extends Component {
 			showConfirmButton: false,
 			timer: 3000
 		});
-		toast({
-			type: 'success',
-			title: 'Signed in successfully'
-		});
+		if (type === 'login') {
+			toast({
+				type: 'success',
+				title: 'Signed in successfully'
+			});
+		} else if (type === 'logout') {
+			toast({
+				type: 'success',
+				title: 'Successfully signed off'
+			});
+		}
 	};
 	fireSweetAlert_error = () => {
 		const toast = swal.mixin({
@@ -212,7 +219,11 @@ export default class Navigation extends Component {
 											Business Owner?
 										</Link>
 									</Option>
-									<Option onClick={() => auth.signOut()}>SignOut</Option>
+									<Option
+										onClick={() => auth.signOut().then(() => this.fireSweetAlert_success('logout'))}
+									>
+										SignOut
+									</Option>
 								</ButtonContainer>
 							);
 						} else
