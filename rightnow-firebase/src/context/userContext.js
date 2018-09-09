@@ -246,7 +246,6 @@ export default class UserProvider extends Component {
 	};
 
 	componentDidMount() {
-		console.log('AAAAA', this);
 		// this.state.clientLocation(); // set initial query input to client location
 		this.state.searchAll(); // searching for all appts: TEMPORARY
 
@@ -260,10 +259,8 @@ export default class UserProvider extends Component {
 					.then((isBusiness) => {
 						// if logged in as Business
 						if (isBusiness) {
-							console.log('AA111a', this);
 							return;
 						} else {
-							console.log('AA111b', this);
 							this.setState(
 								{
 									userSignedIn: true,
@@ -293,7 +290,6 @@ export default class UserProvider extends Component {
 					photo: null,
 					ifOAuth: ''
 				});
-				console.log('AA222', this);
 			} else return;
 		});
 	}

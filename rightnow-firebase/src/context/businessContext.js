@@ -171,7 +171,6 @@ export default class BusinessProvider extends Component {
 	};
 
 	componentDidMount() {
-		console.log('BBBBBB', this);
 		firebase.auth().onAuthStateChanged((user) => {
 			console.log(`current user:`, user);
 
@@ -181,7 +180,6 @@ export default class BusinessProvider extends Component {
 					.then((token) => (token.claims.business ? true : false))
 					.then((isBusiness) => {
 						if (!isBusiness) {
-							console.log('BB111a', this);
 							// if logged in as User
 							this.setState({ loggedInAs: 'customer' });
 							// from business Page
@@ -190,7 +188,6 @@ export default class BusinessProvider extends Component {
 								// then redirect to Customer Page
 							}
 						} else {
-							console.log('BB111b', this);
 							// if logged in as business
 							this.setState({ loggedInAs: 'business' });
 							// from customer Page
@@ -212,7 +209,6 @@ export default class BusinessProvider extends Component {
 						}
 					})
 					.catch((err) => console.log('error', err));
-				console.log('BBB111', this);
 			} else if (!user && this.state.userSignedIn) {
 				// empty state
 				this.setState({
@@ -236,7 +232,6 @@ export default class BusinessProvider extends Component {
 					available_appointments: [],
 					booked_appointments: []
 				});
-				console.log('BBB222', this);
 			} else return;
 		});
 	}
