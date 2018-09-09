@@ -99,9 +99,19 @@ class BusinessAccount extends Component {
 					.auth()
 					.currentUser.getIdTokenResult()
 					.then((token) => (token.claims.business ? true : false))
-					.then((x) => (x ? this.setState({ email: '', password: '' }) : null))
-					// .catch((err) => console.log('error!', err))
-					.then((res) => value.fireSweetAlert_success('login'))
+					.then((isBusiness) => {
+						isNotBusiness ? this.setState({ email: '', password: '' }) : null;
+						if (isBusiness) {
+							value.fireSweetAlert_success('login');
+						} else {
+							firebase
+								.auth()
+								.signOut()
+								.then((res) => setTimeout(this.fireSweetAlert_error_notBiz, 600))
+								.catch((err) => console.log('something went wrong:', err));
+						}
+					})
+					// .then((res) => value.fireSweetAlert_success('login'))
 					.catch((err) => {
 						setTimeout(value.fireSweetAlert_error_notBiz, 600);
 					})
