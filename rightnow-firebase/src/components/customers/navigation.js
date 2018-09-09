@@ -110,31 +110,30 @@ export default class Navigation extends Component {
 		firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)
-			.then((res) => {
-				firebase.auth().onAuthStateChanged((user) => {
-					if (user) {
-						user
-							.getIdTokenResult()
-							.then((token) => (token.claims.business ? true : false))
-							.then((isBusiness) => {
-								if (isBusiness) {
-									console.log('userdb: not user');
-									firebase
-										.auth()
-										.signOut()
-										.then((res) => setTimeout(this.fireSweetAlert_error_notUser, 600))
-										.catch((err) => console.log('something went wrong:', err));
-								} else {
-									console.log('userdb: is user');
-									this.fireSweetAlert_success('login');
-									this.closeModal();
-								}
-							})
-							.catch((err) => console.log('error', err));
-					}
-				});
-			})
-			.then()
+			// .then((res) => {
+			// 	firebase.auth().onAuthStateChanged((user) => {
+			// 		if (user) {
+			// 			user
+			// 				.getIdTokenResult()
+			// 				.then((token) => (token.claims.business ? true : false))
+			// 				.then((isBusiness) => {
+			// 					if (isBusiness) {
+			// 						console.log('userdb: not')
+			// 						firebase
+			// 							.auth()
+			// 							.signOut()
+			// 							.then((res) => setTimeout(this.fireSweetAlert_error_notUser, 600))
+			// 							.catch((err) => console.log('something went wrong:', err));
+			// 					} else {
+			// 						this.fireSweetAlert_success('login');
+			// 						this.closeModal();
+			// 					}
+			// 				})
+			// 				.catch((err) => console.log('error', err));
+			// 		}
+			// 	});
+			// })
+			.then((res) => this.fireSweetAlert_success('login'))
 			.catch((err) => {
 				setTimeout(this.fireSweetAlert_error, 600);
 			});
