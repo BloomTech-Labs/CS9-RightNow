@@ -225,7 +225,7 @@ class Navigation extends Component {
 									<ButtonContainer>
 										<Option>
 											<Link
-												to="/biz-account"
+												to="/user-settings"
 												style={{
 													textDecoration: 'none',
 													color: '#EBEBEB',
@@ -233,7 +233,7 @@ class Navigation extends Component {
 													'&hover': { color: '#353A50 !important' }
 												}}
 											>
-												Business Owner?
+												User Profile
 											</Link>
 										</Option>
 										<Option
@@ -250,7 +250,6 @@ class Navigation extends Component {
 							} else
 								return (
 									<ButtonContainer>
-										<Option onClick={() => this.fireSweetAlert_waiting()}>SweetAlert!</Option>
 										<Option>
 											<Link
 												to="/biz-account"
