@@ -105,14 +105,34 @@ export default class Navigation extends Component {
 	};
 
 	handleEmailSignIn = (email, password) => {
-		// waitforlogin triggers
 		this.fireSweetAlert_waiting();
+
 		firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)
-			.then((res) => this.fireSweetAlert_success('login'))
-			.then((res) => this.closeModal())
-			// if it fails
+			.then((res) => {
+				firebase.auth().onAuthStateChanged((user) => {
+					if (user) {
+						user
+							.getIdTokenResult()
+							.then((token) => (token.claims.business ? true : false))
+							.then((isBusiness) => {
+								if (isBusiness) {
+									firebase
+										.auth()
+										.signOut()
+										.then((res) => setTimeout(this.fireSweetAlert_error_notUser, 600))
+										.catch((err) => console.log('something went wrong:', err));
+								} else {
+									this.fireSweetAlert_success('login');
+									this.closeModal();
+								}
+							})
+							.catch((err) => console.log('error', err));
+					}
+				});
+			})
+			.then()
 			.catch((err) => {
 				setTimeout(this.fireSweetAlert_error, 600);
 			});
@@ -191,6 +211,18 @@ export default class Navigation extends Component {
 		toast({
 			type: 'error',
 			title: 'Wrong email / password'
+		});
+	};
+	fireSweetAlert_error_notUser = () => {
+		const toast = swal.mixin({
+			toast: true,
+			position: 'top-end',
+			showConfirmButton: false,
+			timer: 3000
+		});
+		toast({
+			type: 'error',
+			title: 'You are trying to log in with Business Account'
 		});
 	};
 
