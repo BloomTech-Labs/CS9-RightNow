@@ -69,7 +69,6 @@ export default class RegisterModal extends Component {
 	};
 
 	handleEmailSignIn = async (email, password) => {
-		console.log(this.state);
 		const confirm_account = await firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)

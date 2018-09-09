@@ -67,21 +67,21 @@ export default class UserProvider extends Component {
 
 			console.log('Hello', this.state.upcoming_appointments.length);
 
-			const names = await Promise.all(this.state.upcoming_appointments.map(async (appt) => {
-				const businessRef = await db.collection('_business_').doc(appt['business_ref']).get();
-				console.log('buss Ref', businessRef);
-				const business = await businessRef.data();
-				console.log(business['business_information'].name);
-				return business['business_information'].name;
-			}));
+			const names = await Promise.all(
+				this.state.upcoming_appointments.map(async (appt) => {
+					const businessRef = await db.collection('_business_').doc(appt['business_ref']).get();
+					console.log('buss Ref', businessRef);
+					const business = await businessRef.data();
+					console.log(business['business_information'].name);
+					return business['business_information'].name;
+				})
+			);
 
-			this.setState({companyNames: names})
+			this.setState({ companyNames: names });
 		},
 
 		getCompanyName: async () => {
-
 			// const db = firebase.firestore();
-
 			// console.log('Hello', this.state.upcoming_appointments.length);
 			//
 			// const names = await Promise.all(this.state.upcoming_appointments.map(async (appt) => {
@@ -93,7 +93,6 @@ export default class UserProvider extends Component {
 			// }));
 			//
 			// this.setState({companyNames: names})
-
 		},
 
 		searchAll: async () => {
@@ -246,6 +245,7 @@ export default class UserProvider extends Component {
 	};
 
 	componentDidMount() {
+		console.log('AAAAA', this);
 		// this.state.clientLocation(); // set initial query input to client location
 		this.state.searchAll(); // searching for all appts: TEMPORARY
 
@@ -278,6 +278,7 @@ export default class UserProvider extends Component {
 						}
 					})
 					.catch((err) => console.log('error', err));
+				console.log('AA111', this);
 			} else if (!user && this.state.userSignedIn) {
 				this.setState({
 					userSignedIn: false,
@@ -288,6 +289,7 @@ export default class UserProvider extends Component {
 					photo: null,
 					ifOAuth: ''
 				});
+				console.log('AA222', this);
 			} else return;
 		});
 	}

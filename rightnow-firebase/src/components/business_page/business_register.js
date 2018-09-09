@@ -89,37 +89,46 @@ class BusinessAccount extends Component {
 		}
 	};
 
-	handleEmailSignIn = async (value) => {
+	handleEmail_SignIn = async (value) => {
+		console.log(this.state);
 		value.fireSweetAlert_waiting();
 		const confirm_account = await firebase
 			.auth()
 			.signInWithEmailAndPassword(this.state.email, this.state.password)
-			.then((res) =>
-				firebase
-					.auth()
-					.currentUser.getIdTokenResult()
-					.then((token) => (token.claims.business ? true : false))
-					.then((isBusiness) => {
-						isNotBusiness ? this.setState({ email: '', password: '' }) : null;
-						if (isBusiness) {
-							value.fireSweetAlert_success('login');
-						} else {
-							firebase
-								.auth()
-								.signOut()
-								.then((res) => setTimeout(this.fireSweetAlert_error_notBiz, 600))
-								.catch((err) => console.log('something went wrong:', err));
-						}
-					})
-					// .then((res) => value.fireSweetAlert_success('login'))
-					.catch((err) => {
-						setTimeout(value.fireSweetAlert_error_notBiz, 600);
-					})
-			)
+			.then((res) => {
+				firebase.auth().onAuthStateChanged((user) => {
+					if (user) {
+						user
+							.getIdTokenResult()
+							.then((token) => (token.claims.business ? true : false))
+							.then((isBusiness) => {
+								if (isBusiness) {
+									console.log('bizdb: is biz');
+									value.fireSweetAlert_success('login');
+									this.setState({ email: '', password: '' })
+								}
+								if (!isBusiness) {
+									console.log('bizdb: not biz');
+									console.log('this.state', this.state);
+									firebase
+										.auth()
+										.signOut()
+										.then((res) => {
+											console.log('this part is working');
+											setTimeout(this.fireSweetAlert_error_notBiz, 600);
+										})
+										.catch((err) => console.log('something went wrong:', err));
+								}
+								// isBusiness ? this.setState({ email: '', password: '' }) : null;
+							})
+							.catch((err) => console.log('error', err));
+					}
+				});
+				// .then((res) => value.fireSweetAlert_success('login'))
+			})
 			.catch((err) => {
 				setTimeout(value.fireSweetAlert_error, 600);
 			});
-		// .catch((err) => console.log('oh dear...', err));
 
 		return confirm_account;
 	};
@@ -290,7 +299,7 @@ class BusinessAccount extends Component {
 										required
 										style={{ width: '100%', margin: '2% auto', padding: '2% 0' }}
 									/>
-									<Button onClick={() => this.handleEmailSignIn(this.props.value)}>Login</Button>
+									<Button onClick={() => this.handleEmail_SignIn(this.props.value)}>Login</Button>
 								</Fieldset>
 							</div>
 						</FormContainerLog>

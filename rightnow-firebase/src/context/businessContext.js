@@ -153,6 +153,7 @@ export default class BusinessProvider extends Component {
 	};
 
 	componentDidMount() {
+		console.log('BBBBBB', this);
 		firebase.auth().onAuthStateChanged((user) => {
 			console.log(`current user:`, user);
 
@@ -183,6 +184,7 @@ export default class BusinessProvider extends Component {
 						}
 					})
 					.catch((err) => console.log('error', err));
+				console.log('BBB111', this);
 			} else if (!user && this.state.userSignedIn) {
 				// empty state
 				this.setState({
@@ -206,6 +208,7 @@ export default class BusinessProvider extends Component {
 					available_appointments: [],
 					booked_appointments: []
 				});
+				console.log('BBB222', this);
 			} else return;
 		});
 	}

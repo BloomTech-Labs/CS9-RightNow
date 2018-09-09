@@ -118,12 +118,14 @@ export default class Navigation extends Component {
 							.then((token) => (token.claims.business ? true : false))
 							.then((isBusiness) => {
 								if (isBusiness) {
+									console.log('userdb: not user');
 									firebase
 										.auth()
 										.signOut()
 										.then((res) => setTimeout(this.fireSweetAlert_error_notUser, 600))
 										.catch((err) => console.log('something went wrong:', err));
 								} else {
+									console.log('userdb: is user');
 									this.fireSweetAlert_success('login');
 									this.closeModal();
 								}
