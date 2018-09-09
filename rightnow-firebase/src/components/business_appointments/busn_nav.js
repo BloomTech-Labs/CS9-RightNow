@@ -65,7 +65,11 @@ export default class BusnNav extends Component {
 
         <ButtonContainer>
           <Option onClick={() => this.premiumSignUp()} style={{color: "rgb(97, 218, 251)", fontWeight: "800"}}>Premium</Option>
-          <Option>Settings</Option>
+          <Option>
+            <Link to="/company-settings" style={{ textDecoration: "none", padding: "0", margin: "1%", display: "flex", justifyContent: "center", alignContent: "center" }}>
+            Settings
+            </Link>
+            </Option>
           <Option onClick={() => this.props.logout()}>Sign Out</Option>
         </ButtonContainer>
       </Container>

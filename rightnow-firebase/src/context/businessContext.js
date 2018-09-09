@@ -81,6 +81,17 @@ export default class BusinessProvider extends Component {
 
 			return true;
 		},
+		get_business_details: async (id) => {
+			const busn_details = await firebase
+				.firestore()
+				.collection('_business_')
+				.doc(id)
+				.get()
+				.then((doc) => doc.data())
+				.then((data) => this.setState({ business: data.business_information }))
+				.catch((err) => console.log('error', err));
+			return busn_details;
+		},
 
 		// SweetAlert Stuff
 		fireSweetAlert_waiting: (type) => {
