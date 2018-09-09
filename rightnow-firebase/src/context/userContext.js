@@ -26,6 +26,11 @@ export default class UserProvider extends Component {
 		queryResults: [],
 		finished: false,
 		full_query: null,
+		filtered_query: null,
+		update_results: false,
+
+		industry_selection: "All",
+		time_selection: "All",
 
 		userSignedIn: false,
 		clientZip: null,
@@ -36,6 +41,40 @@ export default class UserProvider extends Component {
 		customerLogout: () => {
 			firebase.auth().signOut();
 			this.unsubscribe();
+		},
+
+		filter_appointments: data => {
+			const copy_full = {...this.state.full_query};
+
+			console.log("here")
+			console.log(data)
+			console.log(copy_full)
+
+			if (data.industry_selection) {
+				const temp_query = {};
+				for (let busn in copy_full) {
+				//  THIS IS A MORE EFFICIENT METHOD TO SORT BY INDUSTRY ONCE OUR DATABASE GROWS
+				// 	const busn_tags = copy_full[busn].business_details.tags;
+				// 	const contains_industry = busn_tags.filter(tag => {
+				// 		const tag_lower = tag.toLowerCase();
+				// 		const industry_lower = data.industry_selection.toLowerCase();
+				// 		return tag_lower.includes(industry_lower);
+				// 	});
+				// 	if (contains_industry.length !== 0) {
+				// 		temp_query[busn] = copy_full[busn];
+				// 	}
+					const busn_appts= copy_full[busn].appointments;
+					const contains_industry = busn_appts.filter(appt => {
+							const appt_lower = appt.service.toLowerCase();
+							const industry_lower = data.industry_selection.toLowerCase();
+							return appt_lower.includes(industry_lower) && appt.is_available;
+						});
+					if (contains_industry.length !== 0) {
+						temp_query[busn] = copy_full[busn];
+					}
+				}
+				this.setState({ filtered_query: temp_query, update_results: true });
+			}
 		},
 
 		upcomingAppointment: async () => {
@@ -164,10 +203,10 @@ export default class UserProvider extends Component {
 
 		listenToResults: () => {
 			// THERE IS NO QUERY WHEN WE AUTO POPULATE DEFAULT APPOINTMENTS
-			const query =
-				this.state.query === ''
-					? firebase.firestore().collection('_appointment_')
-					: firebase.firestore().collection('_appointment_').where('service', '==', this.state.query);
+			const query = firebase.firestore().collection('_appointment_');
+				// this.state.query === ''
+					// ? firebase.firestore().collection('_appointment_')
+					// : firebase.firestore().collection('_appointment_').where('service', '==', this.state.query);
 
 			this.unsubscribe = query.onSnapshot((snapshot) => {
 				snapshot.docChanges().forEach((change) => {
@@ -215,7 +254,7 @@ export default class UserProvider extends Component {
 
 	componentDidMount() {
 		// this.state.clientLocation(); // set initial query input to client location
-		// this.state.searchAll(); // searching for all appts: TEMPORARY
+		this.state.searchAll(); // searching for all appts: TEMPORARY
 
 		firebase.auth().onAuthStateChanged((user) => {
 			console.log(user);

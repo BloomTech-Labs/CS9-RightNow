@@ -121,12 +121,10 @@ class Clock extends Component {
 
 export default class QuickSearch extends Component {
 	state = {
-		industries: [ 'Hair', 'Auto', 'Nails', 'Pets' ],
+		industries: [ 'Hair', 'Auto', 'Nails', 'Pets', 'Massage' ],
 		times: [ '1 hour', '2 hours', '3 hours', '4 hours', '5+ hours' ],
 		active_industry: null,
-		active_time: null,
-		industry_actual: null,
-		time_actual: null
+		active_time: null
 	};
 
 	componentDidMount() {
@@ -152,8 +150,7 @@ export default class QuickSearch extends Component {
 
 			e.target.id = 'active_time';
 			this.setState({ active_time: document.querySelector('#active_time') });
-			// this.setState({ time_actual: this.state.active_time.innerHTML });
-			this.props.updateResults({ time_actual: this.state.active_time.innerHTML });
+			this.props.updateResults({ time_selection: this.state.active_time.innerHTML });
 		} else {
 			e.target.style.background = '#353A50';
 			e.target.style.color = 'white';
@@ -164,8 +161,7 @@ export default class QuickSearch extends Component {
 
 			e.target.id = 'active_industry';
 			this.setState({ active_industry: document.querySelector('#active_industry') });
-			// this.setState({ industry_actual: this.state.active_industry.innerHTML });
-			this.props.updateResults({ industry_actual: this.state.active_industry.innerHTML });
+			this.props.updateResults({ industry_selection: this.state.active_industry.innerHTML });
 		}
 	};
 

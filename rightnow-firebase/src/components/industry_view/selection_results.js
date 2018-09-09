@@ -108,7 +108,7 @@ export default class Results extends Component {
 										return acc;
 									}, {});
 								})
-								.then((final) => value.updateState({ full_query: final, finished: false }))
+								.then((final) => value.updateState({ full_query: final, filtered_query: final, finished: false, update_results: true }))
 								.then(() => !value.featured_appointments ? value.retrieveFeaturedAppointments() : null)
 								.then(() => value.listenToResults())
 								.catch((err) => console.log('oh no', err));
@@ -117,11 +117,29 @@ export default class Results extends Component {
 						getBusinessInfo();
 					}
 
+					if (value.update_results) {
+						value.updateState({ update_results: false });
+						return (
+							<Container>
+								{Object.keys(value.filtered_query).map((busnRef) => {
+									const { business_details, appointments } = value.filtered_query[busnRef];
+									return (
+										<AppointmentCard
+											businessDetails={business_details}
+											appointments={appointments}
+											key={busnRef}
+										/>
+									);
+								})}
+							</Container>
+						)
+					}
+
 					return (
 						<Container>
-							{value.full_query ? (
-								Object.keys(value.full_query).map((busnRef) => {
-									const { business_details, appointments } = value.full_query[busnRef];
+							{value.filtered_query ? (
+								Object.keys(value.filtered_query).map((busnRef) => {
+									const { business_details, appointments } = value.filtered_query[busnRef];
 									return (
 										<AppointmentCard
 											businessDetails={business_details}
