@@ -68,6 +68,15 @@ export default class BusinessProvider extends Component {
       this.setState({ display_delete_modal: false, selected_appointment: null });
 
       return true;
+    },
+
+    get_business_details: async id => {
+      const busn_details = await firebase.firestore()
+        .collection("_business_").doc(id).get()
+        .then(doc => doc.data())
+        .then(data => this.setState({ business: data.business_information }))
+        .catch(err => console.log("error", err));
+      return busn_details;
     }
   }
 
@@ -79,18 +88,20 @@ export default class BusinessProvider extends Component {
         user.getIdTokenResult()
           .then(token => token.claims.business ? true : false)
           .then(isBusiness => {
-            if (!isBusiness) return;
-            else {
-              this.setState({ userSignedIn: true, uid: user.uid,
+              if (!isBusiness) return;
+              this.setState({
+                userSignedIn: true, uid: user.uid,
                 personal: {
                   full_name: user.displayName,
                   email: user.email,
                   phone: user.phoneNumber,
                   photo: user.photoURL
-                }});
-              this.initSnapshot();
-            }
-          }).catch(err => console.log("error", err));
+                }
+              });
+            this.initSnapshot();
+            
+          }).then(() => this.state.get_business_details(user.uid))
+          .catch(err => console.log("error", err));
       }
       
       else if (!user && this.state.userSignedIn) { // empty state

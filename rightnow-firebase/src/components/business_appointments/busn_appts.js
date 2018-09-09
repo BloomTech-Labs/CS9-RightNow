@@ -3,7 +3,7 @@ import {
   Container,
   CalendarWrapper,
   ApptsWrapper,
-  PrimaryWrapper,
+  PrimaryWrapper
 } from "./busn_appts_style";
 import PostAppointment from "./post_availability";
 import Calendar from "./calendar";
@@ -14,28 +14,27 @@ import AppointmentDetails from "../appointmentDetails/appointmentDetailsCustomer
 import DeleteModal from "./delete_modal";
 import PaymentForm from "../_Payment-Form/PaymentForm";
 
-
 class BusnApptsView extends Component {
   state = {
     delete_modal: false
-  }
+  };
 
-
-  render() {  
+  render() {
     return (
       <BusinessContext.Consumer>
         {value => {
-
           if (this.props.value.userSignedIn === false) {
-            console.log("here")
-            return (<Redirect to="/biz-account" />)
+            console.log("here");
+            return <Redirect to="/biz-account" />;
           }
 
           return (
             <PrimaryWrapper>
-      
-              <BusnNav logout={() => value.business_logout()} updateState={data => value.updateState(data)} />
-            
+              <BusnNav
+                logout={() => value.business_logout()}
+                updateState={data => value.updateState(data)}
+              />
+
               <Container>
                 <CalendarWrapper>
                   <Calendar busnContext={value} />
@@ -45,17 +44,19 @@ class BusnApptsView extends Component {
                   <AppointmentDetails busnContext={value} />
                 </ApptsWrapper>
               </Container>
-      
-              {value.display_delete_modal ? <DeleteModal busnContext={value} /> : null}
-              {value.display_payment_modal ? <PaymentForm busnContext={value} /> : null}
-      
+
+              {value.display_delete_modal ? (
+                <DeleteModal busnContext={value} />
+              ) : null}
+              {value.display_payment_modal ? (
+                <PaymentForm busnContext={value} />
+              ) : null}
             </PrimaryWrapper>
-          )
+          );
         }}
       </BusinessContext.Consumer>
-    )
+    );
   }
 }
-
 
 export default withRouter(BusnApptsView);
