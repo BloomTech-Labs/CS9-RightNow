@@ -80,12 +80,81 @@ export default class BusinessProvider extends Component {
 			this.setState({ display_delete_modal: false, selected_appointment: null });
 
 			return true;
+		},
+
+		// SweetAlert Stuff
+		fireSweetAlert_waiting: (type) => {
+			swal({
+				title: 'Logging you in now...',
+				onOpen: () => {
+					swal.showLoading();
+				}
+			});
+		},
+		fireSweetAlert_success: (type) => {
+			const toast = swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 3000
+			});
+			if (type === 'login') {
+				toast({
+					type: 'success',
+					title: 'Signed in successfully'
+				});
+			} else if (type === 'logout') {
+				toast({
+					type: 'success',
+					title: 'Successfully signed off'
+				});
+			}
+		},
+
+		fireSweetAlert_error: (type) => {
+			const toast = swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 3000
+			});
+
+			toast({
+				type: 'error',
+				title: 'Wrong email / password'
+			});
+		},
+		fireSweetAlert_error_notBiz: (type) => {
+			const toast = swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 3000
+			});
+
+			toast({
+				type: 'error',
+				title: 'Your account is not a registered business account.'
+			});
+		},
+		fireSweetAlert_error_emptyField: (type) => {
+			const toast = swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 3000
+			});
+
+			toast({
+				type: 'error',
+				title: 'You have incomplete fields'
+			});
 		}
 	};
 
 	componentDidMount() {
 		firebase.auth().onAuthStateChanged((user) => {
-			console.log(`current user: ${user}`);
+			console.log(`current user:`, user);
 
 			if (user && !this.state.userSignedIn) {
 				user
@@ -168,47 +237,6 @@ export default class BusinessProvider extends Component {
 					}
 				});
 			});
-	};
-
-	// SweetAlert Stuff
-	fireSweetAlert_waiting = () => {
-		swal({
-			title: 'Logging you in now...',
-			onOpen: () => {
-				swal.showLoading();
-			}
-		});
-	};
-	fireSweetAlert_success = (type) => {
-		const toast = swal.mixin({
-			toast: true,
-			position: 'top-end',
-			showConfirmButton: false,
-			timer: 3000
-		});
-		if (type === 'login') {
-			toast({
-				type: 'success',
-				title: 'Signed in successfully'
-			});
-		} else if (type === 'logout') {
-			toast({
-				type: 'success',
-				title: 'Successfully signed off'
-			});
-		}
-	};
-	fireSweetAlert_error = () => {
-		const toast = swal.mixin({
-			toast: true,
-			position: 'top-end',
-			showConfirmButton: false,
-			timer: 3000
-		});
-		toast({
-			type: 'error',
-			title: 'Wrong email / password'
-		});
 	};
 
 	render() {
