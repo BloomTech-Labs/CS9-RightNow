@@ -9,11 +9,11 @@ import { configs } from "./environment";
 
 
 ReactDOM.render(
-	<StripeProvider apiKey={configs.STRIPE_API_KEY}>
+	// <StripeProvider apiKey="pk_test_Yf6hb34cfn9IIpM05jOCNSwk">//{configs.STRIPE_API_KEY}>
 		<Router>
 			<App />
-		</Router>
-	</StripeProvider>,
+		</Router>,
+	// </StripeProvider>,
 	document.getElementById('root')
 );
 

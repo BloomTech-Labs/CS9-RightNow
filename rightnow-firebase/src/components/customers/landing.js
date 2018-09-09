@@ -38,7 +38,7 @@ const Title = glamorous.div({
   color: "#EBEBEB",
   fontWeight: 800,
   textAlign: "center",
-  marginBottom: "5%",
+  marginBottom: "4%",
   // alignSelf: "top",
 
   "@media(min-width: 1500px)": {
@@ -216,10 +216,10 @@ export default class Landing extends Component {
               {value => (
                 <Wrapper id="primary_input">
                   <AlgoliaCitySearch />
-                  <Or>
+                  {/* <Or>
                     <span style={{ backgroundColor: '#353A50', padding: '0 3%', margin: "auto" }}>or</span>
                   </Or>
-                  <AlgoliaServiceSearch />
+                  <AlgoliaServiceSearch /> */}
                   <Button id="primary_button" onClick={() => value.handleSearch()}>Find Appointments</Button>
                 </Wrapper>
               )}

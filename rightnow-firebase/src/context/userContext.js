@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from '../firebase/firebase';
 import axios from 'axios';
+import moment from "moment";
 
 export const UserContext = React.createContext();
 
@@ -44,43 +45,107 @@ export default class UserProvider extends Component {
 			this.unsubscribe();
 		},
 
-		filter_appointments: data => {
-			const copy_full = {...this.state.full_query};
-
-			console.log("here")
-			console.log(data)
-			console.log(copy_full)
-
-			if (data.industry_selection) {
-				const temp_query = {};
-				for (let busn in copy_full) {
-				//  THIS IS A MORE EFFICIENT METHOD TO SORT BY INDUSTRY ONCE OUR DATABASE GROWS
-				// 	const busn_tags = copy_full[busn].business_details.tags;
-				// 	const contains_industry = busn_tags.filter(tag => {
-				// 		const tag_lower = tag.toLowerCase();
-				// 		const industry_lower = data.industry_selection.toLowerCase();
-				// 		return tag_lower.includes(industry_lower);
-				// 	});
-				// 	if (contains_industry.length !== 0) {
-				// 		temp_query[busn] = copy_full[busn];
-				// 	}
-					const busn_appts= copy_full[busn].appointments;
-					const contains_industry = busn_appts.filter(appt => {
-							const appt_lower = appt.service.toLowerCase();
-							const industry_lower = data.industry_selection.toLowerCase();
-							return appt_lower.includes(industry_lower) && appt.is_available;
-						});
-					if (contains_industry.length !== 0) {
-						temp_query[busn] = copy_full[busn];
-					}
+		filter_by_industry: (obj_to_filter, industry_filter=this.state.industry_selection) => {
+			const copy_full = {...obj_to_filter};
+			const temp_query = {};
+			for (let busn in copy_full) {
+				const busn_appts= copy_full[busn].appointments;
+				const contains_industry = busn_appts.filter(appt => {
+						const appt_lower = appt.service.toLowerCase();
+						const industry_lower = industry_filter.toLowerCase();
+						const singluar = industry_lower.slice(0, industry_lower.length-1);
+						return (appt_lower.includes(industry_lower) || appt_lower.includes(singluar)) && appt.is_available;
+					});
+				if (contains_industry.length !== 0) {
+					temp_query[busn] = copy_full[busn];
 				}
-				this.setState({ filtered_query: temp_query, update_results: true });
+			}
+			return temp_query;
+		},
+
+		filter_by_time: (obj_to_filter, time_filter=this.state.time_selection) => {
+			const copy_full = {...obj_to_filter};
+			const temp_query = {};
+			for (let busn in copy_full) {
+				const busn_appts= copy_full[busn].appointments;
+				const contains_time = busn_appts.filter(appt => {
+					const is_after_current_time = moment(appt.start).isAfter(moment());
+					const is_before_filter_time = moment(appt.start).isBefore(moment().add(+time_filter[0], "hour"))
+					return is_after_current_time && is_before_filter_time;
+				});
+				if (contains_time.length !== 0) {
+					temp_query[busn] = copy_full[busn];
+					temp_query[busn].appointments = contains_time;
+				}
+			}
+			return temp_query;
+		},
+
+		filter_appointments: data => {
+			if (data.industry_selection) {
+				if (data.industry_selection === "All" && this.state.time_selection === "All") {
+					this.setState({ 
+						filtered_query: {...this.state.full_query}, 
+						update_results: true, 
+						industry_selection: data.industry_selection 
+					});
+				} else if (data.industry_selection === "All") {
+					const filtered = this.state.filter_by_time(this.state.full_query);
+					this.setState({ 
+						filtered_query: filtered,
+						update_results: true, 
+						industry_selection: data.industry_selection 
+					});
+				} else if (this.state.time_selection === "All") {
+					const filtered = this.state.filter_by_industry(this.state.full_query, data.industry_selection);
+					this.setState({ 
+						filtered_query: filtered,
+						update_results: true, 
+						industry_selection: data.industry_selection 
+					});
+				} else {
+					const filtered = this.state.filter_by_industry(this.state.full_query, data.industry_selection);
+					const filtered2 = this.state.filter_by_time(filtered, this.state.time_selection);
+					this.setState({ 
+						filtered_query: filtered2,
+						update_results: true, 
+						industry_selection: data.industry_selection 
+					});
+				}
+			} else if (data.time_selection) {
+				if (data.time_selection === "All" && this.state.industry_selection === "All") {
+					this.setState({ 
+						filtered_query: {...this.state.full_query}, 
+						update_results: true,
+						time_selection: data.time_selection
+					});
+				} else if (data.time_selection === "All") {
+					const filtered = this.state.filter_by_industry(this.state.full_query);
+					this.setState({ 
+						filtered_query: filtered,
+						update_results: true, 
+						time_selection: data.time_selection 
+					});
+				} else if (this.state.industry_selection === "All") {
+					const filtered = this.state.filter_by_time(this.state.full_query, data.time_selection);
+					this.setState({ 
+						filtered_query: filtered,
+						update_results: true, 
+						time_selection: data.time_selection 
+					});
+				} else {
+					const filtered = this.state.filter_by_time(this.state.full_query, data.time_selection);
+					const filtered2 = this.state.filter_by_industry(filtered);
+					this.setState({ 
+						filtered_query: filtered2,
+						update_results: true, 
+						time_selection: data.time_selection 
+					});
+				}
 			}
 		},
 
 		upcomingAppointment: async () => {
-			// console.log("Starting!");
-			// console.log('uid', this.state);
 			const db = firebase.firestore();
 
 			const appointmentRef = await db
@@ -88,24 +153,18 @@ export default class UserProvider extends Component {
 				.doc(this.state.uid)
 				.collection('future_appointments')
 				.get();
-			// console.log('ApptRef', appointmentRef);
+
 			const apptIds = await appointmentRef.docs.map((doc) => doc.data());
 
-			///////////////////////////////////////////////////////////////////////
 			const future_appointments = await Promise.all(
 				apptIds.map(async (appt) => {
 					const currentRef = await db.collection('_appointment_').doc(appt['appointment_id']).get();
-					// console.log(currentRef.data());
 					const appointment = await currentRef.data();
-					// console.log(appointment);
 					return appointment;
 				})
 			);
 
-			// console.log('appts', future_appointments);
 			this.setState({ upcoming_appointments: future_appointments });
-
-			console.log('Hello', this.state.upcoming_appointments.length);
 
 			const names = await Promise.all(this.state.upcoming_appointments.map(async (appt) => {
 				const businessRef = await db.collection('_business_').doc(appt['business_ref']).get();
@@ -116,24 +175,6 @@ export default class UserProvider extends Component {
 			}));
 
 			this.setState({companyNames: names})
-		},
-
-		getCompanyName: async () => {
-
-			// const db = firebase.firestore();
-
-			// console.log('Hello', this.state.upcoming_appointments.length);
-			//
-			// const names = await Promise.all(this.state.upcoming_appointments.map(async (appt) => {
-			// 	const businessRef = await db.collection('_business_').doc(appt['business_ref']).get();
-			// 	console.log('buss Ref', businessRef);
-			// 	const business = await businessRef.data();
-			// 	console.log(business['business_information'].name);
-			// 	return business['business_information'].name;
-			// }));
-			//
-			// this.setState({companyNames: names})
-
 		},
 
 		searchAll: async () => {
@@ -351,4 +392,19 @@ DIRECTIONS TO USE CONTEXT:
         
       }}
     </UserContext.Consumer>
+*/
+
+/*
+
+				//  THIS IS A MORE EFFICIENT METHOD TO SORT BY INDUSTRY ONCE OUR DATABASE GROWS
+				// 	const busn_tags = copy_full[busn].business_details.tags;
+				// 	const contains_industry = busn_tags.filter(tag => {
+				// 		const tag_lower = tag.toLowerCase();
+				// 		const industry_lower = data.industry_selection.toLowerCase();
+				// 		return tag_lower.includes(industry_lower);
+				// 	});
+				// 	if (contains_industry.length !== 0) {
+				// 		temp_query[busn] = copy_full[busn];
+				// 	}
+
 */

@@ -22,18 +22,7 @@ export default class BusinessProvider extends Component {
       phone: ""
     },
 
-    business: {
-      name: "",
-      fullAddress: "",
-      street_number: "",
-      street_name: "",
-      city: "",
-      state: "",
-      zip: "",
-      phone: "",
-      rating: "",
-      photos: []
-    },
+    business: {},
 
     selectedItem: "",
 
@@ -68,6 +57,15 @@ export default class BusinessProvider extends Component {
       this.setState({ display_delete_modal: false, selected_appointment: null });
 
       return true;
+    },
+
+    get_business_details: async id => {
+      const busn_details = await firebase.firestore()
+        .collection("_business_").doc(id).get()
+        .then(doc => doc.data())
+        .then(data => this.setState({ business: data.business_information }))
+        .catch(err => console.log("error", err));
+      return busn_details;
     }
   }
 
@@ -88,9 +86,11 @@ export default class BusinessProvider extends Component {
                   phone: user.phoneNumber,
                   photo: user.photoURL
                 }});
+              
               this.initSnapshot();
             }
-          }).catch(err => console.log("error", err));
+          }).then(() => this.state.get_business_details(user.uid))
+          .catch(err => console.log("error", err));
       }
       
       else if (!user && this.state.userSignedIn) { // empty state

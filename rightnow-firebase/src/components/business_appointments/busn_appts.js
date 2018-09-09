@@ -13,6 +13,8 @@ import { BusinessContext } from "../../context/businessContext";
 import AppointmentDetails from "../appointmentDetails/appointmentDetailsCustomerView";
 import DeleteModal from "./delete_modal";
 import PaymentForm from "../_Payment-Form/PaymentForm";
+import { StripeProvider } from "react-stripe-elements";
+import { configs } from "../../environment";
 
 
 class BusnApptsView extends Component {
@@ -32,6 +34,7 @@ class BusnApptsView extends Component {
           }
 
           return (
+            <StripeProvider apiKey={configs.STRIPE_API_KEY}>
             <PrimaryWrapper>
       
               <BusnNav logout={() => value.business_logout()} updateState={data => value.updateState(data)} />
@@ -50,6 +53,7 @@ class BusnApptsView extends Component {
               {value.display_payment_modal ? <PaymentForm busnContext={value} /> : null}
       
             </PrimaryWrapper>
+            </StripeProvider>
           )
         }}
       </BusinessContext.Consumer>

@@ -7240,6 +7240,10 @@ sw-toolbox@^3.4.0:
     path-to-regexp "^1.0.1"
     serviceworker-cache-polyfill "^4.0.0"
 
+sweetalert2@^7.26.28:
+  version "7.26.28"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-7.26.28.tgz#6c6c8dae82b2febdcbce99ef834076d76fd2cc00"
+
 symbol-tree@^3.2.1:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.2.tgz#ae27db38f660a7ae2e1c3b7d1bc290819b8519e6"
