@@ -184,19 +184,18 @@ export default class BusinessProvider extends Component {
 							console.log('BB111a', this);
 							// if logged in as User
 							this.setState({ loggedInAs: 'customer' });
+							// from business Page
 							if (this.state.loggedfromPage == 'business') {
-								// from business Page
-								this.state.fireSweetAlert_info_as('business');
+								this.state.fireSweetAlert_info_as('customer');
 								// then redirect to Customer Page
 							}
 						} else {
 							console.log('BB111b', this);
 							// if logged in as business
 							this.setState({ loggedInAs: 'business' });
-
+							// from customer Page
 							if (this.state.loggedfromPage == 'customer') {
-								// from customer Page
-								this.state.fireSweetAlert_info_as('customer');
+								this.state.fireSweetAlert_info_as('business');
 								// then redirect to customer Page
 							}
 							this.setState({
@@ -281,8 +280,6 @@ export default class BusinessProvider extends Component {
 		return <BusinessContext.Provider value={this.state}>{this.props.children}</BusinessContext.Provider>;
 	}
 }
-
-
 
 /*
 

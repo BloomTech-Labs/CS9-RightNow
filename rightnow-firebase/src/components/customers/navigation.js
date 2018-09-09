@@ -110,8 +110,8 @@ class Navigation extends Component {
 		firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)
-			.then(this.closeModal())
-			.then(setTimeout(this.fireSweetAlert_success, 600))
+			.then(() => this.fireSweetAlert_success())
+			.then(() => this.closeModal())
 			.catch((err) => {
 				setTimeout(this.fireSweetAlert_error, 600);
 			});
