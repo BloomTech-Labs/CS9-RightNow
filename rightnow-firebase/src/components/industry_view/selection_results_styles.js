@@ -6,8 +6,9 @@ export const Container = glamorous.div({
 	gridGap: '4.5vw',
 	justifyContent: 'center',
 	width: '85vw',
-	minHeight: '80vh',
-	margin: 'auto'
+	// minHeight: '100%',
+	margin: 'auto',
+	marginBottom: '10%'
 });
 
 export const Sorting = glamorous.div({
