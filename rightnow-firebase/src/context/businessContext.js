@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import firebase from '../firebase/firebase';
 import axios from 'axios';
 import moment from 'moment';
-
 import swal from 'sweetalert2/dist/sweetalert2.js';
 import '../z_sweetAlert/sweetalert2.css';
 
@@ -14,6 +13,9 @@ export default class BusinessProvider extends Component {
 		userSignedIn: false,
 		display_delete_modal: false,
 		display_payment_modal: true,
+
+		loggedfromPage: '',
+		loggedInAs: '',
 
 		personal: {
 			full_name: '',
@@ -121,7 +123,6 @@ export default class BusinessProvider extends Component {
 				});
 			}
 		},
-
 		fireSweetAlert_error: (type) => {
 			const toast = swal.mixin({
 				toast: true,
@@ -135,18 +136,24 @@ export default class BusinessProvider extends Component {
 				title: 'Wrong email / password'
 			});
 		},
-		fireSweetAlert_error_notBiz: (type) => {
+		fireSweetAlert_info_as: (type) => {
 			const toast = swal.mixin({
 				toast: true,
 				position: 'top-end',
 				showConfirmButton: false,
-				timer: 3000
+				timer: 6000
 			});
-
-			toast({
-				type: 'error',
-				title: 'Your account is not a registered business account.'
-			});
+			if (type === 'customer') {
+				toast({
+					type: 'warning',
+					title: 'You are currently logged in as Sesho user.'
+				});
+			} else if (type === 'business') {
+				toast({
+					type: 'warning',
+					title: 'You are currently logged in as Sesho business Manager.'
+				});
+			}
 		},
 		fireSweetAlert_error_emptyField: (type) => {
 			const toast = swal.mixin({
@@ -175,13 +182,23 @@ export default class BusinessProvider extends Component {
 					.then((isBusiness) => {
 						if (!isBusiness) {
 							console.log('BB111a', this);
-
-							// firebase.auth().signOut();
-							// .then((res) => setTimeout(this.fireSweetAlert_error_notBiz, 600))
-							// .catch((err) => console.log('something went wrong:', err));
+							// if logged in as User
+							this.setState({ loggedInAs: 'customer' });
+							if (this.state.loggedfromPage == 'business') {
+								// from business Page
+								this.state.fireSweetAlert_info_as('business');
+								// then redirect to Customer Page
+							}
 						} else {
 							console.log('BB111b', this);
+							// if logged in as business
+							this.setState({ loggedInAs: 'business' });
 
+							if (this.state.loggedfromPage == 'customer') {
+								// from customer Page
+								this.state.fireSweetAlert_info_as('customer');
+								// then redirect to customer Page
+							}
 							this.setState({
 								userSignedIn: true,
 								uid: user.uid,
@@ -264,6 +281,8 @@ export default class BusinessProvider extends Component {
 		return <BusinessContext.Provider value={this.state}>{this.props.children}</BusinessContext.Provider>;
 	}
 }
+
+
 
 /*
 

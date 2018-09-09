@@ -9,6 +9,8 @@ import { UserContext } from '../../context/userContext';
 import firebase, { auth } from '../../firebase/firebase';
 import axios from 'axios';
 
+import { Redirect, withRouter } from 'react-router-dom';
+
 // sweetAlert 2 with custom css
 import swal from 'sweetalert2/dist/sweetalert2.js';
 import '../../z_sweetAlert/sweetalert2.css';
@@ -56,15 +58,12 @@ const Option = glamorous.div({
 	}
 });
 
-export default class Navigation extends Component {
+class Navigation extends Component {
 	state = {
 		displayLoginModal: false,
 		displayRegModal: false,
 		displayRegForm: false,
-		displayConfirm: false,
-
-		waitForReg: false,
-		waitForLogin: false
+		displayConfirm: false
 	};
 
 	openReg = () => {
@@ -104,37 +103,15 @@ export default class Navigation extends Component {
 		document.querySelector('#primary_input').style.zIndex = 1;
 	};
 
-	handleEmailSignIn = (email, password) => {
+	handleEmailSignIn = (email, password, bizContext) => {
+		bizContext.updateState({ loggedfromPage: 'customer' });
 		this.fireSweetAlert_waiting();
 
 		firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)
-			// .then((res) => {
-			// 	firebase.auth().onAuthStateChanged((user) => {
-			// 		if (user) {
-			// 			user
-			// 				.getIdTokenResult()
-			// 				.then((token) => (token.claims.business ? true : false))
-			// 				.then((isBusiness) => {
-			// 					if (isBusiness) {
-			// 						console.log('userdb: not');
-			// 						// firebase
-			// 						// 	.auth()
-			// 						// 	.signOut()
-			// 						// 	.then((res) => setTimeout(this.fireSweetAlert_error_notUser, 600))
-			// 						// 	.catch((err) => console.log('something went wrong:', err));
-			// 						businessContext.business_logout();
-			// 					} else {
-			// 						this.fireSweetAlert_success('login');
-			// 						this.closeModal();
-			// 					}
-			// 				})
-			// 				.catch((err) => console.log('error', err));
-			// 		}
-			// 	});
-			// })
-			.then(this.fireSweetAlert_success('login'))
+			.then(this.closeModal())
+			.then(setTimeout(this.fireSweetAlert_success, 600))
 			.catch((err) => {
 				setTimeout(this.fireSweetAlert_error, 600);
 			});
@@ -191,15 +168,15 @@ export default class Navigation extends Component {
 			showConfirmButton: false,
 			timer: 3000
 		});
-		if (type === 'login') {
-			toast({
-				type: 'success',
-				title: 'Signed in successfully'
-			});
-		} else if (type === 'logout') {
+		if (type === 'logout') {
 			toast({
 				type: 'success',
 				title: 'Successfully signed off'
+			});
+		} else {
+			toast({
+				type: 'success',
+				title: 'Signed in successfully'
 			});
 		}
 	};
@@ -213,18 +190,6 @@ export default class Navigation extends Component {
 		toast({
 			type: 'error',
 			title: 'Wrong email / password'
-		});
-	};
-	fireSweetAlert_error_notUser = () => {
-		const toast = swal.mixin({
-			toast: true,
-			position: 'top-end',
-			showConfirmButton: false,
-			timer: 3000
-		});
-		toast({
-			type: 'error',
-			title: 'You are trying to log in with Business Account'
 		});
 	};
 
@@ -241,78 +206,92 @@ export default class Navigation extends Component {
 
 	render() {
 		console.log('prop check', this.props.businessContext);
-		const businessContext = this.props.businessContext;
-		return (
-			<Container>
-				<Link to="/" style={{ textDecoration: 'none', padding: '1%' }}>
-					<Logo>Sesho</Logo>
-				</Link>
+		const bizContextProp = this.props.businessContext;
+		if (bizContextProp.loggedInAs === 'business') {
+			// if not logged in as business owner
+			bizContextProp.fireSweetAlert_info_as('business');
+			return <Redirect to="/busn-appts" />;
+		} else
+			return (
+				<Container>
+					<Link to="/" style={{ textDecoration: 'none', padding: '1%' }}>
+						<Logo>Sesho</Logo>
+					</Link>
 
-				<UserContext.Consumer>
-					{(value) => {
-						if (value.userSignedIn) {
-							return (
-								<ButtonContainer>
-									<Option>
-										<Link
-											to="/biz-account"
-											style={{
-												textDecoration: 'none',
-												color: '#EBEBEB',
-												width: '100%',
-												'&hover': { color: '#353A50 !important' }
-											}}
+					<UserContext.Consumer>
+						{(value) => {
+							if (value.userSignedIn) {
+								return (
+									<ButtonContainer>
+										<Option>
+											<Link
+												to="/biz-account"
+												style={{
+													textDecoration: 'none',
+													color: '#EBEBEB',
+													width: '100%',
+													'&hover': { color: '#353A50 !important' }
+												}}
+											>
+												Business Owner?
+											</Link>
+										</Option>
+										<Option
+											onClick={() =>
+												auth.signOut().then(() => {
+													this.fireSweetAlert_success('logout');
+													bizContextProp.updateState({ loggedfrom: '', loggedInAs: '' });
+												})}
 										>
-											Business Owner?
-										</Link>
-									</Option>
-									<Option
-										onClick={() => auth.signOut().then(() => this.fireSweetAlert_success('logout'))}
-									>
-										SignOut
-									</Option>
-								</ButtonContainer>
-							);
-						} else
-							return (
-								<ButtonContainer>
-									<Option onClick={() => this.fireSweetAlert_waiting()}>SweetAlert!</Option>
-									<Option>
-										<Link to="/biz-account" style={{ textDecoration: 'none', color: '#EBEBEB' }}>
-											Business Owner?
-										</Link>
-									</Option>
-									<Option onClick={() => this.openReg()}>Sign Up</Option>
-									<Option onClick={() => this.openLogin()}>Login</Option>
-								</ButtonContainer>
-							);
-					}}
-				</UserContext.Consumer>
+											SignOut
+										</Option>
+									</ButtonContainer>
+								);
+							} else
+								return (
+									<ButtonContainer>
+										<Option onClick={() => this.fireSweetAlert_waiting()}>SweetAlert!</Option>
+										<Option>
+											<Link
+												to="/biz-account"
+												style={{ textDecoration: 'none', color: '#EBEBEB' }}
+											>
+												Business Owner?
+											</Link>
+										</Option>
+										<Option onClick={() => this.openReg()}>Sign Up</Option>
+										<Option onClick={() => this.openLogin()}>Login</Option>
+									</ButtonContainer>
+								);
+						}}
+					</UserContext.Consumer>
 
-				{this.state.displayLoginModal ? (
-					<SignInModal
-						providerLogin={(prov) => this.handleProviderLogin(prov)}
-						emailLogin={(x, y) => this.handleEmailSignIn(x, y)}
-						closeModal={() => this.closeModal()}
-						logToReg={() => this.LogToRegModal()}
-					/>
-				) : null}
+					{this.state.displayLoginModal ? (
+						<SignInModal
+							providerLogin={(prov) => this.handleProviderLogin(prov)}
+							emailLogin={(x, y) => this.handleEmailSignIn(x, y, bizContextProp)}
+							closeModal={() => this.closeModal()}
+							logToReg={() => this.LogToRegModal()}
+						/>
+					) : null}
 
-				{this.state.displayRegModal ? (
-					<RegisterModal
-						providerLogin={(prov) => this.handleProviderLogin(prov)}
-						emailLogin={(x, y) => this.handleEmailSignIn(x, y)}
-						closeModal={() => this.closeModal()}
-						regToLog={() => this.RegToLogModal()}
-					/>
-				) : null}
+					{this.state.displayRegModal ? (
+						<RegisterModal
+							providerLogin={(prov) => this.handleProviderLogin(prov)}
+							emailLogin={(x, y) => this.handleEmailSignIn(x, y, bizContextProp)}
+							closeModal={() => this.closeModal()}
+							regToLog={() => this.RegToLogModal()}
+						/>
+					) : null}
 
-				{this.state.displayRegForm ? <RegisterForm closeModal={() => this.closeModal()} /> : null}
-				{/* {this.state.waitForLogin ? () => } */}
-				<UserContext.Consumer>
-					{(value) => (value.displayConfirm ? <ConfirmModal closeModal={() => this.closeModal()} /> : null)}
-				</UserContext.Consumer>
-			</Container>
-		);
+					{this.state.displayRegForm ? <RegisterForm closeModal={() => this.closeModal()} /> : null}
+					<UserContext.Consumer>
+						{(value) =>
+							value.displayConfirm ? <ConfirmModal closeModal={() => this.closeModal()} /> : null}
+					</UserContext.Consumer>
+				</Container>
+			);
 	}
 }
+
+export default withRouter(Navigation);

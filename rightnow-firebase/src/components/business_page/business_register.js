@@ -48,8 +48,8 @@ class BusinessAccount extends Component {
 		} else this.setState({ [e.target.name]: e.target.value });
 	};
 
-	submitForm = async (value) => {
-		value.fireSweetAlert_waiting('register');
+	submitForm = async (bizContext) => {
+		bizContext.fireSweetAlert_waiting('register');
 		let { first_name, last_name, phone, email, password } = this.state;
 		if (first_name !== '' && last_name !== '' && phone !== '' && email !== '' && password !== '') {
 			// regex only digits from phone number
@@ -75,7 +75,7 @@ class BusinessAccount extends Component {
 				.then((res) => console.log(`\nsuccessfuly created new business\n${res}`))
 				.catch((err) => console.log(`\nerror creating new business\n${err}`));
 
-			await this.handleEmailSignIn(value);
+			await this.handleEmailSignIn(bizContext);
 
 			this.setState({
 				first_name: '',
@@ -85,48 +85,22 @@ class BusinessAccount extends Component {
 				password: ''
 			});
 		} else {
-			setTimeout(value.fireSweetAlert_error_emptyField, 600);
+			setTimeout(bizContext.fireSweetAlert_error_emptyField, 600);
 		}
 	};
 
-	handleEmailSignIn = async (value) => {
-		console.log(this.state);
-		value.fireSweetAlert_waiting();
+	handleEmailSignIn = async (bizContext) => {
+		// console.log(this.state);
+		bizContext.updateState({ loggedfromPage: 'business' });
+		bizContext.fireSweetAlert_waiting();
 		const confirm_account = await firebase
 			.auth()
 			.signInWithEmailAndPassword(this.state.email, this.state.password)
 			.then((res) => {
-				// firebase.auth().onAuthStateChanged((user) => {
-				// 	if (user) {
-				// 		user
-				// 			.getIdTokenResult()
-				// 			.then((token) => (token.claims.business ? true : false))
-				// 			.then(async (isBusiness) => {
-				// 				if (isBusiness) {
-				// 					console.log('bizdb: is biz');
-				// 					value.fireSweetAlert_success('login');
-				// 				}
-				// 				if (!isBusiness) {
-				// 					console.log('bizdb: not biz');
-				// 					console.log('this.state', this.state);
-				// 					await firebase
-				// 						.auth()
-				// 						.signOut()
-				// 						.then((res) => {
-				// 							setTimeout(this.fireSweetAlert_error_notBiz, 600);
-				// 						})
-				// 						.catch((err) => console.log('something went wrong:', err));
-				// 				}
-				// 				isBusiness ? this.setState({ email: '', password: '' }) : null;
-				// 			})
-				// 			.catch((err) => console.log('error', err));
-				// 	}
-				// });
-				value.fireSweetAlert_success('login');
-				// .then((res) => value.fireSweetAlert_success('login'))
+				bizContext.fireSweetAlert_success('login');
 			})
 			.catch((err) => {
-				setTimeout(value.fireSweetAlert_error, 600);
+				setTimeout(bizContext.fireSweetAlert_error, 600);
 			});
 
 		return confirm_account;
@@ -154,8 +128,13 @@ class BusinessAccount extends Component {
 	};
 
 	render() {
+		// if valid Business owner
 		if (this.props.value.uid) {
 			return <Redirect to="/busn-appts" />;
+		} else if (this.props.value.loggedInAs === 'customer') {
+			// if not logged in as business owner
+			this.props.value.fireSweetAlert_info_as('customer');
+			return <Redirect to="/" />;
 		} else
 			return (
 				<FixedContainer>
