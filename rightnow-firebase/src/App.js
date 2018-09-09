@@ -24,7 +24,7 @@ class App extends Component {
 						{value => (
 							<div>
 								<Route exact path="/biz-account" render={() => <BusinessAccount value={value} />} />
-								<Route exact path="/company-settings" component={CompanySettings}/>
+								<Route exact path="/company-settings" render={() => <CompanySettings value={value} />} />
 								<Route path="/busn-appts" render={() => <BusnApptsView value={value} />} />
 							</div>
 						)}
