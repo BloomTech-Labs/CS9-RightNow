@@ -77,18 +77,16 @@ export default class BusinessProvider extends Component {
         user.getIdTokenResult()
           .then(token => token.claims.business ? true : false)
           .then(isBusiness => {
-            if (!isBusiness) return;
-            else {
-              this.setState({ userSignedIn: true, uid: user.uid,
+              if (!isBusiness) return;
+              this.setState({
+                userSignedIn: true, uid: user.uid,
                 personal: {
                   full_name: user.displayName,
                   email: user.email,
                   phone: user.phoneNumber,
                   photo: user.photoURL
-                }});
-              
+                }});              
               this.initSnapshot();
-            }
           }).then(() => this.state.get_business_details(user.uid))
           .catch(err => console.log("error", err));
       }

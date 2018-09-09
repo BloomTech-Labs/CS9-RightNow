@@ -3,7 +3,7 @@ import {
   Container,
   CalendarWrapper,
   ApptsWrapper,
-  PrimaryWrapper,
+  PrimaryWrapper
 } from "./busn_appts_style";
 import PostAppointment from "./post_availability";
 import Calendar from "./calendar";
@@ -16,50 +16,51 @@ import PaymentForm from "../_Payment-Form/PaymentForm";
 import { StripeProvider } from "react-stripe-elements";
 import { configs } from "../../environment";
 
-
 class BusnApptsView extends Component {
   state = {
     delete_modal: false
-  }
+  };
 
-
-  render() {  
+  render() {
     return (
       <BusinessContext.Consumer>
         {value => {
-
           if (this.props.value.userSignedIn === false) {
-            console.log("here")
-            return (<Redirect to="/biz-account" />)
+            console.log("here");
+            return <Redirect to="/biz-account" />;
           }
 
           return (
             <StripeProvider apiKey={configs.STRIPE_API_KEY}>
-            <PrimaryWrapper>
-      
-              <BusnNav logout={() => value.business_logout()} updateState={data => value.updateState(data)} />
-            
-              <Container>
-                <CalendarWrapper>
-                  <Calendar busnContext={value} />
-                </CalendarWrapper>
-                <ApptsWrapper>
-                  <PostAppointment busnContext={value} />
-                  <AppointmentDetails busnContext={value} />
-                </ApptsWrapper>
-              </Container>
-      
-              {value.display_delete_modal ? <DeleteModal busnContext={value} /> : null}
-              {value.display_payment_modal ? <PaymentForm busnContext={value} /> : null}
-      
-            </PrimaryWrapper>
+              <PrimaryWrapper>
+                <BusnNav
+                  logout={() => value.business_logout()}
+                  updateState={data => value.updateState(data)}
+                />
+
+                <Container>
+                  <CalendarWrapper>
+                    <Calendar busnContext={value} />
+                  </CalendarWrapper>
+                  <ApptsWrapper>
+                    <PostAppointment busnContext={value} />
+                    <AppointmentDetails busnContext={value} />
+                  </ApptsWrapper>
+                </Container>
+
+                {value.display_delete_modal ? (
+                  <DeleteModal busnContext={value} />
+                ) : null}
+                {value.display_payment_modal ? (
+                  <PaymentForm busnContext={value} />
+                ) : null}
+              </PrimaryWrapper>
             </StripeProvider>
           )
         }}
       </BusinessContext.Consumer>
-    )
+    );
   }
 }
-
 
 export default withRouter(BusnApptsView);
