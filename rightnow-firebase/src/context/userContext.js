@@ -257,8 +257,13 @@ export default class UserProvider extends Component {
 					.getIdTokenResult()
 					.then((token) => (token.claims.business ? true : false))
 					.then((isBusiness) => {
-						if (isBusiness) return;
-						else {
+						if (isBusiness) {
+							console.log('AA111a', this);
+
+							// firebase.auth().signOut();
+						} else {
+							console.log('AA111b', this);
+
 							this.setState(
 								{
 									userSignedIn: true,
@@ -278,7 +283,6 @@ export default class UserProvider extends Component {
 						}
 					})
 					.catch((err) => console.log('error', err));
-				console.log('AA111', this);
 			} else if (!user && this.state.userSignedIn) {
 				this.setState({
 					userSignedIn: false,

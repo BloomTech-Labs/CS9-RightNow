@@ -163,13 +163,14 @@ export default class BusinessProvider extends Component {
 					.then((token) => (token.claims.business ? true : false))
 					.then((isBusiness) => {
 						if (!isBusiness) {
-							return;
-							// firebase
-							// 	.auth()
-							// 	.signOut()
-							// 	.then((res) => setTimeout(this.fireSweetAlert_error_notBiz, 600))
-							// 	.catch((err) => console.log('something went wrong:', err));
+							console.log('BB111a', this);
+
+							// firebase.auth().signOut();
+							// .then((res) => setTimeout(this.fireSweetAlert_error_notBiz, 600))
+							// .catch((err) => console.log('something went wrong:', err));
 						} else {
+							console.log('BB111b', this);
+
 							this.setState({
 								userSignedIn: true,
 								uid: user.uid,

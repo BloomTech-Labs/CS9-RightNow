@@ -118,12 +118,13 @@ export default class Navigation extends Component {
 			// 				.then((token) => (token.claims.business ? true : false))
 			// 				.then((isBusiness) => {
 			// 					if (isBusiness) {
-			// 						console.log('userdb: not')
-			// 						firebase
-			// 							.auth()
-			// 							.signOut()
-			// 							.then((res) => setTimeout(this.fireSweetAlert_error_notUser, 600))
-			// 							.catch((err) => console.log('something went wrong:', err));
+			// 						console.log('userdb: not');
+			// 						// firebase
+			// 						// 	.auth()
+			// 						// 	.signOut()
+			// 						// 	.then((res) => setTimeout(this.fireSweetAlert_error_notUser, 600))
+			// 						// 	.catch((err) => console.log('something went wrong:', err));
+			// 						businessContext.business_logout();
 			// 					} else {
 			// 						this.fireSweetAlert_success('login');
 			// 						this.closeModal();
@@ -133,7 +134,7 @@ export default class Navigation extends Component {
 			// 		}
 			// 	});
 			// })
-			.then((res) => this.fireSweetAlert_success('login'))
+			.then(this.fireSweetAlert_success('login'))
 			.catch((err) => {
 				setTimeout(this.fireSweetAlert_error, 600);
 			});
@@ -239,6 +240,8 @@ export default class Navigation extends Component {
 	// };
 
 	render() {
+		console.log('prop check', this.props.businessContext);
+		const businessContext = this.props.businessContext;
 		return (
 			<Container>
 				<Link to="/" style={{ textDecoration: 'none', padding: '1%' }}>
