@@ -160,7 +160,7 @@ export default class Navigation extends Component {
                         "&hover": { color: "#353A50 !important" }
                       }}
                     >
-                      User Settings
+                      Settings
                     </Link>
                   </Option>
                   
