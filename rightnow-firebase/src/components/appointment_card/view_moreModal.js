@@ -88,7 +88,10 @@ export default class ViewMoreModal extends Component {
 								{this.props.appointments !== null ? (
 									<AvailableAppts>
 										{this.props.appointments.map((appt, index) => (
-											<Appointment key={index} onClick={() => value.initializeAppointment(appt)}>
+											<Appointment key={index} onClick={() => {
+												value.initializeAppointment(appt);
+												this.props.closeViewMore();
+											}}>
 												<Type>{appt.service}</Type>
 												<Time>{`${moment(appt.start).format('h:mm')} - ${moment(
 													appt.end
