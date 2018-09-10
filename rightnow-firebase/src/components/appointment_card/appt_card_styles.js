@@ -7,7 +7,8 @@ export const Container = glamorous.div({
 	borderRadius: '5px',
 	width: '100%',
 	// minHeight: '100%',
-	height: '100%'
+	height: '100%',
+	// backgroundColor: "#b7cece"
 });
 
 export const BusinessImage = glamorous.img({

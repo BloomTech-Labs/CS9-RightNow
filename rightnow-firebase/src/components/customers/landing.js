@@ -23,23 +23,16 @@ const Main = glamorous.div({
   flexDirection: "column",
   justifyContent: "center",
   alignContent: "center",
-  // alignItems: "space-between",
-  paddingBottom: "5%"
-  // height: "85%"
-  // padding: "5%"
+  paddingBottom: "4%"
 });
 
 const Title = glamorous.div({
-  // fontFamily: "coquette, sans-serif",
-  // fontStyle: "normal",
-  // height: "50%",
   fontFamily: "Raleway, sans-serif",
   fontSize: "3.5em",
   color: "#EBEBEB",
   fontWeight: 800,
   textAlign: "center",
-  marginBottom: "4%",
-  // alignSelf: "top",
+  marginBottom: "2%",
 
   "@media(min-width: 1500px)": {
     fontSize: "3.5em"
@@ -59,23 +52,18 @@ const Title = glamorous.div({
 });
 
 const Wrapper = glamorous.div({
-  // height: "50%",
   margin: "3% auto 0",
   alignSelf: "flex-start",
   display: "flex",
-  flexDirection: "column",
   justifyContent: "center",
-  alignItems: "space-even",
-  alignContent: "space-even",
-  // marginTop: "3%",
+  alignItems: "center",
+  alignContent: "center",
   zIndex: 1,
-  // height: "10vh",
-  width: "20vw",
+  width: "40vw",
   height: "15%"
 });
 
 const searchStyle = {
-  // height: "auto",
   width: "15%",
   padding: "0.8%",
   fontSize: "1.5em",
@@ -92,7 +80,6 @@ const searchStyle = {
 };
 
 const Search = glamorous.input({
-  // height: "auto",
   width: "90%",
   margin: "auto",
   padding: "2% 0",
@@ -112,14 +99,15 @@ const Search = glamorous.input({
 });
 
 const Button = glamorous.div({
-  width: "100%",
+  width: "90%",
+  textAlign: "center",
   backgroundColor: "#ef5b5b",
   color: "white",
   fontSize: "1.5em",
   fontWeight: 600,
-  padding: "4% 0",
+  padding: "2% 0",
   borderRadius: "5px",
-  marginTop: "5%",
+  // marginTop: "5%",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",

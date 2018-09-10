@@ -46,9 +46,9 @@ class CityInput extends Component {
           const inputProps = {
             placeholder: 'Search by city',
             onChange: (event, { newValue, method }) => {
-              if (method === "click" && value.service_query !== "") {
-                value.updateState({ service_query: "" });
-              }
+              // if (method === "click" && value.service_query !== "") {
+              //   value.updateState({ service_query: "" });
+              // }
               value.updateState({ city_query: newValue })
             }, // this.onChange(event, data, value),
             value: value.city_query // this.state.value,

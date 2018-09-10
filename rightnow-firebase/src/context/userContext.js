@@ -196,7 +196,7 @@ export default class UserProvider extends Component {
 
 			const appointments = await query.get()
 				.then(res => res.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-				.then(data => this.setState({ queryResults: data, finished: true, city_query: "", service_query: "" }))
+				.then(data => this.setState({ queryResults: data, finished: true }))
 				.catch(err => console.log("error", err));
 
 			return appointments;
