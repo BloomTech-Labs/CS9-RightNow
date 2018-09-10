@@ -63,7 +63,7 @@ const Option = glamorous.div({
   }
 });
 
-export default class Navigation extends Component {
+class Navigation extends Component {
   state = {
     displayLoginModal: false,
     displayRegModal: false,
