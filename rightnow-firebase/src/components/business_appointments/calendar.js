@@ -5,9 +5,6 @@ import React, { Component } from 'react';
 import Calendar from 'react-big-calendar';
 import moment from 'moment';
 // import Select from 'rc-select';
-import iziToast from 'izitoast'
-// import 'izitoast/dist/css/iziToast.css';
-
 
 // Calendar.setLocalizer(Calendar.momentLocalizer(moment));
 Calendar.momentLocalizer(moment);
@@ -30,29 +27,12 @@ const propGetter = (event, start, end, isSelected) => {
 
 	if (event.is_available === false) {
 		newStyle.backgroundColor = 'rgba(190, 50, 50, 0.95)'; // "#c95050"
-		iziToastNotification();
 	}
 
 	return {
 		// className: "",
 		style: newStyle
 	};
-};
-
-const iziToastNotification = () => {
-	iziToast.settings({
-		timeout: 10000,
-		resetOnHover: true,
-		icon: 'material-icons',
-		transitionIn: 'flipInX',
-		transitionOut: 'flipOutX',
-		onOpening: function() {
-			console.log('callback abriu!');
-		},
-		onClosing: function() {
-			console.log('callback fechou!');
-		}
-	});
 };
 
 export default class BusnCalendar extends Component {
@@ -66,7 +46,7 @@ export default class BusnCalendar extends Component {
 	render() {
 		return (
 			<div>
-				{console.log(this.props.busnContext, 'Hi Henry')}
+				{/* {console.log(this.props.busnContext.appointments, 'Hi Henry')} */}
 
 				<Calendar
 					id="calendar"

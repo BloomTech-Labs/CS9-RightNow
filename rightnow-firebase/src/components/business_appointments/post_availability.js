@@ -156,7 +156,9 @@ export default class PostAppointment extends Component {
 			description: this.state.description,
 			business_ref: this.state.business_ref,
 			business_address: business_address,
-			is_available: true
+			is_available: true,
+			newAppt_biz: true,
+			newAppt_cust: true,
 		};
 
 		axios

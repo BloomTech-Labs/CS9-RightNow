@@ -20,7 +20,6 @@ class BusnApptsView extends Component {
 			<BusinessContext.Consumer>
 				{(value) => {
 					if (this.props.value.userSignedIn === false) {
-						console.log('here');
 						return <Redirect to="/biz-account" />;
 					}
 
