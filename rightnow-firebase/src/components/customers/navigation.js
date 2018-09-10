@@ -9,6 +9,9 @@ import { UserContext } from '../../context/userContext';
 import firebase, { auth } from '../../firebase/firebase';
 import axios from 'axios';
 
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.css';
+
 import { Redirect, withRouter } from 'react-router-dom';
 
 // sweetAlert 2 with custom css
@@ -197,6 +200,46 @@ class Navigation extends Component {
 			title: 'Wrong email / password'
 		});
 	};
+	fireiziToast = () => {
+		iziToast.show({
+			theme: 'dark',
+			icon: 'icon-person',
+			title: 'Hey',
+			message: 'Welcome!',
+			position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+			progressBarColor: 'rgb(0, 255, 184)',
+			buttons: [
+				[
+					'<button>Ok</button>',
+					function(instance, toast) {
+						alert('Hello world!');
+					},
+					true
+				], // true to focus
+				[
+					'<button>Close</button>',
+					function(instance, toast) {
+						instance.hide(
+							{
+								transitionOut: 'fadeOutUp',
+								onClosing: function(instance, toast, closedBy) {
+									console.info('closedBy: ' + closedBy); // The return will be: 'closedBy: buttonName'
+								}
+							},
+							toast,
+							'buttonName'
+						);
+					}
+				]
+			],
+			onOpening: function(instance, toast) {
+				console.info('callback abriu!');
+			},
+			onClosing: function(instance, toast, closedBy) {
+				console.info('closedBy: ' + closedBy); // tells if it was closed by 'drag' or 'button'
+			}
+		});
+	};
 
 	// fireSweetAlert_viewMore = () => {
 	// 	console.log('this is working');
@@ -261,6 +304,8 @@ class Navigation extends Component {
 							} else
 								return (
 									<ButtonContainer>
+										<Option onClick={() => this.fireiziToast()}>TestButton</Option>
+
 										<Option
 											style={{
 												textDecoration: 'none',
