@@ -168,6 +168,18 @@ export default class BusinessProvider extends Component {
 				type: 'error',
 				title: 'You have incomplete fields'
 			});
+		},
+		// iziToast notification
+		iziToastNotification: (event) => {
+			iziToast.warning({
+				titleSize: '1.3em',
+				messageSize: '1em',
+				closeOnClick: true,
+				timeout: 15000,
+				position: 'bottomRight',
+				title: `New booking!`,
+				message: `${moment(event.start).format('LLL')}`
+			});
 		}
 	};
 
@@ -250,6 +262,16 @@ export default class BusinessProvider extends Component {
 					// all data in the document
 					const doc = change.doc.data();
 					console.log('businessCtx doc', doc);
+					if ((this.state.loggedInAs = 'business' && doc.new_appointment && !doc.is_available)) {
+						this.state.iziToastNotification(doc);
+						firebase
+							.firestore()
+							.collection('_appointment_')
+							.doc(id)
+							.update({ new_appointment: false })
+							.then(() => console.log('successful update'))
+							.catch((err) => console.log('error updating appointment', err));
+					}
 
 					// format start/end times and appt title for calendar -- add doc id for future reference
 					const formatted = {

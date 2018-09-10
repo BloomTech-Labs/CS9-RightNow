@@ -159,14 +159,14 @@ export default class PostAppointment extends Component {
 			business_ref: this.state.business_ref,
 			business_address: business_address,
 			is_available: true,
-			newAppt_biz: true,
-			newAppt_cust: true
+			new_appointment: true,
+			new_apptChecked: false
 		};
 
 		axios
 			.post('https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment', appointment_details)
 			.then((res) => console.log('success\n', res))
-			.then(() => this.iziToastNotification())
+			.then(() => this.iziToastNotification('business'))
 			.catch((err) => console.log('error\n', err));
 
 		this.setState({

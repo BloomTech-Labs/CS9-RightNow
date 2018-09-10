@@ -6,7 +6,6 @@ import React, { Component } from 'react';
 import Calendar from 'react-big-calendar';
 import moment from 'moment';
 // import Select from 'rc-select';
-import iziToast from 'izitoast';
 
 // Calendar.setLocalizer(Calendar.momentLocalizer(moment));
 Calendar.momentLocalizer(moment);
@@ -19,31 +18,6 @@ const formats = {
 	eventTimeRangeFormat: ({ start, end }) => moment(start).format('hh:mm')
 };
 
-// iziToast notification
-const iziToastNotification = (event) => {
-	// if (type === 'customer') {
-	// 	iziToast.info({
-	// 		titleSize: '1.3em',
-	// 		messageSize: '1em',
-	// 		closeOnClick: true,
-	// 		position: 'bottomRight',
-	// 		title: `You're all booked!`,
-	// 		message: 'Your appointment has been booked!'
-	// 	});
-	// }
-	// if (type === 'business') {
-	iziToast.warning({
-		titleSize: '1.3em',
-		messageSize: '1em',
-		closeOnClick: true,
-		timeout: 15000,
-		position: 'bottomRight',
-		title: `New booking!`,
-		message: `${moment(event.start).format('LLL')}`
-	});
-	// }
-};
-
 const propGetter = (event, start, end, isSelected) => {
 	let newStyle = {
 		backgroundColor: 'rgba(60, 70, 100, 0.95)', // "#70768f",
@@ -54,16 +28,16 @@ const propGetter = (event, start, end, isSelected) => {
 
 	if (!event.is_available) {
 		// if newly booked appointment
-		if (event.new_appointment) {
-			iziToastNotification(event);
-			firebase
-				.firestore()
-				.collection('_appointment_')
-				.doc(event.id)
-				.update({ new_appointment: false })
-				.then(() => console.log('successful update'))
-				.catch((err) => console.log('error updating appointment', err));
-		}
+		// if (event.new_appointment) {
+		// 	iziToastNotification(event);
+		// 	firebase
+		// 		.firestore()
+		// 		.collection('_appointment_')
+		// 		.doc(event.id)
+		// 		.update({ new_appointment: false })
+		// 		.then(() => console.log('successful update'))
+		// 		.catch((err) => console.log('error updating appointment', err));
+		// }
 		// if appointment was never checked/clicked
 		if (!event.new_apptChecked) {
 			newStyle.color = 'yellow';
