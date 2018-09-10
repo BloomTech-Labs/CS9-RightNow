@@ -48,7 +48,7 @@ const Option = glamorous.div({
   width: "8%",
   color: "#EBEBEB",
   textShadow: "0 0 3px #ef5b5b",
-  fontSize: "1.3em",
+  fontSize: "1.2em",
   fontWeight: 600,
   marginRight: "2%",
   border: "1px solid transparent",
@@ -174,7 +174,7 @@ class Navigation extends Component {
                       Settings
                     </Link>
                   </Option>
-                  <Option onClick={() => auth.signOut()}>SignOut</Option>
+                  <Option onClick={() => value.customerLogout()}>Sign Out</Option>
                 </ButtonContainer>
               );
             } else
