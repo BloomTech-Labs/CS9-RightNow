@@ -160,7 +160,7 @@ export default class Landing extends Component {
   render() {
     return (
       <Container>
-        <Navigation />
+        <Navigation busnContext={this.props.businessContext} />
         <Main>
           <Title>Book your last minute appointments today!</Title>
           

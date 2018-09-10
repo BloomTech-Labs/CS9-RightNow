@@ -63,6 +63,19 @@ const Option = glamorous.div({
   }
 });
 
+const Placeholder = glamorous.div({
+  textAlign: "center",
+  width: "8%",
+  color: "#EBEBEB",
+  textShadow: "0 0 3px #ef5b5b",
+  fontSize: "1.2em",
+  fontWeight: 600,
+  marginRight: "2%",
+  border: "1px solid transparent",
+  padding: "1%",
+  display: "none"
+})
+
 class Navigation extends Component {
   state = {
     displayLoginModal: false,
@@ -144,9 +157,53 @@ class Navigation extends Component {
           .then(result => console.log(result))
           .catch(err => console.log(err));
       })
-      .then(x => this.closeModal())
+      .then((res) => this.fireSweetAlert_success('login'))
+      .then(() => this.closeModal())
       .catch(err => console.log(err));
   };
+
+  // SweetAlert Stuff
+	fireSweetAlert_waiting = () => {
+		swal({
+			title: 'Logging you in now...',
+			onOpen: () => {
+				swal.showLoading();
+			}
+		});
+  };
+  
+	fireSweetAlert_success = (type) => {
+		const toast = swal.mixin({
+			toast: true,
+			position: 'top-end',
+			showConfirmButton: false,
+			timer: 3000
+		});
+		if (type === 'logout') {
+			toast({
+				type: 'success',
+				title: 'Successfully signed off'
+			});
+		} else {
+			toast({
+				type: 'success',
+				title: 'Signed in successfully'
+			});
+		}
+  };
+  
+	fireSweetAlert_error = () => {
+		const toast = swal.mixin({
+			toast: true,
+			position: 'top-end',
+			showConfirmButton: false,
+			timer: 3000
+		});
+		toast({
+			type: 'error',
+			title: 'Wrong email / password'
+		});
+	};
 
   render() {
     return (
@@ -160,7 +217,7 @@ class Navigation extends Component {
             if (value.userSignedIn) {
               return (
                 <ButtonContainer>
-                  <Option style={{display: "hidden"}}></Option>
+                  <Placeholder></Placeholder>
                   <Option>
                     <Link
                       to="/user-settings"
@@ -174,7 +231,11 @@ class Navigation extends Component {
                       Settings
                     </Link>
                   </Option>
-                  <Option onClick={() => value.customerLogout()}>Sign Out</Option>
+                  <Option onClick={() => {
+                    value.customerLogout();
+                    this.fireSweetAlert_success('logout');
+                    this.props.busnContext.updateState({ loggedfrom: "", loggedInAs: "" });
+                  }}>Sign Out</Option>
                 </ButtonContainer>
               );
             } else
