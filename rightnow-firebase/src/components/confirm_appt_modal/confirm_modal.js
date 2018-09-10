@@ -60,7 +60,9 @@ export default class ConfirmModal extends Component {
 							<DetailContainer>
 								<Activity>
 									<Spanner>{value.init_appointment.service}</Spanner> at{' '}
-									<Spanner>{value.init_appointment.business_details.business_information.name}</Spanner>
+									<Spanner>
+										{value.init_appointment.business_details.business_information.name}
+									</Spanner>
 								</Activity>
 								<Location>
 									on{' '}
@@ -95,8 +97,7 @@ export default class ConfirmModal extends Component {
 								<ButtonContainer>
 									<Button
 										onClick={() => {
-											value.confirmAppointment();
-											this.iziToastNotification();
+											value.confirmAppointment(this.iziToastNotification);
 										}}
 									>
 										Got it!

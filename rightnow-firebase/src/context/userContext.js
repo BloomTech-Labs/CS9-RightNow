@@ -146,6 +146,19 @@ export default class UserProvider extends Component {
 			}
 		},
 
+		fireSweetAlert_error: () => {
+			const toast = swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 3000
+			});
+			toast({
+				type: 'error',
+				title: 'You must be logged in to book an appointment.'
+			});
+		},
+
 		upcomingAppointment: async () => {
 			const db = firebase.firestore();
 
@@ -262,10 +275,13 @@ export default class UserProvider extends Component {
 			});
 		},
 
-		confirmAppointment: () => {
+		confirmAppointment: (successToast) => {
 			console.log('sanity', this.state.displayConfirm);
 			console.log('sanity', this.state.uid);
-			if (!this.state.confirm || !this.state.uid) return;
+			if (!this.state.confirm || !this.state.uid) {
+				this.state.fireSweetAlert_error();
+				return;
+			}
 			console.log(this.state.init_appointment);
 			firebase
 				.firestore()
@@ -278,6 +294,7 @@ export default class UserProvider extends Component {
 			// NEED FIREBASE FUNCTION FOR APPOINTMENT ON-UPDATE
 			// appointment does not get added to customer's appoinment collection
 			this.setState({ displayConfirm: false });
+			successToast();
 		},
 
 		listenToResults: () => {
