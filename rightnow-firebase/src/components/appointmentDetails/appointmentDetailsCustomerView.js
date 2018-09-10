@@ -3,9 +3,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { Container, Header, Title, TrashCan, Content, Detail } from './appt_details_styles';
+import firebase from '../../firebase/firebase';
 
 class AppointmentDetails extends Component {
-	render() {
+		render() {
 		if (this.props.busnContext.selected_appointment) {
 			const {
 				start,
@@ -13,12 +14,9 @@ class AppointmentDetails extends Component {
 				service,
 				cost,
 				description,
-				customer_ref,
+				customer_name,
 				is_available
 			} = this.props.busnContext.selected_appointment;
-			{
-				(' ');
-			}
 
 			return (
 				<Container>
@@ -50,8 +48,8 @@ class AppointmentDetails extends Component {
 								className={is_available ? 'fas fa-user-times' : 'fas icon fa-user-check'}
 							/>
 							<Detail>
-								{!is_available && customer_ref ? customer_ref : 'this appointment is still available'}
-							</Detail>{' '}
+								{customer_name}
+							</Detail>
 							{/* user-times */}
 						</div>
 						<div style={{ display: 'flex', alignItems: 'center' }}>
