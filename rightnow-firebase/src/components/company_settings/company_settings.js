@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import moment from 'moment';
 
 // import EmailPhone from '../share_settings/email_phone'
-import { CheckBoxContainer, CheckBox, CheckBoxes } from '../share_settings/user_notification';
+import { CheckBoxContainer, CheckBox, CheckTitle, CheckBoxes } from '../share_settings/user_notification';
 
-import { Wrapper, PwLabel, ChangePasswordInput } from '../share_settings/user_change_password';
+import { Wrapper, PwLabel, PwTitle, ChangePasswordInput } from '../share_settings/user_change_password';
 import AppointmentDetails from '../share_settings/appointmentDetails/appointmentDetailsCustomerView';
 
 //import { Appointment, AppointmentList, Upcoming } from '../share_settings/upcoming_appointments';
@@ -24,6 +24,11 @@ export const FormContainer = glamorous.div({
     textAlign: 'center',
     paddingTop: '2%'
 });
+
+export const BusinessTitle = glamorous.h3({
+    color: 'white',
+    fontSize: '40px'
+})
 
 const Button = glamorous.button({
     borderRadius: '7px',
@@ -110,7 +115,7 @@ class UserSettings extends Component {
                 {(value) => {
                         return (
                             <FormContainer>
-                                <h3>Business Settings</h3>
+                                <BusinessTitle>Business Settings</BusinessTitle>
                                
                                 <Container>
                                     {/*<PastAppointments userState={value} />*/}
@@ -162,7 +167,7 @@ class UserSettings extends Component {
                                 </Container>
                                     <Wrapper>
                             
-                                        <h3>Password</h3>
+                                        <PwTitle>Password</PwTitle>
                                         <Label>Password</Label>
                                         <ChangePasswordInput
                                             name="newPassword"
@@ -187,7 +192,8 @@ class UserSettings extends Component {
                             
                                 <CheckBoxContainer>
                                     {/*<UserNotification />*/}
-                                    <h3>Communication Preferences</h3> <CheckBoxes>
+                                    <CheckTitle>Communication Preferences</CheckTitle>
+                                    <CheckBoxes>
                                         <CheckBox>
                                             <div className="pretty p-default">
                                                 <input type="checkbox" />
