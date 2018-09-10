@@ -8,7 +8,6 @@ export const Container = glamorous.div({
 	width: '85vw',
 	// minHeight: '100%',
 	margin: 'auto',
-	marginBottom: '10%'
 });
 
 export const Sorting = glamorous.div({

@@ -16,41 +16,46 @@ import swal from 'sweetalert2/dist/sweetalert2.js';
 import '../../z_sweetAlert/sweetalert2.css';
 
 const Container = glamorous.div({
+	// background: 'rgb(24, 24, 25, 0.2)',
 	width: '100%',
 	display: 'flex',
 	justifyContent: 'space-between',
-	alignContent: 'center',
-	zIndex: 1
+	zIndex: 1,
+	height: '80%'
+	// boxShadow: '0 2px 4px -1px rgba(0,0,0)'
 });
 
 const Logo = glamorous.div({
+	display: 'display',
+	justifyContent: 'center',
+	alignItems: 'center',
 	fontFamily: 'Syncopate, sans-serif',
 	fontSize: '2.5em',
 	fontWeight: 800,
-	alignSelf: 'center',
-	color: '#EBEBEB'
+	color: '#EBEBEB',
+	padding: 0
 });
 
 const ButtonContainer = glamorous.div({
 	display: 'flex',
 	justifyContent: 'flex-end',
-	padding: '1%',
+	padding: '0.5% 0',
 	width: '70%'
-	// paddingRight: "2%"
 });
 
 const Option = glamorous.div({
 	textAlign: 'center',
-	width: '8%',
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+	// minWidth: '8%',
 	color: '#EBEBEB',
 	fontSize: '1.3em',
 	fontWeight: 600,
 	marginRight: '2%',
 	border: '1px solid transparent',
-	padding: '1.5%',
-	':first-child': {
-		width: '15%'
-	},
+	padding: '0 2%',
+	// padding: '1.5% 1%',
 	':hover': {
 		cursor: 'pointer',
 		border: '1px solid white',
@@ -223,13 +228,19 @@ class Navigation extends Component {
 							if (value.userSignedIn) {
 								return (
 									<ButtonContainer>
-										<Option>
+										<Option
+											style={{
+												textDecoration: 'none',
+												color: '#EBEBEB',
+												width: '11%',
+												'&hover': { color: '#353A50 !important' }
+											}}
+										>
 											<Link
 												to="/user-settings"
 												style={{
 													textDecoration: 'none',
 													color: '#EBEBEB',
-													width: '100%',
 													'&hover': { color: '#353A50 !important' }
 												}}
 											>
@@ -250,10 +261,21 @@ class Navigation extends Component {
 							} else
 								return (
 									<ButtonContainer>
-										<Option>
+										<Option
+											style={{
+												textDecoration: 'none',
+												color: '#EBEBEB',
+												width: '15%',
+												'&hover': { color: '#353A50 !important' }
+											}}
+										>
 											<Link
 												to="/biz-account"
-												style={{ textDecoration: 'none', color: '#EBEBEB' }}
+												style={{
+													textDecoration: 'none',
+													// color: '#e8ac8f' // pinkish text
+													color: '#EBEBEB'
+												}}
 											>
 												Business Owner?
 											</Link>

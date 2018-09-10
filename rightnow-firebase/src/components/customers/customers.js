@@ -11,7 +11,9 @@ import glamorous from 'glamorous';
 import Landing from './landing';
 
 const HomeContainer = glamorous.div({
-	width: '100vw'
+	background: '#f4f2eb',
+	width: '100vw',
+	paddingBottom: '10%'
 });
 
 export default class Customers extends Component {
