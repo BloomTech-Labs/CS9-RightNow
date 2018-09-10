@@ -24,19 +24,19 @@ const SelectionWrapper = glamorous.div({
 
 const SelectionSet = glamorous.div({
 	display: 'grid',
-	grid: '100% / 13% 8% 8% 8% 8% 8% 8% 1fr',
+	grid: '100% / 13% 8% 8% 8% 8% 8% 8% 8% 1fr',
 	gridColumnGap: '1%',
 	gridRowGap: '3%',
 	justifyContent: 'center',
-	alignItems: 'center'
+	alignItems: 'center',
 
 	// "@media(min-width: 1475px)": {
 	//   grid: "100% / 15% 14% 14% 14% 14% 14% 14%",
 	// },
 
-	// "@media(min-width: 1200px)": {
-	//   grid: "100% / 18% 8% 8% 8% 8% 8% 8% 1fr",
-	// }
+	"@media(min-width: 1200px)": {
+	  grid: "100% / 16% 8% 8% 8% 8% 8% 8% 8% 1fr",
+	}
 });
 
 const SelectionTitle = glamorous.div({
@@ -121,7 +121,7 @@ class Clock extends Component {
 
 export default class QuickSearch extends Component {
 	state = {
-		industries: [ 'Hair', 'Auto', 'Nails', 'Pets', 'Massage' ],
+		industries: [ 'Hair', 'Auto', 'Nails', 'Pets', 'Massage', "Active" ],
 		times: [ '1 hour', '2 hours', '3 hours', '4 hours', '5+ hours' ],
 		active_industry: null,
 		active_time: null
