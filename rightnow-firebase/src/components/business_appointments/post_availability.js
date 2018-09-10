@@ -6,6 +6,8 @@ import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
+import iziToast from 'izitoast';
+
 const Container = glamorous.div({
 	width: '100%',
 	height: '45%',
@@ -158,12 +160,13 @@ export default class PostAppointment extends Component {
 			business_address: business_address,
 			is_available: true,
 			newAppt_biz: true,
-			newAppt_cust: true,
+			newAppt_cust: true
 		};
 
 		axios
 			.post('https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment', appointment_details)
 			.then((res) => console.log('success\n', res))
+			.then(() => this.iziToastNotification())
 			.catch((err) => console.log('error\n', err));
 
 		this.setState({
@@ -174,6 +177,19 @@ export default class PostAppointment extends Component {
 			cost: '',
 			description: ''
 		});
+	};
+
+	iziToastNotification = (type, start) => {
+		if (type === 'business') {
+			iziToast.success({
+				titleSize: '1.3em',
+				messageSize: '1em',
+				closeOnClick: true,
+				position: 'bottomRight',
+				title: `New appointment created!`,
+				message: `${moment(start).format('LLL')}`
+			});
+		}
 	};
 
 	render() {
