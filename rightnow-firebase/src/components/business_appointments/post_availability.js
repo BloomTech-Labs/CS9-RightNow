@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import glamorous from 'glamorous';
 import axios from 'axios';
-import firebase from 'firebase';
+import firebase from '../../firebase/firebase';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -118,7 +118,7 @@ export default class PostAppointment extends Component {
 		start_time: '', // moment(),
 		end_time: '', // moment().add(30, "m"),
 		service: '',
-		cost: '$',
+		cost: '',
 		description: '',
 		business_ref: this.props.busnContext.uid
 	};

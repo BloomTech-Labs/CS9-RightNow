@@ -55,29 +55,31 @@ const propGetter = (event, start, end, isSelected) => {
 };
 
 export default class BusnCalendar extends Component {
-	apptSelect = async data => {
-    if (data.customer_ref){
-      const customer_name = await firebase
-          .firestore()
-          .collection("_customer_")
-          .doc(data.customer_ref)
-          .get().then(user => {
-            console.log(user.data())
-            return user.data().name;
-          }).catch(err => console.log("error", err));
-          
-      const new_data = { ...data, customer_name };
+	apptSelect = async (data) => {
+		if (data.customer_ref) {
+			const customer_name = await firebase
+				.firestore()
+				.collection('_customer_')
+				.doc(data.customer_ref)
+				.get()
+				.then((user) => {
+					console.log(user.data());
+					return user.data().name;
+				})
+				.catch((err) => console.log('error', err));
 
-      this.props.busnContext.updateState({ selected_appointment: new_data })
-    } else {
-      const customer_name = "This appointment is still available";
-      const new_data = { ...data, customer_name };
-      this.props.busnContext.updateState({ selected_appointment: new_data });
-    }
-    const { start, end } = data;
-    console.log(moment(start).format("LLL"), " --- ", moment(end).format("LLL"))
-    console.log("\n\n", data);
-  }
+			const new_data = { ...data, customer_name };
+
+			this.props.busnContext.updateState({ selected_appointment: new_data });
+		} else {
+			const customer_name = 'This appointment is still available';
+			const new_data = { ...data, customer_name };
+			this.props.busnContext.updateState({ selected_appointment: new_data });
+		}
+		const { start, end } = data;
+		console.log(moment(start).format('LLL'), ' --- ', moment(end).format('LLL'));
+		console.log('\n\n', data);
+	};
 
 	render() {
 		return (

@@ -48,22 +48,35 @@ const ButtonContainer = glamorous.div({
 
 const Option = glamorous.div({
 	textAlign: 'center',
-	display: 'flex',
-	justifyContent: 'center',
-	alignItems: 'center',
-	// minWidth: '8%',
+	width: '8%',
 	color: '#EBEBEB',
-	fontSize: '1.3em',
+	textShadow: '0 0 3px #ef5b5b',
+	fontSize: '1.2em',
 	fontWeight: 600,
 	marginRight: '2%',
 	border: '1px solid transparent',
-	padding: '0 2%',
-	// padding: '1.5% 1%',
+	padding: '1%',
+	':first-child': {
+		width: '17%'
+	},
 	':hover': {
 		cursor: 'pointer',
-		border: '1px solid white',
+		border: '1px solid #ebebeb',
 		borderRadius: '5px'
 	}
+});
+
+const Placeholder = glamorous.div({
+	textAlign: 'center',
+	width: '8%',
+	color: '#EBEBEB',
+	textShadow: '0 0 3px #ef5b5b',
+	fontSize: '1.2em',
+	fontWeight: 600,
+	marginRight: '2%',
+	border: '1px solid transparent',
+	padding: '1%',
+	display: 'none'
 });
 
 class Navigation extends Component {
@@ -153,7 +166,7 @@ class Navigation extends Component {
 					.catch((err) => console.log(err));
 			})
 			.then((res) => this.fireSweetAlert_success('login'))
-			.then((x) => this.closeModal())
+			.then(() => this.closeModal())
 			.catch((err) => {
 				setTimeout(this.fireSweetAlert_error, 600);
 			})
@@ -169,6 +182,7 @@ class Navigation extends Component {
 			}
 		});
 	};
+
 	fireSweetAlert_success = (type) => {
 		const toast = swal.mixin({
 			toast: true,
@@ -188,6 +202,7 @@ class Navigation extends Component {
 			});
 		}
 	};
+
 	fireSweetAlert_error = () => {
 		const toast = swal.mixin({
 			toast: true,
@@ -200,61 +215,9 @@ class Navigation extends Component {
 			title: 'Wrong email / password'
 		});
 	};
-	fireiziToast = () => {
-		iziToast.show({
-			theme: 'dark',
-			icon: 'icon-person',
-			title: 'Hey',
-			message: 'Welcome!',
-			position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-			progressBarColor: 'rgb(0, 255, 184)',
-			buttons: [
-				[
-					'<button>Ok</button>',
-					function(instance, toast) {
-						alert('Hello world!');
-					},
-					true
-				], // true to focus
-				[
-					'<button>Close</button>',
-					function(instance, toast) {
-						instance.hide(
-							{
-								transitionOut: 'fadeOutUp',
-								onClosing: function(instance, toast, closedBy) {
-									console.info('closedBy: ' + closedBy); // The return will be: 'closedBy: buttonName'
-								}
-							},
-							toast,
-							'buttonName'
-						);
-					}
-				]
-			],
-			onOpening: function(instance, toast) {
-				console.info('callback abriu!');
-			},
-			onClosing: function(instance, toast, closedBy) {
-				console.info('closedBy: ' + closedBy); // tells if it was closed by 'drag' or 'button'
-			}
-		});
-	};
-
-	// fireSweetAlert_viewMore = () => {
-	// 	console.log('this is working');
-	// 	swal({
-	// 		title: 'Test modal',
-	// 		html: true,
-	// 		onOpen: () => {
-	// 			<ConfirmModal closeModal={() => this.closeModal()} />;
-	// 		}
-	// 	});
-	// };
 
 	render() {
-		console.log('prop check', this.props.businessContext);
-		const bizContextProp = this.props.businessContext;
+		const bizContextProp = this.props.busnContext;
 		if (bizContextProp.loggedInAs === 'business') {
 			// if not logged in as business owner
 			bizContextProp.fireSweetAlert_info_as('business');
@@ -262,7 +225,7 @@ class Navigation extends Component {
 		} else
 			return (
 				<Container>
-					<Link to="/" style={{ textDecoration: 'none', padding: '1%' }}>
+					<Link to="/" style={{ textDecoration: 'none', padding: '1%', textShadow: '0 0 3px skyblue' }}>
 						<Logo>Sesho</Logo>
 					</Link>
 
@@ -271,56 +234,38 @@ class Navigation extends Component {
 							if (value.userSignedIn) {
 								return (
 									<ButtonContainer>
-										<Option
-											style={{
-												textDecoration: 'none',
-												color: '#EBEBEB',
-												width: '11%',
-												'&hover': { color: '#353A50 !important' }
-											}}
-										>
+										<Placeholder />
+										<Option>
 											<Link
 												to="/user-settings"
 												style={{
 													textDecoration: 'none',
 													color: '#EBEBEB',
+													width: '100%',
 													'&hover': { color: '#353A50 !important' }
 												}}
 											>
-												User Profile
+												Settings
 											</Link>
 										</Option>
 										<Option
-											onClick={() =>
-												auth.signOut().then(() => {
-													this.fireSweetAlert_success('logout');
-													bizContextProp.updateState({ loggedfrom: '', loggedInAs: '' });
-												})}
+											onClick={() => {
+												value.customerLogout();
+												this.fireSweetAlert_success('logout');
+												bizContextProp.updateState({ loggedfrom: '', loggedInAs: '' });
+											}}
 										>
-											SignOut
+											Sign Out
 										</Option>
 									</ButtonContainer>
 								);
 							} else
 								return (
 									<ButtonContainer>
-										<Option onClick={() => this.fireiziToast()}>TestButton</Option>
-
-										<Option
-											style={{
-												textDecoration: 'none',
-												color: '#EBEBEB',
-												width: '15%',
-												'&hover': { color: '#353A50 !important' }
-											}}
-										>
+										<Option>
 											<Link
 												to="/biz-account"
-												style={{
-													textDecoration: 'none',
-													// color: '#e8ac8f' // pinkish text
-													color: '#EBEBEB'
-												}}
+												style={{ textDecoration: 'none', color: '#ebebeb' }}
 											>
 												Business Owner?
 											</Link>
@@ -351,6 +296,7 @@ class Navigation extends Component {
 					) : null}
 
 					{this.state.displayRegForm ? <RegisterForm closeModal={() => this.closeModal()} /> : null}
+
 					<UserContext.Consumer>
 						{(value) =>
 							value.displayConfirm ? <ConfirmModal closeModal={() => this.closeModal()} /> : null}

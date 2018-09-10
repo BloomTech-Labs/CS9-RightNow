@@ -1,0 +1,131 @@
+.highlighted{
+  background: #353A50;
+  color: #ebebeb;
+}
+
+.autocomplete{
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid red;
+  /* width: 100%; */
+}
+
+.ais-InstantSearch__root {
+  width: 100%;
+  margin-top: 0;
+  /* margin-bottom: 3%; */
+  text-align: center;
+  font-family: Raleway, sans-serif;
+  font-weight: 800;
+}
+
+.content{
+  display: flex;
+  justify-content: space-between;
+}
+
+.block{
+  /* padding: 5px 10px; */
+}
+
+.title{
+  border: 1px solid red;
+  display: flex;
+  justify-content: space-around;
+  /* padding: 5px 10px; */
+}
+
+.disabled {
+  display: none;
+}
+
+.title div{
+  /* width: 100%; */
+  /* padding: 5px 10px; */
+}
+
+.react-autosuggest__container {
+  position: relative;
+}
+
+.react-autosuggest__input {
+  width: 90%;
+  height: 100%;
+  padding: 3% 0;
+  /* font-family: Raleway, sans-serif;
+  font-weight: 800; */
+  font-size: 1.5em;
+  border: 1px solid #ebebeb;
+  border-radius: 4px;
+  text-align: center;
+  /* margin-right: 3%; */
+}
+
+.react-autosuggest__input:focus {
+  outline: none;
+}
+
+.react-autosuggest__container--open .react-autosuggest__input {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.react-autosuggest__suggestions-container {
+  display: none;
+}
+
+.react-autosuggest__container--open .react-autosuggest__suggestions-container {
+  display: block;
+  position: absolute;
+  width: 90%;
+  border: 1px solid #aaa;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background-color: #ebebebd5;
+  font-family: Raleway, sans-serif;
+  font-size: 1em;
+  z-index: 2;
+  color: #353A50;
+  font-weight: 600;
+  /* padding-right: 5%; */
+  text-align: left;
+  margin-left: 5%;
+}
+
+.react-autosuggest__suggestions-list {
+  /* margin: 0; */
+  /* padding: 0; */
+  list-style-type: none;
+  color: #353A50;
+  padding-left: 5%;
+
+  /* font-weight: 500; */
+}
+
+.react-autosuggest__suggestion {
+  cursor: pointer;
+  /* padding: 10px 20px; */
+  padding: 3%;
+}
+
+.react-autosuggest__suggestion--highlighted {
+  /* background-color: skyblue; */
+}
+
+.react-autosuggest__section-container {
+  border-top: 1px dashed black;
+}
+
+.react-autosuggest__section-container--first {
+  border-top: 0;
+}
+
+.react-autosuggest__suggestion--focused {
+  background-color: #ebebeb;
+}
+
+.react-autosuggest__section-title {
+  padding: 10px 0 0 10px;
+  font-size: 12px;
+  color: #777;
+}
