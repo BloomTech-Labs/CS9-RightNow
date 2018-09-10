@@ -152,26 +152,25 @@ app.get("/business/:id/past", async (req, res) => {
 app.post("/customer", async (req, res) => {
 	const { first_name, last_name, email, password, phone, location } = req.body;
 
-	const newUserId = await admin
-		.auth()
-		.createUser({
-			email: email,
-			displayName: `${first_name} ${last_name}`,
-			password: password,
-			phoneNumber: phone
-		})
-		.then((userRecord) => {
-			db
-				.collection(CUSTOMER)
-				.doc(userRecord.uid)
-				.set({ ...req.body, uid: userRecord.uid })
-				.then(() => console.log('success'))
-				.catch((err) => res.send(err));
-			return userRecord.uid;
-		})
-		.catch((err) => res.send(err));
-
-	res.send(newUserId);
+	const newUserId = 
+		await admin
+			.auth()
+			.createUser({
+				email: email,
+				displayName: `${first_name} ${last_name}`,
+				password: password,
+				phoneNumber: phone,
+			}).then(userRecord => {
+				res.send(userRecord);
+				return userRecord;
+			})
+			.then(userRecord => {
+				db.collection(CUSTOMER).doc(userRecord.uid).set({...req.body, uid: userRecord.uid}).then(() => console.log("success")).catch(err => res.send(err));
+				return userRecord.uid;
+			})
+			.catch(err => res.send(err));
+	
+	return newUserId;
 });
 
 
