@@ -3,6 +3,7 @@ import { Header, Container } from '../featured_appointments/feat_appts_styles';
 import { CircleOption, OptionContainer, DropDown, Options } from './industry_view_styles';
 import Results from './selection_results';
 import QuickSearch from '../_quickSearch/quickSearch';
+import { UserContext } from '../../context/userContext';
 
 const IndustryOption = (props) => {
 	if (props.text === 'All') {
@@ -20,36 +21,26 @@ const IndustryOption = (props) => {
 };
 
 export default class IndustryView extends Component {
-  state = {
-    industry_actual: "All",
-    time_actual: "All"
-  }
-
-  componentDidMount() {
-    const defaultIndustry = document.querySelector("#defaultSelection");
-    this.setState({ currentSelection: defaultIndustry });
-  }
-
-  handleIndustrySelection = e => {
-    e.target.style.border = "3px solid red";
-    this.state.currentSelection.style.border = "1px solid black";
-    this.setState({ currentSelection: e.target });
-  }
-
   render() {
     return (
-      <Container>
-        <Header id="appointments">View Appointments by Industry</Header>
+      <UserContext.Consumer>
+        {value => {
+          return (
+            <Container>
+              <Header id="appointments">View Appointments by Industry</Header>
 
-        <QuickSearch updateResults={data => this.setState(data)} />
+              <QuickSearch updateResults={data => value.filter_appointments(data)} />
 
-        <Header id="appt_cards">{this.state.time_actual !== "All" ? 
-            `${this.state.industry_actual} Services within the next ${this.state.time_actual}` :
-            `${this.state.industry_actual} Services`}</Header>
+              <Header id="appt_cards">{value.time_selection !== "All" ? 
+                  `${value.industry_selection} Services within the next ${value.time_selection}` :
+                  `${value.industry_selection} Services`}</Header>
 
-        <Results value={this.props.value} industry={this.state.currentSelection} />
-        
-      </Container>
+              <Results value={value} />
+              
+            </Container>
+          )
+        }}
+      </UserContext.Consumer>
     )
   }
 }

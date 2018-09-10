@@ -4,6 +4,7 @@ import "./calendar_style.css";
 import React, { Component } from "react";
 import Calendar from "react-big-calendar";
 import moment from 'moment';
+import firebase from "../../firebase/firebase";
 // import Select from 'rc-select';
 
 
@@ -39,8 +40,26 @@ const propGetter = (event, start, end, isSelected) => {
 
 
 export default class BusnCalendar extends Component {
-  apptSelect = data => {
-    this.props.busnContext.updateState({ selected_appointment: data })
+  apptSelect = async data => {
+    if (data.customer_ref){
+      const customer_name = await firebase
+          .firestore()
+          .collection("_customer_")
+          .doc(data.customer_ref)
+          .get().then(user => {
+            console.log(user.data())
+            return user.data().name;
+          }).catch(err => console.log("error", err));
+          
+      const new_data = { ...data, customer_name };
+
+      this.props.busnContext.updateState({ selected_appointment: new_data })
+    } else {
+      const customer_name = "this appointment is still available";
+      const new_data = { ...data, customer_name };
+      this.props.busnContext.updateState({ selected_appointment: new_data });
+    }
+
     const { start, end } = data;
     console.log(moment(start).format("LLL"), " --- ", moment(end).format("LLL"))
     console.log("\n\n", data);

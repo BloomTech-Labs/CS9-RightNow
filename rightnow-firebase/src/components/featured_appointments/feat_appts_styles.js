@@ -6,7 +6,7 @@ export const Container = glamorous.div({
 });
 
 export const Header = glamorous.div({
-	width: '98%',
+	width: '100%',
 	fontFamily: 'Raleway, sans-serif',
 	fontSize: '2.2em',
 	fontWeight: 600,
@@ -15,7 +15,7 @@ export const Header = glamorous.div({
 	borderBottom: '1px solid #b4b4b4',
 
 	'@media(min-width: 1800px)': {
-		width: '90%'
+		width: '100%'
 	},
 
 	'@media(max-width: 1800px)': {
@@ -28,11 +28,11 @@ export const Header = glamorous.div({
 
 	'@media(max-width: 1000px)': {
 		fontSize: '1.5em',
-		width: '65%'
+		width: '100%'
 	},
 
 	'@media(max-width: 600px)': {
-		width: '95%'
+		width: '100%'
 	},
 
 	'@media(max-width: 405px)': {

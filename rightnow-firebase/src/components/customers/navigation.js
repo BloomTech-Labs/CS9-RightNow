@@ -44,120 +44,125 @@ const ButtonContainer = glamorous.div({
 });
 
 const Option = glamorous.div({
-	textAlign: 'center',
-	display: 'flex',
-	justifyContent: 'center',
-	alignItems: 'center',
-	// minWidth: '8%',
-	color: '#EBEBEB',
-	fontSize: '1.3em',
-	fontWeight: 600,
-	marginRight: '2%',
-	border: '1px solid transparent',
-	padding: '0 2%',
-	// padding: '1.5% 1%',
-	':hover': {
-		cursor: 'pointer',
-		border: '1px solid white',
-		borderRadius: '5px'
-	}
+  textAlign: "center",
+  width: "8%",
+  color: "#EBEBEB",
+  textShadow: "0 0 3px #ef5b5b",
+  fontSize: "1.2em",
+  fontWeight: 600,
+  marginRight: "2%",
+  border: "1px solid transparent",
+  padding: "1%",
+  ":first-child": {
+    width: "17%",
+  },
+  ":hover": {
+    cursor: "pointer",
+    border: "1px solid #ebebeb",
+    borderRadius: "5px"
+  }
 });
 
+const Placeholder = glamorous.div({
+  textAlign: "center",
+  width: "8%",
+  color: "#EBEBEB",
+  textShadow: "0 0 3px #ef5b5b",
+  fontSize: "1.2em",
+  fontWeight: 600,
+  marginRight: "2%",
+  border: "1px solid transparent",
+  padding: "1%",
+  display: "none"
+})
+
 class Navigation extends Component {
-	state = {
-		displayLoginModal: false,
-		displayRegModal: false,
-		displayRegForm: false,
-		displayConfirm: false
-	};
+  state = {
+    displayLoginModal: false,
+    displayRegModal: false,
+    displayRegForm: false,
+    displayConfirm: false
+  };
 
-	openReg = () => {
-		this.setState({ displayRegModal: true });
-		document.body.style.overflowY = 'hidden';
-		document.querySelector('#primary_input').style.zIndex = 0;
-	};
+  openReg = () => {
+    this.setState({ displayRegModal: true });
+    document.body.style.overflowY = "hidden";
+    document.querySelector("#primary_input").style.zIndex = 0;
+  };
 
-	openLogin = () => {
-		this.setState({ displayLoginModal: true });
-		document.body.style.overflowY = 'hidden';
-		document.querySelector('#primary_input').style.zIndex = 0;
-	};
+  openLogin = () => {
+    this.setState({ displayLoginModal: true });
+    document.body.style.overflowY = "hidden";
+    document.querySelector("#primary_input").style.zIndex = 0;
+  };
 
-	RegToLogModal = () => {
-		this.setState({ displayRegModal: false });
-		this.setState({ displayLoginModal: true });
-	};
+  RegToLogModal = () => {
+    this.setState({ displayRegModal: false });
+    this.setState({ displayLoginModal: true });
+  };
 
-	LogToRegModal = () => {
-		this.setState({ displayLoginModal: false });
-		this.setState({ displayRegModal: true });
-	};
+  LogToRegModal = () => {
+    this.setState({ displayLoginModal: false });
+    this.setState({ displayRegModal: true });
+  };
 
-	CreateUserForm = () => {
-		this.setState({ displayRegModal: false });
-		this.setState({ displayRegForm: true });
-	};
+  CreateUserForm = () => {
+    this.setState({ displayRegModal: false });
+    this.setState({ displayRegForm: true });
+  };
 
-	closeModal = () => {
-		document.body.style.overflowY = 'scroll';
-		this.setState({
-			displayRegModal: false,
-			displayLoginModal: false,
-			displayRegForm: false
-		});
-		document.querySelector('#primary_input').style.zIndex = 1;
-	};
+  closeModal = () => {
+    document.body.style.overflowY = "scroll";
+    this.setState({
+      displayRegModal: false,
+      displayLoginModal: false,
+      displayRegForm: false
+    });
+    document.querySelector("#primary_input").style.zIndex = 1;
+  };
 
-	handleEmailSignIn = (email, password, bizContext) => {
-		bizContext.updateState({ loggedfromPage: 'customer' });
-		this.fireSweetAlert_waiting();
+  handleEmailSignIn = (email, password) => {
+    firebase.auth().signInWithEmailAndPassword(email, password);
+    this.closeModal();
+  };
 
-		firebase
-			.auth()
-			.signInWithEmailAndPassword(email, password)
-			.then(() => this.fireSweetAlert_success())
-			.then(() => this.closeModal())
-			.catch((err) => {
-				setTimeout(this.fireSweetAlert_error, 600);
-			});
-	};
+  handleProviderLogin = type => {
+    let provider;
 
-	handleProviderLogin = (type) => {
-		let provider;
+    if (type === "google") provider = new firebase.auth.GoogleAuthProvider();
+    if (type === "facebook")
+      provider = new firebase.auth.FacebookAuthProvider();
 
-		if (type === 'google') provider = new firebase.auth.GoogleAuthProvider();
-		if (type === 'facebook') provider = new firebase.auth.FacebookAuthProvider();
+    if (!provider) return;
 
-		if (!provider) return;
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then(res => {
+        const newUser = res.user;
 
-		firebase
-			.auth()
-			.signInWithPopup(provider)
-			.then((res) => {
-				const newUser = res.user;
+        const data = {
+          uid: newUser.uid,
+          name: newUser.displayName,
+          email: newUser.email,
+          phone: newUser.phoneNumber,
+          photo: newUser.photoURL
+        };
 
-				const data = {
-					uid: newUser.uid,
-					name: newUser.displayName,
-					email: newUser.email,
-					phone: newUser.phoneNumber,
-					photo: newUser.photoURL
-				};
+        axios
+          .post(
+            "https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/customer",
+            data
+          )
+          .then(result => console.log(result))
+          .catch(err => console.log(err));
+      })
+      .then((res) => this.fireSweetAlert_success('login'))
+      .then(() => this.closeModal())
+      .catch(err => console.log(err));
+  };
 
-				axios
-					.post('https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/customer', data)
-					.then((result) => console.log(result))
-					.catch((err) => console.log(err));
-			})
-			.then((res) => this.fireSweetAlert_success('login'))
-			.then((x) => this.closeModal())
-			.catch((err) => {
-				setTimeout(this.fireSweetAlert_error, 600);
-			})
-			.catch((err) => console.log(err));
-	};
-
-	// SweetAlert Stuff
+  // SweetAlert Stuff
 	fireSweetAlert_waiting = () => {
 		swal({
 			title: 'Logging you in now...',
@@ -165,7 +170,8 @@ class Navigation extends Component {
 				swal.showLoading();
 			}
 		});
-	};
+  };
+  
 	fireSweetAlert_success = (type) => {
 		const toast = swal.mixin({
 			toast: true,
@@ -184,7 +190,8 @@ class Navigation extends Component {
 				title: 'Signed in successfully'
 			});
 		}
-	};
+  };
+  
 	fireSweetAlert_error = () => {
 		const toast = swal.mixin({
 			toast: true,
@@ -198,121 +205,89 @@ class Navigation extends Component {
 		});
 	};
 
-	// fireSweetAlert_viewMore = () => {
-	// 	console.log('this is working');
-	// 	swal({
-	// 		title: 'Test modal',
-	// 		html: true,
-	// 		onOpen: () => {
-	// 			<ConfirmModal closeModal={() => this.closeModal()} />;
-	// 		}
-	// 	});
-	// };
+  render() {
+    return (
+      <Container>
+        <Link to="/" style={{ textDecoration: "none", padding: "1%", textShadow: "0 0 3px skyblue", }}>
+          <Logo>Sesho</Logo>
+        </Link>
 
-	render() {
-		console.log('prop check', this.props.businessContext);
-		const bizContextProp = this.props.businessContext;
-		if (bizContextProp.loggedInAs === 'business') {
-			// if not logged in as business owner
-			bizContextProp.fireSweetAlert_info_as('business');
-			return <Redirect to="/busn-appts" />;
-		} else
-			return (
-				<Container>
-					<Link to="/" style={{ textDecoration: 'none', padding: '1%' }}>
-						<Logo>Sesho</Logo>
-					</Link>
+        <UserContext.Consumer>
+          {value => {
+            if (value.userSignedIn) {
+              return (
+                <ButtonContainer>
+                  <Placeholder></Placeholder>
+                  <Option>
+                    <Link
+                      to="/user-settings"
+                      style={{
+                        textDecoration: "none",
+                        color: "#EBEBEB",
+                        width: "100%",
+                        "&hover": { color: "#353A50 !important" }
+                      }}
+                    >
+                      Settings
+                    </Link>
+                  </Option>
+                  <Option onClick={() => {
+                    value.customerLogout();
+                    this.fireSweetAlert_success('logout');
+                    this.props.busnContext.updateState({ loggedfrom: "", loggedInAs: "" });
+                  }}>Sign Out</Option>
+                </ButtonContainer>
+              );
+            } else
+              return (
+                <ButtonContainer>
+                  <Option>
+                    <Link
+                      to="/biz-account"
+                      style={{ textDecoration: "none", color: "#ebebeb" }}
+                    >
+                      Business Owner?
+                    </Link>
+                  </Option>
+                  <Option onClick={() => this.openReg()}>Sign Up</Option>
+                  <Option onClick={() => this.openLogin()}>Login</Option>
+                </ButtonContainer>
+              );
+          }}
+        </UserContext.Consumer>
 
-					<UserContext.Consumer>
-						{(value) => {
-							if (value.userSignedIn) {
-								return (
-									<ButtonContainer>
-										<Option
-											style={{
-												textDecoration: 'none',
-												color: '#EBEBEB',
-												width: '11%',
-												'&hover': { color: '#353A50 !important' }
-											}}
-										>
-											<Link
-												to="/user-settings"
-												style={{
-													textDecoration: 'none',
-													color: '#EBEBEB',
-													'&hover': { color: '#353A50 !important' }
-												}}
-											>
-												User Profile
-											</Link>
-										</Option>
-										<Option
-											onClick={() =>
-												auth.signOut().then(() => {
-													this.fireSweetAlert_success('logout');
-													bizContextProp.updateState({ loggedfrom: '', loggedInAs: '' });
-												})}
-										>
-											SignOut
-										</Option>
-									</ButtonContainer>
-								);
-							} else
-								return (
-									<ButtonContainer>
-										<Option
-											style={{
-												textDecoration: 'none',
-												color: '#EBEBEB',
-												width: '15%',
-												'&hover': { color: '#353A50 !important' }
-											}}
-										>
-											<Link
-												to="/biz-account"
-												style={{
-													textDecoration: 'none',
-													// color: '#e8ac8f' // pinkish text
-													color: '#EBEBEB'
-												}}
-											>
-												Business Owner?
-											</Link>
-										</Option>
-										<Option onClick={() => this.openReg()}>Sign Up</Option>
-										<Option onClick={() => this.openLogin()}>Login</Option>
-									</ButtonContainer>
-								);
-						}}
-					</UserContext.Consumer>
+        {this.state.displayLoginModal ? (
+          <SignInModal
+            providerLogin={prov => this.handleProviderLogin(prov)}
+            emailLogin={(x, y) => this.handleEmailSignIn(x, y)}
+            closeModal={() => this.closeModal()}
+            logToReg={() => this.LogToRegModal()}
+          />
+        ) : null}
 
-					{this.state.displayLoginModal ? (
-						<SignInModal
-							providerLogin={(prov) => this.handleProviderLogin(prov)}
-							emailLogin={(x, y) => this.handleEmailSignIn(x, y, bizContextProp)}
-							closeModal={() => this.closeModal()}
-							logToReg={() => this.LogToRegModal()}
-						/>
-					) : null}
+        {this.state.displayRegModal ? (
+          <RegisterModal
+            providerLogin={prov => this.handleProviderLogin(prov)}
+            emailLogin={(x, y) => this.handleEmailSignIn(x, y)}
+            closeModal={() => this.closeModal()}
+            regToLog={() => this.RegToLogModal()}
+          />
+        ) : null}
 
-					{this.state.displayRegModal ? (
-						<RegisterModal
-							providerLogin={(prov) => this.handleProviderLogin(prov)}
-							emailLogin={(x, y) => this.handleEmailSignIn(x, y, bizContextProp)}
-							closeModal={() => this.closeModal()}
-							regToLog={() => this.RegToLogModal()}
-						/>
-					) : null}
+        {this.state.displayRegForm ? (
+          <RegisterForm closeModal={() => this.closeModal()} />
+        ) : null}
 
-					{this.state.displayRegForm ? <RegisterForm closeModal={() => this.closeModal()} /> : null}
-					<UserContext.Consumer>
-						{(value) =>
-							value.displayConfirm ? <ConfirmModal closeModal={() => this.closeModal()} /> : null}
-					</UserContext.Consumer>
-				</Container>
-			);
-	}
+        <UserContext.Consumer>
+          {value =>
+            value.displayConfirm ? (
+              <ConfirmModal closeModal={() => this.closeModal()} />
+            ) : null
+          }
+        </UserContext.Consumer>
+      </Container>
+    );
+  }
 }
 
 export default withRouter(Navigation);
