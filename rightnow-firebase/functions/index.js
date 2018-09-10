@@ -346,11 +346,9 @@ export const haveAsesh = functions.https.onRequest(app);
 */
 
 import algoliasearch from "algoliasearch";
-import { user } from "firebase-functions/lib/providers/auth";
 
-const ALGOLIA_ID = "6B2HFL051A";  // functions.config().algolia.app_id;
-const ALGOLIA_ADMIN_KEY = "46f5454eead67b5f8fbb66e85f13b80e"; // functions.config().algolia.api_key;
-// const ALGOLIA_SEARCH_KEY = functions.confi	g().algolia.search_key;
+const ALGOLIA_ID = functions.config().algolia.app_id;
+const ALGOLIA_ADMIN_KEY = functions.config().algolia.api_key;
 
 const ALGOLIA_INDEX_NAME = 'appointments';
 const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
