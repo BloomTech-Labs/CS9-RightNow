@@ -17,7 +17,6 @@ const HomeContainer = glamorous.div({
 
 export default class Customers extends Component {
 	render() {
-		// console.log('prop check', this.props.businessContext);
 		return (
 			<HomeContainer>
 				<UserProvider>
