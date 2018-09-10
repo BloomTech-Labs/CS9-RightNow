@@ -168,30 +168,6 @@ export default class BusinessProvider extends Component {
 				type: 'error',
 				title: 'You have incomplete fields'
 			});
-		},
-		// iziToast notification
-		iziToastNotification: (type, doc) => {
-			if (type === 'customer') {
-				iziToast.info({
-					titleSize: '1.3em',
-					messageSize: '1em',
-					closeOnClick: true,
-					position: 'bottomRight',
-					title: `You're all booked!`,
-					message: 'Your appointment has been booked!'
-				});
-			}
-			if (type === 'business') {
-				iziToast.warning({
-					titleSize: '1.3em',
-					messageSize: '1em',
-					closeOnClick: true,
-					timeout: 15000,
-					position: 'bottomRight',
-					title: `New booking!`,
-					message: `${moment(doc.start).format('LLL')}`
-				});
-			}
 		}
 	};
 
@@ -274,30 +250,7 @@ export default class BusinessProvider extends Component {
 					// all data in the document
 					const doc = change.doc.data();
 					console.log('businessCtx doc', doc);
-					// if newly booked appointment, initiate toast
-					if ((doc.newAppt_biz || doc.newAppt_cust) && !doc.is_available) {
-						if (doc.newAppt_biz && this.state.loggedInAs === 'business') {
-							this.state.iziToastNotification('business', doc);
-							// Appt considered not new anymore (business side)
-							firebase
-								.firestore()
-								.collection('_appointment_')
-								.doc(id)
-								.update({ newAppt_biz: false })
-								.then(() => console.log('successful update'))
-								.catch((err) => console.log('error updating appointment', err));
-						} else if (doc.newAppt_biznewAppt_cust && this.state.loggedInAs === 'customer') {
-							this.state.iziToastNotification('customer', doc);
-							// Appt considered not new anymore (customer side)
-							firebase
-								.firestore()
-								.collection('_appointment_')
-								.doc(id)
-								.update({ newAppt_cust: false })
-								.then(() => console.log('successful update'))
-								.catch((err) => console.log('error updating appointment', err));
-						}
-					}
+
 					// format start/end times and appt title for calendar -- add doc id for future reference
 					const formatted = {
 						...doc,
