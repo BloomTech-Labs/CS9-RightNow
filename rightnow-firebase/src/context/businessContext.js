@@ -1,159 +1,280 @@
-import React, { Component } from "react";
-import firebase from "../firebase/firebase";
-import axios from "axios";
-import moment from "moment";
-
+import React, { Component } from 'react';
+import firebase from '../firebase/firebase';
+import axios from 'axios';
+import moment from 'moment';
+import swal from 'sweetalert2/dist/sweetalert2.js';
+import '../z_sweetAlert/sweetalert2.css';
 
 export const BusinessContext = React.createContext();
 
-
 export default class BusinessProvider extends Component {
-  state = {
-    uid: null,
-    userSignedIn: false,
-    display_delete_modal: false,
-    display_payment_modal: true,
+	state = {
+		uid: null,
+		userSignedIn: false,
+		display_delete_modal: false,
+		display_payment_modal: true,
 
-    personal: {
-      full_name: "",
-      first_name: "",
-      last_name: "",
-      email: "",
-      phone: ""
-    },
+		loggedfromPage: '',
+		loggedInAs: '',
 
-    business: {
-      name: "",
-      fullAddress: "",
-      street_number: "",
-      street_name: "",
-      city: "",
-      state: "",
-      zip: "",
-      phone: "",
-      rating: "",
-      photos: []
-    },
+		personal: {
+			full_name: '',
+			first_name: '',
+			last_name: '',
+			email: '',
+			phone: ''
+		},
 
-    selectedItem: "",
+		business: {
+			name: '',
+			fullAddress: '',
+			street_number: '',
+			street_name: '',
+			city: '',
+			state: '',
+			zip: '',
+			phone: '',
+			rating: '',
+			photos: []
+		},
 
-    appointments: [],
-    selected_appointment: null,
+		selectedItem: '',
 
-    future_appointments: [],
-    available_appointments: [],
-    booked_appointments: [],
+		appointments: [],
+		selected_appointment: null,
 
-    updateBusiness: data => this.setState({ business: data }), // PLACES API USES THIS
+		future_appointments: [],
+		available_appointments: [],
+		booked_appointments: [],
 
-    updateState: async data => await this.setState( data ),
+		updateBusiness: (data) => this.setState({ business: data }), // PLACES API USES THIS
 
-    business_logout: () => {
-      firebase.auth().signOut();
-      this.unsubscribe();
-    },
+		updateState: async (data) => await this.setState(data),
 
-    delete_appointment: () => {
-      if (!this.state.selected_appointment.is_available) return false;
+		business_logout: () => {
+			firebase.auth().signOut();
+			this.unsubscribe();
+		},
 
-      const appt_id = this.state.selected_appointment.id;
+		delete_appointment: () => {
+			if (!this.state.selected_appointment.is_available) return false;
 
-      firebase.firestore().collection("_appointment_").doc(appt_id).delete()
-        .then(res => console.log("success", res)).catch(err => console.log("error", err));
+			const appt_id = this.state.selected_appointment.id;
 
-      firebase.firestore().collection("_business_").doc(this.state.uid)
-        .collection("future_appointments").doc(appt_id).delete()
-        .then(res => console.log("success", res)).catch(err => console.log("error", err));
+			firebase
+				.firestore()
+				.collection('_appointment_')
+				.doc(appt_id)
+				.delete()
+				.then((res) => console.log('success', res))
+				.catch((err) => console.log('error', err));
 
-      this.setState({ display_delete_modal: false, selected_appointment: null });
+			firebase
+				.firestore()
+				.collection('_business_')
+				.doc(this.state.uid)
+				.collection('future_appointments')
+				.doc(appt_id)
+				.delete()
+				.then((res) => console.log('success', res))
+				.catch((err) => console.log('error', err));
 
-      return true;
-    },
+			this.setState({ display_delete_modal: false, selected_appointment: null });
 
-    get_business_details: async id => {
-      const busn_details = await firebase.firestore()
-        .collection("_business_").doc(id).get()
-        .then(doc => doc.data())
-        .then(data => this.setState({ business: data.business_information }))
-        .catch(err => console.log("error", err));
-      return busn_details;
-    }
-  }
+			return true;
+		},
+		get_business_details: async (id) => {
+			const busn_details = await firebase
+				.firestore()
+				.collection('_business_')
+				.doc(id)
+				.get()
+				.then((doc) => doc.data())
+				.then((data) => this.setState({ business: data.business_information }))
+				.catch((err) => console.log('error', err));
+			return busn_details;
+		},
 
-  componentDidMount() {    
-    firebase.auth().onAuthStateChanged(user => {
-      console.log(`current user: ${user}`);
+		// SweetAlert Stuff
+		fireSweetAlert_waiting: (type) => {
+			swal({
+				title: 'Logging you in now...',
+				onOpen: () => {
+					swal.showLoading();
+				}
+			});
+		},
+		fireSweetAlert_success: (type) => {
+			const toast = swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 3000
+			});
+			if (type === 'login') {
+				toast({
+					type: 'success',
+					title: 'Signed in successfully'
+				});
+			} else if (type === 'logout') {
+				toast({
+					type: 'success',
+					title: 'Successfully signed off'
+				});
+			}
+		},
+		fireSweetAlert_error: (type) => {
+			const toast = swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 3000
+			});
 
-      if (user && !this.state.userSignedIn) {
-        user.getIdTokenResult()
-          .then(token => token.claims.business ? true : false)
-          .then(isBusiness => {
-              if (!isBusiness) return;
-              this.setState({
-                userSignedIn: true, uid: user.uid,
-                personal: {
-                  full_name: user.displayName,
-                  email: user.email,
-                  phone: user.phoneNumber,
-                  photo: user.photoURL
-                }
-              });
-            this.initSnapshot();
-            
-          }).then(() => this.state.get_business_details(user.uid))
-          .catch(err => console.log("error", err));
-      }
-      
-      else if (!user && this.state.userSignedIn) { // empty state
-        this.setState({ userSignedIn: false, uid: null,
-          personal: { full_name: null, first_name: null, last_name: null, email: null, phone: null },
-          business: { name: null, fullAddress: null, street_number: null, street_name: null, city: null,
-            state: null, zip: null, phone: null, rating: null, photos: [] },
-          appointments: [], future_appointments: [], available_appointments: [], booked_appointments: [],
-        });
-      }
+			toast({
+				type: 'error',
+				title: 'Wrong email / password'
+			});
+		},
+		fireSweetAlert_info_as: (type) => {
+			const toast = swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 6000
+			});
+			if (type === 'customer') {
+				toast({
+					type: 'warning',
+					title: 'You are currently logged in as Sesho user.'
+				});
+			} else if (type === 'business') {
+				toast({
+					type: 'warning',
+					title: 'You are currently logged in as Sesho business Manager.'
+				});
+			}
+		},
+		fireSweetAlert_error_emptyField: (type) => {
+			const toast = swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 3000
+			});
 
-      else return;
-    });
-  }
+			toast({
+				type: 'error',
+				title: 'You have incomplete fields'
+			});
+		}
+	};
 
-  initSnapshot = () => {
-    this.unsubscribe = firebase
-      .firestore().collection("_appointment_")
-      .where("business_ref", "==", this.state.uid)
-      .onSnapshot(snapshot => {
-        snapshot.docChanges().forEach(change => {
-          // id of the document that was changed
-          const id = change.doc.id;
-          // all data in the document
-          const doc = change.doc.data();
-          // format start/end times and appt title for calendar -- add doc id for future reference
-          const formatted = { ...doc, start: moment(doc.start).toDate(), end: moment(doc.end).toDate(), title: doc.service, id: id };
-          // new array of appts with everything except for the altered appointment
-          const filtered = this.state.appointments.filter(appt => appt.id !== id);
+	componentDidMount() {
+		firebase.auth().onAuthStateChanged((user) => {
+			console.log(`current user:`, user);
 
-          // if appt was deleted, set state to all appts except for this one
-          if (change.type === "removed") { 
-            this.setState({ appointments: filtered });
-          } else if (!filtered) { // i'm not entirely sure why this works right now lol
-            this.setState({ appointments: [...this.state.appointments, formatted] });
-          } else {
-            this.setState({ appointments: [...filtered, formatted] });
-          }
-        });
-      });
-  }
+			if (user && !this.state.userSignedIn) {
+				user
+					.getIdTokenResult()
+					.then((token) => (token.claims.business ? true : false))
+					.then((isBusiness) => {
+						if (!isBusiness) {
+							// if logged in as User
+							this.setState({ loggedInAs: 'customer' });
+							// from business Page
+							if (this.state.loggedfromPage == 'business') {
+								this.state.fireSweetAlert_info_as('customer');
+								// then redirect to Customer Page
+							}
+						} else {
+							// if logged in as business
+							this.setState({ loggedInAs: 'business' });
+							// from customer Page
+							if (this.state.loggedfromPage == 'customer') {
+								this.state.fireSweetAlert_info_as('business');
+								// then redirect to customer Page
+							}
+							this.setState({
+								userSignedIn: true,
+								uid: user.uid,
+								personal: {
+									full_name: user.displayName,
+									email: user.email,
+									phone: user.phoneNumber,
+									photo: user.photoURL
+								}
+							});
+							this.initSnapshot();
+						}
+					})
+					.catch((err) => console.log('error', err));
+			} else if (!user && this.state.userSignedIn) {
+				// empty state
+				this.setState({
+					userSignedIn: false,
+					uid: null,
+					personal: { full_name: null, first_name: null, last_name: null, email: null, phone: null },
+					business: {
+						name: null,
+						fullAddress: null,
+						street_number: null,
+						street_name: null,
+						city: null,
+						state: null,
+						zip: null,
+						phone: null,
+						rating: null,
+						photos: []
+					},
+					appointments: [],
+					future_appointments: [],
+					available_appointments: [],
+					booked_appointments: []
+				});
+			} else return;
+		});
+	}
 
+	initSnapshot = () => {
+		this.unsubscribe = firebase
+			.firestore()
+			.collection('_appointment_')
+			.where('business_ref', '==', this.state.uid)
+			.onSnapshot((snapshot) => {
+				snapshot.docChanges().forEach((change) => {
+					// id of the document that was changed
+					const id = change.doc.id;
+					// all data in the document
+					const doc = change.doc.data();
+					// format start/end times and appt title for calendar -- add doc id for future reference
+					const formatted = {
+						...doc,
+						start: moment(doc.start).toDate(),
+						end: moment(doc.end).toDate(),
+						title: doc.service,
+						id: id
+					};
+					// new array of appts with everything except for the altered appointment
+					const filtered = this.state.appointments.filter((appt) => appt.id !== id);
 
-  render() {
-    return (
-      <BusinessContext.Provider value={this.state}>
-        {this.props.children}
-      </BusinessContext.Provider>
-    )
-  }
+					// if appt was deleted, set state to all appts except for this one
+					if (change.type === 'removed') {
+						this.setState({ appointments: filtered });
+					} else if (!filtered) {
+						// i'm not entirely sure why this works right now lol
+						this.setState({ appointments: [ ...this.state.appointments, formatted ] });
+					} else {
+						this.setState({ appointments: [ ...filtered, formatted ] });
+					}
+				});
+			});
+	};
+
+	render() {
+		return <BusinessContext.Provider value={this.state}>{this.props.children}</BusinessContext.Provider>;
+	}
 }
-
 
 /*
 

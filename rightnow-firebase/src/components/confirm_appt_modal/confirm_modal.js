@@ -40,9 +40,9 @@ export default class ConfirmModal extends Component {
 		return (
 			<UserContext.Consumer>
 				{(value) => (
-					<Container>
+					<Container id='confirmModal'>
 						{console.log('sanity check:', value)}
-						<ModalWrapper>
+						{/* <ModalWrapper> */}
 							<ElementConainer>
 								<Greeting>{value.name}</Greeting>
 								<YourSesh>Your Sesh-o is:</YourSesh>
@@ -83,7 +83,7 @@ export default class ConfirmModal extends Component {
 									</ButtonContainer>
 								</DetailContainer>
 							</ElementConainer>
-						</ModalWrapper>
+						{/* </ModalWrapper> */}
 					</Container>
 				)}
 			</UserContext.Consumer>
