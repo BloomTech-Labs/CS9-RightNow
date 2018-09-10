@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from '../firebase/firebase';
 import axios from 'axios';
-import moment from "moment";
+import moment from 'moment';
 import swal from 'sweetalert2/dist/sweetalert2.js';
 import '../z_sweetAlert/sweetalert2.css';
 
@@ -24,16 +24,16 @@ export default class UserProvider extends Component {
 		displayConfirm: false,
 		confirm: false,
 
-		service_query: "",
-		city_query: "",
+		service_query: '',
+		city_query: '',
 		queryResults: [],
 		finished: false,
 		full_query: null,
 		filtered_query: null,
 		update_results: false,
 
-		industry_selection: "All",
-		time_selection: "All",
+		industry_selection: 'All',
+		time_selection: 'All',
 
 		userSignedIn: false,
 		clientZip: null,
@@ -46,17 +46,17 @@ export default class UserProvider extends Component {
 			this.unsubscribe();
 		},
 
-		filter_by_industry: (obj_to_filter, industry_filter=this.state.industry_selection) => {
-			const copy_full = {...obj_to_filter};
+		filter_by_industry: (obj_to_filter, industry_filter = this.state.industry_selection) => {
+			const copy_full = { ...obj_to_filter };
 			const temp_query = {};
 			for (let busn in copy_full) {
-				const busn_appts= copy_full[busn].appointments;
-				const contains_industry = busn_appts.filter(appt => {
-						const appt_lower = appt.service.toLowerCase();
-						const industry_lower = industry_filter.toLowerCase();
-						const singluar = industry_lower.slice(0, industry_lower.length-1);
-						return (appt_lower.includes(industry_lower) || appt_lower.includes(singluar)) && appt.is_available;
-					});
+				const busn_appts = copy_full[busn].appointments;
+				const contains_industry = busn_appts.filter((appt) => {
+					const appt_lower = appt.service.toLowerCase();
+					const industry_lower = industry_filter.toLowerCase();
+					const singluar = industry_lower.slice(0, industry_lower.length - 1);
+					return (appt_lower.includes(industry_lower) || appt_lower.includes(singluar)) && appt.is_available;
+				});
 				if (contains_industry.length !== 0) {
 					temp_query[busn] = copy_full[busn];
 				}
@@ -64,14 +64,14 @@ export default class UserProvider extends Component {
 			return temp_query;
 		},
 
-		filter_by_time: (obj_to_filter, time_filter=this.state.time_selection) => {
-			const copy_full = {...obj_to_filter};
+		filter_by_time: (obj_to_filter, time_filter = this.state.time_selection) => {
+			const copy_full = { ...obj_to_filter };
 			const temp_query = {};
 			for (let busn in copy_full) {
-				const busn_appts= copy_full[busn].appointments;
-				const contains_time = busn_appts.filter(appt => {
+				const busn_appts = copy_full[busn].appointments;
+				const contains_time = busn_appts.filter((appt) => {
 					const is_after_current_time = moment(appt.start).isAfter(moment());
-					const is_before_filter_time = moment(appt.start).isBefore(moment().add(+time_filter[0], "hour"))
+					const is_before_filter_time = moment(appt.start).isBefore(moment().add(+time_filter[0], 'hour'));
 					return is_after_current_time && is_before_filter_time;
 				});
 				if (contains_time.length !== 0) {
@@ -82,68 +82,81 @@ export default class UserProvider extends Component {
 			return temp_query;
 		},
 
-		filter_appointments: data => {
+		filter_appointments: (data) => {
 			if (data.industry_selection) {
-				if (data.industry_selection === "All" && this.state.time_selection === "All") {
-					this.setState({ 
-						filtered_query: {...this.state.full_query}, 
-						update_results: true, 
-						industry_selection: data.industry_selection 
+				if (data.industry_selection === 'All' && this.state.time_selection === 'All') {
+					this.setState({
+						filtered_query: { ...this.state.full_query },
+						update_results: true,
+						industry_selection: data.industry_selection
 					});
-				} else if (data.industry_selection === "All") {
+				} else if (data.industry_selection === 'All') {
 					const filtered = this.state.filter_by_time(this.state.full_query);
-					this.setState({ 
+					this.setState({
 						filtered_query: filtered,
-						update_results: true, 
-						industry_selection: data.industry_selection 
+						update_results: true,
+						industry_selection: data.industry_selection
 					});
-				} else if (this.state.time_selection === "All") {
+				} else if (this.state.time_selection === 'All') {
 					const filtered = this.state.filter_by_industry(this.state.full_query, data.industry_selection);
-					this.setState({ 
+					this.setState({
 						filtered_query: filtered,
-						update_results: true, 
-						industry_selection: data.industry_selection 
+						update_results: true,
+						industry_selection: data.industry_selection
 					});
 				} else {
 					const filtered = this.state.filter_by_industry(this.state.full_query, data.industry_selection);
 					const filtered2 = this.state.filter_by_time(filtered, this.state.time_selection);
-					this.setState({ 
+					this.setState({
 						filtered_query: filtered2,
-						update_results: true, 
-						industry_selection: data.industry_selection 
+						update_results: true,
+						industry_selection: data.industry_selection
 					});
 				}
 			} else if (data.time_selection) {
-				if (data.time_selection === "All" && this.state.industry_selection === "All") {
-					this.setState({ 
-						filtered_query: {...this.state.full_query}, 
+				if (data.time_selection === 'All' && this.state.industry_selection === 'All') {
+					this.setState({
+						filtered_query: { ...this.state.full_query },
 						update_results: true,
 						time_selection: data.time_selection
 					});
-				} else if (data.time_selection === "All") {
+				} else if (data.time_selection === 'All') {
 					const filtered = this.state.filter_by_industry(this.state.full_query);
-					this.setState({ 
+					this.setState({
 						filtered_query: filtered,
-						update_results: true, 
-						time_selection: data.time_selection 
+						update_results: true,
+						time_selection: data.time_selection
 					});
-				} else if (this.state.industry_selection === "All") {
+				} else if (this.state.industry_selection === 'All') {
 					const filtered = this.state.filter_by_time(this.state.full_query, data.time_selection);
-					this.setState({ 
+					this.setState({
 						filtered_query: filtered,
-						update_results: true, 
-						time_selection: data.time_selection 
+						update_results: true,
+						time_selection: data.time_selection
 					});
 				} else {
 					const filtered = this.state.filter_by_time(this.state.full_query, data.time_selection);
 					const filtered2 = this.state.filter_by_industry(filtered);
-					this.setState({ 
+					this.setState({
 						filtered_query: filtered2,
-						update_results: true, 
-						time_selection: data.time_selection 
+						update_results: true,
+						time_selection: data.time_selection
 					});
 				}
 			}
+		},
+
+		fireSweetAlert_error: () => {
+			const toast = swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 3000
+			});
+			toast({
+				type: 'error',
+				title: 'You must be logged in to book an appointment.'
+			});
 		},
 
 		upcomingAppointment: async () => {
@@ -167,11 +180,13 @@ export default class UserProvider extends Component {
 
 			this.setState({ upcoming_appointments: future_appointments });
 
-			const names = await Promise.all(this.state.upcoming_appointments.map(async (appt) => {
-				const businessRef = await db.collection('_business_').doc(appt['business_ref']).get();
-				const business = await businessRef.data();
-				return business['business_information'].name;
-			}));
+			const names = await Promise.all(
+				this.state.upcoming_appointments.map(async (appt) => {
+					const businessRef = await db.collection('_business_').doc(appt['business_ref']).get();
+					const business = await businessRef.data();
+					return business['business_information'].name;
+				})
+			);
 
 			this.setState({ companyNames: names });
 		},
@@ -189,14 +204,19 @@ export default class UserProvider extends Component {
 		},
 
 		handleSearch: async () => {
-			const query = await this.state.city_query === "" ?
-				firebase.firestore().collection("_appointment_").where("service", "==", this.state.service_query) :
-				firebase.firestore().collection("_appointment_").where("business_address", "==", this.state.city_query);
+			const query =
+				(await this.state.city_query) === ''
+					? firebase.firestore().collection('_appointment_').where('service', '==', this.state.service_query)
+					: firebase
+							.firestore()
+							.collection('_appointment_')
+							.where('business_address', '==', this.state.city_query);
 
-			const appointments = await query.get()
-				.then(res => res.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-				.then(data => this.setState({ queryResults: data, finished: true }))
-				.catch(err => console.log("error", err));
+			const appointments = await query
+				.get()
+				.then((res) => res.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+				.then((data) => this.setState({ queryResults: data, finished: true }))
+				.catch((err) => console.log('error', err));
 
 			return appointments;
 		},
@@ -255,10 +275,14 @@ export default class UserProvider extends Component {
 			});
 		},
 
-		confirmAppointment: () => {
-			if (!this.state.confirm || !this.state.uid) return;
+		confirmAppointment: (successToast) => {
+			console.log('sanity', this.state.displayConfirm);
+			console.log('sanity', this.state.uid);
+			if (!this.state.confirm || !this.state.uid) {
+				this.state.fireSweetAlert_error();
+				return;
+			}
 			console.log(this.state.init_appointment);
-
 			firebase
 				.firestore()
 				.collection('_appointment_')
@@ -270,14 +294,15 @@ export default class UserProvider extends Component {
 			// NEED FIREBASE FUNCTION FOR APPOINTMENT ON-UPDATE
 			// appointment does not get added to customer's appoinment collection
 			this.setState({ displayConfirm: false });
+			successToast();
 		},
 
 		listenToResults: () => {
 			// THERE IS NO QUERY WHEN WE AUTO POPULATE DEFAULT APPOINTMENTS
 			const query = firebase.firestore().collection('_appointment_');
-				// this.state.query === ''
-					// ? firebase.firestore().collection('_appointment_')
-					// : firebase.firestore().collection('_appointment_').where('service', '==', this.state.query);
+			// this.state.query === ''
+			// ? firebase.firestore().collection('_appointment_')
+			// : firebase.firestore().collection('_appointment_').where('service', '==', this.state.query);
 
 			this.unsubscribe = query.onSnapshot((snapshot) => {
 				snapshot.docChanges().forEach((change) => {

@@ -1,10 +1,12 @@
-import React, { Component } from "react";
-import glamorous from "glamorous";
-import axios from "axios";
-import firebase from "../../firebase/firebase";
-import moment from "moment";
-import DatePicker from "react-datepicker";
+import React, { Component } from 'react';
+import glamorous from 'glamorous';
+import axios from 'axios';
+import firebase from '../../firebase/firebase';
+import moment from 'moment';
+import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+
+import iziToast from 'izitoast';
 
 const Container = glamorous.div({
 	width: '100%',
@@ -111,72 +113,90 @@ const Time = glamorous.input({
 });
 
 export default class PostAppointment extends Component {
-  state = {
-    today: "",
-    start_time: "", // moment(),
-    end_time: "", // moment().add(30, "m"),
-    service: "",
-    cost: "",
-    description: "",
-    business_ref: this.props.busnContext.uid
-  }
+	state = {
+		today: '',
+		start_time: '', // moment(),
+		end_time: '', // moment().add(30, "m"),
+		service: '',
+		cost: '',
+		description: '',
+		business_ref: this.props.busnContext.uid
+	};
 
-  handleSubmit = async () => {
-    this.state.start_time.set({
-      "year": this.state.today.year(),
-      "month": this.state.today.month(),
-      "day": this.state.today.day()
-    });
+	handleSubmit = async () => {
+		this.state.start_time.set({
+			year: this.state.today.year(),
+			month: this.state.today.month(),
+			day: this.state.today.day()
+		});
 
-    this.state.end_time.set({
-      "year": this.state.today.year(),
-      "month": this.state.today.month(),
-      "day": this.state.today.day()
-    });
+		this.state.end_time.set({
+			year: this.state.today.year(),
+			month: this.state.today.month(),
+			day: this.state.today.day()
+		});
 
-    const business_address = await firebase.firestore()
-      .collection("_business_")
-      .doc(this.state.business_ref)
-      .get().then(busn => {
-        console.log(busn.data());
-        return `${busn.data().business_information.city}`; 
-      }).catch(err => {
-        console.log(err)
-        return null;
-      });
+		const business_address = await firebase
+			.firestore()
+			.collection('_business_')
+			.doc(this.state.business_ref)
+			.get()
+			.then((busn) => {
+				console.log(busn.data());
+				return `${busn.data().business_information.city}`;
+			})
+			.catch((err) => {
+				console.log(err);
+				return null;
+			});
 
-    const appointment_details = {
-      start: this.state.start_time,
-      end: this.state.end_time,
-      service: this.state.service,
-      cost: this.state.cost,
-      description: this.state.description,
-      business_ref: this.state.business_ref,
-      business_address: business_address,
-      is_available: true
-    };
+		const appointment_details = {
+			start: this.state.start_time,
+			end: this.state.end_time,
+			service: this.state.service,
+			cost: this.state.cost,
+			description: this.state.description,
+			business_ref: this.state.business_ref,
+			business_address: business_address,
+			is_available: true,
+			new_appointment: true,
+			new_apptChecked: false
+		};
 
-    axios
-      .post("https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment", appointment_details)
-      .then(res => console.log("success\n", res))
-      .catch(err => console.log("error\n", err));
-    
-    this.setState({ 
-      today: "", 
-      start_time: "", 
-      end_time: "", 
-      service: "", 
-      cost: "", 
-      description: "" 
-    });
-  }
+		axios
+			.post('https://us-central1-cs9-rightnow.cloudfunctions.net/haveAsesh/appointment', appointment_details)
+			.then((res) => console.log('success\n', res))
+			.then(() => this.iziToastNotification('business'))
+			.catch((err) => console.log('error\n', err));
 
+		this.setState({
+			today: '',
+			start_time: '',
+			end_time: '',
+			service: '',
+			cost: '',
+			description: ''
+		});
+	};
 
-  render() {
-    return (
-      <Container>
-        <style>
-          {`
+	iziToastNotification = (type, start) => {
+		if (type === 'business') {
+			iziToast.success({
+				titleSize: '1.3em',
+				messageSize: '1em',
+				closeOnClick: true,
+				position: 'bottomRight',
+				title: `New appointment created!`,
+				message: `${moment(start).format('LLL')}`
+			});
+		}
+	};
+
+	render() {
+		return (
+			<Container>
+				<style>
+					{`
             .react-datepicker-popper {
               position: relative;
             }
