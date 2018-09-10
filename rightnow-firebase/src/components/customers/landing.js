@@ -30,6 +30,7 @@ const Title = glamorous.div({
   fontFamily: "Raleway, sans-serif",
   fontSize: "3.5em",
   color: "#EBEBEB",
+  textShadow: "0 0 3px skyblue",
   fontWeight: 800,
   textAlign: "center",
   marginBottom: "2%",
@@ -63,41 +64,6 @@ const Wrapper = glamorous.div({
   height: "15%"
 });
 
-const searchStyle = {
-  width: "15%",
-  padding: "0.8%",
-  fontSize: "1.5em",
-  borderRadius: "5px",
-  border: "none",
-
-  "@media(max-width: 1224px)": {
-    fontSize: "1.3em",
-  },
-
-  "@media(max-width: 1050px)": {
-    width: "25%"
-  }
-};
-
-const Search = glamorous.input({
-  width: "90%",
-  margin: "auto",
-  padding: "2% 0",
-  fontSize: "1.5em",
-  borderRadius: "5px",
-  border: "none",
-  marginBottom: "3%",
-  textAlign: "center",
-
-  "@media(max-width: 1224px)": {
-    fontSize: "1.3em",
-  },
-
-  "@media(max-width: 1050px)": {
-    width: "25%"
-  }
-});
-
 const Button = glamorous.div({
   width: "90%",
   textAlign: "center",
@@ -111,9 +77,11 @@ const Button = glamorous.div({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  // transition: "all 2s",
 
   ":hover": {
-    cursor: "pointer"
+    cursor: "pointer",
+    textShadow: "0 0 3px skyblue"
   },
 
   "@media(max-width: 1224px)": {

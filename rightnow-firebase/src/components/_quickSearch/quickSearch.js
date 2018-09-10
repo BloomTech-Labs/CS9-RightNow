@@ -68,7 +68,7 @@ const DateContainer = glamorous.div({
 	fontFamily: 'Raleway, sans-serif',
 	height: '100%',
 	width: '100%',
-	marginRight: '43%'
+	// marginRight: '43%'
 });
 
 const DayOfWeek = glamorous.div({
@@ -93,7 +93,7 @@ class Clock extends Component {
 	state = {
 		time: moment().format('h:mm a'),
 		day: moment().format('dddd'),
-		month: moment().format('MMMM d')
+		month: moment().format('MMMM D')
 	};
 
 	componentDidMount() {
