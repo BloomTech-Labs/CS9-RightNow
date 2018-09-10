@@ -160,6 +160,7 @@ class Navigation extends Component {
             if (value.userSignedIn) {
               return (
                 <ButtonContainer>
+                  <Option style={{display: "hidden"}}></Option>
                   <Option>
                     <Link
                       to="/user-settings"
@@ -171,20 +172,6 @@ class Navigation extends Component {
                       }}
                     >
                       Settings
-                    </Link>
-                  </Option>
-                  
-                  <Option>
-                    <Link
-                      to="/biz-account"
-                      style={{
-                        textDecoration: "none",
-                        color: "#EBEBEB",
-                        width: "100%",
-                        "&hover": { color: "#353A50 !important" }
-                      }}
-                    >
-                      Business Owner?
                     </Link>
                   </Option>
                   <Option onClick={() => auth.signOut()}>SignOut</Option>
