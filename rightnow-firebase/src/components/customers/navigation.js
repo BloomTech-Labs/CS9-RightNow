@@ -37,7 +37,7 @@ const Option = glamorous.div({
   textAlign: "center",
   width: "8%",
   color: "#EBEBEB",
-  // textShadow: "1px 1px 1px #ef5b5b",
+  textShadow: "0 0 3px #ef5b5b",
   fontSize: "1.3em",
   fontWeight: 600,
   marginRight: "2%",

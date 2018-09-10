@@ -24,7 +24,7 @@ export default class UserProvider extends Component {
 		confirm: false,
 
 		service_query: "",
-		city_query: "Manhattan, NY",
+		city_query: "",
 		queryResults: [],
 		finished: false,
 		full_query: null,
