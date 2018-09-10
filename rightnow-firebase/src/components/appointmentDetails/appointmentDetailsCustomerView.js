@@ -3,9 +3,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { Container, Header, Title, TrashCan, Content, Detail } from './appt_details_styles';
+import firebase from '../../firebase/firebase';
 
 class AppointmentDetails extends Component {
-	render() {
+		render() {
 		if (this.props.busnContext.selected_appointment) {
 			const {
 				start,
@@ -48,7 +49,7 @@ class AppointmentDetails extends Component {
 							/>
 							<Detail>
 								{customer_name}
-							</Detail>{' '}
+							</Detail>
 							{/* user-times */}
 						</div>
 						<div style={{ display: 'flex', alignItems: 'center' }}>

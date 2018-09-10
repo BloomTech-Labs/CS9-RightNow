@@ -4,6 +4,7 @@ import axios from 'axios';
 import moment from 'moment';
 import swal from 'sweetalert2/dist/sweetalert2.js';
 import '../z_sweetAlert/sweetalert2.css';
+import iziToast from 'izitoast';
 
 export const BusinessContext = React.createContext();
 
@@ -168,12 +169,24 @@ export default class BusinessProvider extends Component {
 				type: 'error',
 				title: 'You have incomplete fields'
 			});
+		},
+		// iziToast notification
+		iziToastNotification: (event) => {
+			iziToast.warning({
+				titleSize: '1.3em',
+				messageSize: '1em',
+				closeOnClick: true,
+				timeout: 15000,
+				position: 'bottomRight',
+				title: `New booking!`,
+				message: `${moment(event.start).format('LLL')}`
+			});
 		}
 	};
 
 	componentDidMount() {
 		firebase.auth().onAuthStateChanged((user) => {
-			console.log(`current user:`, user);
+			// console.log(`current user:`, user);
 
 			if (user && !this.state.userSignedIn) {
 				user
@@ -246,8 +259,21 @@ export default class BusinessProvider extends Component {
 				snapshot.docChanges().forEach((change) => {
 					// id of the document that was changed
 					const id = change.doc.id;
+					console.log('businessCtx id', id);
 					// all data in the document
 					const doc = change.doc.data();
+					console.log('businessCtx doc', doc);
+					if ((this.state.loggedInAs = 'business' && doc.new_appointment && !doc.is_available)) {
+						this.state.iziToastNotification(doc);
+						firebase
+							.firestore()
+							.collection('_appointment_')
+							.doc(id)
+							.update({ new_appointment: false })
+							.then(() => console.log('successful update'))
+							.catch((err) => console.log('error updating appointment', err));
+					}
+
 					// format start/end times and appt title for calendar -- add doc id for future reference
 					const formatted = {
 						...doc,
@@ -256,6 +282,7 @@ export default class BusinessProvider extends Component {
 						title: doc.service,
 						id: id
 					};
+					console.log('businessCtx formatted', id);
 					// new array of appts with everything except for the altered appointment
 					const filtered = this.state.appointments.filter((appt) => appt.id !== id);
 
