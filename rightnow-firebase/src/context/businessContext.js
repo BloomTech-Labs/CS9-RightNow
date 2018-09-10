@@ -173,6 +173,8 @@ export default class BusinessProvider extends Component {
 		iziToastNotification: (type, doc) => {
 			if (type === 'customer') {
 				iziToast.info({
+					titleSize: '1.3em',
+					messageSize: '1em',
 					closeOnClick: true,
 					position: 'bottomRight',
 					title: `You're all booked!`,
@@ -181,11 +183,13 @@ export default class BusinessProvider extends Component {
 			}
 			if (type === 'business') {
 				iziToast.warning({
+					titleSize: '1.3em',
+					messageSize: '1em',
 					closeOnClick: true,
-					timeout: 10000,
+					timeout: 15000,
 					position: 'bottomRight',
 					title: `New booking!`,
-					message: `For: ${moment(doc.start).format('LLL')}`
+					message: `${moment(doc.start).format('LLL')}`
 				});
 			}
 		}
