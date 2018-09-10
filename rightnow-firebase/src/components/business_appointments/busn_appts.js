@@ -17,18 +17,19 @@ import { StripeProvider } from "react-stripe-elements";
 import { configs } from "../../environment";
 
 class BusnApptsView extends Component {
-  state = {
-    delete_modal: false
-  };
+	state = {
+		delete_modal: false,
+		isBusiness: true
+	};
 
-  render() {
-    return (
-      <BusinessContext.Consumer>
-        {value => {
-          if (this.props.value.userSignedIn === false) {
-            console.log("here");
-            return <Redirect to="/biz-account" />;
-          }
+	render() {
+		return (
+			<BusinessContext.Consumer>
+				{(value) => {
+					if (this.props.value.userSignedIn === false) {
+						console.log('here');
+						return <Redirect to="/biz-account" />;
+					}
 
           return (
             <StripeProvider apiKey={configs.STRIPE_API_KEY}>
@@ -48,12 +49,8 @@ class BusnApptsView extends Component {
                   </ApptsWrapper>
                 </Container>
 
-                {value.display_delete_modal ? (
-                  <DeleteModal busnContext={value} />
-                ) : null}
-                {value.display_payment_modal ? (
-                  <PaymentForm busnContext={value} />
-                ) : null}
+                {value.display_delete_modal ? <DeleteModal busnContext={value} /> : null}
+								{value.display_payment_modal ? <PaymentForm busnContext={value} /> : null}
               </PrimaryWrapper>
             </StripeProvider>
           )

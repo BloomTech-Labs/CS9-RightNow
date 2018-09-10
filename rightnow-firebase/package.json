@@ -8,6 +8,7 @@
     "firebase": "^5.3.1",
     "glamor": "^2.20.40",
     "glamorous": "^4.13.1",
+    "izitoast": "^1.4.0",
     "lodash.groupby": "^4.6.0",
     "moment": "^2.22.2",
     "prop-types": "^15.6.2",
@@ -24,6 +25,7 @@
     "react-star-ratings": "^2.3.0",
     "react-stripe-elements": "^2.0.1",
     "sweetalert2": "^7.26.28",
+    "sweetalert2-react-content": "^1.0.1",
     "yarn": "^1.9.4"
   },
   "scripts": {

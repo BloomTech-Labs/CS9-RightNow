@@ -2,7 +2,7 @@ import glamorous from 'glamorous';
 
 export const Container = glamorous.div({
 	width: '85vw',
-	margin: '1% 5%'
+	margin: 'auto'
 });
 
 export const Header = glamorous.div({

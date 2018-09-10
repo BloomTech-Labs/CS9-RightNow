@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import firebase from '../firebase/firebase';
 import axios from 'axios';
 import moment from "moment";
+import swal from 'sweetalert2/dist/sweetalert2.js';
+import '../z_sweetAlert/sweetalert2.css';
 
 export const UserContext = React.createContext();
-
 export default class UserProvider extends Component {
 	state = {
 		uid: '',
@@ -168,13 +169,11 @@ export default class UserProvider extends Component {
 
 			const names = await Promise.all(this.state.upcoming_appointments.map(async (appt) => {
 				const businessRef = await db.collection('_business_').doc(appt['business_ref']).get();
-				console.log('buss Ref', businessRef);
 				const business = await businessRef.data();
-				console.log(business['business_information'].name);
 				return business['business_information'].name;
 			}));
 
-			this.setState({companyNames: names})
+			this.setState({ companyNames: names });
 		},
 
 		searchAll: async () => {
@@ -336,8 +335,10 @@ export default class UserProvider extends Component {
 					.getIdTokenResult()
 					.then((token) => (token.claims.business ? true : false))
 					.then((isBusiness) => {
-						if (isBusiness) return;
-						else {
+						// if logged in as Business
+						if (isBusiness) {
+							return;
+						} else {
 							this.setState(
 								{
 									userSignedIn: true,

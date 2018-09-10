@@ -1,58 +1,67 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import {
-	Container,
-	ModalWrapper,
-	ElementConainer,
-	DetailContainer,
-	Greeting,
-	YourSesh,
-	Activity,
-	Spanner,
-	Location,
-	Icon,
-	Time,
-	Cost,
-	Agreement,
-	FinePrint,
-	ButtonContainer,
-	Button
-} from './view_moreModal_styles';
-import glamorous from "glamorous";
+import glamorous from 'glamorous';
+
+// may have to use its own styling sheet later
+import { AvailableAppts, Appointment, MoreAppointments, Type, Time, Cost } from './appt_card_styles';
 
 import { UserContext } from '../../context/userContext';
 
-
 const Darkness = glamorous.div({
-  height: "100vh",
-  width: "100vw",
-  position: "fixed",
-  background: "rgba(0, 0, 0, 0.65)",
-  zIndex: 5,
-  top: 0,
-  left: 0,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center"
+	height: '100vh',
+	width: '100vw',
+	position: 'fixed',
+	background: 'rgba(0, 0, 0, 0.65)',
+	zIndex: 1,
+	top: 0,
+	left: 0,
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center'
 });
 
 const Modal = glamorous.div({
-  height: "30vh",
-  width: "30vw",
-  zIndex: 6,
-	borderRadius: "5px",
-	border: "1px solid #EBEBEB",
-  background: "#EBEBEB",
-  display: "flex",
-  flexDirection: "column",
+	position: 'relative',
+	height: '30vh',
+	width: '30vw',
+	borderRadius: '5px',
+	border: '1px solid #EBEBEB',
+	background: '#EBEBEB',
+	display: 'flex',
+	flexDirection: 'column',
 
-  "@media(max-width: 1550px)": {
-    height: "40vh",
-    width: "40vw"
-  }
+	'@media(max-width: 1550px)': {
+		height: '55vh',
+		width: '30vw'
+	}
 });
 
-export default class ConfirmModal extends Component {
+export const ButtonContainer = glamorous.div({
+	padding: '0 3%',
+	width: '100%'
+});
+
+export const Button = glamorous.div({
+	fontFamily: 'Quicksand, sans-serif',
+	// fontWeight: 600,
+	// fontSize: '1.2em',
+
+	display: 'flex',
+	width: '50%',
+	padding: '2% 0',
+	alignItems: 'center',
+	alignContent: 'center',
+	justifyContent: 'center',
+	marginTop: '3%',
+	fontSize: '1em',
+	fontWeight: 600,
+	border: '1px solid lightgray',
+	borderRadius: '5px',
+	transition: 'background .25s, border .25s',
+	':hover': { backgroundColor: 'rgba(225, 225, 225, 0.6)', cursor: 'pointer' }
+});
+
+export default class ViewMoreModal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
@@ -67,55 +76,32 @@ export default class ConfirmModal extends Component {
 	}
 
 	render() {
-    console.log('appointments in View More', this.props.appointments)
-    console.log('Close function in View More', this.props.closeViewMore)
+		console.log('appointments in View More', this.props.appointments);
+		console.log('Close function in View More', this.props.closeViewMore);
 		return (
 			<UserContext.Consumer>
 				{(value) => (
 					<Darkness>
 						<Modal>
-							<ElementConainer>
-								<div>Something is working here :)</div>
-
-								{/* <Greeting>{value.name}</Greeting>
-								<YourSesh>Avaialbe Seshos:</YourSesh>
-								<DetailContainer>
-									<Activity>
-										<Spanner>{value.init_appointment.service}</Spanner> at{' '}
-										<Spanner>Chatters Hair Salon</Spanner>
-									</Activity>
-									<Location>
-										on <Spanner>{value.init_appointment.business_details.business_information.fullAddress}</Spanner>{' '}
-										<Icon src="https://seeklogo.com/images/G/google-maps-2014-logo-6108508C7B-seeklogo.com.png" />
-									</Location>
-									<Time>
-										at <Spanner>{`${moment(value.init_appointment.start).format("h:mm")}`}</Spanner>
-									</Time>
-									<Cost>
-										Estimated cost: <Spanner>{value.init_appointment.cost}</Spanner>
-									</Cost>
-									<Agreement>
-										<div className="pretty p-default p-curve">
-											<input type="checkbox" onClick={e => value.updateState({ confirm: e.target.checked })} />
-											<div className="state p-danger">
-												<label>
-													<FinePrint>
-														I acknowledge that by confirming this session, I am solely
-														responsible for <br />any disputes regarding the cost, time and
-														type of service I am receiveing.
-													</FinePrint>
-												</label>
-											</div>
-										</div>
-									</Agreement>
-									<ButtonContainer>
-										<Button onClick={() => value.confirmAppointment()}>Got it!</Button>
-										<Button onClick={() => value.updateState({ displayConfirm: false })}>
-											Go back
-										</Button>
-									</ButtonContainer>
-								</DetailContainer> */}
-							</ElementConainer>
+							<div>Currently avaialbe Seshos:</div>
+							<div>
+								{this.props.appointments !== null ? (
+									<AvailableAppts>
+										{this.props.appointments.map((appt, index) => (
+											<Appointment key={index} onClick={() => value.initializeAppointment(appt)}>
+												<Type>{appt.service}</Type>
+												<Time>{`${moment(appt.start).format('h:mm')} - ${moment(
+													appt.end
+												).format('h:mm')}`}</Time>
+												<Cost>{appt.cost}</Cost>
+											</Appointment>
+										))}
+									</AvailableAppts>
+								) : null}
+								<ButtonContainer>
+									<Button onClick={() => this.props.closeViewMore()}>Go back</Button>
+								</ButtonContainer>
+							</div>
 						</Modal>
 					</Darkness>
 				)}

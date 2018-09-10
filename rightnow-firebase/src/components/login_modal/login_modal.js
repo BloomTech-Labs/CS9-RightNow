@@ -18,7 +18,6 @@ import {
 	CloseX
 } from './login_modal_styles';
 
-
 export default class SignInModal extends Component {
 	state = {
 		email: "",

@@ -1,36 +1,46 @@
-import React, { Component } from "react";
-import glamorous from "glamorous";
-import { Link } from "react-router-dom";
-import SignInModal from "../login_modal/login_modal";
-import RegisterModal from "../register_modal/reg_modal";
-import RegisterForm from "../register_modal/reg_forms";
-import ConfirmModal from "../confirm_appt_modal/confirm_modal";
-import { UserContext } from "../../context/userContext";
-import firebase, { auth } from "../../firebase/firebase";
-import axios from "axios";
+import React, { Component } from 'react';
+import glamorous from 'glamorous';
+import { Link } from 'react-router-dom';
+import SignInModal from '../login_modal/login_modal';
+import RegisterModal from '../register_modal/reg_modal';
+import RegisterForm from '../register_modal/reg_forms';
+import ConfirmModal from '../confirm_appt_modal/confirm_modal';
+import { UserContext } from '../../context/userContext';
+import firebase, { auth } from '../../firebase/firebase';
+import axios from 'axios';
+
+import { Redirect, withRouter } from 'react-router-dom';
+
+// sweetAlert 2 with custom css
+import swal from 'sweetalert2/dist/sweetalert2.js';
+import '../../z_sweetAlert/sweetalert2.css';
 
 const Container = glamorous.div({
-  width: "100%",
-  display: "flex",
-  justifyContent: "space-between",
-  alignContent: "center",
-  zIndex: 1
+	// background: 'rgb(24, 24, 25, 0.2)',
+	width: '100%',
+	display: 'flex',
+	justifyContent: 'space-between',
+	zIndex: 1,
+	height: '80%'
+	// boxShadow: '0 2px 4px -1px rgba(0,0,0)'
 });
 
 const Logo = glamorous.div({
-  fontFamily: "Syncopate, sans-serif",
-  fontSize: "2.5em",
-  fontWeight: 800,
-  alignSelf: "center",
-  color: "#EBEBEB"
+	display: 'display',
+	justifyContent: 'center',
+	alignItems: 'center',
+	fontFamily: 'Syncopate, sans-serif',
+	fontSize: '2.5em',
+	fontWeight: 800,
+	color: '#EBEBEB',
+	padding: 0
 });
 
 const ButtonContainer = glamorous.div({
-  display: "flex",
-  justifyContent: "flex-end",
-  padding: "1%",
-  width: "70%"
-  // paddingRight: "2%"
+	display: 'flex',
+	justifyContent: 'flex-end',
+	padding: '0.5% 0',
+	width: '70%'
 });
 
 const Option = glamorous.div({
@@ -231,3 +241,5 @@ export default class Navigation extends Component {
     );
   }
 }
+
+export default withRouter(Navigation);

@@ -1,14 +1,12 @@
-import React, { Component } from "react";
-import glamorous from "glamorous";
-import Particles from "react-particles-js";
-import Navigation from "./navigation";
+import React, { Component } from 'react';
+import glamorous from 'glamorous';
+import Particles from 'react-particles-js';
+import Navigation from './navigation';
 import { UserContext } from '../../context/userContext';
 import {AlgoliaCitySearch, AlgoliaServiceSearch} from "../algolia_search";
 // import axios from "axios";
 
-
 /* MOSTLY RESPONSIVE DOWN TO 850vw */
-
 
 const Container = glamorous.div({
   height: "70vh",
@@ -126,31 +124,30 @@ const Or = glamorous.div({
 });
 
 const particleOptions = {
-  particles: {
-    number: {
-      value: 45
-    }
-  },
-  opacity: {
-    value: 0.3,
-    random: true
-  },
-  interactivity: {
-    detect_on: "canvas",
-    events: {
-      onhover: {
-        enable: true,
-        mode: "grab"
-      },
-      modes: {
-        grab: {
-          distance: 500
-        }
-      }
-    }
-  }
-}
-
+	particles: {
+		number: {
+			value: 45
+		}
+	},
+	opacity: {
+		value: 0.3,
+		random: true
+	},
+	interactivity: {
+		detect_on: 'canvas',
+		events: {
+			onhover: {
+				enable: true,
+				mode: 'grab'
+			},
+			modes: {
+				grab: {
+					distance: 500
+				}
+			}
+		}
+	}
+};
 
 export default class Landing extends Component {
   componentDidMount() {
@@ -172,10 +169,6 @@ export default class Landing extends Component {
               {value => (
                 <Wrapper id="primary_input">
                   <AlgoliaCitySearch />
-                  {/* <Or>
-                    <span style={{ backgroundColor: '#353A50', padding: '0 3%', margin: "auto" }}>or</span>
-                  </Or>
-                  <AlgoliaServiceSearch /> */}
                   <Button id="primary_button" onClick={() => value.handleSearch()}>Find Appointments</Button>
                 </Wrapper>
               )}

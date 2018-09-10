@@ -8,7 +8,6 @@ export const Container = glamorous.div({
 	width: '100%',
 	// minHeight: '100%',
 	height: '100%',
-	// backgroundColor: "#b7cece"
 });
 
 export const BusinessImage = glamorous.img({
@@ -46,7 +45,7 @@ export const Address = glamorous.div({
 	flexDirection: 'column',
 	justifyContent: 'center',
 	alignItems: 'center',
-	fontSize: '1em',
+	fontSize: '1em'
 	// fontWeight: 500
 });
 
