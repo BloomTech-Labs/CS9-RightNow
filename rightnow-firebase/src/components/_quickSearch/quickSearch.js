@@ -5,13 +5,13 @@ import moment from 'moment';
 
 const Container = glamorous.div({
 	position: 'relative',
-	width: '85vw',
+	width: '95%',
 	height: '15vh',
-	margin: 'auto',
+	// margin: 'auto',
 	display: 'grid',
 	grid: '100% / 80% 20%',
-	backgroundColor: 'rgba(255, 255, 255, 0.97)',
-	zIndex: 5,
+	backgroundColor: 'rgba(255, 255, 255, 0.3)',
+	zIndex: 2,
 	transition: 'all 0.5s'
 });
 
@@ -68,7 +68,7 @@ const DateContainer = glamorous.div({
 	fontFamily: 'Raleway, sans-serif',
 	height: '100%',
 	width: '100%',
-	marginRight: '43%'
+	marginRight: '9%'
 });
 
 const DayOfWeek = glamorous.div({
