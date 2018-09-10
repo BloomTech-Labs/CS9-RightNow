@@ -11,7 +11,7 @@ const Container = glamorous.div({
 	display: 'grid',
 	grid: '100% / 80% 20%',
 	backgroundColor: 'rgba(255, 255, 255, 0.97)',
-	zIndex: 5,
+	// zIndex: 5,
 	transition: 'all 0.5s'
 });
 
