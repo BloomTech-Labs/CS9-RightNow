@@ -53,6 +53,7 @@ export default class BusinessProvider extends Component {
 
 		business_logout: () => {
 			firebase.auth().signOut();
+			this.setState({ loggedInAs: "" });
 			this.unsubscribe();
 		},
 

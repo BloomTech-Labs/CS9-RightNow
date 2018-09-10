@@ -24,19 +24,19 @@ const SelectionWrapper = glamorous.div({
 
 const SelectionSet = glamorous.div({
 	display: 'grid',
-	grid: '100% / 13% 8% 8% 8% 8% 8% 8% 1fr',
+	grid: '100% / 13% 8% 8% 8% 8% 8% 8% 8% 1fr',
 	gridColumnGap: '1%',
 	gridRowGap: '3%',
 	justifyContent: 'center',
-	alignItems: 'center'
+	alignItems: 'center',
 
 	// "@media(min-width: 1475px)": {
 	//   grid: "100% / 15% 14% 14% 14% 14% 14% 14%",
 	// },
 
-	// "@media(min-width: 1200px)": {
-	//   grid: "100% / 18% 8% 8% 8% 8% 8% 8% 1fr",
-	// }
+	"@media(min-width: 1200px)": {
+	  grid: "100% / 16% 8% 8% 8% 8% 8% 8% 8% 1fr",
+	}
 });
 
 const SelectionTitle = glamorous.div({
@@ -68,7 +68,7 @@ const DateContainer = glamorous.div({
 	fontFamily: 'Raleway, sans-serif',
 	height: '100%',
 	width: '100%',
-	marginRight: '43%'
+	// marginRight: '43%'
 });
 
 const DayOfWeek = glamorous.div({
@@ -93,7 +93,7 @@ class Clock extends Component {
 	state = {
 		time: moment().format('h:mm a'),
 		day: moment().format('dddd'),
-		month: moment().format('MMMM d')
+		month: moment().format('MMMM D')
 	};
 
 	componentDidMount() {
@@ -121,12 +121,10 @@ class Clock extends Component {
 
 export default class QuickSearch extends Component {
 	state = {
-		industries: [ 'Hair', 'Auto', 'Nails', 'Pets' ],
+		industries: [ 'Hair', 'Auto', 'Nails', 'Pets', 'Massage', "Active" ],
 		times: [ '1 hour', '2 hours', '3 hours', '4 hours', '5+ hours' ],
 		active_industry: null,
-		active_time: null,
-		industry_actual: null,
-		time_actual: null
+		active_time: null
 	};
 
 	componentDidMount() {
@@ -152,8 +150,7 @@ export default class QuickSearch extends Component {
 
 			e.target.id = 'active_time';
 			this.setState({ active_time: document.querySelector('#active_time') });
-			// this.setState({ time_actual: this.state.active_time.innerHTML });
-			this.props.updateResults({ time_actual: this.state.active_time.innerHTML });
+			this.props.updateResults({ time_selection: this.state.active_time.innerHTML });
 		} else {
 			e.target.style.background = '#353A50';
 			e.target.style.color = 'white';
@@ -164,8 +161,7 @@ export default class QuickSearch extends Component {
 
 			e.target.id = 'active_industry';
 			this.setState({ active_industry: document.querySelector('#active_industry') });
-			// this.setState({ industry_actual: this.state.active_industry.innerHTML });
-			this.props.updateResults({ industry_actual: this.state.active_industry.innerHTML });
+			this.props.updateResults({ industry_selection: this.state.active_industry.innerHTML });
 		}
 	};
 

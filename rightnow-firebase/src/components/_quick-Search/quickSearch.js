@@ -28,15 +28,15 @@ const SelectionSet = glamorous.div({
 	gridColumnGap: '1%',
 	gridRowGap: '3%',
 	justifyContent: 'center',
-	alignItems: 'center'
+	alignItems: 'center',
 
 	// "@media(min-width: 1475px)": {
 	//   grid: "100% / 15% 14% 14% 14% 14% 14% 14%",
 	// },
 
-	// "@media(min-width: 1200px)": {
-	//   grid: "100% / 18% 8% 8% 8% 8% 8% 8% 1fr",
-	// }
+	"@media(min-width: 1200px)": {
+	  grid: "100% / 18% 8% 8% 8% 8% 8% 8% 1fr",
+	}
 });
 
 const SelectionTitle = glamorous.div({

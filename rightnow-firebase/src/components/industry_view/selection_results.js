@@ -25,17 +25,9 @@ export class Clock extends Component {
 	render() {
 		return (
 			<Sorting>
-				{/* <h2>Current time:</h2> */}
+
 				<Time>{this.state.time}</Time>
-				{/* <SortBy> */}
-					{/* <option disabled defaultValue hidden>
-						Sort By
-					</option>
-					<option value="2">2 hours</option>
-					<option value="3">3 hours</option>
-					<option value="4">4 hours</option>
-					<option value="5">5+ hours</option>
-				</SortBy> */}
+
 			</Sorting>
 		);
 	}
@@ -116,8 +108,8 @@ export default class Results extends Component {
 										return acc;
 									}, {});
 								})
-								.then((final) => value.updateState({ full_query: final, finished: false }))
-								.then(() => !value.featured_appointments ? value.retrieveFeaturedAppointments() : null)
+								.then((final) => value.updateState({ full_query: final, filtered_query: final, finished: false, update_results: true }))
+								.then(() => value.retrieveFeaturedAppointments())
 								.then(() => value.listenToResults())
 								.catch((err) => console.log('oh no', err));
 						};
@@ -125,11 +117,29 @@ export default class Results extends Component {
 						getBusinessInfo();
 					}
 
+					if (value.update_results) {
+						value.updateState({ update_results: false });
+						return (
+							<Container>
+								{Object.keys(value.filtered_query).map((busnRef) => {
+									const { business_details, appointments } = value.filtered_query[busnRef];
+									return (
+										<AppointmentCard
+											businessDetails={business_details}
+											appointments={appointments}
+											key={busnRef}
+										/>
+									);
+								})}
+							</Container>
+						)
+					}
+
 					return (
 						<Container>
-							{value.full_query ? (
-								Object.keys(value.full_query).map((busnRef) => {
-									const { business_details, appointments } = value.full_query[busnRef];
+							{value.filtered_query ? (
+								Object.keys(value.filtered_query).map((busnRef) => {
+									const { business_details, appointments } = value.filtered_query[busnRef];
 									return (
 										<AppointmentCard
 											businessDetails={business_details}

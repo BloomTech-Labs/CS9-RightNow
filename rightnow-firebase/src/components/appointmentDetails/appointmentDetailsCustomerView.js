@@ -13,12 +13,9 @@ class AppointmentDetails extends Component {
 				service,
 				cost,
 				description,
-				customer_ref,
+				customer_name,
 				is_available
 			} = this.props.busnContext.selected_appointment;
-			{
-				(' ');
-			}
 
 			return (
 				<Container>
@@ -50,7 +47,7 @@ class AppointmentDetails extends Component {
 								className={is_available ? 'fas fa-user-times' : 'fas icon fa-user-check'}
 							/>
 							<Detail>
-								{!is_available && customer_ref ? customer_ref : 'this appointment is still available'}
+								{customer_name}
 							</Detail>{' '}
 							{/* user-times */}
 						</div>

@@ -2,100 +2,105 @@
 / ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ INITIALIZE FIRESTORE FUNCTIONS ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  /
 /~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
 
 // define primary collection paths
-const APPT = '_appointment_';
-const BUSNINESS = '_business_';
-const CUSTOMER = '_customer_';
+const APPT = "_appointment_";
+const BUSNINESS = "_business_";
+const CUSTOMER = "_customer_";
 
-// initialize admin app instance
+
+// initialize admin app instance 
 admin.initializeApp();
+
 
 // initialize administrative services
 const db = admin.firestore();
 
-// include timestamps in document requests
-db.settings({ timestampsInSnapshots: true });
 
-// Stripe stuff
-const logging = require('@google-cloud/logging')();
-const stripe = require('stripe')(functions.config().stripe.token);
-const currency = functions.config().stripe.currency || 'USD';
+// include timestamps in document requests
+db.settings({timestampsInSnapshots: true});
+
+
+
+
+
 
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~/
 / ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ FIRESTORE CRUD FUNCTIONS ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  /
 /~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
-const express = require('express');
-const cors = require('cors');
+
+const express = require("express");
+const cors = require("cors");
 
 const app = express();
 
 app.use(express.json());
 
-app.use(cors({ origin: true }));
+app.use(cors({origin: true}));
+
 
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
-app.get('/', (req, res) => res.send('seshy'));
+
+app.get("/", (req, res) => res.send("seshy"));
+
 
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
+
 
 // CREATE BUSINESS -- working
 // business users can only be create through this route --- NO 0AUTH FOR BUSINESS SIGN UP
-app.post('/business', async (req, res) => {
+app.post("/business", async (req, res) => {
 	const { first_name, last_name, email, password, phone } = req.body.owner_information;
 
-	const newUserId = await admin
-		.auth()
-		.createUser({
-			email: email,
-			displayName: `${first_name}  ${last_name}`,
-			password: password,
-			phoneNumber: phone
-		})
-		.then((userRecord) => {
-			db
-				.collection(BUSNINESS)
-				.doc(userRecord.uid)
-				.set({ ...req.body, uid: userRecord.uid })
-				.then(() => console.log('success'))
-				.catch((err) => res.send(err));
-			return userRecord.uid;
-		})
-		.then((id) =>
-			admin.auth().setCustomUserClaims(id, { business: true }).then((x) => x).catch((err) => res.send(err))
-		)
-		.catch((err) => res.send(err));
-
-	res.send(newUserId);
+	const newUserId = 
+		await admin
+			.auth()
+			.createUser({
+				email: email,
+				displayName: `${first_name}  ${last_name}`,
+				password: password,
+				phoneNumber: phone,
+			})
+			.then(userRecord => {
+				db.collection(BUSNINESS).doc(userRecord.uid).set({...req.body, uid: userRecord.uid}).then(() => console.log("success")).catch(err => res.send(err));
+				return userRecord.uid;
+			})
+			.then(id => admin.auth().setCustomUserClaims(id, { business: true }).then(x => x).catch(err => res.send(err)))
+			.catch(err => res.send(err));
+	
+	res.send(newUserId)
 });
+
 
 // GET BUSINESS BY ID -- working
-app.get('/business/:id', (req, res) => {
-	db
-		.collection(BUSNINESS)
-		.doc(req.params.id)
-		.get()
-		.then((docSnapshot) => res.send(docSnapshot.data()))
-		.catch((err) => res.send(err));
+app.get("/business/:id", (req, res) => {
+		db
+				.collection(BUSNINESS)
+				.doc(req.params.id)
+				.get()
+				.then(docSnapshot => res.send(docSnapshot.data()))
+				.catch(err => res.send(err));
 });
 
+
 // UPDATE BUSINESS -- not to be used for updating business appointments collection -- working
-app.put('/business/:id', (req, res) => {
-	db
-		.collection(BUSNINESS)
-		.doc(req.params.id)
-		.update(req.body)
-		.then(() => res.send('success'))
-		.catch((err) => res.send('error', err));
+app.put("/business/:id", (req, res) => {
+		db
+				.collection(BUSNINESS)
+				.doc(req.params.id)
+				.update(req.body)
+				.then(() => res.send("success"))
+				.catch(err => res.send("error", err));
 });
+
 
 // GET BUSINESS' AVAILABLE APPOINTMENTS
 // app.get("/business/:id/available", async (req, res) => {
-// 	const availableAppointments =
+// 	const availableAppointments = 
 // 		await db
 // 			.collection(BUSNINESS)
 // 			.doc(req.params.id)
@@ -108,161 +113,211 @@ app.put('/business/:id', (req, res) => {
 // 	res.send(availableAppointments);
 // });
 
-// GET BUSINESS' BOOKED APPOINTMENTS
-app.get('/business/:id/booked', async (req, res) => {
-	const bookedAppointments = await db
-		.collection(BUSNINESS)
-		.doc(req.params.id)
-		.collection('future_appointments') // future_appointments = new standard
-		.where('is_available', '==', true) // THIS HAS NOT BEEN IMPLEMENTED YET
-		.get()
-		.then((querySnapshot) => querySnapshot.docs.map((doc) => doc.id)) // .data()
-		.catch((err) => res.send(err));
 
-	res.send(bookedAppointments);
+// GET BUSINESS' BOOKED APPOINTMENTS
+app.get("/business/:id/booked", async (req, res) => {
+		const bookedAppointments =
+				await db
+						.collection(BUSNINESS)
+						.doc(req.params.id)
+						.collection("future_appointments") // future_appointments = new standard
+						.where("is_available", "==", true) // THIS HAS NOT BEEN IMPLEMENTED YET
+						.get()
+						.then(querySnapshot => querySnapshot.docs.map(doc => doc.id)) // .data()
+						.catch(err => res.send(err));
+
+		res.send(bookedAppointments);
 });
+
 
 // GET BUSINESS' PAST APPOINTMENTS
-app.get('/business/:id/past', async (req, res) => {
-	const pastAppointments = await db
-		.collection(BUSNINESS)
-		.doc(req.params.id)
-		.collection('past_appointments')
-		.get()
-		.then((querySnapshot) => querySnapshot.docs.map((doc) => doc.data()))
-		.catch((err) => res.send(err));
+app.get("/business/:id/past", async (req, res) => {
+		const pastAppointments =
+				await db
+						.collection(BUSNINESS)
+						.doc(req.params.id)
+						.collection("past_appointments")
+						.get()
+						.then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
+						.catch(err => res.send(err));
 
-	res.send(pastAppointments);
+		res.send(pastAppointments);
 });
 
+
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
+
 
 // CREATE CUSTOMER -- working
-app.post('/customer', async (req, res) => {
+app.post("/customer", async (req, res) => {
 	const { first_name, last_name, email, password, phone, location } = req.body;
 
-	const newUserId = await admin
-		.auth()
-		.createUser({
-			email: email,
-			displayName: `${first_name} ${last_name}`,
-			password: password,
-			phoneNumber: phone
-		})
-		.then((userRecord) => {
-			db
-				.collection(CUSTOMER)
-				.doc(userRecord.uid)
-				.set({ ...req.body, uid: userRecord.uid })
-				.then(() => console.log('success'))
-				.catch((err) => res.send(err));
-			return userRecord.uid;
-		})
-		.catch((err) => res.send(err));
-
-	res.send(newUserId);
+	const newUserId = 
+		await admin
+			.auth()
+			.createUser({
+				email: email,
+				displayName: `${first_name} ${last_name}`,
+				password: password,
+				phoneNumber: phone,
+			}).then(userRecord => {
+				res.send(userRecord);
+				return userRecord;
+			})
+			.then(userRecord => {
+				db.collection(CUSTOMER).doc(userRecord.uid).set({...req.body, uid: userRecord.uid}).then(() => console.log("success")).catch(err => res.send(err));
+				return userRecord.uid;
+			})
+			.catch(err => res.send(err));
+	
+	return newUserId;
 });
+
 
 // GET CUSTOMER BY ID -- working
-app.get('/customer/:id', (req, res) => {
-	db
-		.collection(CUSTOMER)
-		.doc(req.params.id)
-		.get()
-		.then((docSnapshot) => res.send(docSnapshot.data()))
-		.catch((err) => res.send(err));
+app.get("/customer/:id", (req, res) => {
+		db
+				.collection(CUSTOMER)
+				.doc(req.params.id)
+				.get()
+				.then(docSnapshot => res.send(docSnapshot.data()))
+				.catch(err => res.send(err));
 });
+
 
 // UPDATE CUSTOMER INFORMATION -- not to be used for updating customer appointment collections -- working
-app.put('/customer/:id', (req, res) => {
-	db
-		.collection(CUSTOMER)
-		.doc(req.params.id)
-		.update(req.body)
-		.then(() => res.send('success'))
-		.catch((err) => res.send('error', err));
+app.put("/customer/:id", (req, res) => {
+		db
+				.collection(CUSTOMER)
+				.doc(req.params.id)
+				.update(req.body)
+				.then(() => res.send("success"))
+				.catch(err => res.send("error", err));
 });
+
 
 // GET CUSTOMER'S FUTURE APPOINTMENTS
-app.get('/customer/:id/upcoming', async (req, res) => {
-	const futureAppointments = await db
-		.collection(CUSTOMER)
-		.doc(req.params.id)
-		.collection('future_appointments')
-		.get()
-		.then((querySnapshot) => querySnapshot.docs.map((doc) => doc.data()))
-		.catch((err) => res.send(err));
+app.get("/customer/:id/upcoming", async (req, res) => {
+		const futureAppointments =
+				await db
+						.collection(CUSTOMER)
+						.doc(req.params.id)
+						.collection("future_appointments")
+						.get()
+						.then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
+						.catch(err => res.send(err));
 
-	res.send(futureAppointments);
+		res.send(futureAppointments);
 });
+
 
 // GET CUSTOMER'S PAST APPOINTMENTS
-app.get('/customer/:id/past', async (req, res) => {
-	const pastAppointments = await db
-		.collection(CUSTOMER)
-		.doc(req.params.id)
-		.collection('past_appointments')
-		.get()
-		.then((querySnapshot) => querySnapshot.docs.map((doc) => doc.data()))
-		.catch((err) => res.send(err));
+app.get("/customer/:id/past", async (req, res) => {
+		const pastAppointments =
+				await db
+						.collection(CUSTOMER)
+						.doc(req.params.id)
+						.collection("past_appointments")
+						.get()
+						.then(querySnapshot => querySnapshot.docs.map(doc => doc.data()))
+						.catch(err => res.send(err));
 
-	res.send(pastAppointments);
+		res.send(pastAppointments);
 });
+
 
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
+
 // GET APPOINTMENT BY ID -- working
-app.get('/appointment/:id', (req, res) => {
-	db
-		.collection(APPT)
-		.doc(req.params.id)
-		.get()
-		.then((docSnapshot) => res.send(docSnapshot.data()))
-		.catch((err) => res.send(err));
+app.get("/appointment/:id", (req, res) => {
+		db
+				.collection(APPT)
+				.doc(req.params.id)
+				.get()
+				.then(docSnapshot => res.send(docSnapshot.data()))
+				.catch(err => res.send(err));
 });
 
 // GET APPOINTMENT BY TERM -- working
-app.get('/appointment', async (req, res) => {
-	const term = req.query.term;
-	const ref = await db.collection(APPT);
-	const query = await ref.where('service', '==', term);
-	const only_available = await query.where('is_available', '==', true);
+app.get("/appointment", async (req, res) => {
+		const term = req.query.term;
+		const ref = await db.collection(APPT);
+		const query = await ref.where("service", "==", term);
+		const only_available = await query.where("is_available", "==", true);
 
-	const data = await only_available
-		.get()
-		.then((querySnapshot) => querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-		.catch((err) => console.log(err));
+		const data =
+				await only_available
+						.get()
+						.then(querySnapshot => querySnapshot.docs.map(doc => ({...doc.data(), id: doc.id })))
+						.catch(err => console.log(err));
 
-	res.send(data);
+		res.send(data);
 });
+
 
 // CREATE APPOINTMENT -- working
-app.post('/appointment', (req, res) => {
-	db.collection(APPT).add(req.body).then((docRef) => res.send(docRef)).catch((err) => res.send(err));
+app.post("/appointment", (req, res) => {
+		db
+				.collection(APPT)
+				.add(req.body)
+				.then(docRef => res.send(docRef))
+				.catch(err => res.send(err));
 });
+
 
 // DELETE APPOINTMENT -- working
-app.delete('/appointment/:id', (req, res) => {
-	db.collection(APPT).doc(req.params.id).delete().then(() => res.send('success')).catch((err) => res.send('error'));
+app.delete("/appointment/:id", (req, res) => {
+		db
+				.collection(APPT)
+				.doc(req.params.id)
+				.delete()
+				.then(() => res.send("success"))
+				.catch(err => res.send("error"));
 });
+
 
 // CONFIRM APPOINTMENT -- working
-app.put('/appointment/:id/confirm', (req, res) => {
-	db
-		.collection(APPT)
-		.doc(req.params.id)
-		.update({ customer_ref: req.body.customerRef })
-		.then(() => res.send('success'))
-		.catch((err) => res.send('error'));
+app.put("/appointment/:id/confirm", (req, res) => {
+		db
+				.collection(APPT)
+				.doc(req.params.id)
+				.update({customer_ref: req.body.customerRef})
+				.then(() => res.send("success"))
+				.catch(err => res.send("error"));
 });
 
+
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
+
+
+// Stripe Configuration
+const stripe = require('stripe')(functions.config().stripe.token); // functions.config().stripe.token
+// const currency = functions.config().stripe.currency || "USD";
+
+
+app.post("/stripe", (req, res) => {
+	const token = req.body.stripeToken;
+
+  return stripe.charges.create({
+		amount: 500,
+		currency: "usd",
+		description: "business subscription",
+		source: token
+	}).then(x => res.status(200).send(x)).catch(err => res.status(500).send(err));
+});
+
+
 export const haveAsesh = functions.https.onRequest(app);
+
 
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~/
 / ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ FIRESTORE EVENT TRIGGERS ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  /
 /~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
 
+
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ UNCERTAIN OF THIS SECTION'S FUNCTIONALITY ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
+
 
 /*
 	When a new appointment is added to the appointments collection,
@@ -289,18 +344,40 @@ export const haveAsesh = functions.https.onRequest(app);
 					customer_ref: ID
 				}
 */
-export const handleNewAppointment = functions.firestore.document(`/${APPT}/{apptId}`).onCreate((snap, context) => {
-	const appointmentRef = snap.ref;
-	const businessRef = snap.data().business_ref; // id for testing
 
-	db
-		.doc(`/${BUSNINESS}/${businessRef}`)
-		.collection('future_appointments')
-		.doc(context.params.apptId)
-		.set({ appointment_id: context.params.apptId })
-		.then((busnDocRef) => busnDocRef)
-		.catch((err) => console.log('error', err));
-});
+import algoliasearch from "algoliasearch";
+
+const ALGOLIA_ID = functions.config().algolia.app_id;
+const ALGOLIA_ADMIN_KEY = functions.config().algolia.api_key;
+
+const ALGOLIA_INDEX_NAME = 'appointments';
+const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
+
+
+export const handleNewAppointment = functions.firestore
+		.document(`/${APPT}/{apptId}`)
+		.onCreate((snap, context) => {
+			// get appointment document
+			const appointment = snap.data();
+			const businessRef = appointment.business_ref; 
+
+			db
+				.doc(`/${BUSNINESS}/${businessRef}`)
+				.collection("future_appointments")
+				.doc(context.params.apptId)
+				.set({appointment_id: context.params.apptId})
+				.then(busnDocRef => busnDocRef)
+				.catch(err => console.log("error", err));
+
+
+			// add an object id field which Algolia requires
+			appointment.objectID = context.params.apptId;
+
+			// write to the algolia index
+			const index = client.initIndex(ALGOLIA_INDEX_NAME);
+			return index.saveObject(appointment);
+		});
+
 
 /*
 	When a customer confirms an appointment, a put request will update 
@@ -312,17 +389,33 @@ export const handleNewAppointment = functions.firestore.document(`/${APPT}/{appt
 
 	THIS METHOD WORKS!!!
 */
-export const handleUpdateAppointment = functions.firestore.document(`/${APPT}/{apptId}`).onUpdate((change, context) => {
-	const updated_doc = change.after.data();
+export const handleUpdateAppointment = functions.firestore
+		.document(`/${APPT}/{apptId}`)
+		.onUpdate((change, context) => {
+			const updated_doc = change.after.data();
+			
+			db.doc(`/${CUSTOMER}/${updated_doc.customer_ref}`)
+				.collection("future_appointments")
+				.doc(context.params.apptId)
+				.set({ appointment_id: context.params.apptId })
+				.then(busnDocRef => busnDocRef)
+				.catch(err => console.log("error", err));
+		});
 
-	db
-		.doc(`/${CUSTOMER}/${updated_doc.customer_ref}`)
-		.collection('future_appointments')
-		.doc(context.params.apptId)
-		.set({ appointment_id: context.params.apptId })
-		.then((busnDocRef) => busnDocRef)
-		.catch((err) => console.log('error', err));
-});
+
+
+
+
+
+
+
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~/
+/ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ALGOLIA ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ /
+/~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */
+		
+		
+		
+		
 
 /*
 	When an appointment gets deleted by a business, this method will search for identical
@@ -339,18 +432,19 @@ export const handleUpdateAppointment = functions.firestore.document(`/${APPT}/{a
 					business_ref: ID,
 					customer_ref: ID
 				}
-
-	NOT PREPARED FOR CUSTOMER'S APPOINTMENT COLLECTIONS OR ACTIVE/EXPIRED APPOINTMENTS (past/future collections)
 */
 // export const handleDeleteAppointment = functions.firestore
 // 		.document(`/${APPT}/{apptId}`)
 // 		.onDelete((snap, context) => {
-// 				const isActive = snap.data().active;
+// 				const is_available = snap.data().is_available;
 // 				const businessRef = snap.data().business_ref; // NOT a reference - logic is based on this being an id for testing purposes
 
-// 				db
-// 						.doc(`${BUSNINESS}/${businessRef}/${isActive ? "future_appointments" : "past_appointments"}/${context.params.apptId}`)
-// 						.delete()
-// 						.then(() => console.log("success"))
-// 						.catch(err => console.log("error", err));
+// 				db.doc(`${BUSNINESS}/${businessRef}/${is_available ? "future_appointments" : "past_appointments"}/${context.params.apptId}`)
+// 					.delete().then(() => console.log("success")).catch(err => console.log("error", err));
+
+// 				if (!is_available) {
+// 					const customer_id = snap.data().customer_ref;
+// 					db.doc(`${CUSTOMER}/${customer_id}/future_appointments/${context.params.apptId}`)
+// 					.delete().then(() => console.log("success")).catch(err => console.log("error", err));
+// 				} 
 // 		});

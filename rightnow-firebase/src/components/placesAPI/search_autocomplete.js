@@ -75,7 +75,8 @@ export default class PlacesAPI extends Component {
 				zip: address[6].long_name,
 				phone: place.formatted_phone_number,
 				rating: place.rating,
-				photos: photosURL
+				photos: photosURL,
+				tags: place.tags
 			});
 
 			this.setState({ query: place.formatted_address });
