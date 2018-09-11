@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 
 // import EmailPhone from '../share_settings/email_phone'
-import { CheckBoxContainer, CheckBox, CheckTitle, CheckBoxes } from '../share_settings/user_notification';
+//import { CheckBoxContainer, CheckBox, CheckTitle, CheckBoxes } from '../share_settings/user_notification';
 
 import { Wrapper, PwLabel, PwTitle, ChangePasswordInput } from '../share_settings/user_change_password';
 import AppointmentDetails from '../share_settings/appointmentDetails/appointmentDetailsCustomerView';
@@ -190,8 +190,8 @@ class UserSettings extends Component {
                                         <ChangePasswordInput type="checkbox" onClick={this.showPassword} />
                                     </Wrapper>
                             
-                                <CheckBoxContainer>
-                                    {/*<UserNotification />*/}
+                                {/*<CheckBoxContainer>
+                                    
                                     <CheckTitle>Communication Preferences</CheckTitle>
                                     <CheckBoxes>
                                         <CheckBox>
@@ -212,7 +212,7 @@ class UserSettings extends Component {
                                             </div>
                                         </CheckBox>
                                     </CheckBoxes>
-                                </CheckBoxContainer>
+                        </CheckBoxContainer>*/}
                                 <Button onClick={() => this.handleSubmit(value)}>Save</Button>
                             </FormContainer>
                         );

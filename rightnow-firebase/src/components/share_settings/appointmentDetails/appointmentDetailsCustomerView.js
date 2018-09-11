@@ -23,7 +23,7 @@ class AppointmentDetails extends Component {
             <div>
                 <div className="Detail__Container">
                     <div className='content'>
-                            <i onClick={this.onDeleteClick()} class="far delete fa-trash-alt"></i>
+                            {/*<i onClick={this.onDeleteClick()} class="far delete fa-trash-alt"></i>*/}
                             <h3 className="Detail__header">Sesh Details</h3>
                         <div className="Detail__content">
                             <div>
